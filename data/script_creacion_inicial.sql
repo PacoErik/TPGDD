@@ -119,8 +119,8 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.Habitacion (
 CREATE TABLE DERROCHADORES_DE_PAPEL.Usuario (
 	usur_id NUMERIC(18,0) IDENTITY(1,1) NOT NULL,
 	usur_username NVARCHAR(255) NOT NULL,
-	usur_password NVARCHAR(255) NOT NULL,
-	usur_datosDePersona NUMERIC(18,0) NOT NULL,
+	usur_password NVARCHAR(64) NOT NULL,
+	usur_datosDePersona NUMERIC(18,0),
 	PRIMARY KEY (usur_id),
 	FOREIGN KEY (usur_datosDePersona) REFERENCES DERROCHADORES_DE_PAPEL.DatosDePersona(dato_id)
 )
@@ -265,21 +265,45 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.RolXUsuario (
 
 -- Funcionalidad - Carga manual
 
+INSERT INTO DERROCHADORES_DE_PAPEL.Funcionalidad (func_detalle) VALUES ("ABM DE ROL")
+INSERT INTO DERROCHADORES_DE_PAPEL.Funcionalidad (func_detalle) VALUES ("ABM DE USUARIO")
+INSERT INTO DERROCHADORES_DE_PAPEL.Funcionalidad (func_detalle) VALUES ("ABM DE CLIENTE")
+INSERT INTO DERROCHADORES_DE_PAPEL.Funcionalidad (func_detalle) VALUES ("ABM DE HOTEL")
+INSERT INTO DERROCHADORES_DE_PAPEL.Funcionalidad (func_detalle) VALUES ("ABM DE HABITACION")
+INSERT INTO DERROCHADORES_DE_PAPEL.Funcionalidad (func_detalle) VALUES ("ABM REGIMEN DE ESTADIA")
+INSERT INTO DERROCHADORES_DE_PAPEL.Funcionalidad (func_detalle) VALUES ("GENERAR O MODIFICAR UNA RESERVA")
+INSERT INTO DERROCHADORES_DE_PAPEL.Funcionalidad (func_detalle) VALUES ("CANCELAR RESERVA" )
+INSERT INTO DERROCHADORES_DE_PAPEL.Funcionalidad (func_detalle) VALUES ("REGISTRAR ESTADIA")
+INSERT INTO DERROCHADORES_DE_PAPEL.Funcionalidad (func_detalle) VALUES ("REGISTRAR CONSUMIBLES")
+
 -- Tarjeta bancaria - Vacio
 
 -- Modo de pago - Carga manual
+
+INSERT INTO DERROCHADORES_DE_PAPEL.ModoDePago (modo_descripcion) VALUES ("TARJETA DE CREDITO")
+INSERT INTO DERROCHADORES_DE_PAPEL.ModoDePago (modo_descripcion) VALUES ("EFECTIVO")
 
 -- Consumible - Carga automatica
 
 -- Rol - Carga manual
 
-INSERT INTO DERROCHADORES_DE_PAPEL.Rol (rol_nombre, rol_activo) VALUES ("Administrador", 1)
-INSERT INTO DERROCHADORES_DE_PAPEL.Rol (rol_nombre, rol_activo) VALUES ("Recepcionista", 1)
-INSERT INTO DERROCHADORES_DE_PAPEL.Rol (rol_nombre, rol_activo) VALUES ("Guest", 1)
+INSERT INTO DERROCHADORES_DE_PAPEL.Rol (rol_nombre, rol_activo) VALUES ("ADMINISTRADOR GENERAL", 1)
+INSERT INTO DERROCHADORES_DE_PAPEL.Rol (rol_nombre, rol_activo) VALUES ("ADMINISTRADOR", 1)
+INSERT INTO DERROCHADORES_DE_PAPEL.Rol (rol_nombre, rol_activo) VALUES ("RECEPCIONISTA", 1)
+INSERT INTO DERROCHADORES_DE_PAPEL.Rol (rol_nombre, rol_activo) VALUES ("GUEST", 1)
 
 -- Estado de reserva - Carga manual
 
+INSERT INTO DERROCHADORES_DE_PAPEL.EstadoDeReserva (esta_detalle) VALUES ("RESERVA CORRECTA")
+INSERT INTO DERROCHADORES_DE_PAPEL.EstadoDeReserva (esta_detalle) VALUES ("RESERVA MODIFICADA")
+INSERT INTO DERROCHADORES_DE_PAPEL.EstadoDeReserva (esta_detalle) VALUES ("RESERVA CANCELADA POR RECEPCION")
+INSERT INTO DERROCHADORES_DE_PAPEL.EstadoDeReserva (esta_detalle) VALUES ("RESERVA CANCELADA POR CLIENTE")
+INSERT INTO DERROCHADORES_DE_PAPEL.EstadoDeReserva (esta_detalle) VALUES ("RESERVA CANCELADA POR NO-SHOW")
+INSERT INTO DERROCHADORES_DE_PAPEL.EstadoDeReserva (esta_detalle) VALUES ("RESERVA EFECTIVIZADA")
+
 -- Nacionalidad - Carga manual
+
+INSERT INTO DERROCHADORES_DE_PAPEL.Nacionalidad (naci_detalle) VALUES ("ARGENTINO")
 
 -- Hotel - Carga automatica
 
@@ -289,6 +313,8 @@ INSERT INTO DERROCHADORES_DE_PAPEL.Rol (rol_nombre, rol_activo) VALUES ("Guest",
 
 -- Documento - Carga manual
 
+INSERT INTO DERROCHADORES_DE_PAPEL.Documento (docu_detalle) VALUES ("DOCUMENTO NACIONAL DE IDENTIDAD")
+
 -- Datos de persona - Carga automatica
 
 -- Tipo de habitacion - Carga automatica
@@ -296,6 +322,9 @@ INSERT INTO DERROCHADORES_DE_PAPEL.Rol (rol_nombre, rol_activo) VALUES ("Guest",
 -- Habitacion - Carga automatica
 
 -- Usuario - Carga manual
+
+INSERT INTO DERROCHADORES_DE_PAPEL.Usuario (usur_username, usur_password, usur_datosDePersona) VALUES ("admin", "E6B87050BFCB8143FCB8DB0170A4DC9ED00D904DDD3E2A4AD1B1E8DC0FDC9BE7", NULL)
+INSERT INTO DERROCHADORES_DE_PAPEL.Usuario (usur_username, usur_password, usur_datosDePersona) VALUES ("guest", "", NULL)
 
 -- Cliente - Carga automatica
 
