@@ -259,6 +259,69 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.RolXUsuario (
 	FOREIGN KEY (roxu_usuario) REFERENCES DERROCHADORES_DE_PAPEL.Usuario(usur_id)
 )
 
+--------------------------------------------------------------
+-------------------Migración de los datos---------------------
+--------------------------------------------------------------
+
+-- Funcionalidad - Carga manual
+
+-- Tarjeta bancaria - Vacio
+
+-- Modo de pago - Carga manual
+
+-- Consumible - Carga automatica
+
+-- Rol - Carga manual
+
+INSERT INTO DERROCHADORES_DE_PAPEL.Rol (rol_nombre, rol_activo) VALUES ("Administrador", 1)
+INSERT INTO DERROCHADORES_DE_PAPEL.Rol (rol_nombre, rol_activo) VALUES ("Recepcionista", 1)
+INSERT INTO DERROCHADORES_DE_PAPEL.Rol (rol_nombre, rol_activo) VALUES ("Guest", 1)
+
+-- Estado de reserva - Carga manual
+
+-- Nacionalidad - Carga manual
+
+-- Hotel - Carga automatica
+
+-- Periodo de cierre - Vacio
+
+-- Regimen - Carga automatica
+
+-- Documento - Carga manual
+
+-- Datos de persona - Carga automatica
+
+-- Tipo de habitacion - Carga automatica
+
+-- Habitacion - Carga automatica
+
+-- Usuario - Carga manual
+
+-- Cliente - Carga automatica
+
+-- Reserva - Carga automatica
+
+-- Modificacion reserva - Vacio
+
+-- Cancelacion Reserva - Vacio
+
+-- Estadia - Carga automatica
+
+-- Factura - Carga automatica
+
+-- Item de factura - Carga automatica
+
+-- EstadiaXCliente - Carga automatica
+
+-- FuncionalidadXRol - Carga manual
+
+-- HotelXUsuario - Carga manual
+
+-- RegimenXHotel - Carga automatica
+
+-- ReservaXHabitacion - Carga automatica
+
+-- RolXUsuario - Carga manual
 
 
 
