@@ -49,15 +49,17 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.Nacionalidad (
 )
 CREATE TABLE DERROCHADORES_DE_PAPEL.Hotel (
 	hote_id NUMERIC(18,0) IDENTITY(1,1) NOT NULL,
-	hote_nombre NVARCHAR(50) NOT NULL,
-	hote_mail NVARCHAR(255) NOT NULL,
-	hote_telefono NUMERIC(18,0) NOT NULL,
+	hote_nombre NVARCHAR(50),
+	hote_mail NVARCHAR(255),
+	hote_telefono NUMERIC(18,0),
 	hote_calle NVARCHAR(50) NOT NULL,
-	hote_localidad NVARCHAR(50) NOT NULL,
+	hote_numeroDeCalle NUMERIC(5,0) NOT NULL,
+	hote_localidad NVARCHAR(50),
 	hote_estrellas NUMERIC(1,0) NOT NULL,
+	hote_recargaEstrella NUMERIC(4,0) NOT NULL,
 	hote_ciudad NVARCHAR(50) NOT NULL,
 	hote_pais NVARCHAR(50) NOT NULL,
-	hote_fechaDeCreacion DATETIME NOT NULL,
+	hote_fechaDeCreacion DATETIME,
 	PRIMARY KEY (hote_id)
 )
 CREATE TABLE DERROCHADORES_DE_PAPEL.PeriodoDeCierre (
@@ -276,7 +278,7 @@ INSERT INTO DERROCHADORES_DE_PAPEL.Funcionalidad (func_detalle) VALUES 	('ABM DE
 																		('REGISTRAR ESTADIA'),
 																		('REGISTRAR CONSUMIBLES'),
 																		('LISTADO ESTADISTICO')
-
+																		
 -- Tarjeta bancaria - Vacio
 
 -- Modo de pago - Carga manual
@@ -286,6 +288,16 @@ INSERT INTO DERROCHADORES_DE_PAPEL.ModoDePago (modo_descripcion) VALUES ('TARJET
 
 -- Consumible - Carga automatica
 
+SET IDENTITY_INSERT DERROCHADORES_DE_PAPEL.Consumible ON
+
+INSERT INTO DERROCHADORES_DE_PAPEL.Consumible (cons_codigo, cons_detalle, cons_precio)
+	SELECT DISTINCT Consumible_Codigo, Consumible_Descripcion, Consumible_Precio
+	FROM gd_esquema.Maestra 
+	WHERE Consumible_Codigo IS NOT NULL
+	ORDER BY Consumible_Codigo
+
+SET IDENTITY_INSERT DERROCHADORES_DE_PAPEL.Consumible OFF
+	
 -- Rol - Carga manual
 
 INSERT INTO DERROCHADORES_DE_PAPEL.Rol (rol_nombre, rol_activo) VALUES 	('ADMINISTRADOR GENERAL', 1),
@@ -308,6 +320,10 @@ INSERT INTO DERROCHADORES_DE_PAPEL.Nacionalidad (naci_detalle) VALUES ('ARGENTIN
 
 -- Hotel - Carga automatica
 
+INSERT INTO DERROCHADORES_DE_PAPEL.Hotel (hote_nombre, hote_mail, hote_telefono, hote_calle, hote_numeroDeCalle, hote_localidad, hote_estrellas, hote_recargaEstrella, hote_ciudad, hote_pais, hote_fechaDeCreacion)
+	SELECT DISTINCT NULL, NULL, NULL, Hotel_Calle, Hotel_Nro_Calle, NULL, Hotel_CantEstrella, Hotel_Recarga_Estrella, Hotel_Ciudad, 'ARGENTINA', NULL
+	FROM gd_esquema.Maestra
+	
 -- Periodo de cierre - Vacio
 
 -- Regimen - Carga automatica
@@ -345,7 +361,36 @@ INSERT INTO DERROCHADORES_DE_PAPEL.Usuario (usur_username, usur_password, usur_d
 
 -- FuncionalidadXRol - Carga manual
 
+INSERT INTO DERROCHADORES_DE_PAPEL.FuncionalidadXRol (fxro_funcionalidad, fxro_rol)
+	SELECT func_id, rol_id 
+	FROM DERROCHADORES_DE_PAPEL.Funcionalidad, DERROCHADORES_DE_PAPEL.Rol
+	WHERE rol_nombre = 'ADMINISTRADOR GENERAL'
+	
+INSERT INTO DERROCHADORES_DE_PAPEL.FuncionalidadXRol (fxro_funcionalidad, fxro_rol)
+	SELECT func_id, rol_id 
+	FROM DERROCHADORES_DE_PAPEL.Funcionalidad, DERROCHADORES_DE_PAPEL.Rol
+	WHERE rol_nombre = 'ADMINISTRADOR' AND
+		func_detalle IN ('ABM DE HOTEL','ABM DE HABITACION','ABM REGIMEN DE ESTADIA','ABM DE USUARIO')
+	
+INSERT INTO DERROCHADORES_DE_PAPEL.FuncionalidadXRol (fxro_funcionalidad, fxro_rol)
+	SELECT func_id, rol_id 
+	FROM DERROCHADORES_DE_PAPEL.Funcionalidad, DERROCHADORES_DE_PAPEL.Rol
+	WHERE rol_nombre = 'RECEPCIONISTA' AND
+		func_detalle IN ('ABM DE CLIENTE','GENERAR O MODIFICAR UNA RESERVA','CANCELAR RESERVA','REGISTRAR ESTADIA','REGISTRAR CONSUMIBLES')
+	
+INSERT INTO DERROCHADORES_DE_PAPEL.FuncionalidadXRol (fxro_funcionalidad, fxro_rol)
+	SELECT func_id, rol_id 
+	FROM DERROCHADORES_DE_PAPEL.Funcionalidad, DERROCHADORES_DE_PAPEL.Rol
+	WHERE rol_nombre = 'GUEST' AND 
+		func_detalle IN ('GENERAR O MODIFICAR UNA RESERVA','CANCELAR RESERVA')
+
 -- HotelXUsuario - Carga manual
+
+INSERT INTO DERROCHADORES_DE_PAPEL.HotelXUsuario (hoxu_hotel, hoxu_usuario)
+	SELECT hote_id, usur_id
+	FROM DERROCHADORES_DE_PAPEL.Hotel, DERROCHADORES_DE_PAPEL.Usuario
+	WHERE usur_username = 'admin' OR
+			usur_username = 'guest'
 
 -- RegimenXHotel - Carga automatica
 
@@ -353,7 +398,11 @@ INSERT INTO DERROCHADORES_DE_PAPEL.Usuario (usur_username, usur_password, usur_d
 
 -- RolXUsuario - Carga manual
 
-
+INSERT INTO DERROCHADORES_DE_PAPEL.RolXUsuario (roxu_rol, roxu_usuario)
+	SELECT rol_id, usur_id
+	FROM DERROCHADORES_DE_PAPEL.Rol, DERROCHADORES_DE_PAPEL.Usuario
+	WHERE (rol_nombre = 'ADMINISTRADOR GENERAL' AND usur_username = 'admin') OR
+			(rol_nombre = 'GUEST' AND usur_username = 'guest')
 
 
 
