@@ -9,6 +9,7 @@ GO
 --------------------------------------------------------------
 -------------------Creación de las tablas---------------------
 --------------------------------------------------------------
+
 CREATE TABLE DERROCHADORES_DE_PAPEL.Funcionalidad (
 	func_id NUMERIC(18,0) IDENTITY(1,1) NOT NULL,
 	func_detalle NVARCHAR(50) NOT NULL,
@@ -328,13 +329,41 @@ INSERT INTO DERROCHADORES_DE_PAPEL.Hotel (hote_nombre, hote_mail, hote_telefono,
 
 -- Regimen - Carga automatica
 
+INSERT INTO DERROCHADORES_DE_PAPEL.Regimen (regi_descripcion, regi_precioBase, regi_estado)
+	SELECT DISTINCT Regimen_Descripcion, Regimen_Precio, 1
+	FROM gd_esquema.Maestra
+
 -- Documento - Carga manual
 
 INSERT INTO DERROCHADORES_DE_PAPEL.Documento (docu_detalle) VALUES ('DOCUMENTO NACIONAL DE IDENTIDAD')
 
 -- Datos de persona - Carga automatica
 
+--INSERT INTO DERROCHADORES_DE_PAPEL.DatosDePersona (dato_nombre, dato_apellido, dato_mail, dato_telefono, dato_calle, dato_numeroDeCalle, dato_piso, dato_departamento, dato_localidad, dato_fechaDeNacimiento, dato_tipoDeDocumento, dato_numeroDePasaporte)
+	
+	
+
 -- Tipo de habitacion - Carga automatica
+
+CREATE FUNCTION DERROCHADORES_DE_PAPEL.DescripcionDeHabitacionACantidad (@descripcion NVARCHAR(255))
+RETURNS NUMERIC(1,0)
+AS BEGIN
+    DECLARE @Cantidad NUMERIC(1,0)
+
+    SET @Cantidad = CASE @descripcion
+						WHEN 'Base Simple' THEN 1
+						WHEN 'Base Doble' THEN 2
+						WHEN 
+	
+    RETURN @Cantidad
+END
+
+SET IDENTITY_INSERT DERROCHADORES_DE_PAPEL.TipoDeHabitacion ON 
+
+INSERT INTO DERROCHADORES_DE_PAPEL.TipoDeHabitacion (tipo_codigo, tipo_descripcion, tipo_porcentual, tipo_cantidadDePersonas)
+	SELECT DISTINCT Habitacion_Tipo_Codigo, Habitacion_Tipo_Descripcion, Habitacion_Tipo_Porcentual, 
+
+SET IDENTITY_INSERT DERROCHADORES_DE_PAPEL.TipoDeHabitacion OFF
 
 -- Habitacion - Carga automatica
 
