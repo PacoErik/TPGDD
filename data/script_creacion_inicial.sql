@@ -4,7 +4,30 @@
 --------------------------------------------------------------
 
 CREATE SCHEMA DERROCHADORES_DE_PAPEL AUTHORIZATION gdHotel2018
+
 GO 
+
+--------------------------------------------------------------
+-------------------Creación de funciones----------------------
+--------------------------------------------------------------
+
+CREATE FUNCTION DERROCHADORES_DE_PAPEL.DescripcionDeHabitacionACantidad (@descripcion NVARCHAR(255))
+RETURNS NUMERIC(1,0)
+AS BEGIN
+    DECLARE @Cantidad NUMERIC(1,0)
+
+    SET @Cantidad = CASE @descripcion
+						WHEN 'Base Simple' THEN 1
+						WHEN 'Base Doble' THEN 2
+						WHEN 'Base Triple' THEN 3
+						WHEN 'Base Cuadruple' THEN 4
+						WHEN 'King' THEN 4
+						ELSE 0
+					END
+    RETURN @Cantidad
+END
+
+GO
 
 --------------------------------------------------------------
 -------------------Creación de las tablas---------------------
@@ -89,15 +112,16 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.DatosDePersona (
 	dato_nombre NVARCHAR(50) NOT NULL,
 	dato_apellido NVARCHAR(50) NOT NULL,
 	dato_mail NVARCHAR(255) NOT NULL,
-	dato_telefono NUMERIC(18,0) NOT NULL,
+	dato_telefono NUMERIC(18,0),
 	dato_calle NVARCHAR(50) NOT NULL,
 	dato_numeroDeCalle NUMERIC(8,0) NOT NULL,
 	dato_piso NUMERIC(8,0) NOT NULL,
-	dato_departamento NUMERIC(8,0) NOT NULL,
-	dato_localidad NVARCHAR(50) NOT NULL,
+	dato_departamento NVARCHAR(50) NOT NULL,
+	dato_localidad NVARCHAR(50),
 	dato_fechaDeNacimiento DATETIME NOT NULL,
 	dato_tipoDeDocumento NUMERIC(18,0) NOT NULL,
-	dato_numeroDePasaporte NUMERIC(18,0) NOT NULL,
+	dato_numeroDeDocumento NUMERIC(18,0) NOT NULL,
+	dato_habilitado BIT NOT NULL,
 	PRIMARY KEY (dato_id),
 	FOREIGN KEY (dato_tipoDeDocumento) REFERENCES DERROCHADORES_DE_PAPEL.Documento(docu_tipo)
 )
@@ -129,12 +153,11 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.Usuario (
 )
 CREATE TABLE DERROCHADORES_DE_PAPEL.Cliente (
 	clie_id NUMERIC(18,0) IDENTITY(1,1) NOT NULL,
-	clie_nacionalidad NUMERIC(18,0) NOT NULL,
 	clie_datosDePersona NUMERIC(18,0) NOT NULL,
-	clie_habilitado BIT NOT NULL,
+	clie_nacionalidad NUMERIC(18,0) NOT NULL,
 	PRIMARY KEY (clie_id),
-	FOREIGN KEY (clie_nacionalidad) REFERENCES DERROCHADORES_DE_PAPEL.Nacionalidad(naci_id),
-	FOREIGN KEY (clie_datosDePersona) REFERENCES DERROCHADORES_DE_PAPEL.DatosDePersona(dato_id)
+	FOREIGN KEY (clie_datosDePersona) REFERENCES DERROCHADORES_DE_PAPEL.DatosDePersona(dato_id),
+	FOREIGN KEY (clie_nacionalidad) REFERENCES DERROCHADORES_DE_PAPEL.Nacionalidad(naci_id)
 )
 CREATE TABLE DERROCHADORES_DE_PAPEL.Reserva (
 	rese_codigo NUMERIC(18,0) IDENTITY(1,1) NOT NULL,
@@ -234,6 +257,7 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.FuncionalidadXRol (
 CREATE TABLE DERROCHADORES_DE_PAPEL.HotelXUsuario (
 	hoxu_hotel NUMERIC(18,0) NOT NULL,
 	hoxu_usuario NUMERIC(18,0) NOT NULL,
+	hoxu_habilitado BIT NOT NULL,
 	PRIMARY KEY (hoxu_hotel, hoxu_usuario),
 	FOREIGN KEY (hoxu_hotel) REFERENCES DERROCHADORES_DE_PAPEL.Hotel(hote_id),
 	FOREIGN KEY (hoxu_usuario) REFERENCES DERROCHADORES_DE_PAPEL.Usuario(usur_id)
@@ -261,6 +285,8 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.RolXUsuario (
 	FOREIGN KEY (roxu_rol) REFERENCES DERROCHADORES_DE_PAPEL.Rol(rol_id),
 	FOREIGN KEY (roxu_usuario) REFERENCES DERROCHADORES_DE_PAPEL.Usuario(usur_id)
 )
+
+GO
 
 --------------------------------------------------------------
 -------------------Migración de los datos---------------------
@@ -336,32 +362,28 @@ INSERT INTO DERROCHADORES_DE_PAPEL.Regimen (regi_descripcion, regi_precioBase, r
 -- Documento - Carga manual
 
 INSERT INTO DERROCHADORES_DE_PAPEL.Documento (docu_detalle) VALUES ('DOCUMENTO NACIONAL DE IDENTIDAD')
+INSERT INTO DERROCHADORES_DE_PAPEL.Documento (docu_detalle) VALUES ('CARNET DE EXTRANJERIA')
+INSERT INTO DERROCHADORES_DE_PAPEL.Documento (docu_detalle) VALUES ('PASAPORTE')
 
 -- Datos de persona - Carga automatica
 
---INSERT INTO DERROCHADORES_DE_PAPEL.DatosDePersona (dato_nombre, dato_apellido, dato_mail, dato_telefono, dato_calle, dato_numeroDeCalle, dato_piso, dato_departamento, dato_localidad, dato_fechaDeNacimiento, dato_tipoDeDocumento, dato_numeroDePasaporte)
-	
-	
+/*
+INSERT INTO DERROCHADORES_DE_PAPEL.DatosDePersona (dato_nombre, dato_apellido, dato_mail, dato_telefono, dato_calle, dato_numeroDeCalle, dato_piso, dato_departamento, dato_localidad, dato_fechaDeNacimiento, dato_tipoDeDocumento, dato_numeroDeDocumento, dato_habilitado)
+	SELECT DISTINCT Cliente_Nombre, Cliente_Apellido, Cliente_Mail, NULL, Cliente_Dom_Calle, Cliente_Nro_Calle, Cliente_Piso, Cliente_Depto, NULL, Cliente_Fecha_Nac, (SELECT docu_tipo FROM DERROCHADORES_DE_PAPEL.Documento WHERE docu_detalle = 'PASAPORTE'), Cliente_Pasaporte_Nro, 1
+	FROM gd_esquema.Maestra
+INSERT INTO DERROCHADORES_DE_PAPEL.DatosDePersona (dato_nombre, dato_apellido, dato_mail, dato_telefono, dato_calle, dato_numeroDeCalle, dato_piso, dato_departamento, dato_localidad, dato_fechaDeNacimiento, dato_tipoDeDocumento, dato_numeroDeDocumento, dato_habilitado)
+	SELECT Cliente_Nombre, Cliente_Apellido, Cliente_Mail, NULL, Cliente_Dom_Calle, Cliente_Nro_Calle, Cliente_Piso, Cliente_Depto, NULL, Cliente_Fecha_Nac, (SELECT docu_tipo FROM DERROCHADORES_DE_PAPEL.Documento WHERE docu_detalle = 'PASAPORTE'), Cliente_Pasaporte_Nro, 0
+	FROM gd_esquema.Maestra JOIN DERROCHADORES_DE_PAPEL.DatosDePersona ON ((Cliente_Pasaporte_Nro = dato_numeroDeDocumento AND Cliente_Mail != dato_mail) OR (Cliente_Pasaporte_Nro != dato_numeroDeDocumento AND Cliente_Mail = dato_mail) )
+*/
 
 -- Tipo de habitacion - Carga automatica
-
-CREATE FUNCTION DERROCHADORES_DE_PAPEL.DescripcionDeHabitacionACantidad (@descripcion NVARCHAR(255))
-RETURNS NUMERIC(1,0)
-AS BEGIN
-    DECLARE @Cantidad NUMERIC(1,0)
-
-    SET @Cantidad = CASE @descripcion
-						WHEN 'Base Simple' THEN 1
-						WHEN 'Base Doble' THEN 2
-						WHEN 
-	
-    RETURN @Cantidad
-END
 
 SET IDENTITY_INSERT DERROCHADORES_DE_PAPEL.TipoDeHabitacion ON 
 
 INSERT INTO DERROCHADORES_DE_PAPEL.TipoDeHabitacion (tipo_codigo, tipo_descripcion, tipo_porcentual, tipo_cantidadDePersonas)
-	SELECT DISTINCT Habitacion_Tipo_Codigo, Habitacion_Tipo_Descripcion, Habitacion_Tipo_Porcentual, 
+	SELECT DISTINCT Habitacion_Tipo_Codigo, Habitacion_Tipo_Descripcion, Habitacion_Tipo_Porcentual, DERROCHADORES_DE_PAPEL.DescripcionDeHabitacionACantidad(Habitacion_Tipo_Descripcion)
+	FROM gd_esquema.Maestra
+	ORDER BY Habitacion_Tipo_Codigo
 
 SET IDENTITY_INSERT DERROCHADORES_DE_PAPEL.TipoDeHabitacion OFF
 
@@ -415,8 +437,8 @@ INSERT INTO DERROCHADORES_DE_PAPEL.FuncionalidadXRol (fxro_funcionalidad, fxro_r
 
 -- HotelXUsuario - Carga manual
 
-INSERT INTO DERROCHADORES_DE_PAPEL.HotelXUsuario (hoxu_hotel, hoxu_usuario)
-	SELECT hote_id, usur_id
+INSERT INTO DERROCHADORES_DE_PAPEL.HotelXUsuario (hoxu_hotel, hoxu_usuario, hoxu_habilitado)
+	SELECT hote_id, usur_id, 1
 	FROM DERROCHADORES_DE_PAPEL.Hotel, DERROCHADORES_DE_PAPEL.Usuario
 	WHERE usur_username = 'admin' OR
 			usur_username = 'guest'
