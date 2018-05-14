@@ -107,24 +107,6 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.Documento (
 	docu_detalle NVARCHAR(50) NOT NULL,
 	PRIMARY KEY (docu_tipo)
 )
-CREATE TABLE DERROCHADORES_DE_PAPEL.DatosDePersona (
-	dato_id NUMERIC(18,0) IDENTITY(1,1) NOT NULL,
-	dato_nombre NVARCHAR(50) NOT NULL,
-	dato_apellido NVARCHAR(50) NOT NULL,
-	dato_mail NVARCHAR(255) NOT NULL,
-	dato_telefono NUMERIC(18,0),
-	dato_calle NVARCHAR(50) NOT NULL,
-	dato_numeroDeCalle NUMERIC(8,0) NOT NULL,
-	dato_piso NUMERIC(8,0) NOT NULL,
-	dato_departamento NVARCHAR(50) NOT NULL,
-	dato_localidad NVARCHAR(50),
-	dato_fechaDeNacimiento DATETIME NOT NULL,
-	dato_tipoDeDocumento NUMERIC(18,0) NOT NULL,
-	dato_numeroDeDocumento NUMERIC(18,0) NOT NULL,
-	dato_habilitado BIT NOT NULL,
-	PRIMARY KEY (dato_id),
-	FOREIGN KEY (dato_tipoDeDocumento) REFERENCES DERROCHADORES_DE_PAPEL.Documento(docu_tipo)
-)
 CREATE TABLE DERROCHADORES_DE_PAPEL.TipoDeHabitacion (
 	tipo_codigo NUMERIC(18,0) IDENTITY(1,1) NOT NULL,
 	tipo_descripcion NVARCHAR(50) NOT NULL,
@@ -147,16 +129,40 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.Usuario (
 	usur_id NUMERIC(18,0) IDENTITY(1,1) NOT NULL,
 	usur_username NVARCHAR(255) NOT NULL,
 	usur_password NVARCHAR(64) NOT NULL,
-	usur_datosDePersona NUMERIC(18,0),
+	usur_nombre NVARCHAR(50),
+	usur_apellido NVARCHAR(50),
+	usur_mail NVARCHAR(255),
+	usur_telefono NUMERIC(18,0),
+	usur_fechaDeNacimiento DATETIME,
+	usur_calle NVARCHAR(50),
+	usur_numeroDeCalle NUMERIC(8,0),
+	usur_piso NUMERIC(8,0),
+	usur_departamento NVARCHAR(50),
+	usur_localidad NVARCHAR(50),
+	usur_tipoDeDocumento NUMERIC(18,0),
+	usur_numeroDeDocumento NUMERIC(18,0),
+	usur_habilitado BIT NOT NULL,
 	PRIMARY KEY (usur_id),
-	FOREIGN KEY (usur_datosDePersona) REFERENCES DERROCHADORES_DE_PAPEL.DatosDePersona(dato_id)
+	FOREIGN KEY (usur_tipoDeDocumento) REFERENCES DERROCHADORES_DE_PAPEL.Documento(docu_tipo)
 )
 CREATE TABLE DERROCHADORES_DE_PAPEL.Cliente (
 	clie_id NUMERIC(18,0) IDENTITY(1,1) NOT NULL,
-	clie_datosDePersona NUMERIC(18,0) NOT NULL,
+	clie_nombre NVARCHAR(50) NOT NULL,
+	clie_apellido NVARCHAR(50) NOT NULL,
+	clie_mail NVARCHAR(255) NOT NULL,
+	clie_telefono NUMERIC(18,0),
+	clie_fechaDeNacimiento DATETIME NOT NULL,
+	clie_calle NVARCHAR(50) NOT NULL,
+	clie_numeroDeCalle NUMERIC(8,0) NOT NULL,
+	clie_piso NUMERIC(8,0) NOT NULL,
+	clie_departamento NVARCHAR(50) NOT NULL,
+	clie_localidad NVARCHAR(50),
+	clie_tipoDeDocumento NUMERIC(18,0) NOT NULL,
+	clie_numeroDeDocumento NUMERIC(18,0) NOT NULL,
+	clie_habilitado BIT NOT NULL,
 	clie_nacionalidad NUMERIC(18,0) NOT NULL,
 	PRIMARY KEY (clie_id),
-	FOREIGN KEY (clie_datosDePersona) REFERENCES DERROCHADORES_DE_PAPEL.DatosDePersona(dato_id),
+	FOREIGN KEY (clie_tipoDeDocumento) REFERENCES DERROCHADORES_DE_PAPEL.Documento(docu_tipo),
 	FOREIGN KEY (clie_nacionalidad) REFERENCES DERROCHADORES_DE_PAPEL.Nacionalidad(naci_id)
 )
 CREATE TABLE DERROCHADORES_DE_PAPEL.Reserva (
@@ -305,7 +311,9 @@ INSERT INTO DERROCHADORES_DE_PAPEL.Funcionalidad (func_detalle) VALUES 	('ABM DE
 																		('REGISTRAR ESTADIA'),
 																		('REGISTRAR CONSUMIBLES'),
 																		('LISTADO ESTADISTICO')
-																		
+
+GO																		
+	
 -- Tarjeta bancaria - Vacio
 
 -- Modo de pago - Carga manual
@@ -313,6 +321,8 @@ INSERT INTO DERROCHADORES_DE_PAPEL.Funcionalidad (func_detalle) VALUES 	('ABM DE
 INSERT INTO DERROCHADORES_DE_PAPEL.ModoDePago (modo_descripcion) VALUES ('TARJETA DE CREDITO'),
 																		('EFECTIVO')
 
+GO
+																		
 -- Consumible - Carga automatica
 
 SET IDENTITY_INSERT DERROCHADORES_DE_PAPEL.Consumible ON
@@ -325,6 +335,8 @@ INSERT INTO DERROCHADORES_DE_PAPEL.Consumible (cons_codigo, cons_detalle, cons_p
 
 SET IDENTITY_INSERT DERROCHADORES_DE_PAPEL.Consumible OFF
 	
+GO
+	
 -- Rol - Carga manual
 
 INSERT INTO DERROCHADORES_DE_PAPEL.Rol (rol_nombre, rol_activo) VALUES 	('ADMINISTRADOR GENERAL', 1),
@@ -332,6 +344,8 @@ INSERT INTO DERROCHADORES_DE_PAPEL.Rol (rol_nombre, rol_activo) VALUES 	('ADMINI
 																		('RECEPCIONISTA', 1),
 																		('GUEST', 1)
 
+GO																		
+																		
 -- Estado de reserva - Carga manual
 
 INSERT INTO DERROCHADORES_DE_PAPEL.EstadoDeReserva (esta_detalle) VALUES 	('RESERVA CORRECTA'),
@@ -341,15 +355,21 @@ INSERT INTO DERROCHADORES_DE_PAPEL.EstadoDeReserva (esta_detalle) VALUES 	('RESE
 																			('RESERVA CANCELADA POR NO-SHOW'),
 																			('RESERVA EFECTIVIZADA')
 
+GO																			
+																			
 -- Nacionalidad - Carga manual
 
 INSERT INTO DERROCHADORES_DE_PAPEL.Nacionalidad (naci_detalle) VALUES ('ARGENTINO')
+
+GO
 
 -- Hotel - Carga automatica
 
 INSERT INTO DERROCHADORES_DE_PAPEL.Hotel (hote_nombre, hote_mail, hote_telefono, hote_calle, hote_numeroDeCalle, hote_localidad, hote_estrellas, hote_recargaEstrella, hote_ciudad, hote_pais, hote_fechaDeCreacion)
 	SELECT DISTINCT NULL, NULL, NULL, Hotel_Calle, Hotel_Nro_Calle, NULL, Hotel_CantEstrella, Hotel_Recarga_Estrella, Hotel_Ciudad, 'ARGENTINA', NULL
 	FROM gd_esquema.Maestra
+	
+GO
 	
 -- Periodo de cierre - Vacio
 
@@ -359,22 +379,33 @@ INSERT INTO DERROCHADORES_DE_PAPEL.Regimen (regi_descripcion, regi_precioBase, r
 	SELECT DISTINCT Regimen_Descripcion, Regimen_Precio, 1
 	FROM gd_esquema.Maestra
 
+GO
+	
 -- Documento - Carga manual
 
 INSERT INTO DERROCHADORES_DE_PAPEL.Documento (docu_detalle) VALUES ('DOCUMENTO NACIONAL DE IDENTIDAD')
 INSERT INTO DERROCHADORES_DE_PAPEL.Documento (docu_detalle) VALUES ('CARNET DE EXTRANJERIA')
 INSERT INTO DERROCHADORES_DE_PAPEL.Documento (docu_detalle) VALUES ('PASAPORTE')
 
--- Datos de persona - Carga automatica
+GO
 
-/*
-INSERT INTO DERROCHADORES_DE_PAPEL.DatosDePersona (dato_nombre, dato_apellido, dato_mail, dato_telefono, dato_calle, dato_numeroDeCalle, dato_piso, dato_departamento, dato_localidad, dato_fechaDeNacimiento, dato_tipoDeDocumento, dato_numeroDeDocumento, dato_habilitado)
-	SELECT DISTINCT Cliente_Nombre, Cliente_Apellido, Cliente_Mail, NULL, Cliente_Dom_Calle, Cliente_Nro_Calle, Cliente_Piso, Cliente_Depto, NULL, Cliente_Fecha_Nac, (SELECT docu_tipo FROM DERROCHADORES_DE_PAPEL.Documento WHERE docu_detalle = 'PASAPORTE'), Cliente_Pasaporte_Nro, 1
+-- Cliente - Carga automatica
+
+INSERT INTO DERROCHADORES_DE_PAPEL.Cliente (clie_nombre, clie_apellido, clie_mail, clie_telefono, clie_fechaDeNacimiento, clie_calle, clie_numeroDeCalle, clie_piso, clie_departamento, clie_localidad, clie_tipoDeDocumento, clie_numeroDeDocumento, clie_habilitado, clie_nacionalidad)
+	SELECT Cliente_Nombre, Cliente_Apellido, Cliente_Mail, NULL, MAX(Cliente_Fecha_Nac), MAX(Cliente_Dom_Calle), MAX(Cliente_Nro_Calle), MAX(Cliente_Piso), MAX(Cliente_Depto), NULL, (SELECT docu_tipo FROM DERROCHADORES_DE_PAPEL.Documento WHERE docu_detalle = 'PASAPORTE'), MAX(Cliente_Pasaporte_Nro), 1, (SELECT naci_id FROM DERROCHADORES_DE_PAPEL.Nacionalidad WHERE naci_detalle = 'ARGENTINO')
 	FROM gd_esquema.Maestra
-INSERT INTO DERROCHADORES_DE_PAPEL.DatosDePersona (dato_nombre, dato_apellido, dato_mail, dato_telefono, dato_calle, dato_numeroDeCalle, dato_piso, dato_departamento, dato_localidad, dato_fechaDeNacimiento, dato_tipoDeDocumento, dato_numeroDeDocumento, dato_habilitado)
-	SELECT Cliente_Nombre, Cliente_Apellido, Cliente_Mail, NULL, Cliente_Dom_Calle, Cliente_Nro_Calle, Cliente_Piso, Cliente_Depto, NULL, Cliente_Fecha_Nac, (SELECT docu_tipo FROM DERROCHADORES_DE_PAPEL.Documento WHERE docu_detalle = 'PASAPORTE'), Cliente_Pasaporte_Nro, 0
-	FROM gd_esquema.Maestra JOIN DERROCHADORES_DE_PAPEL.DatosDePersona ON ((Cliente_Pasaporte_Nro = dato_numeroDeDocumento AND Cliente_Mail != dato_mail) OR (Cliente_Pasaporte_Nro != dato_numeroDeDocumento AND Cliente_Mail = dato_mail) )
-*/
+	GROUP BY Cliente_Nombre, Cliente_Apellido, Cliente_Mail
+
+GO
+
+INSERT INTO DERROCHADORES_DE_PAPEL.Cliente (clie_nombre, clie_apellido, clie_mail, clie_telefono, clie_fechaDeNacimiento, clie_calle, clie_numeroDeCalle, clie_piso, clie_departamento, clie_localidad, clie_tipoDeDocumento, clie_numeroDeDocumento, clie_habilitado, clie_nacionalidad)
+	SELECT DISTINCT Cliente_Nombre, Cliente_Apellido, Cliente_Mail, NULL, Cliente_Fecha_Nac, Cliente_Dom_Calle, Cliente_Nro_Calle, Cliente_Piso, Cliente_Depto, NULL, (SELECT docu_tipo FROM DERROCHADORES_DE_PAPEL.Documento WHERE docu_detalle = 'PASAPORTE'), Cliente_Pasaporte_Nro, 0, (SELECT naci_id FROM DERROCHADORES_DE_PAPEL.Nacionalidad WHERE naci_detalle = 'ARGENTINO')
+	FROM gd_esquema.Maestra 
+	WHERE Cliente_Pasaporte_Nro NOT IN (SELECT C.clie_numeroDeDocumento
+										FROM DERROCHADORES_DE_PAPEL.Cliente C
+										WHERE C.clie_nombre = Cliente_Nombre AND C.clie_apellido = Cliente_Apellido)
+
+GO
 
 -- Tipo de habitacion - Carga automatica
 
@@ -387,14 +418,17 @@ INSERT INTO DERROCHADORES_DE_PAPEL.TipoDeHabitacion (tipo_codigo, tipo_descripci
 
 SET IDENTITY_INSERT DERROCHADORES_DE_PAPEL.TipoDeHabitacion OFF
 
+GO
+
 -- Habitacion - Carga automatica
 
 -- Usuario - Carga manual
 
-INSERT INTO DERROCHADORES_DE_PAPEL.Usuario (usur_username, usur_password, usur_datosDePersona) VALUES 	('admin', 'E6B87050BFCB8143FCB8DB0170A4DC9ED00D904DDD3E2A4AD1B1E8DC0FDC9BE7', NULL),
-																										('guest', ' ', NULL)
+INSERT INTO DERROCHADORES_DE_PAPEL.Usuario (usur_username, usur_password, usur_nombre, usur_apellido, usur_mail, usur_telefono, usur_fechaDeNacimiento, usur_calle, usur_numeroDeCalle, usur_piso, usur_departamento, usur_localidad, usur_tipoDeDocumento, usur_numeroDeDocumento, usur_habilitado) 
+	VALUES 	('admin', 'E6B87050BFCB8143FCB8DB0170A4DC9ED00D904DDD3E2A4AD1B1E8DC0FDC9BE7', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
+			('guest', ' ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1)
 
--- Cliente - Carga automatica
+GO
 
 -- Reserva - Carga automatica
 
@@ -435,6 +469,8 @@ INSERT INTO DERROCHADORES_DE_PAPEL.FuncionalidadXRol (fxro_funcionalidad, fxro_r
 	WHERE rol_nombre = 'GUEST' AND 
 		func_detalle IN ('GENERAR O MODIFICAR UNA RESERVA','CANCELAR RESERVA')
 
+GO
+		
 -- HotelXUsuario - Carga manual
 
 INSERT INTO DERROCHADORES_DE_PAPEL.HotelXUsuario (hoxu_hotel, hoxu_usuario, hoxu_habilitado)
@@ -443,6 +479,8 @@ INSERT INTO DERROCHADORES_DE_PAPEL.HotelXUsuario (hoxu_hotel, hoxu_usuario, hoxu
 	WHERE usur_username = 'admin' OR
 			usur_username = 'guest'
 
+GO
+			
 -- RegimenXHotel - Carga automatica
 
 -- ReservaXHabitacion - Carga automatica
@@ -455,7 +493,7 @@ INSERT INTO DERROCHADORES_DE_PAPEL.RolXUsuario (roxu_rol, roxu_usuario)
 	WHERE (rol_nombre = 'ADMINISTRADOR GENERAL' AND usur_username = 'admin') OR
 			(rol_nombre = 'GUEST' AND usur_username = 'guest')
 
-
+GO
 
 
 
