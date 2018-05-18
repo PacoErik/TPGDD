@@ -490,14 +490,7 @@ INSERT INTO DERROCHADORES_DE_PAPEL.ItemDeFactura (item_cantidad, item_monto, ite
 -- EstadiaXCliente - Carga automatica
 
 INSERT INTO DERROCHADORES_DE_PAPEL.EstadiaXCliente (esxc_estadia, esxc_cliente, esxc_hotel, esxc_numero, esxc_piso)
-	SELECT esta_id, 
-		clie_id, 
-		(SELECT hote_id FROM DERROCHADORES_DE_PAPEL.Hotel WHERE rese_hotel = hote_id),
-		(SELECT DISTINCT Habitacion_Numero FROM gd_esquema.Maestra WHERE Reserva_Codigo = rese_codigo),
-		(SELECT DISTINCT Habitacion_Piso FROM gd_esquema.Maestra WHERE Reserva_Codigo = rese_codigo)
-	FROM DERROCHADORES_DE_PAPEL.Estadia, DERROCHADORES_DE_PAPEL.Cliente, DERROCHADORES_DE_PAPEL.Reserva
-	WHERE clie_id = rese_cliente AND 
-			esta_reserva = rese_codigo
+	
 
 -- FuncionalidadXRol - Carga manual
 
@@ -537,8 +530,33 @@ INSERT INTO DERROCHADORES_DE_PAPEL.HotelXUsuario (hoxu_hotel, hoxu_usuario, hoxu
 GO
 			
 -- RegimenXHotel - Carga automatica
+--CONFIRMAR SI ES CORRECTO
+INSERT INTO DERROCHADORES_DE_PAPEL.RegimenXHotel (rexh_regimen, rexh_hotel)
+	SELECT (SELECT regi_codigo
+			FROM DERROCHADORES_DE_PAPEL.Regimen
+			WHERE regi_descripcion = Regimen_Descripcion), 
+			(SELECT hote_id
+			FROM DERROCHADORES_DE_PAPEL.Hotel
+			WHERE hote_calle = Hotel_Calle AND
+					hote_numeroDeCalle = Hotel_Nro_Calle)
+	FROM gd_esquema.Maestra
+	GROUP BY Regimen_Descripcion, Hotel_Calle, Hotel_Nro_Calle
+	
+GO
 
 -- ReservaXHabitacion - Carga automatica
+--FALTA DESARROLLAR
+INSERT INTO DERROCHADORES_DE_PAPEL.ReservaXHabitacion (rexh_reserva, rexh_hotel, rexh_numero, rexh_piso)
+	SELECT esta_id, 
+		clie_id, 
+		(SELECT hote_id FROM DERROCHADORES_DE_PAPEL.Hotel WHERE rese_hotel = hote_id),
+		(SELECT DISTINCT Habitacion_Numero FROM gd_esquema.Maestra WHERE Reserva_Codigo = rese_codigo),
+		(SELECT DISTINCT Habitacion_Piso FROM gd_esquema.Maestra WHERE Reserva_Codigo = rese_codigo)
+	FROM DERROCHADORES_DE_PAPEL.Estadia, DERROCHADORES_DE_PAPEL.Cliente, DERROCHADORES_DE_PAPEL.Reserva
+	WHERE clie_id = rese_cliente AND 
+			esta_reserva = rese_codigo
+	
+GO
 
 -- RolXUsuario - Carga manual
 
