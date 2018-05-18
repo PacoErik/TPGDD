@@ -466,6 +466,8 @@ INSERT INTO DERROCHADORES_DE_PAPEL.Estadia (esta_fechaDeInicio, esta_fechaDeFin,
 			Estadia_Fecha_Inicio IS NOT NULL
 	ORDER BY Reserva_Codigo
 
+GO
+
 -- Factura - Carga automatica
 
 SET IDENTITY_INSERT DERROCHADORES_DE_PAPEL.Factura ON
@@ -479,6 +481,8 @@ INSERT INTO DERROCHADORES_DE_PAPEL.Factura (fact_numero, fact_fecha, fact_costoT
 
 SET IDENTITY_INSERT DERROCHADORES_DE_PAPEL.Factura OFF
 
+GO
+
 -- Item de factura - Carga automatica
 
 INSERT INTO DERROCHADORES_DE_PAPEL.ItemDeFactura (item_cantidad, item_monto, item_factura, item_descripcion, item_consumible)
@@ -487,10 +491,21 @@ INSERT INTO DERROCHADORES_DE_PAPEL.ItemDeFactura (item_cantidad, item_monto, ite
 	WHERE Factura_Nro IS NOT NULL
 	ORDER BY Factura_Nro
 
+GO
+
 -- EstadiaXCliente - Carga automatica
 
 INSERT INTO DERROCHADORES_DE_PAPEL.EstadiaXCliente (esxc_estadia, esxc_cliente, esxc_hotel, esxc_numero, esxc_piso)
-	
+	SELECT esta_id, 
+		clie_id, 
+		(SELECT hote_id FROM DERROCHADORES_DE_PAPEL.Hotel WHERE rese_hotel = hote_id),
+		(SELECT DISTINCT Habitacion_Numero FROM gd_esquema.Maestra WHERE Reserva_Codigo = rese_codigo),
+		(SELECT DISTINCT Habitacion_Piso FROM gd_esquema.Maestra WHERE Reserva_Codigo = rese_codigo)
+	FROM DERROCHADORES_DE_PAPEL.Estadia, DERROCHADORES_DE_PAPEL.Cliente, DERROCHADORES_DE_PAPEL.Reserva
+	WHERE clie_id = rese_cliente AND 
+		esta_reserva = rese_codigo
+
+GO
 
 -- FuncionalidadXRol - Carga manual
 
