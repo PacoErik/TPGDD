@@ -1,5 +1,5 @@
-Curso: K3012
-Número de grupo: A determinar
+﻿Curso: K3012
+Número de grupo: DERROCHADORES_DE_PAPEL
 Integrantes:
 	Paco Colque, Erik Germán. 155.653-8
 	Feijoo, Santiago Iván. 152.288-7

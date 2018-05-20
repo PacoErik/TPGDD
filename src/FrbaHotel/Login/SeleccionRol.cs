@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace FrbaHotel.Login
 {
-    public partial class Form1 : Form
+    public partial class SeleccionRol : Form
     {
-        public Form1()
+        public SeleccionRol()
         {
             InitializeComponent();
         }
