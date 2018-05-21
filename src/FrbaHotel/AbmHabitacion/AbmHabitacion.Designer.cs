@@ -1,6 +1,6 @@
-﻿namespace FrbaHotel.AbmRegimen
+﻿namespace FrbaHotel.AbmHabitacion
 {
-    partial class Form1
+    partial class AbmHabitacion
     {
         /// <summary>
         /// Required designer variable.

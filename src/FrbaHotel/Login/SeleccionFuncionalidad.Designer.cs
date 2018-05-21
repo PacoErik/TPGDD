@@ -1,6 +1,6 @@
-﻿namespace FrbaHotel.AbmCliente
+﻿namespace FrbaHotel.Login
 {
-    partial class Form1
+    partial class SeleccionFuncionalidad
     {
         /// <summary>
         /// Required designer variable.
@@ -28,9 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // SeleccionFuncionalidad
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(359, 373);
+            this.Name = "SeleccionFuncionalidad";
+            this.Text = "SeleccionFuncionalidad";
+            this.ResumeLayout(false);
+
         }
 
         #endregion

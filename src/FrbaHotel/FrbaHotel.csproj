@@ -51,35 +51,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbmCliente\Form1.cs">
+    <Compile Include="AbmCliente\AbmCliente.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmCliente\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="AbmCliente\AbmCliente.Designer.cs">
+      <DependentUpon>AbmCliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmHabitacion\Form1.cs">
+    <Compile Include="AbmHabitacion\AbmHabitacion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmHabitacion\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="AbmHabitacion\AbmHabitacion.Designer.cs">
+      <DependentUpon>AbmHabitacion.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmRegimen\Form1.cs">
+    <Compile Include="AbmRegimen\AbmRegimen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmRegimen\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="AbmRegimen\AbmRegimen.Designer.cs">
+      <DependentUpon>AbmRegimen.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmRol\Form1.cs">
+    <Compile Include="AbmRol\AbmRol.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmRol\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="AbmRol\AbmRol.Designer.cs">
+      <DependentUpon>AbmRol.cs</DependentUpon>
     </Compile>
-    <Compile Include="CancelarReserva\Form1.cs">
+    <Compile Include="CancelarReserva\CancelarReserva.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CancelarReserva\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="CancelarReserva\CancelarReserva.Designer.cs">
+      <DependentUpon>CancelarReserva.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login\SeleccionFuncionalidad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\SeleccionFuncionalidad.Designer.cs">
+      <DependentUpon>SeleccionFuncionalidad.cs</DependentUpon>
     </Compile>
     <Compile Include="Login\SHA.cs" />
     <Compile Include="Main.cs">
@@ -88,17 +94,17 @@
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="GenerarModificacionReserva\Form1.cs">
+    <Compile Include="GenerarModificacionReserva\GenerarModificacionReserva.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GenerarModificacionReserva\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="GenerarModificacionReserva\GenerarModificacionReserva.Designer.cs">
+      <DependentUpon>GenerarModificacionReserva.cs</DependentUpon>
     </Compile>
-    <Compile Include="ListadoEstadistico\Form1.cs">
+    <Compile Include="ListadoEstadistico\ListadoEstadistico.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ListadoEstadistico\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="ListadoEstadistico\ListadoEstadistico.Designer.cs">
+      <DependentUpon>ListadoEstadistico.cs</DependentUpon>
     </Compile>
     <Compile Include="Login\Login.cs">
       <SubType>Form</SubType>
@@ -114,18 +120,21 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegistrarConsumible\Form1.cs">
+    <Compile Include="RegistrarConsumible\RegistrarConsumible.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RegistrarConsumible\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="RegistrarConsumible\RegistrarConsumible.Designer.cs">
+      <DependentUpon>RegistrarConsumible.cs</DependentUpon>
     </Compile>
-    <Compile Include="RegistrarEstadia\Form1.cs">
+    <Compile Include="RegistrarEstadia\RegistrarEstadia.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RegistrarEstadia\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="RegistrarEstadia\RegistrarEstadia.Designer.cs">
+      <DependentUpon>RegistrarEstadia.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Login\SeleccionFuncionalidad.resx">
+      <DependentUpon>SeleccionFuncionalidad.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>

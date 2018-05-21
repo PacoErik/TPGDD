@@ -52,7 +52,6 @@
             this.usuarioTextBox.Name = "usuarioTextBox";
             this.usuarioTextBox.Size = new System.Drawing.Size(220, 20);
             this.usuarioTextBox.TabIndex = 1;
-            this.usuarioTextBox.TextChanged += new System.EventHandler(this.usuarioTextBox_TextChanged);
             // 
             // ContraseñaTextBox
             // 
@@ -61,7 +60,6 @@
             this.ContraseñaTextBox.PasswordChar = '*';
             this.ContraseñaTextBox.Size = new System.Drawing.Size(220, 20);
             this.ContraseñaTextBox.TabIndex = 2;
-            this.ContraseñaTextBox.TextChanged += new System.EventHandler(this.ContraseñaTextBox_TextChanged);
             // 
             // label1
             // 
@@ -71,7 +69,6 @@
             this.label1.Size = new System.Drawing.Size(46, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "Usuario:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 

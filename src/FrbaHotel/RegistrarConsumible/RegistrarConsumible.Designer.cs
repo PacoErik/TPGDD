@@ -1,6 +1,6 @@
-﻿namespace FrbaHotel.GenerarModificacionReserva
+﻿namespace FrbaHotel.RegistrarConsumible
 {
-    partial class Form1
+    partial class RegistrarConsumible
     {
         /// <summary>
         /// Required designer variable.

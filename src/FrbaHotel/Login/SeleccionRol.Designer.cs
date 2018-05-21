@@ -29,46 +29,50 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.rolesComboBox = new System.Windows.Forms.ComboBox();
+            this.Entrar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(80, 47);
+            this.label1.Location = new System.Drawing.Point(38, 64);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(92, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Seleccione un rol:";
             // 
-            // comboBox1
+            // rolesComboBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(65, 77);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 1;
+            this.rolesComboBox.FormattingEnabled = true;
+            this.rolesComboBox.Location = new System.Drawing.Point(37, 80);
+            this.rolesComboBox.Name = "rolesComboBox";
+            this.rolesComboBox.Size = new System.Drawing.Size(187, 21);
+            this.rolesComboBox.TabIndex = 1;
+            this.rolesComboBox.SelectedIndexChanged += new System.EventHandler(this.rolesComboBox_SelectedIndexChanged);
             // 
-            // button1
+            // Entrar
             // 
-            this.button1.Location = new System.Drawing.Point(83, 176);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Entrar";
-            this.button1.UseVisualStyleBackColor = true;
+            this.Entrar.Location = new System.Drawing.Point(89, 185);
+            this.Entrar.Name = "Entrar";
+            this.Entrar.Size = new System.Drawing.Size(75, 23);
+            this.Entrar.TabIndex = 2;
+            this.Entrar.Text = "Entrar";
+            this.Entrar.UseMnemonic = false;
+            this.Entrar.UseVisualStyleBackColor = true;
+            this.Entrar.Click += new System.EventHandler(this.entrar_Click);
             // 
             // SeleccionRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(254, 304);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.Entrar);
+            this.Controls.Add(this.rolesComboBox);
             this.Controls.Add(this.label1);
             this.Name = "SeleccionRol";
             this.Text = "Seleccion de rol";
+            this.Load += new System.EventHandler(this.SeleccionRol_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -77,7 +81,7 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox rolesComboBox;
+        private System.Windows.Forms.Button Entrar;
     }
 }
