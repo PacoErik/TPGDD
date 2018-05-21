@@ -259,14 +259,6 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.FuncionalidadXRol (
 	FOREIGN KEY (fxro_funcionalidad) REFERENCES DERROCHADORES_DE_PAPEL.Funcionalidad(func_id),
 	FOREIGN KEY (fxro_rol) REFERENCES DERROCHADORES_DE_PAPEL.Rol(rol_id)
 )
-CREATE TABLE DERROCHADORES_DE_PAPEL.HotelXUsuario (
-	hoxu_hotel NUMERIC(18,0) NOT NULL,
-	hoxu_usuario NUMERIC(18,0) NOT NULL,
-	hoxu_habilitado BIT NOT NULL,
-	PRIMARY KEY (hoxu_hotel, hoxu_usuario),
-	FOREIGN KEY (hoxu_hotel) REFERENCES DERROCHADORES_DE_PAPEL.Hotel(hote_id),
-	FOREIGN KEY (hoxu_usuario) REFERENCES DERROCHADORES_DE_PAPEL.Usuario(usur_id)
-)
 CREATE TABLE DERROCHADORES_DE_PAPEL.RegimenXHotel (
 	rexh_regimen NUMERIC(18,0) NOT NULL,
 	rexh_hotel NUMERIC(18,0) NOT NULL,
@@ -283,12 +275,15 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.ReservaXHabitacion (
 	FOREIGN KEY (rexh_reserva) REFERENCES DERROCHADORES_DE_PAPEL.Reserva(rese_codigo),
 	FOREIGN KEY (rexh_hotel, rexh_numero, rexh_piso) REFERENCES DERROCHADORES_DE_PAPEL.Habitacion(habi_hotel, habi_numero, habi_piso)
 )
-CREATE TABLE DERROCHADORES_DE_PAPEL.RolXUsuario (
-	roxu_rol NUMERIC(18,0) NOT NULL,
-	roxu_usuario NUMERIC(18,0) NOT NULL,
-	PRIMARY KEY (roxu_rol, roxu_usuario),
-	FOREIGN KEY (roxu_rol) REFERENCES DERROCHADORES_DE_PAPEL.Rol(rol_id),
-	FOREIGN KEY (roxu_usuario) REFERENCES DERROCHADORES_DE_PAPEL.Usuario(usur_id)
+CREATE TABLE DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel (
+	rouh_rol NUMERIC(18,0) NOT NULL,
+	rouh_usuario NUMERIC(18,0) NOT NULL,
+	rouh_hotel NUMERIC(18,0) NOT NULL,
+	rouh_habilitado BIT NOT NULL,
+	PRIMARY KEY (rouh_rol, rouh_usuario, rouh_hotel),
+	FOREIGN KEY (rouh_rol) REFERENCES DERROCHADORES_DE_PAPEL.Rol(rol_id),
+	FOREIGN KEY (rouh_usuario) REFERENCES DERROCHADORES_DE_PAPEL.Usuario(usur_id),
+	FOREIGN KEY (rouh_hotel) REFERENCES DERROCHADORES_DE_PAPEL.Hotel(hote_id)
 )
 
 GO
@@ -533,16 +528,6 @@ INSERT INTO DERROCHADORES_DE_PAPEL.FuncionalidadXRol (fxro_funcionalidad, fxro_r
 		func_detalle IN ('GENERAR O MODIFICAR UNA RESERVA','CANCELAR RESERVA')
 
 GO
-		
--- HotelXUsuario - Carga manual
-
-INSERT INTO DERROCHADORES_DE_PAPEL.HotelXUsuario (hoxu_hotel, hoxu_usuario, hoxu_habilitado)
-	SELECT hote_id, usur_id, 1
-	FROM DERROCHADORES_DE_PAPEL.Hotel, DERROCHADORES_DE_PAPEL.Usuario
-	WHERE usur_username = 'admin' OR
-			usur_username = 'guest'
-
-GO
 			
 -- RegimenXHotel - Carga automatica
 
@@ -569,11 +554,11 @@ INSERT INTO DERROCHADORES_DE_PAPEL.ReservaXHabitacion (rexh_reserva, rexh_hotel,
 	
 GO
 
--- RolXUsuario - Carga manual
+-- RolXUsuarioXHotel - Carga manual
 
-INSERT INTO DERROCHADORES_DE_PAPEL.RolXUsuario (roxu_rol, roxu_usuario)
-	SELECT rol_id, usur_id
-	FROM DERROCHADORES_DE_PAPEL.Rol, DERROCHADORES_DE_PAPEL.Usuario
+INSERT INTO DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel (rouh_rol, rouh_usuario, rouh_hotel, rouh_habilitado)
+	SELECT rol_id, usur_id, hote_id, 1
+	FROM DERROCHADORES_DE_PAPEL.Rol, DERROCHADORES_DE_PAPEL.Usuario, DERROCHADORES_DE_PAPEL.Hotel
 	WHERE (rol_nombre = 'ADMINISTRADOR GENERAL' AND usur_username = 'admin') OR
 			(rol_nombre = 'GUEST' AND usur_username = 'guest')
 
