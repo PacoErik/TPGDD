@@ -36,7 +36,7 @@ namespace FrbaHotel.Login
             sda.Fill(dt);
             if (dt.Rows.Count == 0)      //Checkeo que exista el usuario
             {
-                MessageBox.Show("No existe el usuario o no tiene roles");
+                MessageBox.Show("No existe el usuario o no tiene ningún rol");
             }
             else
             {
@@ -93,7 +93,7 @@ namespace FrbaHotel.Login
             switch (dt.Rows.Count)
             {
                 case 0:
-                    MessageBox.Show("Esta cuenta no tiene roles");
+                    MessageBox.Show("Esta cuenta no tiene ningún rol");
                     break;
                 case 1:
                     MessageBox.Show("Login exitoso!");
