@@ -235,7 +235,7 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.ItemDeFactura (
 	item_monto NUMERIC(18,2) NOT NULL,
 	item_factura NUMERIC(18,0) NOT NULL,
 	item_descripcion NVARCHAR(50) NOT NULL,
-	item_consumible NUMERIC(18,0) NOT NULL,
+	item_consumible NUMERIC(18,0),
 	PRIMARY KEY (item_id),
 	FOREIGN KEY (item_factura) REFERENCES DERROCHADORES_DE_PAPEL.Factura(fact_numero),
 	FOREIGN KEY (item_consumible) REFERENCES DERROCHADORES_DE_PAPEL.Consumible(cons_codigo)
