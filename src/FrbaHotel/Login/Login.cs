@@ -23,17 +23,20 @@ namespace FrbaHotel.Login
         private int loginsIncorrectos = 0;
         private SqlCommand command;
         private SqlConnection con = new SqlConnection(@"Data Source=localhost\SQLSERVER2012;Initial Catalog=GD1C2018;User ID=gdHotel2018;Password=gd2018");
+        DataTable dt = new DataTable();
+        SHA sha256 = new SHA();
+        private string usuario;
 
 
         private void Entrar_Click(object sender, EventArgs e)
         {
-            SHA sha256 = new SHA();
-            SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM DERROCHADORES_DE_PAPEL.Usuario WHERE usur_username = '" + usuarioTextBox.Text + "'", con);
-            DataTable dt = new DataTable();
+            if (loginsIncorrectos != 0 && usuario != usuarioTextBox.Text) { loginsIncorrectos = 0; }      //reinicia los logins invalidos si trato de logear con otro usuario
+            usuario = usuarioTextBox.Text;
+            SqlDataAdapter sda = new SqlDataAdapter("SELECT u.usur_username, u.usur_password, u.usur_habilitado, r.rol_nombre, h.hote_nombre from DERROCHADORES_DE_PAPEL.Usuario as u  inner join DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel as ruh ON u.usur_id = ruh.rouh_usuario inner join DERROCHADORES_DE_PAPEL.Hotel as h ON h.hote_id = ruh.rouh_hotel inner join DERROCHADORES_DE_PAPEL.Rol as r ON r.rol_id = ruh.rouh_rol WHERE u.usur_username = '" + usuario + "' GROUP BY u.usur_username, u.usur_password, u.usur_habilitado, r.rol_nombre, h.hote_nombre", con);
             sda.Fill(dt);
             if (dt.Rows.Count == 0)      //Checkeo que exista el usuario
             {
-                MessageBox.Show("No existe el usuario");
+                MessageBox.Show("No existe el usuario o no tiene roles");
             }
             else
             {
@@ -44,7 +47,7 @@ namespace FrbaHotel.Login
                         LoginCorrecto(sda);
                         this.Close();
                     }
-                    else
+                     else
                     {
                         LoginIncorrecto();
                     }
@@ -58,13 +61,12 @@ namespace FrbaHotel.Login
 
         private bool ValidarContraseña(DataTable dt)
         {
-            SHA sha256 = new SHA();
-            return dt.Rows[0][2].ToString() == sha256.GenerarSHA256String(ContraseñaTextBox.Text);
+            return dt.Rows[0][1].ToString() == sha256.GenerarSHA256String(ContraseñaTextBox.Text);
         }
 
         private bool ValidarUsuario(DataTable dt)
         {
-            return dt.Rows[0][15].ToString() == "True";
+            return dt.Rows[0][2].ToString() == "True";
         }
 
         private void LoginIncorrecto()
@@ -82,15 +84,12 @@ namespace FrbaHotel.Login
                 con.Close();
                 MessageBox.Show("Contraseña incorrecta. La cuenta ha sido bloqueada");
             }
+            dt.Clear();
         }
 
         private void LoginCorrecto(SqlDataAdapter sda)
         {
-            DataTable dt = new DataTable();
             loginsIncorrectos = 0;
-            dt.Clear();
-            sda = new SqlDataAdapter("SELECT r.rol_nombre FROM DERROCHADORES_DE_PAPEL.Usuario as u inner join DERROCHADORES_DE_PAPEL.RolXUsuario as rxu ON u.usur_id = rxu.roxu_usuario inner join DERROCHADORES_DE_PAPEL.Rol as r ON rxu.roxu_rol = r.rol_id where usur_username='" + usuarioTextBox.Text + "'", con);
-            sda.Fill(dt);
             switch (dt.Rows.Count)
             {
                 case 0:
@@ -98,9 +97,10 @@ namespace FrbaHotel.Login
                     break;
                 case 1:
                     MessageBox.Show("Login exitoso!");
+
                     break;
                 default:
-                    Form f1 = new SeleccionRol(usuarioTextBox.Text);
+                    Form f1 = new SeleccionRol(dt);
                     f1.ShowDialog();
                     break;
             }

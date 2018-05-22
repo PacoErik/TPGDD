@@ -13,9 +13,11 @@ namespace FrbaHotel.Login
 {
     public partial class SeleccionRol : Form
     {
-        public SeleccionRol(string usuario)
+        DataTable dt;
+
+        public SeleccionRol(DataTable dataT)
         {
-            user = usuario;
+            dt = dataT;
             InitializeComponent();
         }
 
@@ -31,17 +33,14 @@ namespace FrbaHotel.Login
 
         private void SeleccionRol_Load(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(@"Data Source=localhost\SQLSERVER2012;Initial Catalog=GD1C2018;User ID=gdHotel2018;Password=gd2018");
             rolesComboBox.Items.Clear();
-            DataTable dt = new DataTable();
-            SqlDataAdapter sda = new SqlDataAdapter("SELECT r.rol_nombre FROM DERROCHADORES_DE_PAPEL.Usuario as u inner join DERROCHADORES_DE_PAPEL.RolXUsuario as rxu ON u.usur_id = rxu.roxu_usuario inner join DERROCHADORES_DE_PAPEL.Rol as r ON rxu.roxu_rol = r.rol_id where usur_username='" + user + "'", con);
-            sda.Fill(dt);
             foreach (DataRow dr in dt.Rows)      //Añade los roles al combo box
             {
-                rolesComboBox.Items.Add(dr["rol_nombre"].ToString());
+                rolesComboBox.Items.Add(dr["rol_nombre"].ToString()+","+dr["hote_nombre"].ToString());
             }
         }
 
         public string user { get; set; }
+
     }
 }
