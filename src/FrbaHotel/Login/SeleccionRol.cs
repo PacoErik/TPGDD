@@ -28,19 +28,51 @@ namespace FrbaHotel.Login
 
         private void entrar_Click(object sender, EventArgs e)
         {
-
+            switch (RolXHotel.CurrentRow.Cells[0].Value.ToString())
+            {
+                case "ADMINISTRADOR GENERAL":
+                    Form f2 = new SeleccionFuncionalidadAdminGral();
+                    f2.Show();
+                    break;
+                case "ADMINISTRADOR":
+                    Form f5 = new SeleccionFuncionalidadAdmin();
+                    break;
+                case "RECEPCIONISTA":
+                    Form f3 = new SeleccionFuncionalidadRecepcionista();
+                    f3.Show();
+                    break;
+                case "GUEST":
+                    Form f4 = new SeleccionFuncionalidadGuest();
+                    f4.Show();
+                    break;
+            }
+            this.Close();
         }
 
         private void SeleccionRol_Load(object sender, EventArgs e)
         {
-            rolesComboBox.Items.Clear();
-            foreach (DataRow dr in dt.Rows)      //Añade los roles al combo box
-            {
-                rolesComboBox.Items.Add(dr["rol_nombre"].ToString()+","+dr["hote_nombre"].ToString());
-            }
+            dt.Columns.Remove("usur_habilitado");
+            dt.Columns.Remove("usur_password");
+            dt.Columns.Remove("usur_username");
+            RolXHotel.DataSource = dt;
         }
 
         public string user { get; set; }
+
+        private void Cancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void RolXHotel_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
 
     }
 }

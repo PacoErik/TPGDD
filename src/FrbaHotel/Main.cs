@@ -30,14 +30,18 @@ namespace FrbaHotel
         private void Usuario_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Form f1 = new Login.Login();
+            Form f1 = new Login.Login(this);
             f1.ShowDialog();
-            this.Show();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void Salir_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -90,11 +90,29 @@
     <Compile Include="CancelarReserva\CancelarReserva.Designer.cs">
       <DependentUpon>CancelarReserva.cs</DependentUpon>
     </Compile>
-    <Compile Include="Login\SeleccionFuncionalidad.cs">
+    <Compile Include="Login\SeleccionFuncionalidadAdmin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Login\SeleccionFuncionalidad.Designer.cs">
-      <DependentUpon>SeleccionFuncionalidad.cs</DependentUpon>
+    <Compile Include="Login\SeleccionFuncionalidadAdmin.Designer.cs">
+      <DependentUpon>SeleccionFuncionalidadAdmin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login\SeleccionFuncionalidadAdminGral.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\SeleccionFuncionalidadAdminGral.Designer.cs">
+      <DependentUpon>SeleccionFuncionalidadAdminGral.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login\SeleccionFuncionalidadGuest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\SeleccionFuncionalidadGuest.Designer.cs">
+      <DependentUpon>SeleccionFuncionalidadGuest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login\SeleccionFuncionalidadRecepcionista.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login\SeleccionFuncionalidadRecepcionista.Designer.cs">
+      <DependentUpon>SeleccionFuncionalidadRecepcionista.cs</DependentUpon>
     </Compile>
     <Compile Include="Login\SHA.cs" />
     <Compile Include="Main.cs">
@@ -168,8 +186,17 @@
     <EmbeddedResource Include="ListadoEstadistico\ListadoEstadistico.resx">
       <DependentUpon>ListadoEstadistico.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Login\SeleccionFuncionalidad.resx">
-      <DependentUpon>SeleccionFuncionalidad.cs</DependentUpon>
+    <EmbeddedResource Include="Login\SeleccionFuncionalidadAdmin.resx">
+      <DependentUpon>SeleccionFuncionalidadAdmin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\SeleccionFuncionalidadAdminGral.resx">
+      <DependentUpon>SeleccionFuncionalidadAdminGral.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\SeleccionFuncionalidadGuest.resx">
+      <DependentUpon>SeleccionFuncionalidadGuest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login\SeleccionFuncionalidadRecepcionista.resx">
+      <DependentUpon>SeleccionFuncionalidadRecepcionista.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>

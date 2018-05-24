@@ -15,11 +15,13 @@ namespace FrbaHotel.Login
 {
     public partial class Login : Form
     {
-        public Login()
+        public Login(Form MainF)
         {
+            MainForm = MainF;
             InitializeComponent();
         }
 
+        Form MainForm;
         private int loginsIncorrectos = 0;
         private SqlCommand command;
         private SqlConnection con = new SqlConnection(@"Data Source=localhost\SQLSERVER2012;Initial Catalog=GD1C2018;User ID=gdHotel2018;Password=gd2018");
@@ -96,12 +98,28 @@ namespace FrbaHotel.Login
                     MessageBox.Show("Esta cuenta no tiene ningún rol");
                     break;
                 case 1:
-                    MessageBox.Show("Login exitoso!");
-
+                    switch (dt.Rows[0][3].ToString())
+                    {
+                        case "ADMINISTRADOR GENERAL":
+                            Form f2 = new SeleccionFuncionalidadAdminGral();
+                            f2.Show();
+                            break;
+                        case "ADMINISTRADOR":
+                            Form f5 = new SeleccionFuncionalidadAdmin();
+                            break;
+                        case "RECEPCIONISTA":
+                            Form f3 = new SeleccionFuncionalidadRecepcionista();
+                            f3.Show();
+                            break;
+                        case "GUEST":
+                            Form f4 = new SeleccionFuncionalidadGuest();
+                            f4.Show();
+                            break;
+                    }
                     break;
                 default:
-                    Form f1 = new SeleccionRol(dt);
-                    f1.ShowDialog();
+            Form f1 = new SeleccionRol(dt);
+                    f1.Show();
                     break;
             }
         }
@@ -114,6 +132,7 @@ namespace FrbaHotel.Login
         private void Cancelar_Click(object sender, EventArgs e)
         {
             this.Close();
+            MainForm.Show();
         }
     }
 }
