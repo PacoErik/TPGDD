@@ -16,5 +16,10 @@ namespace FrbaHotel.RegistrarEstadia
         {
             InitializeComponent();
         }
+
+        private void atras_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

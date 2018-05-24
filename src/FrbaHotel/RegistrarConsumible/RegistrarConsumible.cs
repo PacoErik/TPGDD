@@ -16,5 +16,10 @@ namespace FrbaHotel.RegistrarConsumible
         {
             InitializeComponent();
         }
+
+        private void atras_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

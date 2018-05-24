@@ -16,5 +16,35 @@ namespace FrbaHotel.AbmCliente
         {
             InitializeComponent();
         }
+
+        private void AbmCliente_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void baja_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void modificacion_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listado_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void atras_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

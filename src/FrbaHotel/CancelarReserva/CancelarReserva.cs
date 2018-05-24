@@ -16,5 +16,16 @@ namespace FrbaHotel.CancelarReserva
         {
             InitializeComponent();
         }
+
+        private void enviar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void atras_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

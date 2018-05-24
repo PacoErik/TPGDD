@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FrbaHotel.AbmHabitacion
+namespace FrbaHotel.AbmUsuario
 {
-    public partial class AbmHabitacion : Form
+    public partial class AbmUsuario : Form
     {
-        public AbmHabitacion()
+        public AbmUsuario()
         {
             InitializeComponent();
         }

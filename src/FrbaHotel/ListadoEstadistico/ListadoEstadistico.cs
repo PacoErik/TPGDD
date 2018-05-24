@@ -16,5 +16,15 @@ namespace FrbaHotel.ListadoEstadistico
         {
             InitializeComponent();
         }
+
+        private void atras_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

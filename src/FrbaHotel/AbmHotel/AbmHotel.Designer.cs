@@ -1,6 +1,6 @@
-﻿namespace FrbaHotel.AbmRol
+﻿namespace FrbaHotel.AbmHotel
 {
-    partial class AbmRol
+    partial class AbmHotel
     {
         /// <summary>
         /// Required designer variable.
@@ -39,7 +39,7 @@
             // 
             this.atras.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.atras.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.atras.Location = new System.Drawing.Point(17, 215);
+            this.atras.Location = new System.Drawing.Point(19, 213);
             this.atras.Name = "atras";
             this.atras.Size = new System.Drawing.Size(62, 34);
             this.atras.TabIndex = 9;
@@ -49,45 +49,45 @@
             // 
             // listado
             // 
-            this.listado.Location = new System.Drawing.Point(73, 177);
+            this.listado.Location = new System.Drawing.Point(75, 175);
             this.listado.Name = "listado";
             this.listado.Size = new System.Drawing.Size(141, 23);
             this.listado.TabIndex = 8;
-            this.listado.Text = "Listado de roles";
+            this.listado.Text = "Listado de hoteles";
             this.listado.UseVisualStyleBackColor = true;
             this.listado.Click += new System.EventHandler(this.listado_Click);
             // 
             // modificacion
             // 
-            this.modificacion.Location = new System.Drawing.Point(73, 129);
+            this.modificacion.Location = new System.Drawing.Point(75, 127);
             this.modificacion.Name = "modificacion";
             this.modificacion.Size = new System.Drawing.Size(141, 23);
             this.modificacion.TabIndex = 7;
-            this.modificacion.Text = "Modificación de rol";
+            this.modificacion.Text = "Modificación de hotel";
             this.modificacion.UseVisualStyleBackColor = true;
             this.modificacion.Click += new System.EventHandler(this.modificacion_Click);
             // 
             // baja
             // 
-            this.baja.Location = new System.Drawing.Point(73, 79);
+            this.baja.Location = new System.Drawing.Point(75, 77);
             this.baja.Name = "baja";
             this.baja.Size = new System.Drawing.Size(141, 23);
             this.baja.TabIndex = 6;
-            this.baja.Text = "Baja de rol";
+            this.baja.Text = "Baja de hotel";
             this.baja.UseVisualStyleBackColor = true;
             this.baja.Click += new System.EventHandler(this.baja_Click);
             // 
             // alta
             // 
-            this.alta.Location = new System.Drawing.Point(73, 30);
+            this.alta.Location = new System.Drawing.Point(75, 28);
             this.alta.Name = "alta";
             this.alta.Size = new System.Drawing.Size(141, 23);
             this.alta.TabIndex = 5;
-            this.alta.Text = "Alta de rol";
+            this.alta.Text = "Alta de hotel";
             this.alta.UseVisualStyleBackColor = true;
             this.alta.Click += new System.EventHandler(this.alta_Click);
             // 
-            // AbmRol
+            // AbmHotel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -97,8 +97,8 @@
             this.Controls.Add(this.modificacion);
             this.Controls.Add(this.baja);
             this.Controls.Add(this.alta);
-            this.Name = "AbmRol";
-            this.Text = "ABM de Rol";
+            this.Name = "AbmHotel";
+            this.Text = "ABM de Hotel";
             this.ResumeLayout(false);
 
         }

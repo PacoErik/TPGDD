@@ -32,9 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework">
-      <HintPath>packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -63,6 +60,12 @@
     <Compile Include="AbmHabitacion\AbmHabitacion.Designer.cs">
       <DependentUpon>AbmHabitacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmHotel\AbmHotel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmHotel\AbmHotel.Designer.cs">
+      <DependentUpon>AbmHotel.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmRegimen\AbmRegimen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,6 +77,12 @@
     </Compile>
     <Compile Include="AbmRol\AbmRol.Designer.cs">
       <DependentUpon>AbmRol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmUsuario\AbmUsuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmUsuario\AbmUsuario.Designer.cs">
+      <DependentUpon>AbmUsuario.cs</DependentUpon>
     </Compile>
     <Compile Include="CancelarReserva\CancelarReserva.cs">
       <SubType>Form</SubType>
@@ -132,6 +141,27 @@
     <Compile Include="RegistrarEstadia\RegistrarEstadia.Designer.cs">
       <DependentUpon>RegistrarEstadia.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="AbmCliente\AbmCliente.resx">
+      <DependentUpon>AbmCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmHabitacion\AbmHabitacion.resx">
+      <DependentUpon>AbmHabitacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmHotel\AbmHotel.resx">
+      <DependentUpon>AbmHotel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRegimen\AbmRegimen.resx">
+      <DependentUpon>AbmRegimen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\AbmRol.resx">
+      <DependentUpon>AbmRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmUsuario\AbmUsuario.resx">
+      <DependentUpon>AbmUsuario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CancelarReserva\CancelarReserva.resx">
+      <DependentUpon>CancelarReserva.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Login\SeleccionFuncionalidad.resx">
       <DependentUpon>SeleccionFuncionalidad.cs</DependentUpon>
     </EmbeddedResource>

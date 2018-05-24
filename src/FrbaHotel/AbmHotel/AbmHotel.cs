@@ -8,16 +8,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FrbaHotel.GenerarModificacionReserva
+namespace FrbaHotel.AbmHotel
 {
-    public partial class GenerarModificacionReserva : Form
+    public partial class AbmHotel : Form
     {
-        public GenerarModificacionReserva()
+        public AbmHotel()
         {
             InitializeComponent();
         }
 
+        private void atras_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void alta_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void baja_Click(object sender, EventArgs e)
         {
 
         }
@@ -27,7 +37,7 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         }
 
-        private void atras_Click(object sender, EventArgs e)
+        private void listado_Click(object sender, EventArgs e)
         {
 
         }
