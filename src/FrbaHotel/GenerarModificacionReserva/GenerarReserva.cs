@@ -17,6 +17,8 @@ namespace FrbaHotel.GenerarModificacionReserva
         private DateTime fecha_que_se_realizo_reserva;
         private DateTime fecha_desde;
         private DateTime fecha_hasta;
+        private int personas;
+        private int cantidad_de_noches;
         //private SqlCommand command;
         private SqlConnection conexion = new SqlConnection(@"Data Source=localhost\SQLSERVER2012;Initial Catalog=GD1C2018;User ID=gdHotel2018;Password=gd2018");
         DataTable hoteles = new DataTable();
@@ -30,9 +32,70 @@ namespace FrbaHotel.GenerarModificacionReserva
             fecha_hasta = DateTime.Today;
             date_desde.MinDate = DateTime.Today;
             date_hasta.MinDate = DateTime.Today;
+
+            //Inicializaciones
+            this.cbox_tipos_habitacion.Enabled = false;
+            this.cbox_regimenes.Enabled = false;
+            this.cbox_hoteles.Enabled = false;
+
+            //Inicializacion de intefaz
             this.cbox_hoteles.Text = "<Seleccione hotel>";
+            this.cbox_personas.Text = "<Numero de personas>";
+            this.lbl_noches.Text = this.lbl_estrellas.Text = this.lbl_precio_base.Text = this.lbl_recarga_estrellas.Text = String.Empty;
+        }
+
+        private void date_desde_ValueChanged(object sender, EventArgs e)
+        {
+            this.fecha_desde = this.date_desde.Value;
+            if (date_desde.Value > date_hasta.Value)
+            {
+                date_hasta.Value = date_desde.Value;
+            }
+            //this.CargarHoteles();
+            this.calcular_cantidad_noches();
+        }
+
+        private void date_hasta_ValueChanged(object sender, EventArgs e)
+        {
+            this.fecha_hasta = this.date_hasta.Value;
+            if (date_desde.Value > date_hasta.Value)
+            {
+                date_hasta.Value = date_desde.Value;
+            }
+            //this.CargarHoteles();
+            this.calcular_cantidad_noches();
+        }
+
+        private void calcular_cantidad_noches()
+        {
+            this.cantidad_de_noches = this.date_desde.Value.Day - this.date_hasta.Value.Day;
+            this.lbl_noches.Text = this.cantidad_de_noches.ToString();
+        }
+
+
+        private void cbox_personas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.personas = Convert.ToInt32(cbox_personas.Text);
+            cbox_tipos_habitacion.Enabled = true;
             this.CargarTipoHabitaciones();
-            this.lbl_estrellas.Text = this.lbl_precio_base.Text = this.lbl_recarga_estrellas.Text = String.Empty;
+        }
+
+        private void CargarTipoHabitaciones()
+        {
+            SqlDataAdapter sql_adapter_habitaciones = new SqlDataAdapter("SELECT * FROM DERROCHADORES_DE_PAPEL.TipoDeHabitacion WHERE tipo_cantidadDePersonas >= " + this.personas.ToString(), conexion);
+            sql_adapter_habitaciones.Fill(tipo_habitaciones);
+
+            for (int indice = 0; indice < tipo_habitaciones.Rows.Count - 1; indice++)
+            {
+                cbox_tipos_habitacion.Items.Add(tipo_habitaciones.Rows[indice]["tipo_descripcion"]);
+            }
+        }
+
+
+        private void cbox_tipos_habitacion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.CargarHoteles();
+            this.cbox_hoteles.Enabled = true;
         }
 
         private void CargarHoteles()
@@ -42,32 +105,9 @@ namespace FrbaHotel.GenerarModificacionReserva
             this.refresh_cbox_hoteles();
         }
 
-        private void CargarTipoHabitaciones()
-        {
-            SqlDataAdapter sql_adapter_habitaciones = new SqlDataAdapter("SELECT * FROM DERROCHADORES_DE_PAPEL.TipoDeHabitacion", conexion);
-            sql_adapter_habitaciones.Fill(tipo_habitaciones);
-
-            for (int indice = 0; indice < tipo_habitaciones.Rows.Count - 1; indice++) 
-            {
-                cbox_tipos_habitacion.Items.Add(tipo_habitaciones.Rows[indice]["tipo_descripcion"]);
-            }
-        }
-
-        private void date_desde_ValueChanged(object sender, EventArgs e)
-        {
-            this.fecha_desde = this.date_desde.Value;
-            this.CargarHoteles();
-        }
-
-        private void date_hasta_ValueChanged(object sender, EventArgs e)
-        {
-            this.fecha_hasta = this.date_hasta.Value;
-            this.CargarHoteles();
-        }
-
         private void refresh_cbox_hoteles()
         {
-            long cantidad_hoteles = hoteles.Rows.Count;
+            int cantidad_hoteles = hoteles.Rows.Count;
             for (int indice = 0; indice < cantidad_hoteles-1; indice++) {
                 this.cbox_hoteles.Items.Add("Hotel en " + hoteles.Rows[indice][9].ToString() + ", " + hoteles.Rows[indice][4].ToString() + " " + hoteles.Rows[indice][5].ToString() );
             }
@@ -99,6 +139,8 @@ namespace FrbaHotel.GenerarModificacionReserva
             int indice_regimen_seleccionado = this.cbox_regimenes.SelectedIndex;
             this.lbl_precio_base.Text = this.regimenes.Rows[indice_regimen_seleccionado]["regi_precioBase"].ToString();
         }
+
+
 
     }
 }

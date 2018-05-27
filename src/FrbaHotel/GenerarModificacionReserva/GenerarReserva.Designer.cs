@@ -42,10 +42,12 @@
             this.lbl_estrellas = new System.Windows.Forms.Label();
             this.lbl_precio_base = new System.Windows.Forms.Label();
             this.lbl_recarga_estrellas = new System.Windows.Forms.Label();
-            this.txtbx_cantidad_personas = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.cbox_tipos_habitacion = new System.Windows.Forms.ComboBox();
+            this.cbox_personas = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.lbl_noches = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -172,13 +174,6 @@
             this.lbl_recarga_estrellas.TabIndex = 13;
             this.lbl_recarga_estrellas.Text = "label9";
             // 
-            // txtbx_cantidad_personas
-            // 
-            this.txtbx_cantidad_personas.Location = new System.Drawing.Point(347, 25);
-            this.txtbx_cantidad_personas.Name = "txtbx_cantidad_personas";
-            this.txtbx_cantidad_personas.Size = new System.Drawing.Size(141, 20);
-            this.txtbx_cantidad_personas.TabIndex = 14;
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -204,16 +199,52 @@
             this.cbox_tipos_habitacion.Name = "cbox_tipos_habitacion";
             this.cbox_tipos_habitacion.Size = new System.Drawing.Size(141, 21);
             this.cbox_tipos_habitacion.TabIndex = 18;
+            this.cbox_tipos_habitacion.SelectedIndexChanged += new System.EventHandler(this.cbox_tipos_habitacion_SelectedIndexChanged);
+            // 
+            // cbox_personas
+            // 
+            this.cbox_personas.FormattingEnabled = true;
+            this.cbox_personas.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+            this.cbox_personas.Location = new System.Drawing.Point(347, 25);
+            this.cbox_personas.Name = "cbox_personas";
+            this.cbox_personas.Size = new System.Drawing.Size(141, 21);
+            this.cbox_personas.TabIndex = 19;
+            this.cbox_personas.SelectedIndexChanged += new System.EventHandler(this.cbox_personas_SelectedIndexChanged);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(12, 106);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(105, 13);
+            this.label10.TabIndex = 20;
+            this.label10.Text = "Cantidad de noches:";
+            // 
+            // lbl_noches
+            // 
+            this.lbl_noches.AutoSize = true;
+            this.lbl_noches.Location = new System.Drawing.Point(123, 106);
+            this.lbl_noches.Name = "lbl_noches";
+            this.lbl_noches.Size = new System.Drawing.Size(54, 13);
+            this.lbl_noches.TabIndex = 21;
+            this.lbl_noches.Text = "<noches>";
             // 
             // GenerarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(585, 505);
+            this.ClientSize = new System.Drawing.Size(509, 505);
+            this.Controls.Add(this.lbl_noches);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.cbox_personas);
             this.Controls.Add(this.cbox_tipos_habitacion);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.txtbx_cantidad_personas);
             this.Controls.Add(this.lbl_recarga_estrellas);
             this.Controls.Add(this.lbl_precio_base);
             this.Controls.Add(this.lbl_estrellas);
@@ -251,9 +282,11 @@
         private System.Windows.Forms.Label lbl_estrellas;
         private System.Windows.Forms.Label lbl_precio_base;
         private System.Windows.Forms.Label lbl_recarga_estrellas;
-        private System.Windows.Forms.TextBox txtbx_cantidad_personas;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox cbox_tipos_habitacion;
+        private System.Windows.Forms.ComboBox cbox_personas;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label lbl_noches;
     }
 }
