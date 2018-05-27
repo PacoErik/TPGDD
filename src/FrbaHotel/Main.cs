@@ -24,7 +24,9 @@ namespace FrbaHotel
 
         private void Huesped_Click(object sender, EventArgs e)
         {
-
+            this.Hide();
+            Form f1 = new GenerarModificacionReserva.GenerarModificacionReserva(this);
+            f1.ShowDialog();
         }
 
         private void Usuario_Click(object sender, EventArgs e)

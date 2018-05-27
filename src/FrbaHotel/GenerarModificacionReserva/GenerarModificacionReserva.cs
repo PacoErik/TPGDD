@@ -12,14 +12,18 @@ namespace FrbaHotel.GenerarModificacionReserva
 {
     public partial class GenerarModificacionReserva : Form
     {
-        public GenerarModificacionReserva()
+        private Form invocador;
+        public GenerarModificacionReserva(Form invocador)
         {
+            this.invocador = invocador;
             InitializeComponent();
         }
 
         private void alta_Click(object sender, EventArgs e)
         {
-
+            this.Hide();
+            Form reserva = new GenerarReserva(this);
+            reserva.ShowDialog();
         }
 
         private void modificacion_Click(object sender, EventArgs e)
@@ -29,7 +33,8 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         private void atras_Click(object sender, EventArgs e)
         {
-
+            this.invocador.Show();
+            this.Close();
         }
     }
 }

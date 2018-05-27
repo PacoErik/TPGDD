@@ -32,7 +32,7 @@ namespace FrbaHotel.Login
         private void Generar_o_modificar_una_reserva_Click(object sender, EventArgs e)
         {
             this.Hide();
-            Form f1 = new GenerarModificacionReserva.GenerarModificacionReserva();
+            Form f1 = new GenerarModificacionReserva.GenerarModificacionReserva(this);
             f1.ShowDialog();
         }
     }
