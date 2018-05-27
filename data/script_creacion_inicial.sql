@@ -73,17 +73,17 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.Nacionalidad (
 )
 CREATE TABLE DERROCHADORES_DE_PAPEL.Hotel (
 	hote_id NUMERIC(18,0) IDENTITY(1,1) NOT NULL,
-	hote_nombre NVARCHAR(50),
-	hote_mail NVARCHAR(255),
-	hote_telefono NUMERIC(18,0),
+	hote_nombre NVARCHAR(50) NOT NULL,
+	hote_mail NVARCHAR(255) NOT NULL,
+	hote_telefono NUMERIC(18,0) NOT NULL,
 	hote_calle NVARCHAR(50) NOT NULL,
 	hote_numeroDeCalle NUMERIC(5,0) NOT NULL,
-	hote_localidad NVARCHAR(50),
+	hote_localidad NVARCHAR(50) NOT NULL,
 	hote_estrellas NUMERIC(1,0) NOT NULL,
 	hote_recargaEstrella NUMERIC(4,0) NOT NULL,
 	hote_ciudad NVARCHAR(50) NOT NULL,
 	hote_pais NVARCHAR(50) NOT NULL,
-	hote_fechaDeCreacion DATETIME,
+	hote_fechaDeCreacion DATETIME NOT NULL,
 	PRIMARY KEY (hote_id)
 )
 CREATE TABLE DERROCHADORES_DE_PAPEL.PeriodoDeCierre (
@@ -111,7 +111,7 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.TipoDeHabitacion (
 	tipo_codigo NUMERIC(18,0) IDENTITY(1,1) NOT NULL,
 	tipo_descripcion NVARCHAR(50) NOT NULL,
 	tipo_porcentual NUMERIC(18,2) NOT NULL,
-	tipo_cantidadDePersonas NUMERIC(1,0),
+	tipo_cantidadDePersonas NUMERIC(1,0) NOT NULL,
 	PRIMARY KEY (tipo_codigo)
 )
 CREATE TABLE DERROCHADORES_DE_PAPEL.Habitacion (
@@ -119,7 +119,7 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.Habitacion (
 	habi_numero NUMERIC(18,0) NOT NULL,
 	habi_piso NUMERIC(18,0) NOT NULL,
 	habi_frente BIT NOT NULL,
-	habi_descripcion NVARCHAR(50),
+	habi_descripcion NVARCHAR(50) NOT NULL,
 	habi_tipo NUMERIC(18,0) NOT NULL,
 	habi_estado BIT NOT NULL,
 	PRIMARY KEY (habi_hotel, habi_numero, habi_piso),
@@ -129,18 +129,18 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.Usuario (
 	usur_id NUMERIC(18,0) IDENTITY(1,1) NOT NULL,
 	usur_username NVARCHAR(255) NOT NULL,
 	usur_password NVARCHAR(64) NOT NULL,
-	usur_nombre NVARCHAR(50),
-	usur_apellido NVARCHAR(50),
-	usur_mail NVARCHAR(255),
-	usur_telefono NUMERIC(18,0),
-	usur_fechaDeNacimiento DATETIME,
-	usur_calle NVARCHAR(50),
-	usur_numeroDeCalle NUMERIC(8,0),
-	usur_piso NUMERIC(8,0),
-	usur_departamento NVARCHAR(50),
-	usur_localidad NVARCHAR(50),
-	usur_tipoDeDocumento NUMERIC(18,0),
-	usur_numeroDeDocumento NUMERIC(18,0),
+	usur_nombre NVARCHAR(50) NOT NULL,
+	usur_apellido NVARCHAR(50) NOT NULL,
+	usur_mail NVARCHAR(255) NOT NULL,
+	usur_telefono NUMERIC(18,0) NOT NULL,
+	usur_fechaDeNacimiento DATETIME NOT NULL,
+	usur_calle NVARCHAR(50) NOT NULL,
+	usur_numeroDeCalle NUMERIC(8,0) NOT NULL,
+	usur_piso NUMERIC(8,0) NOT NULL,
+	usur_departamento NVARCHAR(50) NOT NULL,
+	usur_localidad NVARCHAR(50) NOT NULL,
+	usur_tipoDeDocumento NUMERIC(18,0) NOT NULL,
+	usur_numeroDeDocumento NUMERIC(18,0) NOT NULL,
 	usur_habilitado BIT NOT NULL,
 	PRIMARY KEY (usur_id),
 	FOREIGN KEY (usur_tipoDeDocumento) REFERENCES DERROCHADORES_DE_PAPEL.Documento(docu_tipo)
@@ -150,13 +150,13 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.Cliente (
 	clie_nombre NVARCHAR(50) NOT NULL,
 	clie_apellido NVARCHAR(50) NOT NULL,
 	clie_mail NVARCHAR(255) NOT NULL,
-	clie_telefono NUMERIC(18,0),
+	clie_telefono NUMERIC(18,0) NOT NULL,
 	clie_fechaDeNacimiento DATETIME NOT NULL,
 	clie_calle NVARCHAR(50) NOT NULL,
 	clie_numeroDeCalle NUMERIC(8,0) NOT NULL,
 	clie_piso NUMERIC(8,0) NOT NULL,
 	clie_departamento NVARCHAR(50) NOT NULL,
-	clie_localidad NVARCHAR(50),
+	clie_localidad NVARCHAR(50) NOT NULL,
 	clie_tipoDeDocumento NUMERIC(18,0) NOT NULL,
 	clie_numeroDeDocumento NUMERIC(18,0) NOT NULL,
 	clie_habilitado BIT NOT NULL,
@@ -167,13 +167,13 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.Cliente (
 )
 CREATE TABLE DERROCHADORES_DE_PAPEL.Reserva (
 	rese_codigo NUMERIC(18,0) IDENTITY(1,1) NOT NULL,
-	rese_fecha DATETIME,
+	rese_fecha DATETIME NOT NULL,
 	rese_hotel NUMERIC(18,0) NOT NULL,
 	rese_inicio DATETIME NOT NULL,
 	rese_fin DATETIME NOT NULL,
 	rese_cliente NUMERIC(18,0) NOT NULL,
 	rese_regimen NUMERIC(18,0) NOT NULL,
-	rese_usuario NUMERIC(18,0),
+	rese_usuario NUMERIC(18,0) NOT NULL,
 	rese_estado NUMERIC(18,0) NOT NULL,
 	rese_cantidadDeNoches NUMERIC(18,0) NOT NULL,
 	PRIMARY KEY (rese_codigo),
@@ -208,8 +208,8 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.Estadia (
 	esta_fechaDeFin DATETIME NOT NULL,
 	esta_cantidadDeNoches NUMERIC(18,0) NOT NULL,
 	esta_reserva NUMERIC(18,0) NOT NULL,
-	esta_usuarioCheckIn NUMERIC(18,0),
-	esta_usuarioCheckOut NUMERIC(18,0),
+	esta_usuarioCheckIn NUMERIC(18,0) NOT NULL,
+	esta_usuarioCheckOut NUMERIC(18,0) NOT NULL,
 	PRIMARY KEY (esta_id),
 	FOREIGN KEY (esta_reserva) REFERENCES DERROCHADORES_DE_PAPEL.Reserva(rese_codigo),
 	FOREIGN KEY (esta_usuarioCheckIn) REFERENCES DERROCHADORES_DE_PAPEL.Usuario(usur_id),
@@ -221,7 +221,7 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.Factura (
 	fact_costoTotal NUMERIC(18,2) NOT NULL,
 	fact_estadia NUMERIC(18,0) NOT NULL,
 	fact_cliente NUMERIC(18,0) NOT NULL,
-	fact_modoDePago NUMERIC(18,0),
+	fact_modoDePago NUMERIC(18,0) NOT NULL,
 	fact_tarjeta NUMERIC(18,0),
 	PRIMARY KEY (fact_numero),
 	FOREIGN KEY (fact_estadia) REFERENCES DERROCHADORES_DE_PAPEL.Estadia(esta_id),
@@ -360,9 +360,8 @@ GO
 -- Hotel - Carga automatica
 
 INSERT INTO DERROCHADORES_DE_PAPEL.Hotel (hote_nombre, hote_mail, hote_telefono, hote_calle, hote_numeroDeCalle, hote_localidad, hote_estrellas, hote_recargaEstrella, hote_ciudad, hote_pais, hote_fechaDeCreacion)
-	SELECT DISTINCT NULL, NULL, NULL, Hotel_Calle, Hotel_Nro_Calle, NULL, Hotel_CantEstrella, Hotel_Recarga_Estrella, Hotel_Ciudad, 'ARGENTINA', NULL
+  	SELECT DISTINCT 'Hotel '+RTRIM(Hotel_Ciudad)+' '+STR(Hotel_Nro_Calle), '', 0, Hotel_Calle, Hotel_Nro_Calle, '', Hotel_CantEstrella, Hotel_Recarga_Estrella, Hotel_Ciudad, 'ARGENTINA', CONVERT(datetime,0)
 	FROM gd_esquema.Maestra
-	
 GO
 	
 -- Periodo de cierre - Vacio
@@ -386,14 +385,14 @@ GO
 -- Cliente - Carga automatica
 
 INSERT INTO DERROCHADORES_DE_PAPEL.Cliente (clie_nombre, clie_apellido, clie_mail, clie_telefono, clie_fechaDeNacimiento, clie_calle, clie_numeroDeCalle, clie_piso, clie_departamento, clie_localidad, clie_tipoDeDocumento, clie_numeroDeDocumento, clie_habilitado, clie_nacionalidad)
-	SELECT Cliente_Nombre, Cliente_Apellido, Cliente_Mail, NULL, MAX(Cliente_Fecha_Nac), MAX(Cliente_Dom_Calle), MAX(Cliente_Nro_Calle), MAX(Cliente_Piso), MAX(Cliente_Depto), NULL, (SELECT docu_tipo FROM DERROCHADORES_DE_PAPEL.Documento WHERE docu_detalle = 'PASAPORTE'), MAX(Cliente_Pasaporte_Nro), 1, (SELECT naci_id FROM DERROCHADORES_DE_PAPEL.Nacionalidad WHERE naci_detalle = 'ARGENTINO')
+	SELECT Cliente_Nombre, Cliente_Apellido, Cliente_Mail, 0, MAX(Cliente_Fecha_Nac), MAX(Cliente_Dom_Calle), MAX(Cliente_Nro_Calle), MAX(Cliente_Piso), MAX(Cliente_Depto), '', (SELECT docu_tipo FROM DERROCHADORES_DE_PAPEL.Documento WHERE docu_detalle = 'PASAPORTE'), MAX(Cliente_Pasaporte_Nro), 1, (SELECT naci_id FROM DERROCHADORES_DE_PAPEL.Nacionalidad WHERE naci_detalle = 'ARGENTINO')
 	FROM gd_esquema.Maestra
 	GROUP BY Cliente_Nombre, Cliente_Apellido, Cliente_Mail
 
 GO
 
 INSERT INTO DERROCHADORES_DE_PAPEL.Cliente (clie_nombre, clie_apellido, clie_mail, clie_telefono, clie_fechaDeNacimiento, clie_calle, clie_numeroDeCalle, clie_piso, clie_departamento, clie_localidad, clie_tipoDeDocumento, clie_numeroDeDocumento, clie_habilitado, clie_nacionalidad)
-	SELECT DISTINCT Cliente_Nombre, Cliente_Apellido, Cliente_Mail, NULL, Cliente_Fecha_Nac, Cliente_Dom_Calle, Cliente_Nro_Calle, Cliente_Piso, Cliente_Depto, NULL, (SELECT docu_tipo FROM DERROCHADORES_DE_PAPEL.Documento WHERE docu_detalle = 'PASAPORTE'), Cliente_Pasaporte_Nro, 0, (SELECT naci_id FROM DERROCHADORES_DE_PAPEL.Nacionalidad WHERE naci_detalle = 'ARGENTINO')
+	SELECT DISTINCT Cliente_Nombre, Cliente_Apellido, Cliente_Mail, 0, Cliente_Fecha_Nac, Cliente_Dom_Calle, Cliente_Nro_Calle, Cliente_Piso, Cliente_Depto, '', (SELECT docu_tipo FROM DERROCHADORES_DE_PAPEL.Documento WHERE docu_detalle = 'PASAPORTE'), Cliente_Pasaporte_Nro, 0, (SELECT naci_id FROM DERROCHADORES_DE_PAPEL.Nacionalidad WHERE naci_detalle = 'ARGENTINO')
 	FROM gd_esquema.Maestra 
 	WHERE Cliente_Pasaporte_Nro NOT IN (SELECT C.clie_numeroDeDocumento
 										FROM DERROCHADORES_DE_PAPEL.Cliente C
@@ -416,7 +415,7 @@ GO
 
 -- Habitacion - Carga automatica
 INSERT INTO DERROCHADORES_DE_PAPEL.Habitacion (habi_hotel, habi_numero, habi_piso, habi_frente, habi_descripcion, habi_tipo, habi_estado)
-	SELECT DISTINCT hote_id, Habitacion_Numero, Habitacion_Piso, (CASE Habitacion_Frente WHEN 'S' THEN 1 ELSE 0 END), NULL, Habitacion_Tipo_Codigo, 1
+	SELECT DISTINCT hote_id, Habitacion_Numero, Habitacion_Piso, (CASE Habitacion_Frente WHEN 'S' THEN 1 ELSE 0 END), '', Habitacion_Tipo_Codigo, 1
 	FROM DERROCHADORES_DE_PAPEL.Hotel JOIN gd_esquema.Maestra ON (Hotel_Ciudad = hote_ciudad AND
 																Hotel_Calle = hote_calle AND
 																Hotel_Nro_Calle = hote_numeroDeCalle)
@@ -427,8 +426,8 @@ GO
 -- Usuario - Carga manual
 
 INSERT INTO DERROCHADORES_DE_PAPEL.Usuario (usur_username, usur_password, usur_nombre, usur_apellido, usur_mail, usur_telefono, usur_fechaDeNacimiento, usur_calle, usur_numeroDeCalle, usur_piso, usur_departamento, usur_localidad, usur_tipoDeDocumento, usur_numeroDeDocumento, usur_habilitado) 
-	VALUES 	('admin', 'E6B87050BFCB8143FCB8DB0170A4DC9ED00D904DDD3E2A4AD1B1E8DC0FDC9BE7', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1),
-			('guest', ' ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1)
+	VALUES 	('admin', 'E6B87050BFCB8143FCB8DB0170A4DC9ED00D904DDD3E2A4AD1B1E8DC0FDC9BE7', '', '', '', 0, CONVERT(datetime,0), '', 0, 0, '', '', 1, 0, 1),
+			('guest', '', '', '', '', 0, CONVERT(datetime,0), '', 0, 0, '', '', 1, 0, 1)
 
 GO
 
@@ -437,7 +436,7 @@ GO
 SET IDENTITY_INSERT DERROCHADORES_DE_PAPEL.Reserva ON
 
 INSERT INTO DERROCHADORES_DE_PAPEL.Reserva (rese_codigo, rese_fecha, rese_hotel, rese_inicio, rese_fin, rese_cliente, rese_regimen, rese_usuario, rese_estado, rese_cantidadDeNoches)
-	SELECT Reserva_Codigo, NULL, hote_id, Reserva_Fecha_Inicio, (Reserva_Fecha_Inicio+Reserva_Cant_Noches), (SELECT clie_id FROM DERROCHADORES_DE_PAPEL.Cliente WHERE Cliente_Mail = clie_mail AND Cliente_Pasaporte_Nro = clie_numeroDeDocumento), (SELECT regi_codigo FROM DERROCHADORES_DE_PAPEL.Regimen WHERE regi_descripcion = Regimen_Descripcion), NULL, (CASE WHEN MAX(Factura_Nro) IS NULL THEN (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = 'RESERVA CANCELADA POR NO-SHOW') ELSE (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = 'RESERVA EFECTIVIZADA') END), Reserva_Cant_Noches
+	SELECT Reserva_Codigo, CONVERT(datetime,'2017-01-01'), hote_id, Reserva_Fecha_Inicio, (Reserva_Fecha_Inicio+Reserva_Cant_Noches), (SELECT clie_id FROM DERROCHADORES_DE_PAPEL.Cliente WHERE Cliente_Mail = clie_mail AND Cliente_Pasaporte_Nro = clie_numeroDeDocumento), (SELECT regi_codigo FROM DERROCHADORES_DE_PAPEL.Regimen WHERE regi_descripcion = Regimen_Descripcion), 2, (CASE WHEN MAX(Factura_Nro) IS NULL THEN (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = 'RESERVA CANCELADA POR NO-SHOW') ELSE (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = 'RESERVA EFECTIVIZADA') END), Reserva_Cant_Noches
 	FROM DERROCHADORES_DE_PAPEL.Hotel JOIN gd_esquema.Maestra ON (Hotel_Ciudad = hote_ciudad AND
 																	Hotel_Calle = hote_calle AND
 																	Hotel_Nro_Calle = hote_numeroDeCalle)
@@ -455,7 +454,7 @@ GO
 -- Estadia - Carga automatica
 
 INSERT INTO DERROCHADORES_DE_PAPEL.Estadia (esta_fechaDeInicio, esta_fechaDeFin, esta_cantidadDeNoches, esta_reserva, esta_usuarioCheckIn, esta_usuarioCheckOut)
-	SELECT DISTINCT Estadia_Fecha_Inicio, (Estadia_Fecha_Inicio+Estadia_Cant_Noches), Estadia_Cant_Noches, Reserva_Codigo, NULL, NULL 
+	SELECT DISTINCT Estadia_Fecha_Inicio, (Estadia_Fecha_Inicio+Estadia_Cant_Noches), Estadia_Cant_Noches, Reserva_Codigo, 1, 1 
 	FROM gd_esquema.Maestra 
 	WHERE Reserva_Codigo IS NOT NULL AND
 			Estadia_Fecha_Inicio IS NOT NULL
@@ -468,7 +467,7 @@ GO
 SET IDENTITY_INSERT DERROCHADORES_DE_PAPEL.Factura ON
 
 INSERT INTO DERROCHADORES_DE_PAPEL.Factura (fact_numero, fact_fecha, fact_costoTotal, fact_estadia, fact_cliente, fact_modoDePago, fact_tarjeta)
-	SELECT Factura_Nro, Factura_Fecha, SUM(Item_Factura_Cantidad), (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.Estadia WHERE esta_reserva = Reserva_Codigo), (SELECT clie_id FROM DERROCHADORES_DE_PAPEL.Cliente WHERE clie_numeroDeDocumento = Cliente_Pasaporte_Nro AND clie_mail = Cliente_Mail), NULL, NULL
+	SELECT Factura_Nro, Factura_Fecha, SUM(Item_Factura_Cantidad), (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.Estadia WHERE esta_reserva = Reserva_Codigo), (SELECT clie_id FROM DERROCHADORES_DE_PAPEL.Cliente WHERE clie_numeroDeDocumento = Cliente_Pasaporte_Nro AND clie_mail = Cliente_Mail), 2, NULL
 	FROM gd_esquema.Maestra 
 	WHERE Factura_Nro IS NOT NULL
 	GROUP BY Factura_Nro, Factura_Fecha, Reserva_Codigo, Cliente_Pasaporte_Nro, Cliente_Mail
@@ -563,11 +562,4 @@ INSERT INTO DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel (rouh_rol, rouh_usuario, ro
 			(rol_nombre = 'GUEST' AND usur_username = 'guest')
 
 GO
-
---------------------------------------------------------------
--------------------Alteración de columnas---------------------
---------------------------------------------------------------
-
-
-
 
