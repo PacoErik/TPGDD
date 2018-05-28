@@ -91,7 +91,6 @@ namespace FrbaHotel.GenerarModificacionReserva
             }
         }
 
-
         private void cbox_tipos_habitacion_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.CargarHoteles();
@@ -100,7 +99,10 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         private void CargarHoteles()
         {
-            SqlDataAdapter sql_adapter_hoteles = new SqlDataAdapter("SELECT * FROM DERROCHADORES_DE_PAPEL.Hotel ORDER BY hote_id", conexion);
+            int indice_tipo_habitacion_seleccionado = this.cbox_tipos_habitacion.SelectedIndex;
+            string tipo_habitacion_seleccionado = this.tipo_habitaciones.Rows[indice_tipo_habitacion_seleccionado]["tipo_codigo"].ToString();
+
+            SqlDataAdapter sql_adapter_hoteles = new SqlDataAdapter("SELECT hote_id, hote_ciudad, hote_recargaEstrella , hote_estrellas,tipo_descripcion, tipo_cantidadDePersonas FROM DERROCHADORES_DE_PAPEL.Hotel, DERROCHADORES_DE_PAPEL.Habitacion, DERROCHADORES_DE_PAPEL.TipoDeHabitacion WHERE hote_id = habi_hotel AND habi_tipo = tipo_codigo AND tipo_codigo = " + tipo_habitacion_seleccionado + " GROUP BY hote_id, hote_ciudad, hote_recargaEstrella, hote_estrellas,tipo_descripcion, tipo_cantidadDePersonas", conexion);
             sql_adapter_hoteles.Fill(hoteles);
             this.refresh_cbox_hoteles();
         }
@@ -109,7 +111,7 @@ namespace FrbaHotel.GenerarModificacionReserva
         {
             int cantidad_hoteles = hoteles.Rows.Count;
             for (int indice = 0; indice < cantidad_hoteles-1; indice++) {
-                this.cbox_hoteles.Items.Add("Hotel en " + hoteles.Rows[indice][9].ToString() + ", " + hoteles.Rows[indice][4].ToString() + " " + hoteles.Rows[indice][5].ToString() );
+                this.cbox_hoteles.Items.Add("Hotel en " + hoteles.Rows[indice]["hote_id"].ToString() + ", " + hoteles.Rows[indice]["hote_ciudad"].ToString());
             }
         }
 
@@ -120,7 +122,7 @@ namespace FrbaHotel.GenerarModificacionReserva
 
             for (int indice = 0; indice < regimenes.Rows.Count - 1; indice++)
             {
-                this.cbox_regimenes.Items.Add(regimenes.Rows[indice][1]);
+                this.cbox_regimenes.Items.Add(regimenes.Rows[indice]["regi_descripcion"]);
             }
 
         }
@@ -128,10 +130,11 @@ namespace FrbaHotel.GenerarModificacionReserva
         private void cbox_hoteles_SelectedIndexChanged(object sender, EventArgs e)
         {
             int indice_hotel_seleccionado = this.cbox_hoteles.SelectedIndex;
-            string hotel_id_seleccionado = this.hoteles.Rows[indice_hotel_seleccionado][0].ToString();
+            string hotel_id_seleccionado = this.hoteles.Rows[indice_hotel_seleccionado]["hote_id"].ToString();
             this.refresh_cbox_regimenes(hotel_id_seleccionado);
             this.lbl_recarga_estrellas.Text = this.hoteles.Rows[indice_hotel_seleccionado]["hote_recargaEstrella"].ToString();
             this.lbl_estrellas.Text = this.hoteles.Rows[indice_hotel_seleccionado]["hote_estrellas"].ToString();
+            this.cbox_regimenes.Enabled = true;
         }
 
         private void cbox_regimenes_SelectedIndexChanged(object sender, EventArgs e)
