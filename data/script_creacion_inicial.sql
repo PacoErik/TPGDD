@@ -8,6 +8,13 @@ CREATE SCHEMA DERROCHADORES_DE_PAPEL AUTHORIZATION gdHotel2018
 GO 
 
 --------------------------------------------------------------
+-------------------Creación de stored procedures--------------
+--------------------------------------------------------------
+
+
+	
+
+--------------------------------------------------------------
 -------------------Creación de funciones----------------------
 --------------------------------------------------------------
 
@@ -35,7 +42,7 @@ GO
 
 CREATE TABLE DERROCHADORES_DE_PAPEL.Funcionalidad (
 	func_id NUMERIC(18,0) IDENTITY(1,1) NOT NULL,
-	func_detalle NVARCHAR(50) NOT NULL,
+	func_detalle NVARCHAR(50) NOT NULL UNIQUE,
 	PRIMARY KEY (func_id)
 )
 CREATE TABLE DERROCHADORES_DE_PAPEL.TarjetaBancaria (
