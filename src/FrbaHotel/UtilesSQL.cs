@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -35,5 +36,11 @@ namespace FrbaHotel
             }
             return resultado;
         }
+        public static void llenarTabla(DataTable tabla, String sql)
+        {
+            SqlDataAdapter sql_adapter = new SqlDataAdapter(sql, conexion);
+            sql_adapter.Fill(tabla);
+        }
+
     }
 }

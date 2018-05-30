@@ -13,15 +13,14 @@ namespace FrbaHotel.AbmRol
 {
     public partial class AltaRol : Form
     {
-        private SqlConnection conexion = new SqlConnection(@"Data Source=localhost\SQLSERVER2012;Initial Catalog=GD1C2018;User ID=gdHotel2018;Password=gd2018");
-        DataTable funcionalidades = new DataTable();
-        SqlDataAdapter sql_adapter_funcionalidades;
+        DataTable funcionalidades;
             
         public AltaRol()
         {
             InitializeComponent();
-            sql_adapter_funcionalidades = new SqlDataAdapter("SELECT * FROM DERROCHADORES_DE_PAPEL.Funcionalidad", conexion);
-            sql_adapter_funcionalidades.Fill(funcionalidades);
+
+            funcionalidades = new DataTable();
+            UtilesSQL.llenarTabla(funcionalidades, "SELECT * FROM DERROCHADORES_DE_PAPEL.Funcionalidad" );
 
             inicializarFuncionalidades();
         }
