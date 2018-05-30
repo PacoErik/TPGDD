@@ -19,7 +19,9 @@ namespace FrbaHotel.AbmRol
 
         private void alta_Click(object sender, EventArgs e)
         {
-
+            this.Hide();
+            Form f1 = new AltaRol();
+            f1.ShowDialog();
         }
 
         private void baja_Click(object sender, EventArgs e)

@@ -14,6 +14,7 @@ namespace FrbaHotel
     {
         public Main()
         {
+            UtilesSQL.inicializar();
             InitializeComponent();
         }
 
