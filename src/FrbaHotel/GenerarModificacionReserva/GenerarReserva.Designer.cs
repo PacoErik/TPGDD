@@ -48,6 +48,7 @@
             this.cbox_personas = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.lbl_noches = new System.Windows.Forms.Label();
+            this.atras_Button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -234,11 +235,22 @@
             this.lbl_noches.TabIndex = 21;
             this.lbl_noches.Text = "<noches>";
             // 
+            // atras_Button
+            // 
+            this.atras_Button.Location = new System.Drawing.Point(15, 470);
+            this.atras_Button.Name = "atras_Button";
+            this.atras_Button.Size = new System.Drawing.Size(75, 23);
+            this.atras_Button.TabIndex = 22;
+            this.atras_Button.Text = "Atras";
+            this.atras_Button.UseVisualStyleBackColor = true;
+            this.atras_Button.Click += new System.EventHandler(this.atras_Button_Click);
+            // 
             // GenerarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(509, 505);
+            this.Controls.Add(this.atras_Button);
             this.Controls.Add(this.lbl_noches);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.cbox_personas);
@@ -288,5 +300,6 @@
         private System.Windows.Forms.ComboBox cbox_personas;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label lbl_noches;
+        private System.Windows.Forms.Button atras_Button;
     }
 }

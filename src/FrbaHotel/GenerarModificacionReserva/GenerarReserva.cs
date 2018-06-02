@@ -143,6 +143,11 @@ namespace FrbaHotel.GenerarModificacionReserva
             this.lbl_precio_base.Text = this.regimenes.Rows[indice_regimen_seleccionado]["regi_precioBase"].ToString();
         }
 
+        private void atras_Button_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
 
 
     }

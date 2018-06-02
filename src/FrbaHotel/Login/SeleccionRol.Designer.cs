@@ -54,7 +54,6 @@
             this.label1.Size = new System.Drawing.Size(144, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Seleccione un rol de la tabla:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // Cancelar
             // 
@@ -74,7 +73,6 @@
             this.RolXHotel.Name = "RolXHotel";
             this.RolXHotel.Size = new System.Drawing.Size(261, 180);
             this.RolXHotel.TabIndex = 4;
-            this.RolXHotel.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.RolXHotel_CellContentClick);
             // 
             // SeleccionRol
             // 

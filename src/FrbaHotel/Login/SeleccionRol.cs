@@ -20,12 +20,7 @@ namespace FrbaHotel.Login
             dt = dataT;
             InitializeComponent();
         }
-
-        private void rolesComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void entrar_Click(object sender, EventArgs e)
         {
             switch (RolXHotel.CurrentRow.Cells[0].Value.ToString())
@@ -63,16 +58,5 @@ namespace FrbaHotel.Login
         {
             this.Close();
         }
-
-        private void RolXHotel_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-    }
+   }
 }

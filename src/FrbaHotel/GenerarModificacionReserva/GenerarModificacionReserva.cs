@@ -24,6 +24,7 @@ namespace FrbaHotel.GenerarModificacionReserva
             this.Hide();
             Form reserva = new GenerarReserva(this);
             reserva.ShowDialog();
+            this.Show();
         }
 
         private void modificacion_Click(object sender, EventArgs e)
