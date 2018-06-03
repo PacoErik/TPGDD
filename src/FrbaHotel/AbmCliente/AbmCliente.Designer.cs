@@ -164,6 +164,7 @@
             // 
             // buttonModificarCliente
             // 
+            this.buttonModificarCliente.Enabled = false;
             this.buttonModificarCliente.Location = new System.Drawing.Point(226, 510);
             this.buttonModificarCliente.Name = "buttonModificarCliente";
             this.buttonModificarCliente.Size = new System.Drawing.Size(108, 23);
@@ -174,6 +175,7 @@
             // 
             // buttonDarDeBaja
             // 
+            this.buttonDarDeBaja.Enabled = false;
             this.buttonDarDeBaja.Location = new System.Drawing.Point(69, 510);
             this.buttonDarDeBaja.Name = "buttonDarDeBaja";
             this.buttonDarDeBaja.Size = new System.Drawing.Size(108, 23);
