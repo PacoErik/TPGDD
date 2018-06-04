@@ -49,6 +49,15 @@
             this.label10 = new System.Windows.Forms.Label();
             this.lbl_noches = new System.Windows.Forms.Label();
             this.atras_Button = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.lbl_precio = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.cbox_tipo_identificacion = new System.Windows.Forms.ComboBox();
+            this.txtbox_identificacion = new System.Windows.Forms.TextBox();
+            this.txtbox_mail = new System.Windows.Forms.TextBox();
+            this.btn_reservar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -133,7 +142,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(309, 230);
+            this.label6.Location = new System.Drawing.Point(301, 230);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(107, 13);
             this.label6.TabIndex = 9;
@@ -169,7 +178,7 @@
             // lbl_recarga_estrellas
             // 
             this.lbl_recarga_estrellas.AutoSize = true;
-            this.lbl_recarga_estrellas.Location = new System.Drawing.Point(312, 247);
+            this.lbl_recarga_estrellas.Location = new System.Drawing.Point(301, 247);
             this.lbl_recarga_estrellas.Name = "lbl_recarga_estrellas";
             this.lbl_recarga_estrellas.Size = new System.Drawing.Size(35, 13);
             this.lbl_recarga_estrellas.TabIndex = 13;
@@ -245,11 +254,100 @@
             this.atras_Button.UseVisualStyleBackColor = true;
             this.atras_Button.Click += new System.EventHandler(this.atras_Button_Click);
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(12, 280);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(63, 13);
+            this.label11.TabIndex = 23;
+            this.label11.Text = "Precio total:";
+            // 
+            // lbl_precio
+            // 
+            this.lbl_precio.AutoSize = true;
+            this.lbl_precio.Location = new System.Drawing.Point(81, 280);
+            this.lbl_precio.Name = "lbl_precio";
+            this.lbl_precio.Size = new System.Drawing.Size(47, 13);
+            this.lbl_precio.TabIndex = 24;
+            this.lbl_precio.Text = "PRECIO";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(15, 306);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(94, 13);
+            this.label12.TabIndex = 25;
+            this.label12.Text = "Tipo Identificacion";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(142, 306);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(70, 13);
+            this.label13.TabIndex = 26;
+            this.label13.Text = "Identificacion";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(15, 364);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(26, 13);
+            this.label14.TabIndex = 27;
+            this.label14.Text = "Mail";
+            // 
+            // cbox_tipo_identificacion
+            // 
+            this.cbox_tipo_identificacion.FormattingEnabled = true;
+            this.cbox_tipo_identificacion.Location = new System.Drawing.Point(18, 323);
+            this.cbox_tipo_identificacion.Name = "cbox_tipo_identificacion";
+            this.cbox_tipo_identificacion.Size = new System.Drawing.Size(91, 21);
+            this.cbox_tipo_identificacion.TabIndex = 28;
+            this.cbox_tipo_identificacion.SelectedIndexChanged += new System.EventHandler(this.cbox_tipo_identificacion_SelectedIndexChanged);
+            // 
+            // txtbox_identificacion
+            // 
+            this.txtbox_identificacion.Location = new System.Drawing.Point(145, 323);
+            this.txtbox_identificacion.Name = "txtbox_identificacion";
+            this.txtbox_identificacion.Size = new System.Drawing.Size(100, 20);
+            this.txtbox_identificacion.TabIndex = 29;
+            this.txtbox_identificacion.TextChanged += new System.EventHandler(this.txtbox_identificacion_TextChanged);
+            // 
+            // txtbox_mail
+            // 
+            this.txtbox_mail.Location = new System.Drawing.Point(47, 361);
+            this.txtbox_mail.Name = "txtbox_mail";
+            this.txtbox_mail.Size = new System.Drawing.Size(414, 20);
+            this.txtbox_mail.TabIndex = 30;
+            this.txtbox_mail.TextChanged += new System.EventHandler(this.txtbox_mail_TextChanged);
+            // 
+            // btn_reservar
+            // 
+            this.btn_reservar.Location = new System.Drawing.Point(347, 470);
+            this.btn_reservar.Name = "btn_reservar";
+            this.btn_reservar.Size = new System.Drawing.Size(150, 23);
+            this.btn_reservar.TabIndex = 31;
+            this.btn_reservar.Text = "Generar Reserva";
+            this.btn_reservar.UseVisualStyleBackColor = true;
+            this.btn_reservar.Click += new System.EventHandler(this.btn_reservar_Click);
+            // 
             // GenerarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(509, 505);
+            this.Controls.Add(this.btn_reservar);
+            this.Controls.Add(this.txtbox_mail);
+            this.Controls.Add(this.txtbox_identificacion);
+            this.Controls.Add(this.cbox_tipo_identificacion);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.lbl_precio);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.atras_Button);
             this.Controls.Add(this.lbl_noches);
             this.Controls.Add(this.label10);
@@ -301,5 +399,14 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label lbl_noches;
         private System.Windows.Forms.Button atras_Button;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label lbl_precio;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ComboBox cbox_tipo_identificacion;
+        private System.Windows.Forms.TextBox txtbox_identificacion;
+        private System.Windows.Forms.TextBox txtbox_mail;
+        private System.Windows.Forms.Button btn_reservar;
     }
 }

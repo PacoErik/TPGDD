@@ -24,6 +24,8 @@ namespace FrbaHotel.GenerarModificacionReserva
         DataTable hoteles = new DataTable();
         DataTable regimenes = new DataTable();
         DataTable tipo_habitaciones = new DataTable();
+        DataTable identificaciones = new DataTable();
+        DataTable clientes = new DataTable();
         public GenerarReserva(Form invocador)
         {
             InitializeComponent();
@@ -37,6 +39,10 @@ namespace FrbaHotel.GenerarModificacionReserva
             this.cbox_tipos_habitacion.Enabled = false;
             this.cbox_regimenes.Enabled = false;
             this.cbox_hoteles.Enabled = false;
+            this.cbox_tipo_identificacion.Enabled = false;
+            this.txtbox_identificacion.Enabled = false;
+            this.txtbox_mail.Enabled = false;
+            this.btn_reservar.Enabled = false;
 
             //Inicializacion de intefaz
             this.cbox_hoteles.Text = "<Seleccione hotel>";
@@ -87,7 +93,7 @@ namespace FrbaHotel.GenerarModificacionReserva
 
             for (int indice = 0; indice < tipo_habitaciones.Rows.Count - 1; indice++)
             {
-                cbox_tipos_habitacion.Items.Add(tipo_habitaciones.Rows[indice]["tipo_descripcion"]);
+                cbox_tipos_habitacion.Items.Add(tipo_habitaciones.Rows[indice]["tipo_descripcion"].ToString());
             }
         }
 
@@ -122,8 +128,10 @@ namespace FrbaHotel.GenerarModificacionReserva
 
             for (int indice = 0; indice < regimenes.Rows.Count - 1; indice++)
             {
-                this.cbox_regimenes.Items.Add(regimenes.Rows[indice]["regi_descripcion"]);
+                this.cbox_regimenes.Items.Add(regimenes.Rows[indice]["regi_descripcion"].ToString());
             }
+
+            this.cbox_regimenes.Items.Add("<No seleccionado>");
 
         }
 
@@ -140,7 +148,70 @@ namespace FrbaHotel.GenerarModificacionReserva
         private void cbox_regimenes_SelectedIndexChanged(object sender, EventArgs e)
         {
             int indice_regimen_seleccionado = this.cbox_regimenes.SelectedIndex;
-            this.lbl_precio_base.Text = this.regimenes.Rows[indice_regimen_seleccionado]["regi_precioBase"].ToString();
+
+            if (this.cbox_regimenes.SelectedText.ToString() == "<No seleccionado>")
+            {
+                this.lbl_precio_base.Text = "---";
+            }
+            else
+            {
+                this.lbl_precio_base.Text = this.regimenes.Rows[indice_regimen_seleccionado]["regi_precioBase"].ToString();
+            }
+
+            this.calcular_precio();
+        }
+
+        private void calcular_precio() {
+            if (this.lbl_precio_base.Text != "" && this.lbl_recarga_estrellas.Text != "" && this.personas != 0)
+            {
+                this.lbl_precio.Text = "METER CALCULO DE PRECIO";
+                this.HabilitarRegistroCliente();
+            }
+        }
+
+        void HabilitarRegistroCliente() {
+            this.cbox_tipo_identificacion.Enabled = true;
+            this.txtbox_identificacion.Enabled = true;
+            this.txtbox_mail.Enabled = true;
+            this.refresh_cbox_identificacion();
+        }
+
+        private void refresh_cbox_identificacion()
+        {
+            SqlDataAdapter sql_adapter_identificaciones = new SqlDataAdapter("SELECT * FROM DERROCHADORES_DE_PAPEL.Documento", conexion);
+            sql_adapter_identificaciones.Fill(identificaciones);
+
+            for (int indice = 0; indice < regimenes.Rows.Count - 1; indice++)
+            {
+                this.cbox_tipo_identificacion.Items.Add(identificaciones.Rows[indice]["docu_detalle"].ToString());
+            }
+
+        }
+
+        private void txtbox_identificacion_TextChanged(object sender, EventArgs e)
+        {
+            this.Verificar_datos_cliente_ingresados();
+        }
+
+        private void txtbox_mail_TextChanged(object sender, EventArgs e)
+        {
+            this.Verificar_datos_cliente_ingresados();
+        }
+
+
+        private void cbox_tipo_identificacion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.Verificar_datos_cliente_ingresados();
+        }
+
+        void Verificar_datos_cliente_ingresados(){
+            if (this.DocumentoValido()) {
+                this.btn_reservar.Enabled = true;
+            }
+        }
+
+        bool DocumentoValido() {
+            return this.txtbox_identificacion.Text.All(Char.IsDigit);
         }
 
         private void atras_Button_Click(object sender, EventArgs e)
@@ -148,7 +219,31 @@ namespace FrbaHotel.GenerarModificacionReserva
             this.Close();
         }
 
+        private void btn_reservar_Click(object sender, EventArgs e)
+        {
+            if (!this.EsCliente())
+            {
+                /* ACA VA
+                 * LO QUE
+                 * CREO QUE ES 
+                 * UN STORE PROCEDURE
+                 */
 
+            }
+            else { 
+                //Registrar cliente
+                Form registrar_cliente = new AbmCliente.AltaCliente();
+                registrar_cliente.ShowDialog();
+                //Habria que verificar que pasa si cuando se registra el cliente hay un fallo
+                //Generar reserva
+            }
+        }
+
+        bool EsCliente() {
+            SqlDataAdapter sql_adapter_clientes = new SqlDataAdapter("SELECT * FROM DERROCHADORES_DE_PAPEL.Clientes as c WHERE c.clie_mail = " + this.txtbox_mail.Text + " AND c.clie_numeroDeDocumento = " + this.txtbox_identificacion.Text, conexion);
+            sql_adapter_clientes.Fill(clientes);
+            return clientes.Rows.Count != 0;
+        }
 
     }
 }
