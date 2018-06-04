@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace FrbaHotel.AbmCliente
         DataTable dt4 = new DataTable();
         Form f1;
         int id;
+        bool teleNull = false;
 
         public ModificarCliente(Form f, DataTable DataT)
         {
@@ -95,7 +97,8 @@ namespace FrbaHotel.AbmCliente
             if (confirmResult == DialogResult.Yes)
             {
                 resetearTextBox();
-                if (checkearDatos())
+                checkearDatos();
+                if (Valido)
                 {
                     realizarCambios();
                 }
@@ -253,12 +256,16 @@ namespace FrbaHotel.AbmCliente
             }
             {
                 dt4.Clear();
-                SqlDataAdapter sda = new SqlDataAdapter("select clie_id from DERROCHADORES_DE_PAPEL.Cliente where clie_mail = '" + mail + "'", con);
+                SqlDataAdapter sda = new SqlDataAdapter("select clie_id from DERROCHADORES_DE_PAPEL.Cliente where clie_mail = @mail", con);
+                sda.SelectCommand.Parameters.AddWithValue("@mail", mail);
                 sda.Fill(dt3);
                 if (dt4.Rows.Count == 0) //El mail no esta en uso
                 {
-                    var addr = new System.Net.Mail.MailAddress(mail);
-                    if(addr.Address != mail)
+                    try
+                    {
+                        MailAddress m = new MailAddress(mail);
+                    }
+                    catch (FormatException)
                     {
                         labelMailInvalido.Visible = true;
                         Valido = false;
@@ -293,16 +300,47 @@ namespace FrbaHotel.AbmCliente
         }
         private void telefonoValido(string tel)
         {
-            if (!(tel.All(Char.IsDigit)))
+            if (String.IsNullOrEmpty(tel))
             {
-                labelTelefonoInvalido.Visible = true;
-                Valido = false;
+                teleNull = true;
+            }
+            else
+            {
+                if (!(tel.All(Char.IsDigit)))
+                    {
+                        labelTelefonoInvalido.Visible = true;
+                        Valido = false;
+                    }
             }
         }
        
         private void realizarCambios()
         {
-            
+            con.Open();
+            command = new SqlCommand("UPDATE DERROCHADORES_DE_PAPEL.Cliente SET clie_nombre = @nom, clie_apellido = @ape, clie_mail = @mail, clie_telefono = @tel, clie_tipoDeDocumento = @doc, clie_numeroDeDocumento = @numeroDoc, clie_calle = @calle, clie_numeroDeCalle = @numCalle, clie_piso = @piso, clie_departamento = @depto, clie_localidad = @loc, clie_nacionalidad = @nac, clie_fechaDeNacimiento = @fecha WHERE clie_id = @id", con);
+            command.Parameters.AddWithValue("@nom", textBoxNombre.Text);
+            command.Parameters.AddWithValue("@ape", textBoxApellido.Text);
+            command.Parameters.AddWithValue("@mail", textBoxMail.Text);
+            if (teleNull)
+            {
+                command.Parameters.AddWithValue("@tel", "NULL"); //no funciona
+            }
+            else
+            {
+                command.Parameters.AddWithValue("@tel", textBoxTelefono.Text);
+            }
+            command.Parameters.AddWithValue("@doc", comboBoxTipoDocumento.SelectedIndex);
+            command.Parameters.AddWithValue("@numeroDoc", textBoxNumeroDocumento.Text);
+            command.Parameters.AddWithValue("@calle", textBoxDireccion.Text);
+            command.Parameters.AddWithValue("@numCalle", textBoxNumeroCalle.Text);
+            command.Parameters.AddWithValue("@piso", textBoxPiso.Text);
+            command.Parameters.AddWithValue("@depto", textBoxDepto.Text);
+            command.Parameters.AddWithValue("@loc", textBoxLocalidad.Text);
+            command.Parameters.AddWithValue("@nac", comboBoxNacionalidad.SelectedIndex);
+            command.Parameters.AddWithValue("@fecha", textBoxFecha.Text);
+            command.Parameters.AddWithValue("@id", id);
+            command.ExecuteNonQuery();
+            con.Close();
         }
 
         private void resetearTextBox()
@@ -326,6 +364,7 @@ namespace FrbaHotel.AbmCliente
             labelNumeroDocObligatorio.Visible = false;
             labelMailObligatorio.Visible = false;
             labelNacionalidadObligatoria.Visible = false;
+            teleNull = false;
         }
     }
 }
