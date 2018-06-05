@@ -34,7 +34,8 @@ namespace FrbaHotel.Login
         {
             if (loginsIncorrectos != 0 && usuario != usuarioTextBox.Text) { loginsIncorrectos = 0; }      //reinicia los logins invalidos si trato de logear con otro usuario
             usuario = usuarioTextBox.Text;
-            SqlDataAdapter sda = new SqlDataAdapter("SELECT u.usur_username, u.usur_password, u.usur_habilitado, r.rol_nombre, h.hote_nombre from DERROCHADORES_DE_PAPEL.Usuario as u  inner join DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel as ruh ON u.usur_id = ruh.rouh_usuario inner join DERROCHADORES_DE_PAPEL.Hotel as h ON h.hote_id = ruh.rouh_hotel inner join DERROCHADORES_DE_PAPEL.Rol as r ON r.rol_id = ruh.rouh_rol WHERE u.usur_username = '" + usuario + "' GROUP BY u.usur_username, u.usur_password, u.usur_habilitado, r.rol_nombre, h.hote_nombre", con);
+            SqlDataAdapter sda = new SqlDataAdapter("SELECT u.usur_username, u.usur_password, u.usur_habilitado, r.rol_nombre, h.hote_nombre from DERROCHADORES_DE_PAPEL.Usuario as u  inner join DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel as ruh ON u.usur_id = ruh.rouh_usuario inner join DERROCHADORES_DE_PAPEL.Hotel as h ON h.hote_id = ruh.rouh_hotel inner join DERROCHADORES_DE_PAPEL.Rol as r ON r.rol_id = ruh.rouh_rol WHERE u.usur_username = @usuario GROUP BY u.usur_username, u.usur_password, u.usur_habilitado, r.rol_nombre, h.hote_nombre", con);
+            sda.SelectCommand.Parameters.AddWithValue("@usuario", usuario);
             sda.Fill(dt);
             if (dt.Rows.Count == 0)      //Checkeo que exista el usuario
             {
@@ -65,12 +66,10 @@ namespace FrbaHotel.Login
         {
             return dt.Rows[0][1].ToString() == sha256.GenerarSHA256String(ContraseñaTextBox.Text);
         }
-
         private bool ValidarUsuario(DataTable dt)
         {
             return dt.Rows[0][2].ToString() == "True";
         }
-
         private void LoginIncorrecto()
         {
             loginsIncorrectos++;         //incrementa los logins incorrectos (max 3)
@@ -88,9 +87,10 @@ namespace FrbaHotel.Login
             }
             dt.Clear();
         }
-
         private void LoginCorrecto(SqlDataAdapter sda)
         {
+            ContraseñaTextBox.Clear();
+            usuarioTextBox.Clear();
             loginsIncorrectos = 0;
             switch (dt.Rows.Count)
             {
@@ -101,24 +101,24 @@ namespace FrbaHotel.Login
                     switch (dt.Rows[0][3].ToString())
                     {
                         case "ADMINISTRADOR GENERAL":
-                            Form f2 = new SeleccionFuncionalidadAdminGral();
+                            Form f2 = new SeleccionFuncionalidadAdminGral(this);
                             f2.Show();
                             break;
                         case "ADMINISTRADOR":
-                            Form f5 = new SeleccionFuncionalidadAdmin();
+                            Form f5 = new SeleccionFuncionalidadAdmin(this);
                             break;
                         case "RECEPCIONISTA":
-                            Form f3 = new SeleccionFuncionalidadRecepcionista();
+                            Form f3 = new SeleccionFuncionalidadRecepcionista(this);
                             f3.Show();
                             break;
                         case "GUEST":
-                            Form f4 = new SeleccionFuncionalidadGuest();
+                            Form f4 = new SeleccionFuncionalidadGuest(this);
                             f4.Show();
                             break;
                     }
                     break;
                 default:
-            Form f1 = new SeleccionRol(dt);
+            Form f1 = new SeleccionRol(dt, this);
                     f1.Show();
                     break;
             }

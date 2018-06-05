@@ -12,8 +12,11 @@ namespace FrbaHotel.Login
 {
     public partial class SeleccionFuncionalidadAdminGral : Form
     {
-        public SeleccionFuncionalidadAdminGral()
+        Form f1;
+
+        public SeleccionFuncionalidadAdminGral(Form f)
         {
+            f1 = f;
             InitializeComponent();
         }
 
@@ -96,6 +99,7 @@ namespace FrbaHotel.Login
 
         private void Salir_Click(object sender, EventArgs e)
         {
+            f1.Show();
             this.Close();
         }
     }

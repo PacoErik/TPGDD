@@ -26,6 +26,9 @@ namespace FrbaHotel.AbmCliente
         Form f1;
         int id;
         bool teleNull = false;
+        bool pisoNull = false;
+        bool deptoNull = false;
+        bool locNull = false;
 
         public ModificarCliente(Form f, DataTable DataT)
         {
@@ -44,7 +47,7 @@ namespace FrbaHotel.AbmCliente
             textBoxApellido.Text = dt.Rows[0][2].ToString();
             textBoxMail.Text = dt.Rows[0][3].ToString();
             textBoxTelefono.Text = dt.Rows[0][4].ToString();
-            textBoxFecha.Text = dt.Rows[0][5].ToString();
+            textBoxFecha.Text = DateTime.Parse(dt.Rows[0][5].ToString()).ToString("yyyy-MM-dd HH:mm:ss.fff");
             textBoxDireccion.Text = dt.Rows[0][6].ToString();
             textBoxNumeroCalle.Text = dt.Rows[0][7].ToString();
             textBoxPiso.Text = dt.Rows[0][8].ToString();
@@ -122,7 +125,7 @@ namespace FrbaHotel.AbmCliente
             localidadValida(textBoxLocalidad.Text);
             return Valido;
         }
-       
+        
         private void nacionalidadValida(string nac)
         {
             if (string.IsNullOrWhiteSpace(nac))
@@ -161,26 +164,47 @@ namespace FrbaHotel.AbmCliente
         }
         private void numeroPisoValido(string piso)
         {
-            if (!(piso.All(Char.IsDigit)))
+            if (piso == null)
             {
-                labelPisoInvalido.Visible = true;
-                Valido = false;
+                pisoNull = true;
+            }
+            else
+            {
+                if (!(piso.All(Char.IsDigit)))
+                {
+                    labelPisoInvalido.Visible = true;
+                    Valido = false;
+                }
             }
         }
         private void localidadValida(string loc)
         {
-            if (!(loc.All(Char.IsLetter)))
+            if (string.IsNullOrWhiteSpace(loc))
             {
-                labelLocalidadInvalida.Visible = true;
-                Valido = false;
+                locNull = true;
+            }
+            else
+            {
+                if (!(loc.All(Char.IsLetter)))
+                {
+                    labelLocalidadInvalida.Visible = true;
+                    Valido = false;
+                }
             }
         }
         private void deptoValido(string depto)
         {
-            if (!(depto.All(Char.IsLetter)))
+            if (string.IsNullOrWhiteSpace(depto))
             {
-                labelDepartamentoInvalido.Visible = true;
-                Valido = false;
+                deptoNull = true;
+            }
+            else
+            {
+                if (!(depto.All(Char.IsLetter)))
+                {
+                    labelDepartamentoInvalido.Visible = true;
+                    Valido = false;
+                }
             }
         }
         private void numeroCalleValido(string num)
@@ -254,6 +278,7 @@ namespace FrbaHotel.AbmCliente
                 labelMailObligatorio.Visible = true;
                 Valido = false;
             }
+            else
             {
                 dt4.Clear();
                 SqlDataAdapter sda = new SqlDataAdapter("select clie_id from DERROCHADORES_DE_PAPEL.Cliente where clie_mail = @mail", con);
@@ -317,30 +342,39 @@ namespace FrbaHotel.AbmCliente
         private void realizarCambios()
         {
             con.Open();
-            command = new SqlCommand("UPDATE DERROCHADORES_DE_PAPEL.Cliente SET clie_nombre = @nom, clie_apellido = @ape, clie_mail = @mail, clie_telefono = @tel, clie_tipoDeDocumento = @doc, clie_numeroDeDocumento = @numeroDoc, clie_calle = @calle, clie_numeroDeCalle = @numCalle, clie_piso = @piso, clie_departamento = @depto, clie_localidad = @loc, clie_nacionalidad = @nac, clie_fechaDeNacimiento = @fecha WHERE clie_id = @id", con);
+            command = new SqlCommand("UPDATE DERROCHADORES_DE_PAPEL.Cliente SET clie_nombre = @nom, clie_apellido = @ape, clie_mail = @mail, clie_telefono = @tel, clie_tipoDeDocumento = @doc, clie_numeroDeDocumento = @numeroDoc, clie_calle = @calle, clie_numeroDeCalle = @numCalle, clie_piso = @piso, clie_departamento = @depto, clie_localidad = @loc, clie_nacionalidad = @nac, clie_fechaDeNacimiento = @fecha, clie_habilitado = @habilitado WHERE clie_id = @id", con);
             command.Parameters.AddWithValue("@nom", textBoxNombre.Text);
             command.Parameters.AddWithValue("@ape", textBoxApellido.Text);
             command.Parameters.AddWithValue("@mail", textBoxMail.Text);
             if (teleNull)
-            {
-                command.Parameters.AddWithValue("@tel", "NULL"); //no funciona
-            }
+            { command.Parameters.AddWithValue("@tel", DBNull.Value);}
             else
-            {
-                command.Parameters.AddWithValue("@tel", textBoxTelefono.Text);
-            }
-            command.Parameters.AddWithValue("@doc", comboBoxTipoDocumento.SelectedIndex);
+            { command.Parameters.AddWithValue("@tel", textBoxTelefono.Text); }
+            command.Parameters.AddWithValue("@doc", comboBoxTipoDocumento.SelectedIndex + 1);
             command.Parameters.AddWithValue("@numeroDoc", textBoxNumeroDocumento.Text);
             command.Parameters.AddWithValue("@calle", textBoxDireccion.Text);
             command.Parameters.AddWithValue("@numCalle", textBoxNumeroCalle.Text);
-            command.Parameters.AddWithValue("@piso", textBoxPiso.Text);
-            command.Parameters.AddWithValue("@depto", textBoxDepto.Text);
-            command.Parameters.AddWithValue("@loc", textBoxLocalidad.Text);
-            command.Parameters.AddWithValue("@nac", comboBoxNacionalidad.SelectedIndex);
+            if (pisoNull)
+            { command.Parameters.AddWithValue("@piso", DBNull.Value); }
+            else
+            { command.Parameters.AddWithValue("@piso", textBoxPiso.Text); }
+            if (deptoNull)
+            { command.Parameters.AddWithValue("@depto", DBNull.Value); }
+            else
+            { command.Parameters.AddWithValue("@depto", textBoxDepto.Text); }
+            if (locNull)
+            { command.Parameters.AddWithValue("@loc", DBNull.Value); }
+            else
+            { command.Parameters.AddWithValue("@loc", textBoxLocalidad.Text); }
+            command.Parameters.AddWithValue("@nac", comboBoxNacionalidad.SelectedIndex + 1);
             command.Parameters.AddWithValue("@fecha", textBoxFecha.Text);
+            command.Parameters.AddWithValue("@habilitado", checkBoxHabilitado.Checked);
             command.Parameters.AddWithValue("@id", id);
             command.ExecuteNonQuery();
             con.Close();
+            MessageBox.Show("Cambios exitosos!");
+            f1.Show();
+            this.Close();
         }
 
         private void resetearTextBox()
@@ -365,6 +399,9 @@ namespace FrbaHotel.AbmCliente
             labelMailObligatorio.Visible = false;
             labelNacionalidadObligatoria.Visible = false;
             teleNull = false;
+            pisoNull = false;
+            deptoNull = false;
+            locNull = false;
         }
     }
 }

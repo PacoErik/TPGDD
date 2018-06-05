@@ -48,19 +48,38 @@ namespace FrbaHotel.AbmCliente
 
         private void buscar_Click(object sender, EventArgs e)
         {
-            commandString = "SELECT c.clie_nombre, c.clie_apellido, c.clie_mail, c.clie_numeroDeDocumento, d.docu_detalle FROM DERROCHADORES_DE_PAPEL.Cliente AS c JOIN DERROCHADORES_DE_PAPEL.Documento AS d ON c.clie_tipoDeDocumento = d.docu_tipo WHERE ";
-            if (!String.IsNullOrEmpty(textBoxNombre.Text)) { commandString += "c.clie_nombre = '" + textBoxNombre.Text + "' and "; }
-            if (!String.IsNullOrEmpty(textBoxApellido.Text)) { commandString += "c.clie_apellido = '" + textBoxApellido.Text + "' and "; }
-            if (!String.IsNullOrEmpty(textBoxEmail.Text)) { commandString += "c.clie_mail = '" + textBoxEmail.Text + "' and "; }
-            if (!String.IsNullOrEmpty(textBoxNumeroIdentificacion.Text)) { commandString += "c.clie_numeroDeDocumento = '" + textBoxNumeroIdentificacion.Text + "' and "; }
-            if (comboBoxTipoDocumento.SelectedValue.ToString() != "") { commandString += "d.docu_detalle = '" + comboBoxTipoDocumento.SelectedValue.ToString() + "' and "; }
-            commandString += "c.clie_habilitado = 1";
+            commandString = "SELECT c.clie_nombre, c.clie_apellido, c.clie_mail, c.clie_numeroDeDocumento, d.docu_detalle, c.clie_habilitado FROM DERROCHADORES_DE_PAPEL.Cliente AS c JOIN DERROCHADORES_DE_PAPEL.Documento AS d ON c.clie_tipoDeDocumento = d.docu_tipo WHERE ";
+            if (!String.IsNullOrEmpty(textBoxNombre.Text)) 
+            { 
+                commandString += "c.clie_nombre LIKE @nom and ";
+            }
+            if (!String.IsNullOrEmpty(textBoxApellido.Text)) 
+            { 
+                commandString += "c.clie_apellido LIKE @ape and ";
+            }
+            if (!String.IsNullOrEmpty(textBoxEmail.Text)) 
+            { 
+                commandString += "c.clie_mail = @mail and ";
+            }
+            if (!String.IsNullOrEmpty(textBoxNumeroIdentificacion.Text)) 
+            { 
+                commandString += "c.clie_numeroDeDocumento = @numDoc and ";
+            }
+            if (!String.IsNullOrEmpty(comboBoxTipoDocumento.SelectedValue.ToString())) 
+            { 
+                commandString += "d.docu_detalle = @doc and ";
+            }
+            commandString += "1=1";
 
             SqlDataAdapter sda = new SqlDataAdapter(commandString, con);
+            sda.SelectCommand.Parameters.AddWithValue("@nom", "%" + textBoxNombre.Text + "%");
+            sda.SelectCommand.Parameters.AddWithValue("@ape", "%" + textBoxApellido.Text + "%");
+            sda.SelectCommand.Parameters.AddWithValue("@mail", textBoxEmail.Text);
+            sda.SelectCommand.Parameters.AddWithValue("@numDoc", textBoxNumeroIdentificacion.Text);
+            sda.SelectCommand.Parameters.AddWithValue("@doc", comboBoxTipoDocumento.Text);
             sda.Fill(dt2);
             dataGridViewClientes.DataSource = dt2;
             buttonModificarCliente.Enabled = true;
-            buttonDarDeBaja.Enabled = true;
         }
 
         private void listBoxClientes_SelectedIndexChanged(object sender, EventArgs e)
@@ -71,8 +90,9 @@ namespace FrbaHotel.AbmCliente
         private void modificarCliente_Click(object sender, EventArgs e)
         {
             index = dataGridViewClientes.CurrentCell.RowIndex;
-            commandString = "SELECT clie_nacionalidad, clie_nombre, clie_apellido, clie_mail, clie_telefono, clie_fechaDeNacimiento, clie_calle, clie_numeroDeCalle, clie_piso, clie_departamento, clie_localidad, clie_tipoDeDocumento, clie_numeroDeDocumento, clie_id FROM DERROCHADORES_DE_PAPEL.Cliente WHERE clie_mail = '" + dt2.Rows[index][2].ToString() + "'";
+            commandString = "SELECT clie_nacionalidad, clie_nombre, clie_apellido, clie_mail, clie_telefono, clie_fechaDeNacimiento, clie_calle, clie_numeroDeCalle, clie_piso, clie_departamento, clie_localidad, clie_tipoDeDocumento, clie_numeroDeDocumento, clie_id FROM DERROCHADORES_DE_PAPEL.Cliente WHERE clie_mail = @mail";
             SqlDataAdapter sda2 = new SqlDataAdapter(commandString, con);
+            sda2.SelectCommand.Parameters.AddWithValue("@mail", dt2.Rows[0][2]);
             sda2.Fill(dtM);
             this.Hide();
             Form f1 = new ModificarCliente(this, dtM);
@@ -111,7 +131,6 @@ namespace FrbaHotel.AbmCliente
             dt2.Clear();
             comboBoxTipoDocumento.SelectedIndex = 0;
             buttonModificarCliente.Enabled = false;
-            buttonDarDeBaja.Enabled = false;
         }
 
         private void textBoxNombre_TextChanged(object sender, EventArgs e)

@@ -12,13 +12,17 @@ namespace FrbaHotel.Login
 {
     public partial class SeleccionFuncionalidadRecepcionista : Form
     {
-        public SeleccionFuncionalidadRecepcionista()
+        Form f1;
+
+        public SeleccionFuncionalidadRecepcionista(Form f)
         {
+            f1 = f;
             InitializeComponent();
         }
 
         private void Salir_Click(object sender, EventArgs e)
         {
+            f1.Show();
             this.Close();
         }
 

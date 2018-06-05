@@ -78,6 +78,7 @@
             this.labelDireccionObligatoria = new System.Windows.Forms.Label();
             this.labelCalleObligatoria = new System.Windows.Forms.Label();
             this.labelNacionalidadObligatoria = new System.Windows.Forms.Label();
+            this.checkBoxHabilitado = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // labelMailInvalido
@@ -240,6 +241,7 @@
             // 
             // comboBoxTipoDocumento
             // 
+            this.comboBoxTipoDocumento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxTipoDocumento.FormattingEnabled = true;
             this.comboBoxTipoDocumento.Location = new System.Drawing.Point(397, 70);
             this.comboBoxTipoDocumento.Name = "comboBoxTipoDocumento";
@@ -453,6 +455,7 @@
             // 
             // comboBoxNacionalidad
             // 
+            this.comboBoxNacionalidad.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxNacionalidad.FormattingEnabled = true;
             this.comboBoxNacionalidad.Location = new System.Drawing.Point(40, 457);
             this.comboBoxNacionalidad.Name = "comboBoxNacionalidad";
@@ -546,11 +549,24 @@
             this.labelNacionalidadObligatoria.Text = "La nacionalidad es olbigatoria";
             this.labelNacionalidadObligatoria.Visible = false;
             // 
+            // checkBoxHabilitado
+            // 
+            this.checkBoxHabilitado.AutoSize = true;
+            this.checkBoxHabilitado.Checked = true;
+            this.checkBoxHabilitado.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxHabilitado.Location = new System.Drawing.Point(315, 461);
+            this.checkBoxHabilitado.Name = "checkBoxHabilitado";
+            this.checkBoxHabilitado.Size = new System.Drawing.Size(73, 17);
+            this.checkBoxHabilitado.TabIndex = 143;
+            this.checkBoxHabilitado.Text = "Habilitado";
+            this.checkBoxHabilitado.UseVisualStyleBackColor = true;
+            // 
             // ModificarCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(605, 592);
+            this.Controls.Add(this.checkBoxHabilitado);
             this.Controls.Add(this.labelNacionalidadObligatoria);
             this.Controls.Add(this.labelCalleObligatoria);
             this.Controls.Add(this.labelDireccionObligatoria);
@@ -660,6 +676,7 @@
         private System.Windows.Forms.Label labelDireccionObligatoria;
         private System.Windows.Forms.Label labelCalleObligatoria;
         private System.Windows.Forms.Label labelNacionalidadObligatoria;
+        private System.Windows.Forms.CheckBox checkBoxHabilitado;
 
 
     }

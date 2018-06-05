@@ -42,7 +42,6 @@
             this.textBoxEmail = new System.Windows.Forms.TextBox();
             this.buttonLimpiar = new System.Windows.Forms.Button();
             this.buttonModificarCliente = new System.Windows.Forms.Button();
-            this.buttonDarDeBaja = new System.Windows.Forms.Button();
             this.comboBoxTipoDocumento = new System.Windows.Forms.ComboBox();
             this.dataGridViewClientes = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewClientes)).BeginInit();
@@ -50,7 +49,7 @@
             // 
             // buttonAlta
             // 
-            this.buttonAlta.Location = new System.Drawing.Point(387, 510);
+            this.buttonAlta.Location = new System.Drawing.Point(444, 510);
             this.buttonAlta.Name = "buttonAlta";
             this.buttonAlta.Size = new System.Drawing.Size(141, 23);
             this.buttonAlta.TabIndex = 0;
@@ -70,7 +69,7 @@
             // 
             // buttonBuscar
             // 
-            this.buttonBuscar.Location = new System.Drawing.Point(387, 134);
+            this.buttonBuscar.Location = new System.Drawing.Point(498, 134);
             this.buttonBuscar.Name = "buttonBuscar";
             this.buttonBuscar.Size = new System.Drawing.Size(75, 23);
             this.buttonBuscar.TabIndex = 7;
@@ -82,7 +81,7 @@
             // 
             this.textBoxNombre.Location = new System.Drawing.Point(43, 31);
             this.textBoxNombre.Name = "textBoxNombre";
-            this.textBoxNombre.Size = new System.Drawing.Size(148, 20);
+            this.textBoxNombre.Size = new System.Drawing.Size(190, 20);
             this.textBoxNombre.TabIndex = 8;
             this.textBoxNombre.TextChanged += new System.EventHandler(this.textBoxNombre_TextChanged);
             // 
@@ -108,13 +107,13 @@
             // 
             this.textBoxApellido.Location = new System.Drawing.Point(43, 84);
             this.textBoxApellido.Name = "textBoxApellido";
-            this.textBoxApellido.Size = new System.Drawing.Size(148, 20);
+            this.textBoxApellido.Size = new System.Drawing.Size(190, 20);
             this.textBoxApellido.TabIndex = 10;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(209, 15);
+            this.label3.Location = new System.Drawing.Point(254, 14);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(111, 13);
             this.label3.TabIndex = 13;
@@ -123,7 +122,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(209, 68);
+            this.label4.Location = new System.Drawing.Point(254, 67);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(127, 13);
             this.label4.TabIndex = 15;
@@ -131,15 +130,15 @@
             // 
             // textBoxNumeroIdentificacion
             // 
-            this.textBoxNumeroIdentificacion.Location = new System.Drawing.Point(212, 84);
+            this.textBoxNumeroIdentificacion.Location = new System.Drawing.Point(257, 83);
             this.textBoxNumeroIdentificacion.Name = "textBoxNumeroIdentificacion";
-            this.textBoxNumeroIdentificacion.Size = new System.Drawing.Size(148, 20);
+            this.textBoxNumeroIdentificacion.Size = new System.Drawing.Size(181, 20);
             this.textBoxNumeroIdentificacion.TabIndex = 14;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(384, 15);
+            this.label5.Location = new System.Drawing.Point(462, 15);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(35, 13);
             this.label5.TabIndex = 17;
@@ -147,9 +146,9 @@
             // 
             // textBoxEmail
             // 
-            this.textBoxEmail.Location = new System.Drawing.Point(387, 31);
+            this.textBoxEmail.Location = new System.Drawing.Point(465, 31);
             this.textBoxEmail.Name = "textBoxEmail";
-            this.textBoxEmail.Size = new System.Drawing.Size(148, 20);
+            this.textBoxEmail.Size = new System.Drawing.Size(196, 20);
             this.textBoxEmail.TabIndex = 16;
             // 
             // buttonLimpiar
@@ -165,7 +164,7 @@
             // buttonModificarCliente
             // 
             this.buttonModificarCliente.Enabled = false;
-            this.buttonModificarCliente.Location = new System.Drawing.Point(226, 510);
+            this.buttonModificarCliente.Location = new System.Drawing.Point(136, 510);
             this.buttonModificarCliente.Name = "buttonModificarCliente";
             this.buttonModificarCliente.Size = new System.Drawing.Size(108, 23);
             this.buttonModificarCliente.TabIndex = 19;
@@ -173,31 +172,25 @@
             this.buttonModificarCliente.UseVisualStyleBackColor = true;
             this.buttonModificarCliente.Click += new System.EventHandler(this.modificarCliente_Click);
             // 
-            // buttonDarDeBaja
-            // 
-            this.buttonDarDeBaja.Enabled = false;
-            this.buttonDarDeBaja.Location = new System.Drawing.Point(69, 510);
-            this.buttonDarDeBaja.Name = "buttonDarDeBaja";
-            this.buttonDarDeBaja.Size = new System.Drawing.Size(108, 23);
-            this.buttonDarDeBaja.TabIndex = 20;
-            this.buttonDarDeBaja.Text = "Dar de baja";
-            this.buttonDarDeBaja.UseVisualStyleBackColor = true;
-            this.buttonDarDeBaja.Click += new System.EventHandler(this.darDeBaja_Click);
-            // 
             // comboBoxTipoDocumento
             // 
-            this.comboBoxTipoDocumento.FormattingEnabled = true;
-            this.comboBoxTipoDocumento.Location = new System.Drawing.Point(212, 31);
+            this.comboBoxTipoDocumento.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxTipoDocumento.Location = new System.Drawing.Point(257, 30);
             this.comboBoxTipoDocumento.Name = "comboBoxTipoDocumento";
-            this.comboBoxTipoDocumento.Size = new System.Drawing.Size(148, 21);
+            this.comboBoxTipoDocumento.Size = new System.Drawing.Size(181, 21);
             this.comboBoxTipoDocumento.TabIndex = 21;
             // 
             // dataGridViewClientes
             // 
+            this.dataGridViewClientes.AllowUserToAddRows = false;
+            this.dataGridViewClientes.AllowUserToDeleteRows = false;
+            this.dataGridViewClientes.AllowUserToOrderColumns = true;
             this.dataGridViewClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewClientes.Location = new System.Drawing.Point(12, 163);
+            this.dataGridViewClientes.MultiSelect = false;
             this.dataGridViewClientes.Name = "dataGridViewClientes";
-            this.dataGridViewClientes.Size = new System.Drawing.Size(569, 341);
+            this.dataGridViewClientes.ReadOnly = true;
+            this.dataGridViewClientes.Size = new System.Drawing.Size(659, 341);
             this.dataGridViewClientes.TabIndex = 22;
             this.dataGridViewClientes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewClientes_CellContentClick);
             // 
@@ -205,10 +198,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(593, 582);
+            this.ClientSize = new System.Drawing.Size(683, 582);
             this.Controls.Add(this.dataGridViewClientes);
             this.Controls.Add(this.comboBoxTipoDocumento);
-            this.Controls.Add(this.buttonDarDeBaja);
             this.Controls.Add(this.buttonModificarCliente);
             this.Controls.Add(this.buttonLimpiar);
             this.Controls.Add(this.label5);
@@ -248,7 +240,6 @@
         private System.Windows.Forms.TextBox textBoxEmail;
         private System.Windows.Forms.Button buttonLimpiar;
         private System.Windows.Forms.Button buttonModificarCliente;
-        private System.Windows.Forms.Button buttonDarDeBaja;
         private System.Windows.Forms.ComboBox comboBoxTipoDocumento;
         private System.Windows.Forms.DataGridView dataGridViewClientes;
     }
