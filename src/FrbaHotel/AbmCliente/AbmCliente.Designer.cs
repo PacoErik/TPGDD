@@ -179,6 +179,7 @@
             this.comboBoxTipoDocumento.Name = "comboBoxTipoDocumento";
             this.comboBoxTipoDocumento.Size = new System.Drawing.Size(181, 21);
             this.comboBoxTipoDocumento.TabIndex = 21;
+            this.comboBoxTipoDocumento.SelectedIndexChanged += new System.EventHandler(this.comboBoxTipoDocumento_SelectedIndexChanged);
             // 
             // dataGridViewClientes
             // 

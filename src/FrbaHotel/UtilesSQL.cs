@@ -36,11 +36,22 @@ namespace FrbaHotel
             }
             return resultado;
         }
+        public static void ejecutarComandoNonQuery(SqlCommand com)
+        {
+            com.ExecuteNonQuery();
+        }
         public static void llenarTabla(DataTable tabla, String sql)
         {
             SqlDataAdapter sql_adapter = new SqlDataAdapter(sql, conexion);
             sql_adapter.Fill(tabla);
         }
-
+        public static SqlCommand crearCommand(string com)
+        {
+            return new SqlCommand(com, conexion);
+        }
+        public static SqlDataAdapter crearDataAdapter(string com)
+        {
+            return new SqlDataAdapter(com, conexion);
+        }
     }
 }

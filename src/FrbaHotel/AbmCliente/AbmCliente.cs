@@ -20,6 +20,7 @@ namespace FrbaHotel.AbmCliente
         DataTable dt2 = new DataTable();
         DataTable dtM = new DataTable();
         string commandString;
+        Form f;
         
 
         public AbmCliente()
@@ -97,7 +98,7 @@ namespace FrbaHotel.AbmCliente
             this.Hide();
             Form f1 = new ModificarCliente(this, dtM);
             limpiarTodo();
-            f1.Show();
+            f1.ShowDialog();
         }
 
         private void darDeBaja_Click(object sender, EventArgs e)
@@ -157,6 +158,11 @@ namespace FrbaHotel.AbmCliente
         }
 
         private void dataGridViewClientes_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void comboBoxTipoDocumento_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

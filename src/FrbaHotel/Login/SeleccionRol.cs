@@ -29,19 +29,19 @@ namespace FrbaHotel.Login
             switch (RolXHotel.CurrentRow.Cells[0].Value.ToString())
             {
                 case "ADMINISTRADOR GENERAL":
-                    Form f2 = new SeleccionFuncionalidadAdminGral(this);
+                    Form f2 = new SeleccionFuncionalidad(this, int.Parse(dt.Rows[0][5].ToString()));
                     f2.Show();
                     break;
                 case "ADMINISTRADOR":
-                    Form f5 = new SeleccionFuncionalidadAdmin(this);
+                    Form f5 = new SeleccionFuncionalidad(this, int.Parse(dt.Rows[0][5].ToString()));
                     f5.Show();
                     break;
                 case "RECEPCIONISTA":
-                    Form f3 = new SeleccionFuncionalidadRecepcionista(this);
+                    Form f3 = new SeleccionFuncionalidad(this, int.Parse(dt.Rows[0][5].ToString()));
                     f3.Show();
                     break;
                 case "GUEST":
-                    Form f4 = new SeleccionFuncionalidadGuest(this);
+                    Form f4 = new SeleccionFuncionalidad(this, int.Parse(dt.Rows[0][5].ToString()));
                     f4.Show();
                     break;
             }

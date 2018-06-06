@@ -17,7 +17,6 @@ namespace FrbaHotel.AbmCliente
     {
         private SqlCommand command;
         private SqlCommand command2;
-        private SqlConnection con = new SqlConnection(@"Data Source=localhost\SQLSERVER2012;Initial Catalog=GD1C2018;User ID=gdHotel2018;Password=gd2018");
         bool Valido = true;
         bool teleNull = false;
         bool pisoNull = false;
@@ -26,9 +25,12 @@ namespace FrbaHotel.AbmCliente
         DataTable dt = new DataTable();
         DataTable dt3 = new DataTable();
         DataTable dt2 = new DataTable();
+        SqlDataReader reader;
+        SqlDataReader reader2;
 
         public AltaCliente()
         {
+            UtilesSQL.inicializar();
             InitializeComponent();
             cargarComboBox();
         }
@@ -40,10 +42,7 @@ namespace FrbaHotel.AbmCliente
 
         private void cargarComboBox()
         {
-            con.Open();
-            command = new SqlCommand("select docu_detalle from DERROCHADORES_DE_PAPEL.Documento", con);
-            SqlDataReader reader;
-
+            command = UtilesSQL.crearCommand("select docu_detalle from DERROCHADORES_DE_PAPEL.Documento");
             reader = command.ExecuteReader();
             dt.Columns.Add("docu_detalle", typeof(string));
             dt.Load(reader);
@@ -51,16 +50,13 @@ namespace FrbaHotel.AbmCliente
             comboBoxTipoDocumento.ValueMember = "docu_detalle";
             comboBoxTipoDocumento.DataSource = dt;
 
-            SqlDataReader reader2;
-            command2 = new SqlCommand("SELECT naci_detalle from DERROCHADORES_DE_PAPEL.Nacionalidad", con);
+            command2 = UtilesSQL.crearCommand("SELECT naci_detalle from DERROCHADORES_DE_PAPEL.Nacionalidad");
             reader2 = command2.ExecuteReader();
             dt2.Columns.Add("naci_detalle", typeof(string));
             dt2.Load(reader2);
 
             comboBoxNacionalidad.ValueMember = "naci_detalle";
             comboBoxNacionalidad.DataSource = dt2;
-
-            con.Close();
         }
 
         private bool checkearDatos()
@@ -236,7 +232,7 @@ namespace FrbaHotel.AbmCliente
             else
             {
                 dt3.Clear();
-                SqlDataAdapter sda = new SqlDataAdapter("select clie_id from DERROCHADORES_DE_PAPEL.Cliente where clie_mail = @mail", con);
+                SqlDataAdapter sda = UtilesSQL.crearDataAdapter("select clie_id from DERROCHADORES_DE_PAPEL.Cliente where clie_mail = @mail");
                 sda.SelectCommand.Parameters.AddWithValue("@mail", mail);
                 sda.Fill(dt2);
                 if (dt3.Rows.Count == 0) //El mail no esta en uso
@@ -301,8 +297,7 @@ namespace FrbaHotel.AbmCliente
        
         private void realizarCambios()
         {
-            con.Open();
-            command = new SqlCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Cliente (clie_nombre, clie_apellido, clie_mail, clie_telefono, clie_fechaDeNacimiento, clie_calle, clie_numeroDeCalle, clie_piso, clie_departamento, clie_localidad, clie_tipoDeDocumento, clie_numeroDeDocumento, clie_habilitado, clie_nacionalidad) VALUES (@nom, @ape, @mail, @tel, @fecha, @calle, @numCalle, @piso, @depto, @loc, @doc, @numeroDoc, @habilitado, @nac)", con);
+            command = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Cliente (clie_nombre, clie_apellido, clie_mail, clie_telefono, clie_fechaDeNacimiento, clie_calle, clie_numeroDeCalle, clie_piso, clie_departamento, clie_localidad, clie_tipoDeDocumento, clie_numeroDeDocumento, clie_habilitado, clie_nacionalidad) VALUES (@nom, @ape, @mail, @tel, @fecha, @calle, @numCalle, @piso, @depto, @loc, @doc, @numeroDoc, @habilitado, @nac)");
             command.Parameters.AddWithValue("@nom", textBoxNombre.Text);
             command.Parameters.AddWithValue("@ape", textBoxApellido.Text);
             command.Parameters.AddWithValue("@mail", textBoxMail.Text);
@@ -329,8 +324,7 @@ namespace FrbaHotel.AbmCliente
             command.Parameters.AddWithValue("@nac", comboBoxNacionalidad.SelectedIndex + 1);
             command.Parameters.AddWithValue("@fecha", textBoxFecha.Text);
             command.Parameters.AddWithValue("@habilitado", checkBoxHabilitado.Checked);
-            command.ExecuteNonQuery();
-            con.Close();
+            UtilesSQL.ejecutarComandoNonQuery(command);
             MessageBox.Show("Creación exitosa!");
             this.Close();
         }

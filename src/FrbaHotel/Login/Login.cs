@@ -18,23 +18,24 @@ namespace FrbaHotel.Login
         public Login(Form MainF)
         {
             MainForm = MainF;
+            UtilesSQL.inicializar();
             InitializeComponent();
         }
 
         Form MainForm;
         private int loginsIncorrectos = 0;
         private SqlCommand command;
-        private SqlConnection con = new SqlConnection(@"Data Source=localhost\SQLSERVER2012;Initial Catalog=GD1C2018;User ID=gdHotel2018;Password=gd2018");
         DataTable dt = new DataTable();
         SHA sha256 = new SHA();
         private string usuario;
+        SqlDataAdapter sda;
 
 
         private void Entrar_Click(object sender, EventArgs e)
         {
             if (loginsIncorrectos != 0 && usuario != usuarioTextBox.Text) { loginsIncorrectos = 0; }      //reinicia los logins invalidos si trato de logear con otro usuario
             usuario = usuarioTextBox.Text;
-            SqlDataAdapter sda = new SqlDataAdapter("SELECT u.usur_username, u.usur_password, u.usur_habilitado, r.rol_nombre, h.hote_nombre from DERROCHADORES_DE_PAPEL.Usuario as u  inner join DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel as ruh ON u.usur_id = ruh.rouh_usuario inner join DERROCHADORES_DE_PAPEL.Hotel as h ON h.hote_id = ruh.rouh_hotel inner join DERROCHADORES_DE_PAPEL.Rol as r ON r.rol_id = ruh.rouh_rol WHERE u.usur_username = @usuario GROUP BY u.usur_username, u.usur_password, u.usur_habilitado, r.rol_nombre, h.hote_nombre", con);
+            sda = UtilesSQL.crearDataAdapter("SELECT u.usur_username, u.usur_password, u.usur_habilitado, r.rol_nombre, h.hote_nombre, u.usur_id from DERROCHADORES_DE_PAPEL.Usuario as u  inner join DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel as ruh ON u.usur_id = ruh.rouh_usuario inner join DERROCHADORES_DE_PAPEL.Hotel as h ON h.hote_id = ruh.rouh_hotel inner join DERROCHADORES_DE_PAPEL.Rol as r ON r.rol_id = ruh.rouh_rol WHERE u.usur_username = @usuario GROUP BY u.usur_username, u.usur_password, u.usur_habilitado, r.rol_nombre, h.hote_nombre, u.usur_id");
             sda.SelectCommand.Parameters.AddWithValue("@usuario", usuario);
             sda.Fill(dt);
             if (dt.Rows.Count == 0)      //Checkeo que exista el usuario
@@ -79,10 +80,9 @@ namespace FrbaHotel.Login
             }
             else
             {
-                con.Open();
-                command = new SqlCommand("UPDATE DERROCHADORES_DE_PAPEL.Usuario SET usur_habilitado = '0' WHERE usur_username = '" + usuarioTextBox.Text + "'", con);
+                command = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Usuario SET usur_habilitado = '0' WHERE usur_username = @user");
+                command.Parameters.AddWithValue("@user", usuarioTextBox.Text);
                 command.ExecuteNonQuery();
-                con.Close();
                 MessageBox.Show("Contraseña incorrecta. La cuenta ha sido bloqueada");
             }
             dt.Clear();
@@ -98,27 +98,11 @@ namespace FrbaHotel.Login
                     MessageBox.Show("Esta cuenta no tiene ningún rol");
                     break;
                 case 1:
-                    switch (dt.Rows[0][3].ToString())
-                    {
-                        case "ADMINISTRADOR GENERAL":
-                            Form f2 = new SeleccionFuncionalidadAdminGral(this);
-                            f2.Show();
-                            break;
-                        case "ADMINISTRADOR":
-                            Form f5 = new SeleccionFuncionalidadAdmin(this);
-                            break;
-                        case "RECEPCIONISTA":
-                            Form f3 = new SeleccionFuncionalidadRecepcionista(this);
-                            f3.Show();
-                            break;
-                        case "GUEST":
-                            Form f4 = new SeleccionFuncionalidadGuest(this);
-                            f4.Show();
-                            break;
-                    }
+                    Form f2 = new SeleccionFuncionalidad(this, int.Parse(dt.Rows[0][5].ToString()));
+                    f2.Show();
                     break;
                 default:
-            Form f1 = new SeleccionRol(dt, this);
+                    Form f1 = new SeleccionRol(dt, this);
                     f1.Show();
                     break;
             }
