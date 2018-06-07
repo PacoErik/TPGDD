@@ -29,7 +29,7 @@ namespace FrbaHotel.Login
             switch (RolXHotel.CurrentRow.Cells[0].Value.ToString())
             {
                 case "ADMINISTRADOR GENERAL":
-                    Form f2 = new SeleccionFuncionalidad(this, int.Parse(dt.Rows[0][5].ToString()));
+                    Form f2 = new SeleccionFuncionalidad(this, int.Parse(dt.Rows[0][2].ToString()));
                     f2.Show();
                     break;
                 case "ADMINISTRADOR":
