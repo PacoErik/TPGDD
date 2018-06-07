@@ -87,14 +87,38 @@
     <Compile Include="AbmRol\AbmRol.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmRol\AbmRol.Designer.cs">
+    <Compile Include="AbmRol\AbmRol.designer.cs">
       <DependentUpon>AbmRol.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmRol\AltaRol.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmRol\AltaRol.Designer.cs">
+    <Compile Include="AbmRol\AltaRol.designer.cs">
       <DependentUpon>AltaRol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRol\BajaRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\BajaRol.designer.cs">
+      <DependentUpon>BajaRol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRol\ListadoRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\ListadoRol.designer.cs">
+      <DependentUpon>ListadoRol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRol\ModificacionRol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\ModificacionRol.designer.cs">
+      <DependentUpon>ModificacionRol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRol\ModificacionRolElegido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\ModificacionRolElegido.designer.cs">
+      <DependentUpon>ModificacionRolElegido.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmUsuario\AbmUsuario.cs">
       <SubType>Form</SubType>
@@ -191,6 +215,18 @@
     <EmbeddedResource Include="AbmRol\AltaRol.resx">
       <DependentUpon>AltaRol.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\BajaRol.resx">
+      <DependentUpon>BajaRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\ListadoRol.resx">
+      <DependentUpon>ListadoRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\ModificacionRol.resx">
+      <DependentUpon>ModificacionRol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\ModificacionRolElegido.resx">
+      <DependentUpon>ModificacionRolElegido.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AbmUsuario\AbmUsuario.resx">
       <DependentUpon>AbmUsuario.cs</DependentUpon>
     </EmbeddedResource>
@@ -250,6 +286,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

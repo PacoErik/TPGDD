@@ -1,6 +1,6 @@
 ﻿namespace FrbaHotel.AbmRol
 {
-    partial class AltaRol
+    partial class ModificacionRolElegido
     {
         /// <summary>
         /// Required designer variable.
@@ -31,12 +31,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.habilitado = new System.Windows.Forms.CheckBox();
-            this.disponibles = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.elegidas = new System.Windows.Forms.ComboBox();
             this.limpiar = new System.Windows.Forms.Button();
             this.aceptar = new System.Windows.Forms.Button();
+            this.disponibles = new System.Windows.Forms.DataGridView();
+            this.actuales = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.disponibles)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.actuales)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -67,20 +69,10 @@
             this.habilitado.Text = "Habilitado";
             this.habilitado.UseVisualStyleBackColor = true;
             // 
-            // disponibles
-            // 
-            this.disponibles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.disponibles.FormattingEnabled = true;
-            this.disponibles.Location = new System.Drawing.Point(15, 92);
-            this.disponibles.Name = "disponibles";
-            this.disponibles.Size = new System.Drawing.Size(248, 21);
-            this.disponibles.TabIndex = 3;
-            this.disponibles.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 76);
+            this.label2.Location = new System.Drawing.Point(15, 61);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(225, 13);
             this.label2.TabIndex = 4;
@@ -89,26 +81,15 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 145);
+            this.label3.Location = new System.Drawing.Point(12, 174);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(225, 13);
+            this.label3.Size = new System.Drawing.Size(226, 13);
             this.label3.TabIndex = 5;
-            this.label3.Text = "Funcionalidades elegidas (click para remover):";
-            // 
-            // elegidas
-            // 
-            this.elegidas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.elegidas.FormattingEnabled = true;
-            this.elegidas.Location = new System.Drawing.Point(15, 161);
-            this.elegidas.Name = "elegidas";
-            this.elegidas.Size = new System.Drawing.Size(248, 21);
-            this.elegidas.TabIndex = 6;
-            this.elegidas.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
-            this.elegidas.TextChanged += new System.EventHandler(this.elegidas_TextChanged);
+            this.label3.Text = "Funcionalidades actuales (click para remover):";
             // 
             // limpiar
             // 
-            this.limpiar.Location = new System.Drawing.Point(98, 226);
+            this.limpiar.Location = new System.Drawing.Point(15, 298);
             this.limpiar.Name = "limpiar";
             this.limpiar.Size = new System.Drawing.Size(75, 23);
             this.limpiar.TabIndex = 7;
@@ -118,7 +99,7 @@
             // 
             // aceptar
             // 
-            this.aceptar.Location = new System.Drawing.Point(197, 226);
+            this.aceptar.Location = new System.Drawing.Point(380, 298);
             this.aceptar.Name = "aceptar";
             this.aceptar.Size = new System.Drawing.Size(75, 23);
             this.aceptar.TabIndex = 8;
@@ -126,22 +107,48 @@
             this.aceptar.UseVisualStyleBackColor = true;
             this.aceptar.Click += new System.EventHandler(this.aceptar_Click);
             // 
-            // AltaRol
+            // disponibles
+            // 
+            this.disponibles.AllowUserToAddRows = false;
+            this.disponibles.AllowUserToDeleteRows = false;
+            this.disponibles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.disponibles.Location = new System.Drawing.Point(18, 78);
+            this.disponibles.Name = "disponibles";
+            this.disponibles.ReadOnly = true;
+            this.disponibles.Size = new System.Drawing.Size(437, 93);
+            this.disponibles.TabIndex = 9;
+            this.disponibles.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.disponibles_CellClick);
+            // 
+            // actuales
+            // 
+            this.actuales.AllowUserToAddRows = false;
+            this.actuales.AllowUserToDeleteRows = false;
+            this.actuales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.actuales.Location = new System.Drawing.Point(15, 190);
+            this.actuales.Name = "actuales";
+            this.actuales.ReadOnly = true;
+            this.actuales.Size = new System.Drawing.Size(437, 93);
+            this.actuales.TabIndex = 10;
+            this.actuales.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.actuales_CellClick);
+            // 
+            // ModificacionRolElegido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(467, 333);
+            this.Controls.Add(this.actuales);
+            this.Controls.Add(this.disponibles);
             this.Controls.Add(this.aceptar);
             this.Controls.Add(this.limpiar);
-            this.Controls.Add(this.elegidas);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.disponibles);
             this.Controls.Add(this.habilitado);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
-            this.Name = "AltaRol";
-            this.Text = "AltaRol";
+            this.Name = "ModificacionRolElegido";
+            this.Text = "Modificación de rol";
+            ((System.ComponentModel.ISupportInitialize)(this.disponibles)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.actuales)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -152,11 +159,11 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.CheckBox habilitado;
-        private System.Windows.Forms.ComboBox disponibles;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox elegidas;
         private System.Windows.Forms.Button limpiar;
         private System.Windows.Forms.Button aceptar;
+        private System.Windows.Forms.DataGridView disponibles;
+        private System.Windows.Forms.DataGridView actuales;
     }
 }

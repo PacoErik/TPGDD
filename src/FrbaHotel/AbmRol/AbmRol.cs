@@ -19,24 +19,22 @@ namespace FrbaHotel.AbmRol
 
         private void alta_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            Form f1 = new AltaRol();
-            f1.ShowDialog();
+            new AltaRol().ShowDialog();
         }
 
         private void baja_Click(object sender, EventArgs e)
         {
-
+            new BajaRol().ShowDialog();
         }
 
         private void modificacion_Click(object sender, EventArgs e)
         {
-
+            new ModificacionRol().ShowDialog();
         }
 
         private void listado_Click(object sender, EventArgs e)
         {
-
+            new ListadoRol().ShowDialog();
         }
 
         private void atras_Click(object sender, EventArgs e)
