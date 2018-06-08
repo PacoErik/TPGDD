@@ -22,7 +22,8 @@ AS
 				DELETE FROM DERROCHADORES_DE_PAPEL.Rol WHERE rol_id = @id;
 			END
 	END
-	
+
+GO	
 
 --------------------------------------------------------------
 -------------------Creación de funciones----------------------
