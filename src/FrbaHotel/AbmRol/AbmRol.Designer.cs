@@ -28,24 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.atras = new System.Windows.Forms.Button();
             this.listado = new System.Windows.Forms.Button();
             this.modificacion = new System.Windows.Forms.Button();
             this.baja = new System.Windows.Forms.Button();
             this.alta = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // atras
-            // 
-            this.atras.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.atras.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.atras.Location = new System.Drawing.Point(17, 215);
-            this.atras.Name = "atras";
-            this.atras.Size = new System.Drawing.Size(62, 34);
-            this.atras.TabIndex = 9;
-            this.atras.Text = "Atrás";
-            this.atras.UseVisualStyleBackColor = false;
-            this.atras.Click += new System.EventHandler(this.atras_Click);
             // 
             // listado
             // 
@@ -92,7 +79,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Controls.Add(this.atras);
             this.Controls.Add(this.listado);
             this.Controls.Add(this.modificacion);
             this.Controls.Add(this.baja);
@@ -105,7 +91,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button atras;
         private System.Windows.Forms.Button listado;
         private System.Windows.Forms.Button modificacion;
         private System.Windows.Forms.Button baja;

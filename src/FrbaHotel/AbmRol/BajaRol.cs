@@ -43,26 +43,27 @@ namespace FrbaHotel.AbmRol
         private void roles_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             //Mostrar las funcionalidades del rol cuando se hace click en el número de rol
-            if (e.ColumnIndex == 0)
+            if (e.ColumnIndex == 0 && e.RowIndex >= 0)
             {
                 funcionalidades_dt.Clear();
                 UtilesSQL.llenarTabla(funcionalidades_dt, "SELECT func_id Funcionalidad, func_detalle Detalle FROM DERROCHADORES_DE_PAPEL.Funcionalidad JOIN DERROCHADORES_DE_PAPEL.FuncionalidadXRol ON fxro_funcionalidad = func_id AND fxro_rol = " + roles_dt.Rows[e.RowIndex]["Rol"].ToString());
             }
             //Confirmar que el usuario quiere deshabilitar el rol cuando aprieta en la columna Eliminar
-            else if (e.ColumnIndex == 3)
+            else if (e.ColumnIndex == 3 && e.RowIndex >= 0)
             {
-                if (MessageBox.Show("¿Está seguro de que quiere deshabilitar el rol?", "Deshabilitar el rol", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                String nombre_rol = roles_dt.Rows[e.RowIndex]["Nombre"].ToString();
+                if (MessageBox.Show("¿Está seguro de que quiere eliminar el rol "+nombre_rol+"?", "Eliminar el rol", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    int resultado = UtilesSQL.ejecutarComandoNonQuery("UPDATE DERROCHADORES_DE_PAPEL.Rol SET rol_activo = 0 WHERE rol_id = " + roles_dt.Rows[e.RowIndex]["Rol"].ToString());
+                    int resultado = UtilesSQL.ejecutarComandoNonQuery("DERROCHADORES_DE_PAPEL.EliminarRol " + roles_dt.Rows[e.RowIndex]["Rol"].ToString());
                     if (resultado > 0)
                     {
                         funcionalidades_dt.Clear();
                         roles_dt.Rows.RemoveAt(e.RowIndex);
-                        MessageBox.Show("Se deshabilitó satisfactoriamente el rol " + roles_dt.Rows[e.RowIndex]["Nombre"].ToString());
+                        MessageBox.Show("Se eliminó satisfactoriamente el rol " + nombre_rol);
                     }
                     else
                     {
-                        MessageBox.Show("No se pudo deshabilitar el rol porque ya está deshabilitado");
+                        MessageBox.Show("No se pudo eliminar el rol porque hay usuarios que dependen de él");
                     }
                 }
 
