@@ -11,7 +11,17 @@ GO
 -------------------Creación de stored procedures--------------
 --------------------------------------------------------------
 
-
+CREATE PROCEDURE DERROCHADORES_DE_PAPEL.EliminarRol (@id NUMERIC(18,0))
+AS
+	BEGIN
+		IF ((SELECT COUNT(*)
+			FROM DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel
+			WHERE rouh_usuario = @id) = 0) 
+			BEGIN
+				DELETE FROM DERROCHADORES_DE_PAPEL.FuncionalidadXRol WHERE fxro_rol = @id;
+				DELETE FROM DERROCHADORES_DE_PAPEL.Rol WHERE rol_id = @id;
+			END
+	END
 	
 
 --------------------------------------------------------------
