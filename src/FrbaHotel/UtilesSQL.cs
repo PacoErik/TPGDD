@@ -30,7 +30,7 @@ namespace FrbaHotel
             {
                 resultado = comando.ExecuteNonQuery();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 resultado = -1;
             }

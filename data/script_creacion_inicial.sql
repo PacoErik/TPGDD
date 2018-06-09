@@ -467,8 +467,15 @@ GO
 	
 -- Modificacion reserva - Vacio
 
--- Cancelacion Reserva - Vacio
+-- Cancelacion Reserva - Carga automatica
 
+INSERT INTO DERROCHADORES_DE_PAPEL.CancelacionReserva (canc_reserva, canc_motivo, canc_fechaDeCancelacion, canc_usuario)
+	SELECT rese_codigo, 'Motivo desconocido', rese_fin, 1
+	FROM DERROCHADORES_DE_PAPEL.Reserva 
+	WHERE rese_estado = (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = 'RESERVA CANCELADA POR NO-SHOW')
+
+GO
+	
 -- Estadia - Carga automatica
 
 INSERT INTO DERROCHADORES_DE_PAPEL.Estadia (esta_fechaDeInicio, esta_fechaDeFin, esta_cantidadDeNoches, esta_reserva, esta_usuarioCheckIn, esta_usuarioCheckOut)
