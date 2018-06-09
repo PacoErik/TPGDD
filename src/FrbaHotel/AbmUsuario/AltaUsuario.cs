@@ -42,7 +42,7 @@ namespace FrbaHotel.AbmUsuario
             comboBoxTipoDocumento.ValueMember = "docu_detalle";
             comboBoxTipoDocumento.DataSource = dtDocu;
 
-            SqlCommand command2 = UtilesSQL.crearCommand("SELECT rol_nombre FROM DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre NOT IN (SELECT rol_nombre  from DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre = 'ADMINISTRADOR GENERAL')");
+            SqlCommand command2 = UtilesSQL.crearCommand("SELECT rol_nombre FROM DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre NOT IN (SELECT rol_nombre  from DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre = 'ADMINISTRADOR GENERAL' OR rol_nombre = 'GUEST')");
             SqlDataReader reader2 = command2.ExecuteReader();
             dtRol.Columns.Add("rol_nombre", typeof(string));
             dtRol.Load(reader2);

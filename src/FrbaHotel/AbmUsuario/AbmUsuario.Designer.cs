@@ -77,7 +77,7 @@
             // buttonModificarUsuario
             // 
             this.buttonModificarUsuario.Enabled = false;
-            this.buttonModificarUsuario.Location = new System.Drawing.Point(125, 534);
+            this.buttonModificarUsuario.Location = new System.Drawing.Point(137, 534);
             this.buttonModificarUsuario.Name = "buttonModificarUsuario";
             this.buttonModificarUsuario.Size = new System.Drawing.Size(108, 23);
             this.buttonModificarUsuario.TabIndex = 35;
@@ -139,7 +139,7 @@
             // 
             // buttonAlta
             // 
-            this.buttonAlta.Location = new System.Drawing.Point(408, 534);
+            this.buttonAlta.Location = new System.Drawing.Point(435, 534);
             this.buttonAlta.Name = "buttonAlta";
             this.buttonAlta.Size = new System.Drawing.Size(141, 23);
             this.buttonAlta.TabIndex = 23;

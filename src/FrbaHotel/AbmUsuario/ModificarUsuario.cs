@@ -25,13 +25,13 @@ namespace FrbaHotel.AbmUsuario
         DataTable dtDocu = new DataTable();
         DataTable dtRol = new DataTable();
         DataTable dtHotel = new DataTable();
-        DataTable dt;
+        DataTable dtUsuario;
         int hotelU;
 
         public ModificarUsuario(DataTable dt1, int hotel)
         {
             hotelU = hotel;
-            dt = dt1;
+            dtUsuario = dt1;
             UtilesSQL.inicializar();
             InitializeComponent();
             cargarComboBox();
@@ -39,22 +39,21 @@ namespace FrbaHotel.AbmUsuario
         }
         private void llenarTextBox()
         {
-            textBoxUsuario.Text = dt.Rows[0][1].ToString();
-            textBoxContraseña.Text = dt.Rows[0][2].ToString();
-            textBoxNombre.Text = dt.Rows[0][3].ToString();
-            textBoxApellido.Text = dt.Rows[0][4].ToString();
-            textBoxMail.Text = dt.Rows[0][5].ToString();
-            textBoxTelefono.Text = dt.Rows[0][6].ToString();
-            textBoxFecha.Text = DateTime.Parse(dt.Rows[0][7].ToString()).ToString("yyyy-MM-dd HH:mm:ss.fff");
-            textBoxDireccion.Text = dt.Rows[0][8].ToString();
-            textBoxNumeroCalle.Text = dt.Rows[0][9].ToString();
-            textBoxPiso.Text = dt.Rows[0][10].ToString();
-            textBoxDepto.Text = dt.Rows[0][11].ToString();
-            textBoxLocalidad.Text = dt.Rows[0][12].ToString();
-            comboBoxTipoDocumento.SelectedIndex = Int32.Parse(dt.Rows[0][13].ToString()) - 1;
-            textBoxNumeroDocumento.Text = dt.Rows[0][14].ToString();
-            checkBoxHabilitado.Checked = Convert.ToBoolean(dt.Rows[0][15]);
-            textBoxHotel.Text = hotelU.ToString();
+            textBoxContraseña.Text = dtUsuario.Rows[0][2].ToString();
+            textBoxContraseña2.Text = dtUsuario.Rows[0][2].ToString();
+            textBoxNombre.Text = dtUsuario.Rows[0][3].ToString();
+            textBoxApellido.Text = dtUsuario.Rows[0][4].ToString();
+            textBoxMail.Text = dtUsuario.Rows[0][5].ToString();
+            textBoxTelefono.Text = dtUsuario.Rows[0][6].ToString();
+            textBoxFecha.Text = DateTime.Parse(dtUsuario.Rows[0][7].ToString()).ToString("yyyy-MM-dd HH:mm:ss.fff");
+            textBoxDireccion.Text = dtUsuario.Rows[0][8].ToString();
+            textBoxNumeroCalle.Text = dtUsuario.Rows[0][9].ToString();
+            textBoxPiso.Text = dtUsuario.Rows[0][10].ToString();
+            textBoxDepto.Text = dtUsuario.Rows[0][11].ToString();
+            textBoxLocalidad.Text = dtUsuario.Rows[0][12].ToString();
+            comboBoxTipoDocumento.SelectedIndex = Int32.Parse(dtUsuario.Rows[0][13].ToString()) - 1;
+            textBoxNumeroDocumento.Text = dtUsuario.Rows[0][14].ToString();
+            checkBoxHabilitado.Checked = Convert.ToBoolean(dtUsuario.Rows[0][15]);
         }
         private void cargarComboBox()
         {
@@ -66,7 +65,7 @@ namespace FrbaHotel.AbmUsuario
             comboBoxTipoDocumento.ValueMember = "docu_detalle";
             comboBoxTipoDocumento.DataSource = dtDocu;
 
-            SqlCommand command2 = UtilesSQL.crearCommand("SELECT rol_nombre FROM DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre NOT IN (SELECT rol_nombre  from DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre = 'ADMINISTRADOR GENERAL')");
+            SqlCommand command2 = UtilesSQL.crearCommand("SELECT rol_nombre FROM DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre NOT IN (SELECT rol_nombre  from DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre = 'ADMINISTRADOR GENERAL' OR rol_nombre = 'GUEST')");
             SqlDataReader reader2 = command2.ExecuteReader();
             dtRol.Columns.Add("rol_nombre", typeof(string));
             dtRol.Load(reader2);
@@ -96,10 +95,7 @@ namespace FrbaHotel.AbmUsuario
             labelNumeroDocObligatorio.Visible = false;
             labelMailObligatorio.Visible = false;
             labelContraseñaObligatoria.Visible = false;
-            labelUsuarioInvalido.Visible = false;
-            labelUsuarioObligatorio.Visible = false;
-            labelUsuarioEnUso.Visible = false;
-            labelHotelObligatorio.Visible = false;
+            labelContraseñaCoinciden.Visible = false;
         }
 
         private bool checkearDatos()
@@ -116,9 +112,7 @@ namespace FrbaHotel.AbmUsuario
             numeroPisoValido(textBoxPiso.Text);
             deptoValido(textBoxDepto.Text);
             localidadValida(textBoxLocalidad.Text);
-            usernameValido(textBoxUsuario.Text);
             contraseñaValida(textBoxContraseña.Text);
-            hotelValido(textBoxHotel.Text);
             return Valido;
         }
 
@@ -323,34 +317,6 @@ namespace FrbaHotel.AbmUsuario
                 }
             }
         }
-        private void usernameValido(string username)
-        {
-            if (string.IsNullOrWhiteSpace(username))
-            {
-                labelUsuarioObligatorio.Visible = true;
-                Valido = false;
-            }
-            else
-            {
-                DataTable dtUsuario = new DataTable();
-                SqlDataAdapter sda = UtilesSQL.crearDataAdapter("select usur_username from DERROCHADORES_DE_PAPEL.Usuario where usur_username = @user");
-                sda.SelectCommand.Parameters.AddWithValue("@user", username);
-                sda.Fill(dtUsuario);
-                if (dtUsuario.Rows.Count == 0) //El mail no esta en uso
-                {
-                    if (!(username.All(Char.IsLetter)))
-                    {
-                        labelUsuarioInvalido.Visible = true;
-                        Valido = false;
-                    }
-                }
-                else
-                {
-                    labelUsuarioEnUso.Visible = Enabled;
-                    Valido = false;
-                }
-            }
-        }
         private void contraseñaValida(string contraseña)
         {
             if (string.IsNullOrWhiteSpace(contraseña))
@@ -358,12 +324,9 @@ namespace FrbaHotel.AbmUsuario
                 labelContraseñaObligatoria.Visible = true;
                 Valido = false;
             }
-        }
-        private void hotelValido(string hotel)
-        {
-            if (string.IsNullOrWhiteSpace(hotel))
+            else if (textBoxContraseña2.Text != contraseña)
             {
-                labelHotelObligatorio.Visible = true;
+                labelContraseñaCoinciden.Visible = true;
                 Valido = false;
             }
         }
@@ -383,10 +346,12 @@ namespace FrbaHotel.AbmUsuario
         }
         private void realizarCambios()
         {
-            SqlCommand command1 = UtilesSQL.crearCommand("");
-            command1.Parameters.AddWithValue("@user", textBoxUsuario.Text);
-            command1.Parameters.AddWithValue("@pass", sha256.GenerarSHA256String(textBoxContraseña.Text));
-            command1.Parameters.AddWithValue("@nombre", textBoxNombre.Text);
+            SqlCommand command1 = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Usuario SET usur_password = @pass, usur_nombre = @nom, usur_apellido = @ape, usur_mail = @mail, usur_telefono = @tel, usur_fechaDeNacimiento = @fecha, usur_calle = @calle, usur_numeroDeCalle = @numCalle, usur_piso = @piso, usur_departamento = @depto, usur_localidad = @loc, usur_tipoDeDocumento = @doc, usur_numeroDeDocumento = @numDoc, usur_habilitado = @hab WHERE usur_id = @id");
+            if (textBoxContraseña.Text == dtUsuario.Rows[0][2].ToString())
+            { command1.Parameters.AddWithValue("@pass", textBoxContraseña.Text); }
+            else
+            { command1.Parameters.AddWithValue("@pass", sha256.GenerarSHA256String(textBoxContraseña.Text)); }
+            command1.Parameters.AddWithValue("@nom", textBoxNombre.Text);
             command1.Parameters.AddWithValue("@ape", textBoxApellido.Text);
             command1.Parameters.AddWithValue("@mail", textBoxMail.Text);
             if (teleNull)
@@ -411,7 +376,17 @@ namespace FrbaHotel.AbmUsuario
             command1.Parameters.AddWithValue("@doc", comboBoxTipoDocumento.SelectedIndex + 1);
             command1.Parameters.AddWithValue("@numDoc", textBoxNumeroDocumento.Text);
             command1.Parameters.AddWithValue("@hab", checkBoxHabilitado.Checked);
+            command1.Parameters.AddWithValue("@id", dtUsuario.Rows[0][0].ToString());
             UtilesSQL.ejecutarComandoNonQuery(command1);
+
+            SqlCommand command2 = UtilesSQL.crearCommand("DERROCHADORES_DE_PAPEL.ModificarRolesUsuario");
+            command2.CommandType = CommandType.StoredProcedure;
+            command2.Parameters.AddWithValue("@rol", SqlDbType.BigInt).Value = comboBoxRoles.SelectedIndex + 2;
+            command2.Parameters.AddWithValue("@hotel", SqlDbType.BigInt).Value = hotelU;
+            command2.Parameters.AddWithValue("@user", SqlDbType.BigInt).Value = dtUsuario.Rows[0][0].ToString();
+            command2.Parameters.AddWithValue("@hab", SqlDbType.Bit).Value = checkBoxHabilitado.Checked;
+            UtilesSQL.ejecutarComandoNonQuery(command2);
+
 
             MessageBox.Show("Modificación exitosa!");
             this.Close();
@@ -420,12 +395,6 @@ namespace FrbaHotel.AbmUsuario
         private void buttonSeleccionarFecha_Click(object sender, EventArgs e)
         {
             textBoxFecha.Text = monthCalendar.SelectionEnd.ToString("yyyy-MM-dd HH:mm:ss.fff");
-        }
-        private void buttonSeleccionarHotel_Click(object sender, EventArgs e)
-        {
-            SeleccionarHotel f1 = new SeleccionarHotel();
-            f1.ShowDialog();
-            textBoxHotel.Text = f1.Hotel;
         }
         private void buttonAtras_Click(object sender, EventArgs e)
         {

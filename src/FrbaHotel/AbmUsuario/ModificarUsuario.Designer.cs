@@ -28,14 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.labelUsuarioEnUso = new System.Windows.Forms.Label();
-            this.labelUsuarioInvalido = new System.Windows.Forms.Label();
             this.labelContraseñaObligatoria = new System.Windows.Forms.Label();
-            this.labelUsuarioObligatorio = new System.Windows.Forms.Label();
             this.textBoxContraseña = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.textBoxUsuario = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
             this.checkBoxHabilitado = new System.Windows.Forms.CheckBox();
             this.labelCalleObligatoria = new System.Windows.Forms.Label();
             this.labelDireccionObligatoria = new System.Windows.Forms.Label();
@@ -86,59 +81,25 @@
             this.buttonAtras = new System.Windows.Forms.Button();
             this.label17 = new System.Windows.Forms.Label();
             this.comboBoxRoles = new System.Windows.Forms.ComboBox();
+            this.labelContraseñaCoinciden = new System.Windows.Forms.Label();
+            this.textBoxContraseña2 = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.textBoxHotel = new System.Windows.Forms.TextBox();
-            this.labelHotelObligatorio = new System.Windows.Forms.Label();
-            this.buttonSeleccionarHotel = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // labelUsuarioEnUso
-            // 
-            this.labelUsuarioEnUso.AutoSize = true;
-            this.labelUsuarioEnUso.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelUsuarioEnUso.Location = new System.Drawing.Point(29, 93);
-            this.labelUsuarioEnUso.Name = "labelUsuarioEnUso";
-            this.labelUsuarioEnUso.Size = new System.Drawing.Size(111, 13);
-            this.labelUsuarioEnUso.TabIndex = 276;
-            this.labelUsuarioEnUso.Text = "El usuario esta en uso";
-            this.labelUsuarioEnUso.Visible = false;
-            // 
-            // labelUsuarioInvalido
-            // 
-            this.labelUsuarioInvalido.AutoSize = true;
-            this.labelUsuarioInvalido.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelUsuarioInvalido.Location = new System.Drawing.Point(28, 93);
-            this.labelUsuarioInvalido.Name = "labelUsuarioInvalido";
-            this.labelUsuarioInvalido.Size = new System.Drawing.Size(82, 13);
-            this.labelUsuarioInvalido.TabIndex = 275;
-            this.labelUsuarioInvalido.Text = "Usuario invalido";
-            this.labelUsuarioInvalido.Visible = false;
             // 
             // labelContraseñaObligatoria
             // 
             this.labelContraseñaObligatoria.AutoSize = true;
             this.labelContraseñaObligatoria.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelContraseñaObligatoria.Location = new System.Drawing.Point(28, 157);
+            this.labelContraseñaObligatoria.Location = new System.Drawing.Point(22, 93);
             this.labelContraseñaObligatoria.Name = "labelContraseñaObligatoria";
             this.labelContraseñaObligatoria.Size = new System.Drawing.Size(140, 13);
             this.labelContraseñaObligatoria.TabIndex = 274;
             this.labelContraseñaObligatoria.Text = "La contraseña es olbigatoria";
             this.labelContraseñaObligatoria.Visible = false;
             // 
-            // labelUsuarioObligatorio
-            // 
-            this.labelUsuarioObligatorio.AutoSize = true;
-            this.labelUsuarioObligatorio.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelUsuarioObligatorio.Location = new System.Drawing.Point(29, 93);
-            this.labelUsuarioObligatorio.Name = "labelUsuarioObligatorio";
-            this.labelUsuarioObligatorio.Size = new System.Drawing.Size(118, 13);
-            this.labelUsuarioObligatorio.TabIndex = 273;
-            this.labelUsuarioObligatorio.Text = "El usuario es olbigatorio";
-            this.labelUsuarioObligatorio.Visible = false;
-            // 
             // textBoxContraseña
             // 
-            this.textBoxContraseña.Location = new System.Drawing.Point(32, 134);
+            this.textBoxContraseña.Location = new System.Drawing.Point(26, 70);
             this.textBoxContraseña.Name = "textBoxContraseña";
             this.textBoxContraseña.PasswordChar = '*';
             this.textBoxContraseña.Size = new System.Drawing.Size(160, 20);
@@ -147,34 +108,18 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(29, 120);
+            this.label14.Location = new System.Drawing.Point(23, 56);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(74, 13);
             this.label14.TabIndex = 271;
             this.label14.Text = "(*)Contraseña:";
-            // 
-            // textBoxUsuario
-            // 
-            this.textBoxUsuario.Location = new System.Drawing.Point(32, 70);
-            this.textBoxUsuario.Name = "textBoxUsuario";
-            this.textBoxUsuario.Size = new System.Drawing.Size(160, 20);
-            this.textBoxUsuario.TabIndex = 270;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(29, 56);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(56, 13);
-            this.label12.TabIndex = 269;
-            this.label12.Text = "(*)Usuario:";
             // 
             // checkBoxHabilitado
             // 
             this.checkBoxHabilitado.AutoSize = true;
             this.checkBoxHabilitado.Checked = true;
             this.checkBoxHabilitado.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxHabilitado.Location = new System.Drawing.Point(304, 463);
+            this.checkBoxHabilitado.Location = new System.Drawing.Point(569, 424);
             this.checkBoxHabilitado.Name = "checkBoxHabilitado";
             this.checkBoxHabilitado.Size = new System.Drawing.Size(110, 17);
             this.checkBoxHabilitado.TabIndex = 265;
@@ -185,7 +130,7 @@
             // 
             this.labelCalleObligatoria.AutoSize = true;
             this.labelCalleObligatoria.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelCalleObligatoria.Location = new System.Drawing.Point(23, 303);
+            this.labelCalleObligatoria.Location = new System.Drawing.Point(23, 352);
             this.labelCalleObligatoria.Name = "labelCalleObligatoria";
             this.labelCalleObligatoria.Size = new System.Drawing.Size(119, 13);
             this.labelCalleObligatoria.TabIndex = 264;
@@ -196,7 +141,7 @@
             // 
             this.labelDireccionObligatoria.AutoSize = true;
             this.labelDireccionObligatoria.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelDireccionObligatoria.Location = new System.Drawing.Point(29, 244);
+            this.labelDireccionObligatoria.Location = new System.Drawing.Point(29, 293);
             this.labelDireccionObligatoria.Name = "labelDireccionObligatoria";
             this.labelDireccionObligatoria.Size = new System.Drawing.Size(130, 13);
             this.labelDireccionObligatoria.TabIndex = 263;
@@ -259,7 +204,7 @@
             // 
             // textBoxDepto
             // 
-            this.textBoxDepto.Location = new System.Drawing.Point(137, 340);
+            this.textBoxDepto.Location = new System.Drawing.Point(137, 389);
             this.textBoxDepto.Name = "textBoxDepto";
             this.textBoxDepto.Size = new System.Drawing.Size(105, 20);
             this.textBoxDepto.TabIndex = 257;
@@ -268,7 +213,7 @@
             // 
             this.labelDepartamentoInvalido.AutoSize = true;
             this.labelDepartamentoInvalido.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelDepartamentoInvalido.Location = new System.Drawing.Point(134, 363);
+            this.labelDepartamentoInvalido.Location = new System.Drawing.Point(134, 412);
             this.labelDepartamentoInvalido.Name = "labelDepartamentoInvalido";
             this.labelDepartamentoInvalido.Size = new System.Drawing.Size(111, 13);
             this.labelDepartamentoInvalido.TabIndex = 256;
@@ -278,7 +223,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(134, 324);
+            this.label16.Location = new System.Drawing.Point(134, 373);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(77, 13);
             this.label16.TabIndex = 255;
@@ -286,7 +231,7 @@
             // 
             // textBoxPiso
             // 
-            this.textBoxPiso.Location = new System.Drawing.Point(26, 340);
+            this.textBoxPiso.Location = new System.Drawing.Point(26, 389);
             this.textBoxPiso.Name = "textBoxPiso";
             this.textBoxPiso.Size = new System.Drawing.Size(105, 20);
             this.textBoxPiso.TabIndex = 254;
@@ -295,7 +240,7 @@
             // 
             this.labelPisoInvalido.AutoSize = true;
             this.labelPisoInvalido.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelPisoInvalido.Location = new System.Drawing.Point(23, 363);
+            this.labelPisoInvalido.Location = new System.Drawing.Point(23, 412);
             this.labelPisoInvalido.Name = "labelPisoInvalido";
             this.labelPisoInvalido.Size = new System.Drawing.Size(69, 13);
             this.labelPisoInvalido.TabIndex = 253;
@@ -305,7 +250,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(23, 324);
+            this.label15.Location = new System.Drawing.Point(23, 373);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(84, 13);
             this.label15.TabIndex = 252;
@@ -348,21 +293,21 @@
             // 
             // textBoxLocalidad
             // 
-            this.textBoxLocalidad.Location = new System.Drawing.Point(26, 395);
+            this.textBoxLocalidad.Location = new System.Drawing.Point(26, 444);
             this.textBoxLocalidad.Name = "textBoxLocalidad";
             this.textBoxLocalidad.Size = new System.Drawing.Size(216, 20);
             this.textBoxLocalidad.TabIndex = 246;
             // 
             // textBoxNumeroCalle
             // 
-            this.textBoxNumeroCalle.Location = new System.Drawing.Point(26, 280);
+            this.textBoxNumeroCalle.Location = new System.Drawing.Point(26, 329);
             this.textBoxNumeroCalle.Name = "textBoxNumeroCalle";
             this.textBoxNumeroCalle.Size = new System.Drawing.Size(216, 20);
             this.textBoxNumeroCalle.TabIndex = 245;
             // 
             // textBoxDireccion
             // 
-            this.textBoxDireccion.Location = new System.Drawing.Point(26, 222);
+            this.textBoxDireccion.Location = new System.Drawing.Point(26, 271);
             this.textBoxDireccion.Name = "textBoxDireccion";
             this.textBoxDireccion.Size = new System.Drawing.Size(216, 20);
             this.textBoxDireccion.TabIndex = 244;
@@ -371,7 +316,7 @@
             // 
             this.labelLocalidadInvalida.AutoSize = true;
             this.labelLocalidadInvalida.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelLocalidadInvalida.Location = new System.Drawing.Point(23, 418);
+            this.labelLocalidadInvalida.Location = new System.Drawing.Point(23, 467);
             this.labelLocalidadInvalida.Name = "labelLocalidadInvalida";
             this.labelLocalidadInvalida.Size = new System.Drawing.Size(92, 13);
             this.labelLocalidadInvalida.TabIndex = 243;
@@ -382,7 +327,7 @@
             // 
             this.labelNumeroDeCalleInvalido.AutoSize = true;
             this.labelNumeroDeCalleInvalido.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelNumeroDeCalleInvalido.Location = new System.Drawing.Point(23, 303);
+            this.labelNumeroDeCalleInvalido.Location = new System.Drawing.Point(23, 352);
             this.labelNumeroDeCalleInvalido.Name = "labelNumeroDeCalleInvalido";
             this.labelNumeroDeCalleInvalido.Size = new System.Drawing.Size(83, 13);
             this.labelNumeroDeCalleInvalido.TabIndex = 242;
@@ -392,7 +337,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(23, 264);
+            this.label13.Location = new System.Drawing.Point(23, 313);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(97, 13);
             this.label13.TabIndex = 241;
@@ -402,7 +347,7 @@
             // 
             this.labelDireccionInvalida.AutoSize = true;
             this.labelDireccionInvalida.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelDireccionInvalida.Location = new System.Drawing.Point(23, 244);
+            this.labelDireccionInvalida.Location = new System.Drawing.Point(23, 293);
             this.labelDireccionInvalida.Name = "labelDireccionInvalida";
             this.labelDireccionInvalida.Size = new System.Drawing.Size(91, 13);
             this.labelDireccionInvalida.TabIndex = 240;
@@ -466,7 +411,7 @@
             // 
             this.labelFechaInvalida.AutoSize = true;
             this.labelFechaInvalida.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelFechaInvalida.Location = new System.Drawing.Point(301, 245);
+            this.labelFechaInvalida.Location = new System.Drawing.Point(292, 267);
             this.labelFechaInvalida.Name = "labelFechaInvalida";
             this.labelFechaInvalida.Size = new System.Drawing.Size(76, 13);
             this.labelFechaInvalida.TabIndex = 234;
@@ -475,13 +420,13 @@
             // 
             // monthCalendar
             // 
-            this.monthCalendar.Location = new System.Drawing.Point(301, 280);
+            this.monthCalendar.Location = new System.Drawing.Point(292, 302);
             this.monthCalendar.Name = "monthCalendar";
             this.monthCalendar.TabIndex = 233;
             // 
             // buttonSeleccionarFecha
             // 
-            this.buttonSeleccionarFecha.Location = new System.Drawing.Point(467, 219);
+            this.buttonSeleccionarFecha.Location = new System.Drawing.Point(458, 241);
             this.buttonSeleccionarFecha.Name = "buttonSeleccionarFecha";
             this.buttonSeleccionarFecha.Size = new System.Drawing.Size(105, 23);
             this.buttonSeleccionarFecha.TabIndex = 232;
@@ -491,7 +436,7 @@
             // 
             // textBoxFecha
             // 
-            this.textBoxFecha.Location = new System.Drawing.Point(301, 222);
+            this.textBoxFecha.Location = new System.Drawing.Point(292, 244);
             this.textBoxFecha.Name = "textBoxFecha";
             this.textBoxFecha.ReadOnly = true;
             this.textBoxFecha.Size = new System.Drawing.Size(160, 20);
@@ -500,7 +445,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(298, 206);
+            this.label10.Location = new System.Drawing.Point(289, 228);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(119, 13);
             this.label10.TabIndex = 230;
@@ -509,7 +454,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(23, 379);
+            this.label8.Location = new System.Drawing.Point(23, 428);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(56, 13);
             this.label8.TabIndex = 229;
@@ -518,7 +463,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(23, 205);
+            this.label7.Location = new System.Drawing.Point(23, 254);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(65, 13);
             this.label7.TabIndex = 228;
@@ -602,7 +547,7 @@
             // 
             // buttonCrear
             // 
-            this.buttonCrear.Location = new System.Drawing.Point(594, 496);
+            this.buttonCrear.Location = new System.Drawing.Point(594, 512);
             this.buttonCrear.Name = "buttonCrear";
             this.buttonCrear.Size = new System.Drawing.Size(99, 23);
             this.buttonCrear.TabIndex = 219;
@@ -612,7 +557,7 @@
             // 
             // buttonAtras
             // 
-            this.buttonAtras.Location = new System.Drawing.Point(65, 496);
+            this.buttonAtras.Location = new System.Drawing.Point(65, 512);
             this.buttonAtras.Name = "buttonAtras";
             this.buttonAtras.Size = new System.Drawing.Size(75, 23);
             this.buttonAtras.TabIndex = 218;
@@ -623,7 +568,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(566, 278);
+            this.label17.Location = new System.Drawing.Point(566, 314);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(82, 13);
             this.label17.TabIndex = 266;
@@ -633,66 +578,50 @@
             // 
             this.comboBoxRoles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxRoles.FormattingEnabled = true;
-            this.comboBoxRoles.Location = new System.Drawing.Point(569, 292);
+            this.comboBoxRoles.Location = new System.Drawing.Point(569, 328);
             this.comboBoxRoles.Name = "comboBoxRoles";
             this.comboBoxRoles.Size = new System.Drawing.Size(160, 21);
             this.comboBoxRoles.TabIndex = 267;
             // 
+            // labelContraseñaCoinciden
+            // 
+            this.labelContraseñaCoinciden.AutoSize = true;
+            this.labelContraseñaCoinciden.ForeColor = System.Drawing.Color.DarkRed;
+            this.labelContraseñaCoinciden.Location = new System.Drawing.Point(22, 157);
+            this.labelContraseñaCoinciden.Name = "labelContraseñaCoinciden";
+            this.labelContraseñaCoinciden.Size = new System.Drawing.Size(149, 13);
+            this.labelContraseñaCoinciden.TabIndex = 279;
+            this.labelContraseñaCoinciden.Text = "Las contraseñas no coinciden";
+            this.labelContraseñaCoinciden.Visible = false;
+            // 
+            // textBoxContraseña2
+            // 
+            this.textBoxContraseña2.Location = new System.Drawing.Point(26, 134);
+            this.textBoxContraseña2.Name = "textBoxContraseña2";
+            this.textBoxContraseña2.PasswordChar = '*';
+            this.textBoxContraseña2.Size = new System.Drawing.Size(160, 20);
+            this.textBoxContraseña2.TabIndex = 278;
+            // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(566, 354);
+            this.label18.Location = new System.Drawing.Point(23, 120);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(91, 13);
-            this.label18.TabIndex = 268;
-            this.label18.Text = "(*)Hotel asignado:";
-            // 
-            // textBoxHotel
-            // 
-            this.textBoxHotel.Location = new System.Drawing.Point(569, 372);
-            this.textBoxHotel.Name = "textBoxHotel";
-            this.textBoxHotel.ReadOnly = true;
-            this.textBoxHotel.Size = new System.Drawing.Size(160, 20);
-            this.textBoxHotel.TabIndex = 277;
-            // 
-            // labelHotelObligatorio
-            // 
-            this.labelHotelObligatorio.AutoSize = true;
-            this.labelHotelObligatorio.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelHotelObligatorio.Location = new System.Drawing.Point(566, 424);
-            this.labelHotelObligatorio.Name = "labelHotelObligatorio";
-            this.labelHotelObligatorio.Size = new System.Drawing.Size(107, 13);
-            this.labelHotelObligatorio.TabIndex = 278;
-            this.labelHotelObligatorio.Text = "El hotel es obligatorio";
-            this.labelHotelObligatorio.Visible = false;
-            // 
-            // buttonSeleccionarHotel
-            // 
-            this.buttonSeleccionarHotel.Location = new System.Drawing.Point(569, 395);
-            this.buttonSeleccionarHotel.Name = "buttonSeleccionarHotel";
-            this.buttonSeleccionarHotel.Size = new System.Drawing.Size(104, 23);
-            this.buttonSeleccionarHotel.TabIndex = 279;
-            this.buttonSeleccionarHotel.Text = "Seleccionar Hotel";
-            this.buttonSeleccionarHotel.UseVisualStyleBackColor = true;
-            this.buttonSeleccionarHotel.Click += new System.EventHandler(this.buttonSeleccionarHotel_Click);
+            this.label18.Size = new System.Drawing.Size(110, 13);
+            this.label18.TabIndex = 277;
+            this.label18.Text = "(*)Repetir contraseña:";
             // 
             // ModificarUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(767, 547);
-            this.Controls.Add(this.buttonSeleccionarHotel);
-            this.Controls.Add(this.labelHotelObligatorio);
-            this.Controls.Add(this.textBoxHotel);
-            this.Controls.Add(this.labelUsuarioEnUso);
-            this.Controls.Add(this.labelUsuarioInvalido);
+            this.Controls.Add(this.labelContraseñaCoinciden);
+            this.Controls.Add(this.textBoxContraseña2);
+            this.Controls.Add(this.label18);
             this.Controls.Add(this.labelContraseñaObligatoria);
-            this.Controls.Add(this.labelUsuarioObligatorio);
             this.Controls.Add(this.textBoxContraseña);
             this.Controls.Add(this.label14);
-            this.Controls.Add(this.textBoxUsuario);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.label18);
             this.Controls.Add(this.comboBoxRoles);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.checkBoxHabilitado);
@@ -752,14 +681,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Label labelUsuarioEnUso;
-        private System.Windows.Forms.Label labelUsuarioInvalido;
         private System.Windows.Forms.Label labelContraseñaObligatoria;
-        private System.Windows.Forms.Label labelUsuarioObligatorio;
         private System.Windows.Forms.TextBox textBoxContraseña;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox textBoxUsuario;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.CheckBox checkBoxHabilitado;
         private System.Windows.Forms.Label labelCalleObligatoria;
         private System.Windows.Forms.Label labelDireccionObligatoria;
@@ -810,9 +734,8 @@
         private System.Windows.Forms.Button buttonAtras;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.ComboBox comboBoxRoles;
+        private System.Windows.Forms.Label labelContraseñaCoinciden;
+        private System.Windows.Forms.TextBox textBoxContraseña2;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.TextBox textBoxHotel;
-        private System.Windows.Forms.Label labelHotelObligatorio;
-        private System.Windows.Forms.Button buttonSeleccionarHotel;
     }
 }

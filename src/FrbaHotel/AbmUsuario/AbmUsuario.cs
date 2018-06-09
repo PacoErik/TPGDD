@@ -135,7 +135,7 @@ namespace FrbaHotel.AbmUsuario
             sda2.SelectCommand.Parameters.AddWithValue("@usur", dtUsuarios.Rows[index][0]);
             sda2.Fill(dtU);
             this.Hide();
-            f = new ModificarUsuario(dtU, Int32.Parse(dtU.Rows[index][10].ToString()));
+            f = new ModificarUsuario(dtU, Int32.Parse(dtUsuarios.Rows[index][10].ToString()));
             limpiarTodo();
             f.ShowDialog();
         }

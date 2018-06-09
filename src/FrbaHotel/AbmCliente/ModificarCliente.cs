@@ -294,7 +294,7 @@ namespace FrbaHotel.AbmCliente
                 }
                 else
                 {
-                    if(dt4.Rows[0][0] == id.ToString())  //el mail esta en uso pero por ese usuario
+                    if(dt4.Rows[0][0].ToString() == id.ToString())  //el mail esta en uso pero por ese usuario
                     {
                         labelMailEnUso.Visible = Enabled;
                         Valido = false;
