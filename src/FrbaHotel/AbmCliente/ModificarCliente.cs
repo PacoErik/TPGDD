@@ -18,7 +18,6 @@ namespace FrbaHotel.AbmCliente
         bool Valido;
         private SqlCommand command;
         private SqlCommand command2;
-        private SqlConnection con = new SqlConnection(@"Data Source=localhost\SQLSERVER2012;Initial Catalog=GD1C2018;User ID=gdHotel2018;Password=gd2018");
         DataTable dt;
         DataTable dt2 = new DataTable();
         DataTable dt3 = new DataTable();
@@ -32,13 +31,13 @@ namespace FrbaHotel.AbmCliente
 
         public ModificarCliente(Form f, DataTable DataT)
         {
+            UtilesSQL.inicializar();
             id = Int32.Parse(DataT.Rows[0][13].ToString());
             dt = DataT;
             f1 = f;
             InitializeComponent();
             llenarTextBoxs();
         }
-
         private void llenarTextBoxs()
         {
             cargarComboBox();
@@ -60,8 +59,7 @@ namespace FrbaHotel.AbmCliente
         {
             dt2.Clear();
             dt3.Clear();
-            con.Open();
-            command = new SqlCommand("select docu_detalle from DERROCHADORES_DE_PAPEL.Documento", con);
+            command = UtilesSQL.crearCommand("select docu_detalle from DERROCHADORES_DE_PAPEL.Documento");
             SqlDataReader reader;
 
             reader = command.ExecuteReader();
@@ -72,15 +70,13 @@ namespace FrbaHotel.AbmCliente
             comboBoxTipoDocumento.DataSource = dt2;
 
             SqlDataReader reader2;
-            command2 = new SqlCommand("SELECT naci_detalle from DERROCHADORES_DE_PAPEL.Nacionalidad", con);
+            command2 = UtilesSQL.crearCommand("SELECT naci_detalle from DERROCHADORES_DE_PAPEL.Nacionalidad");
             reader2 = command2.ExecuteReader();
             dt3.Columns.Add("naci_detalle", typeof(string));
             dt3.Load(reader2);
 
             comboBoxNacionalidad.ValueMember = "naci_detalle";
             comboBoxNacionalidad.DataSource = dt3;
-
-            con.Close();
         }
 
         private void buttonSeleccionarFecha_Click(object sender, EventArgs e)
@@ -281,7 +277,7 @@ namespace FrbaHotel.AbmCliente
             else
             {
                 dt4.Clear();
-                SqlDataAdapter sda = new SqlDataAdapter("select clie_id from DERROCHADORES_DE_PAPEL.Cliente where clie_mail = @mail", con);
+                SqlDataAdapter sda = UtilesSQL.crearDataAdapter("select clie_id from DERROCHADORES_DE_PAPEL.Cliente where clie_mail = @mail");
                 sda.SelectCommand.Parameters.AddWithValue("@mail", mail);
                 sda.Fill(dt3);
                 if (dt4.Rows.Count == 0) //El mail no esta en uso
@@ -341,8 +337,7 @@ namespace FrbaHotel.AbmCliente
        
         private void realizarCambios()
         {
-            con.Open();
-            command = new SqlCommand("UPDATE DERROCHADORES_DE_PAPEL.Cliente SET clie_nombre = @nom, clie_apellido = @ape, clie_mail = @mail, clie_telefono = @tel, clie_tipoDeDocumento = @doc, clie_numeroDeDocumento = @numeroDoc, clie_calle = @calle, clie_numeroDeCalle = @numCalle, clie_piso = @piso, clie_departamento = @depto, clie_localidad = @loc, clie_nacionalidad = @nac, clie_fechaDeNacimiento = @fecha, clie_habilitado = @habilitado WHERE clie_id = @id", con);
+            command = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Cliente SET clie_nombre = @nom, clie_apellido = @ape, clie_mail = @mail, clie_telefono = @tel, clie_tipoDeDocumento = @doc, clie_numeroDeDocumento = @numeroDoc, clie_calle = @calle, clie_numeroDeCalle = @numCalle, clie_piso = @piso, clie_departamento = @depto, clie_localidad = @loc, clie_nacionalidad = @nac, clie_fechaDeNacimiento = @fecha, clie_habilitado = @habilitado WHERE clie_id = @id");
             command.Parameters.AddWithValue("@nom", textBoxNombre.Text);
             command.Parameters.AddWithValue("@ape", textBoxApellido.Text);
             command.Parameters.AddWithValue("@mail", textBoxMail.Text);
@@ -371,7 +366,6 @@ namespace FrbaHotel.AbmCliente
             command.Parameters.AddWithValue("@habilitado", checkBoxHabilitado.Checked);
             command.Parameters.AddWithValue("@id", id);
             command.ExecuteNonQuery();
-            con.Close();
             MessageBox.Show("Cambios exitosos!");
             f1.Show();
             this.Close();

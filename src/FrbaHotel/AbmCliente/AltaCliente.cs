@@ -23,7 +23,6 @@ namespace FrbaHotel.AbmCliente
         bool deptoNull = false;
         bool locNull = false;
         DataTable dt = new DataTable();
-        DataTable dt3 = new DataTable();
         DataTable dt2 = new DataTable();
         SqlDataReader reader;
         SqlDataReader reader2;
@@ -231,10 +230,10 @@ namespace FrbaHotel.AbmCliente
             }
             else
             {
-                dt3.Clear();
+                DataTable dt3 = new DataTable();
                 SqlDataAdapter sda = UtilesSQL.crearDataAdapter("select clie_id from DERROCHADORES_DE_PAPEL.Cliente where clie_mail = @mail");
                 sda.SelectCommand.Parameters.AddWithValue("@mail", mail);
-                sda.Fill(dt2);
+                sda.Fill(dt3);
                 if (dt3.Rows.Count == 0) //El mail no esta en uso
                 {
                     if (mail == "")

@@ -35,7 +35,7 @@ namespace FrbaHotel.Login
         {
             if (loginsIncorrectos != 0 && usuario != usuarioTextBox.Text) { loginsIncorrectos = 0; }      //reinicia los logins invalidos si trato de logear con otro usuario
             usuario = usuarioTextBox.Text;
-            sda = UtilesSQL.crearDataAdapter("SELECT u.usur_username, u.usur_password, u.usur_habilitado, r.rol_nombre, h.hote_nombre, u.usur_id from DERROCHADORES_DE_PAPEL.Usuario as u  inner join DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel as ruh ON u.usur_id = ruh.rouh_usuario inner join DERROCHADORES_DE_PAPEL.Hotel as h ON h.hote_id = ruh.rouh_hotel inner join DERROCHADORES_DE_PAPEL.Rol as r ON r.rol_id = ruh.rouh_rol WHERE u.usur_username = @usuario GROUP BY u.usur_username, u.usur_password, u.usur_habilitado, r.rol_nombre, h.hote_nombre, u.usur_id");
+            sda = UtilesSQL.crearDataAdapter("SELECT u.usur_username, u.usur_password, u.usur_habilitado, r.rol_nombre, h.hote_nombre, u.usur_id, ruh.rouh_hotel from DERROCHADORES_DE_PAPEL.Usuario as u  inner join DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel as ruh ON u.usur_id = ruh.rouh_usuario inner join DERROCHADORES_DE_PAPEL.Hotel as h ON h.hote_id = ruh.rouh_hotel inner join DERROCHADORES_DE_PAPEL.Rol as r ON r.rol_id = ruh.rouh_rol WHERE u.usur_username = @usuario AND ruh.rouh_habilitado = 1 GROUP BY u.usur_username, u.usur_password, u.usur_habilitado, r.rol_nombre, h.hote_nombre, u.usur_id, ruh.rouh_hotel");
             sda.SelectCommand.Parameters.AddWithValue("@usuario", usuario);
             sda.Fill(dt);
             if (dt.Rows.Count == 0)      //Checkeo que exista el usuario
@@ -98,7 +98,7 @@ namespace FrbaHotel.Login
                     MessageBox.Show("Esta cuenta no tiene ningún rol");
                     break;
                 case 1:
-                    Form f2 = new SeleccionFuncionalidad(this, int.Parse(dt.Rows[0][5].ToString()));
+                    Form f2 = new SeleccionFuncionalidad(this, int.Parse(dt.Rows[0][5].ToString()), dt.Rows[0][6].ToString());
                     f2.Show();
                     break;
                 default:

@@ -15,12 +15,14 @@ namespace FrbaHotel.Login
     {
         Form f1;
         int id;
+        string hotelId;
         SqlCommand com;
         DataSet ds = new DataSet();
         SqlDataAdapter da = new SqlDataAdapter();
 
-        public SeleccionFuncionalidad(Form f, int id_usuario)
+        public SeleccionFuncionalidad(Form f, int id_usuario, string hoteU)
         {
+            hotelId = hoteU;
             id = id_usuario;
             f1 = f;
             UtilesSQL.inicializar();
@@ -30,8 +32,9 @@ namespace FrbaHotel.Login
 
         private void inicializarComboBox()
         {
-            com = UtilesSQL.crearCommand("select f.func_detalle from DERROCHADORES_DE_PAPEL.FuncionalidadXRol as fxr join DERROCHADORES_DE_PAPEL.Funcionalidad as f on f.func_id = fxro_funcionalidad join DERROCHADORES_DE_PAPEL.Rol as r ON r.rol_id = fxr.fxro_rol left join DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel as u ON u.rouh_rol = r.rol_id where u.rouh_usuario = @id group by f.func_detalle");
+            com = UtilesSQL.crearCommand("select f.func_detalle, u.rouh_hotel from DERROCHADORES_DE_PAPEL.FuncionalidadXRol as fxr  join DERROCHADORES_DE_PAPEL.Funcionalidad as f on f.func_id = fxro_funcionalidad  join DERROCHADORES_DE_PAPEL.Rol as r ON r.rol_id = fxr.fxro_rol  left join DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel as u ON u.rouh_rol = r.rol_id  where u.rouh_usuario = @id AND u.rouh_hotel = @hote group by f.func_detalle, u.rouh_hotel");
             com.Parameters.AddWithValue("@id", id);
+            com.Parameters.AddWithValue("@hote", hotelId);
             da.SelectCommand = com;
             da.Fill(ds);
             comboBoxFuncionalidad.DisplayMember = "func_detalle";
@@ -46,7 +49,7 @@ namespace FrbaHotel.Login
         }
         private void Gestion_de_usuarios()
         {
-            Form f1 = new AbmUsuario.AbmUsuario();
+            Form f1 = new AbmUsuario.AbmUsuario(hotelId);
             f1.ShowDialog();
         }
         private void Gestion_de_clientes()
@@ -98,7 +101,7 @@ namespace FrbaHotel.Login
         private void Seleccionar_Click(object sender, EventArgs e)
         {
             this.Hide();
-            switch (comboBoxFuncionalidad.Text)
+            switch (comboBoxFuncionalidad.Text)  //Según la funcionalidad el id del usuario y hotel son necesarios o no
             {
                 case "ABM DE ROL":
                     Gestion_de_roles();

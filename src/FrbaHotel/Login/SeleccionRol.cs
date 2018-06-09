@@ -15,9 +15,11 @@ namespace FrbaHotel.Login
     {
         DataTable dt;
         Form f1;
+        int id;
 
         public SeleccionRol(DataTable dataT, Form f)
         {
+            id = int.Parse(dataT.Rows[0][5].ToString());
             f1 = f;
             dt = dataT;
             InitializeComponent();
@@ -25,26 +27,8 @@ namespace FrbaHotel.Login
         
         private void entrar_Click(object sender, EventArgs e)
         {
-            
-            switch (RolXHotel.CurrentRow.Cells[0].Value.ToString())
-            {
-                case "ADMINISTRADOR GENERAL":
-                    Form f2 = new SeleccionFuncionalidad(this, int.Parse(dt.Rows[0][2].ToString()));
-                    f2.Show();
-                    break;
-                case "ADMINISTRADOR":
-                    Form f5 = new SeleccionFuncionalidad(this, int.Parse(dt.Rows[0][5].ToString()));
-                    f5.Show();
-                    break;
-                case "RECEPCIONISTA":
-                    Form f3 = new SeleccionFuncionalidad(this, int.Parse(dt.Rows[0][5].ToString()));
-                    f3.Show();
-                    break;
-                case "GUEST":
-                    Form f4 = new SeleccionFuncionalidad(this, int.Parse(dt.Rows[0][5].ToString()));
-                    f4.Show();
-                    break;
-            }
+            Form f2 = new SeleccionFuncionalidad(this, id, RolXHotel.CurrentRow.Cells[2].Value.ToString());
+            f2.Show();
             this.Close();
         }
 
@@ -53,6 +37,7 @@ namespace FrbaHotel.Login
             dt.Columns.Remove("usur_habilitado");
             dt.Columns.Remove("usur_password");
             dt.Columns.Remove("usur_username");
+            dt.Columns.Remove("usur_id");
             RolXHotel.DataSource = dt;
         }
 

@@ -15,7 +15,6 @@ namespace FrbaHotel.AbmCliente
     {
         int index;
         private SqlCommand command;
-        private SqlConnection con = new SqlConnection(@"Data Source=localhost\SQLSERVER2012;Initial Catalog=GD1C2018;User ID=gdHotel2018;Password=gd2018");
         DataTable dt = new DataTable();
         DataTable dt2 = new DataTable();
         DataTable dtM = new DataTable();
@@ -25,6 +24,7 @@ namespace FrbaHotel.AbmCliente
 
         public AbmCliente()
         {
+            UtilesSQL.inicializar();
             InitializeComponent();
         }
 
@@ -37,8 +37,8 @@ namespace FrbaHotel.AbmCliente
         {
             limpiarTodo();
             this.Hide();
-            Form f1 = new AltaCliente();
-            f1.ShowDialog();
+            f = new AltaCliente();
+            f.ShowDialog();
             this.Show();
         }
 
@@ -49,6 +49,7 @@ namespace FrbaHotel.AbmCliente
 
         private void buscar_Click(object sender, EventArgs e)
         {
+            dt2.Clear();
             commandString = "SELECT c.clie_nombre, c.clie_apellido, c.clie_mail, c.clie_numeroDeDocumento, d.docu_detalle, c.clie_habilitado FROM DERROCHADORES_DE_PAPEL.Cliente AS c JOIN DERROCHADORES_DE_PAPEL.Documento AS d ON c.clie_tipoDeDocumento = d.docu_tipo WHERE ";
             if (!String.IsNullOrEmpty(textBoxNombre.Text)) 
             { 
@@ -70,14 +71,18 @@ namespace FrbaHotel.AbmCliente
             { 
                 commandString += "d.docu_detalle = @doc and ";
             }
+            if (checkBox.Checked)
+            {
+                commandString += "c.clie_habilitado = @hab and ";
+            }
             commandString += "1=1";
-
-            SqlDataAdapter sda = new SqlDataAdapter(commandString, con);
+            SqlDataAdapter sda = UtilesSQL.crearDataAdapter(commandString);
             sda.SelectCommand.Parameters.AddWithValue("@nom", "%" + textBoxNombre.Text + "%");
             sda.SelectCommand.Parameters.AddWithValue("@ape", "%" + textBoxApellido.Text + "%");
             sda.SelectCommand.Parameters.AddWithValue("@mail", textBoxEmail.Text);
             sda.SelectCommand.Parameters.AddWithValue("@numDoc", textBoxNumeroIdentificacion.Text);
-            sda.SelectCommand.Parameters.AddWithValue("@doc", comboBoxTipoDocumento.Text);
+            sda.SelectCommand.Parameters.AddWithValue("@doc", comboBoxTipoDocumento.SelectedText);
+            sda.SelectCommand.Parameters.AddWithValue("@hab", 1);
             sda.Fill(dt2);
             dataGridViewClientes.DataSource = dt2;
             buttonModificarCliente.Enabled = true;
@@ -92,13 +97,13 @@ namespace FrbaHotel.AbmCliente
         {
             index = dataGridViewClientes.CurrentCell.RowIndex;
             commandString = "SELECT clie_nacionalidad, clie_nombre, clie_apellido, clie_mail, clie_telefono, clie_fechaDeNacimiento, clie_calle, clie_numeroDeCalle, clie_piso, clie_departamento, clie_localidad, clie_tipoDeDocumento, clie_numeroDeDocumento, clie_id FROM DERROCHADORES_DE_PAPEL.Cliente WHERE clie_mail = @mail";
-            SqlDataAdapter sda2 = new SqlDataAdapter(commandString, con);
-            sda2.SelectCommand.Parameters.AddWithValue("@mail", dt2.Rows[0][2]);
+            SqlDataAdapter sda2 = UtilesSQL.crearDataAdapter(commandString);
+            sda2.SelectCommand.Parameters.AddWithValue("@mail", dt2.Rows[index][2]);
             sda2.Fill(dtM);
             this.Hide();
-            Form f1 = new ModificarCliente(this, dtM);
+            f = new ModificarCliente(this, dtM);
             limpiarTodo();
-            f1.ShowDialog();
+            f.ShowDialog();
         }
 
         private void darDeBaja_Click(object sender, EventArgs e)
@@ -107,10 +112,8 @@ namespace FrbaHotel.AbmCliente
             if (confirmResult == DialogResult.Yes)
             {
                 index = dataGridViewClientes.CurrentCell.RowIndex;
-                con.Open();
-                command = new SqlCommand("UPDATE DERROCHADORES_DE_PAPEL.Cliente set clie_habilitado = 0 WHERE clie_mail = '" + dt2.Rows[index][2].ToString() + "'", con);
+                command = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Cliente set clie_habilitado = 0 WHERE clie_mail = '" + dt2.Rows[index][2].ToString() + "'");
                 command.ExecuteNonQuery();
-                con.Close();
                 MessageBox.Show("El usuario ha sido dado de baja");
                 limpiarTodo();
             }
@@ -120,7 +123,6 @@ namespace FrbaHotel.AbmCliente
         {
             limpiarTodo();
         }
-
         private void limpiarTodo()
         {
             textBoxNombre.Clear();
@@ -141,8 +143,7 @@ namespace FrbaHotel.AbmCliente
 
         private void cargarTipoDocumento()
         {
-            con.Open();
-            command = new SqlCommand("select docu_detalle from DERROCHADORES_DE_PAPEL.Documento", con);
+            command = UtilesSQL.crearCommand("select docu_detalle from DERROCHADORES_DE_PAPEL.Documento");
             SqlDataReader reader;
 
             reader = command.ExecuteReader();
@@ -153,8 +154,6 @@ namespace FrbaHotel.AbmCliente
 
             comboBoxTipoDocumento.ValueMember = "docu_detalle";
             comboBoxTipoDocumento.DataSource = dt;
-
-            con.Close();
         }
 
         private void dataGridViewClientes_CellContentClick(object sender, DataGridViewCellEventArgs e)

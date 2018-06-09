@@ -44,6 +44,7 @@
             this.buttonModificarCliente = new System.Windows.Forms.Button();
             this.comboBoxTipoDocumento = new System.Windows.Forms.ComboBox();
             this.dataGridViewClientes = new System.Windows.Forms.DataGridView();
+            this.checkBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewClientes)).BeginInit();
             this.SuspendLayout();
             // 
@@ -195,11 +196,24 @@
             this.dataGridViewClientes.TabIndex = 22;
             this.dataGridViewClientes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewClientes_CellContentClick);
             // 
+            // checkBox
+            // 
+            this.checkBox.AutoSize = true;
+            this.checkBox.Checked = true;
+            this.checkBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox.Location = new System.Drawing.Point(465, 85);
+            this.checkBox.Name = "checkBox";
+            this.checkBox.Size = new System.Drawing.Size(106, 17);
+            this.checkBox.TabIndex = 23;
+            this.checkBox.Text = "Cliente habilitado";
+            this.checkBox.UseVisualStyleBackColor = true;
+            // 
             // AbmCliente
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(683, 582);
+            this.Controls.Add(this.checkBox);
             this.Controls.Add(this.dataGridViewClientes);
             this.Controls.Add(this.comboBoxTipoDocumento);
             this.Controls.Add(this.buttonModificarCliente);
@@ -243,5 +257,6 @@
         private System.Windows.Forms.Button buttonModificarCliente;
         private System.Windows.Forms.ComboBox comboBoxTipoDocumento;
         private System.Windows.Forms.DataGridView dataGridViewClientes;
+        private System.Windows.Forms.CheckBox checkBox;
     }
 }

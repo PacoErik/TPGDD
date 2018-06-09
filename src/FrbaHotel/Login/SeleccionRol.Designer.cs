@@ -37,7 +37,7 @@
             // 
             // Entrar
             // 
-            this.Entrar.Location = new System.Drawing.Point(203, 242);
+            this.Entrar.Location = new System.Drawing.Point(251, 242);
             this.Entrar.Name = "Entrar";
             this.Entrar.Size = new System.Drawing.Size(75, 23);
             this.Entrar.TabIndex = 2;
@@ -68,17 +68,24 @@
             // 
             // RolXHotel
             // 
+            this.RolXHotel.AllowUserToAddRows = false;
+            this.RolXHotel.AllowUserToDeleteRows = false;
+            this.RolXHotel.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.RolXHotel.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.RolXHotel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.RolXHotel.Location = new System.Drawing.Point(41, 38);
             this.RolXHotel.Name = "RolXHotel";
-            this.RolXHotel.Size = new System.Drawing.Size(261, 180);
+            this.RolXHotel.ReadOnly = true;
+            this.RolXHotel.RowTemplate.ReadOnly = true;
+            this.RolXHotel.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.RolXHotel.Size = new System.Drawing.Size(336, 180);
             this.RolXHotel.TabIndex = 4;
             // 
             // SeleccionRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(341, 292);
+            this.ClientSize = new System.Drawing.Size(410, 289);
             this.Controls.Add(this.RolXHotel);
             this.Controls.Add(this.Cancelar);
             this.Controls.Add(this.Entrar);
