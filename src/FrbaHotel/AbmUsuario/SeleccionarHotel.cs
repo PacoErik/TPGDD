@@ -14,7 +14,7 @@ namespace FrbaHotel.AbmUsuario
     public partial class SeleccionarHotel : Form
     {
         public String Hotel { get; set; }
-        SqlDataAdapter sda = UtilesSQL.crearDataAdapter("SELECT hote_nombre, hote_id FROM DERROCHADORES_DE_PAPEL.Hotel");
+        SqlDataAdapter sda = UtilesSQL.crearDataAdapter("SELECT hote_id, hote_nombre, hote_estrellas, hote_ciudad FROM DERROCHADORES_DE_PAPEL.Hotel");
         DataTable dt = new DataTable();
 
         public SeleccionarHotel()
@@ -27,7 +27,7 @@ namespace FrbaHotel.AbmUsuario
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Hotel = Hoteles.CurrentRow.Cells[1].Value.ToString();
+            Hotel = Hoteles.CurrentRow.Cells[0].Value.ToString();
             this.Close();
         }
     }

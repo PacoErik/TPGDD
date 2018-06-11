@@ -74,6 +74,18 @@
     <Compile Include="AbmHabitacion\AbmHabitacion.Designer.cs">
       <DependentUpon>AbmHabitacion.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmHabitacion\AltaHabitacion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmHabitacion\AltaHabitacion.Designer.cs">
+      <DependentUpon>AltaHabitacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmHabitacion\ListadoHabitaciones.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmHabitacion\ListadoHabitaciones.Designer.cs">
+      <DependentUpon>ListadoHabitaciones.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmHotel\AbmHotel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -247,6 +259,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AbmHabitacion\AbmHabitacion.resx">
       <DependentUpon>AbmHabitacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmHabitacion\AltaHabitacion.resx">
+      <DependentUpon>AltaHabitacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmHabitacion\ListadoHabitaciones.resx">
+      <DependentUpon>ListadoHabitaciones.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmHotel\AbmHotel.resx">
       <DependentUpon>AbmHotel.cs</DependentUpon>
