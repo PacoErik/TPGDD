@@ -80,6 +80,30 @@
     <Compile Include="AbmHotel\AbmHotel.Designer.cs">
       <DependentUpon>AbmHotel.cs</DependentUpon>
     </Compile>
+    <Compile Include="AbmHotel\AltaHotel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmHotel\AltaHotel.Designer.cs">
+      <DependentUpon>AltaHotel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmHotel\BajaHotel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmHotel\BajaHotel.Designer.cs">
+      <DependentUpon>BajaHotel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmHotel\ModificarHotel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmHotel\ModificarHotel.Designer.cs">
+      <DependentUpon>ModificarHotel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmHotel\SeleccionarFecha.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmHotel\SeleccionarFecha.Designer.cs">
+      <DependentUpon>SeleccionarFecha.cs</DependentUpon>
+    </Compile>
     <Compile Include="AbmRegimen\AbmRegimen.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -225,6 +249,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AbmHotel\AbmHotel.resx">
       <DependentUpon>AbmHotel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmHotel\AltaHotel.resx">
+      <DependentUpon>AltaHotel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmHotel\BajaHotel.resx">
+      <DependentUpon>BajaHotel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmHotel\ModificarHotel.resx">
+      <DependentUpon>ModificarHotel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmHotel\SeleccionarFecha.resx">
+      <DependentUpon>SeleccionarFecha.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRegimen\AbmRegimen.resx">
       <DependentUpon>AbmRegimen.cs</DependentUpon>

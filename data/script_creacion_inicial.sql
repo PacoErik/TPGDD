@@ -57,6 +57,33 @@ BEGIN CATCH
 END CATCH
 
 GO
+
+-------------------------------------------------------------
+
+CREATE PROCEDURE DERROCHADORES_DE_PAPEL.CrearBajaHotel
+@hotel NUMERIC(18,0),
+@fechaI datetime,
+@fechaF datetime,
+@motivo NVARCHAR(255)
+AS
+	IF NOT EXISTS ( SELECT * FROM DERROCHADORES_DE_PAPEL.Estadia AS e 
+					JOIN DERROCHADORES_DE_PAPEL.Reserva AS r ON r.rese_codigo = e.esta_reserva 
+					WHERE (e.esta_fechaDeFin < @fechaF AND e.esta_fechaDeInicio > @fechaI) 
+					OR (r.rese_fin < @fechaF AND r.rese_inicio > @fechaI) 
+					AND r.rese_hotel = @hotel )
+
+	BEGIN
+		INSERT INTO DERROCHADORES_DE_PAPEL.PeriodoDeCierre (peri_hotel, peri_fechaInicio, peri_fechaFin, peri_motivo)
+		VALUES (@hotel, @fechaI, @fechaF, @motivo)
+		SELECT 1
+	END
+	ELSE
+	BEGIN
+		SELECT 0
+	END
+
+GO
+
 --------------------------------------------------------------
 -------------------Creación de funciones----------------------
 --------------------------------------------------------------
