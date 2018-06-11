@@ -13,13 +13,15 @@ namespace FrbaHotel.Login
 {
     public partial class SeleccionRol : Form
     {
+        public string hoteId { get; set; }
         DataTable dt;
         Form f1;
-        int id;
+        public int idU { get; set; }
+        public bool resultado { get; set; }
 
         public SeleccionRol(DataTable dataT, Form f)
         {
-            id = int.Parse(dataT.Rows[0][5].ToString());
+            idU = int.Parse(dataT.Rows[0][5].ToString());
             f1 = f;
             dt = dataT;
             InitializeComponent();
@@ -27,8 +29,8 @@ namespace FrbaHotel.Login
         
         private void entrar_Click(object sender, EventArgs e)
         {
-            Form f2 = new SeleccionFuncionalidad(this, id, RolXHotel.CurrentRow.Cells[2].Value.ToString());
-            f2.Show();
+            hoteId = RolXHotel.CurrentRow.Cells[2].Value.ToString();
+            resultado = true;
             this.Close();
         }
 
@@ -45,6 +47,7 @@ namespace FrbaHotel.Login
 
         private void Cancelar_Click(object sender, EventArgs e)
         {
+            resultado = false;
             f1.Show();
             this.Close();
         }

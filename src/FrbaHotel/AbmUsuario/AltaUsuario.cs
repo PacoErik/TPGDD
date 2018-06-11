@@ -51,7 +51,7 @@ namespace FrbaHotel.AbmUsuario
             comboBoxRoles.DataSource = dtRol;
         }
 
-        private void resetearTextBox()
+        private void resetearLabels()
         {
             labelNombreInvalido.Visible = false;
             labelMailEnUso.Visible = false;
@@ -349,7 +349,7 @@ namespace FrbaHotel.AbmUsuario
             var confirmResult = MessageBox.Show("Esta seguro que los datos son correctos?", "Esta seguro?", MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.Yes)
             {
-                resetearTextBox();
+                resetearLabels();
                 checkearDatos();
                 if (Valido)
                 {

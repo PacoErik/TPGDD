@@ -64,7 +64,7 @@ namespace FrbaHotel.Login
         }
         private void Gestion_de_hotel()
         {
-            Form f1 = new AbmHotel.AbmHotel();
+            Form f1 = new AbmHotel.AbmHotel(id);
             f1.ShowDialog();
         }
         private void Gestion_de_habitaciones()

@@ -41,6 +41,7 @@
             this.Hoteles.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.Hoteles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.Hoteles.Location = new System.Drawing.Point(12, 12);
+            this.Hoteles.MultiSelect = false;
             this.Hoteles.Name = "Hoteles";
             this.Hoteles.ReadOnly = true;
             this.Hoteles.RowTemplate.ReadOnly = true;

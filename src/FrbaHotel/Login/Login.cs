@@ -40,7 +40,7 @@ namespace FrbaHotel.Login
             sda.Fill(dt);
             if (dt.Rows.Count == 0)      //Checkeo que exista el usuario
             {
-                MessageBox.Show("No existe el usuario o no tiene ningún rol");
+                MessageBox.Show("No existe el usuario o no tiene asignado ningún rol");
             }
             else
             {
@@ -49,7 +49,6 @@ namespace FrbaHotel.Login
                     if (ValidarContraseña(dt))    //checkea que la contraseña sea correcta
                     {
                         LoginCorrecto(sda);
-                        this.Close();
                     }
                      else
                     {
@@ -69,7 +68,7 @@ namespace FrbaHotel.Login
         }
         private bool ValidarUsuario(DataTable dt)
         {
-            return dt.Rows[0][2].ToString() == "True";
+            return dt.Rows[0][2].ToString() == true.ToString();
         }
         private void LoginIncorrecto()
         {
@@ -89,23 +88,31 @@ namespace FrbaHotel.Login
         }
         private void LoginCorrecto(SqlDataAdapter sda)
         {
+            this.Hide();
             ContraseñaTextBox.Clear();
             usuarioTextBox.Clear();
             loginsIncorrectos = 0;
-            switch (dt.Rows.Count)
+            switch (dt.Rows.Count) //Si tiene mas de un rol, pregunta a cual rol quiere loguearse
             {
                 case 0:
                     MessageBox.Show("Esta cuenta no tiene ningún rol");
                     break;
                 case 1:
                     Form f2 = new SeleccionFuncionalidad(this, int.Parse(dt.Rows[0][5].ToString()), dt.Rows[0][6].ToString());
-                    f2.Show();
+                    f2.ShowDialog();
                     break;
                 default:
-                    Form f1 = new SeleccionRol(dt, this);
-                    f1.Show();
+                    SeleccionRol f1 = new SeleccionRol(dt, this);
+                    f1.ShowDialog();
+                    if (f1.resultado) //Se fija que la seleccion de rol fue exitosa
+                    {
+                        Form f3 = new SeleccionFuncionalidad(this, f1.idU, f1.hoteId);
+                        f3.ShowDialog();
+                    }
                     break;
             }
+            this.Close();
+
         }
 
         private void Login_Load(object sender, EventArgs e)
