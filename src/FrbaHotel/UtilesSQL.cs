@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -15,7 +16,7 @@ namespace FrbaHotel
         public UtilesSQL() { }
         public static void inicializar() 
         {
-            conexion = new SqlConnection(@"Data Source=localhost\SQLSERVER2012;Initial Catalog=GD1C2018;User ID=gdHotel2018;Password=gd2018");
+            conexion = new SqlConnection(Properties.Settings.Default["ConexionBaseDeDatos"].ToString());
             conexion.Open();
         }
         public static int ejecutarComandoNonQuery(String sql)

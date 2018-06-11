@@ -12,10 +12,18 @@ namespace FrbaHotel
 {
     public partial class Main : Form
     {
+        static String fechaDelSistema;
+
         public Main()
         {
+            fechaDelSistema = Properties.Settings.Default["fechaDelSistema"].ToString();
             UtilesSQL.inicializar();
             InitializeComponent();
+        }
+
+        public static String fecha()
+        {
+            return fechaDelSistema;
         }
 
         private void Form1_Load(object sender, EventArgs e)
