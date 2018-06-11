@@ -31,6 +31,7 @@
             this.atras = new System.Windows.Forms.Button();
             this.modificacion = new System.Windows.Forms.Button();
             this.alta = new System.Windows.Forms.Button();
+            this.baja = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // atras
@@ -47,7 +48,7 @@
             // 
             // modificacion
             // 
-            this.modificacion.Location = new System.Drawing.Point(73, 128);
+            this.modificacion.Location = new System.Drawing.Point(73, 108);
             this.modificacion.Name = "modificacion";
             this.modificacion.Size = new System.Drawing.Size(141, 23);
             this.modificacion.TabIndex = 7;
@@ -57,7 +58,7 @@
             // 
             // alta
             // 
-            this.alta.Location = new System.Drawing.Point(73, 70);
+            this.alta.Location = new System.Drawing.Point(73, 49);
             this.alta.Name = "alta";
             this.alta.Size = new System.Drawing.Size(141, 23);
             this.alta.TabIndex = 5;
@@ -65,11 +66,22 @@
             this.alta.UseVisualStyleBackColor = true;
             this.alta.Click += new System.EventHandler(this.alta_Click);
             // 
+            // baja
+            // 
+            this.baja.Location = new System.Drawing.Point(73, 166);
+            this.baja.Name = "baja";
+            this.baja.Size = new System.Drawing.Size(141, 23);
+            this.baja.TabIndex = 10;
+            this.baja.Text = "Eliminar reserva";
+            this.baja.UseVisualStyleBackColor = true;
+            this.baja.Click += new System.EventHandler(this.baja_Click);
+            // 
             // GenerarModificacionReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.baja);
             this.Controls.Add(this.atras);
             this.Controls.Add(this.modificacion);
             this.Controls.Add(this.alta);
@@ -84,5 +96,6 @@
         private System.Windows.Forms.Button atras;
         private System.Windows.Forms.Button modificacion;
         private System.Windows.Forms.Button alta;
+        private System.Windows.Forms.Button baja;
     }
 }
