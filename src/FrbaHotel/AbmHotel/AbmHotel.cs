@@ -93,10 +93,9 @@ namespace FrbaHotel.AbmHotel
         private void buttonModificarHotel_Click(object sender, EventArgs e)
         {
             DataTable dtH = new DataTable();
-            int index = dataGridViewHoteles.CurrentCell.RowIndex;
             string commandString = "SELECT * FROM DERROCHADORES_DE_PAPEL.Hotel WHERE hote_id = @id";
             SqlDataAdapter sda = UtilesSQL.crearDataAdapter(commandString);
-            sda.SelectCommand.Parameters.AddWithValue("@id", dtHoteles.Rows[index][0]);
+            sda.SelectCommand.Parameters.AddWithValue("@id", dataGridViewHoteles.CurrentRow.Cells[0]);
             sda.Fill(dtH);
             this.Hide();
             Form f = new ModificarHotel(dtH);
@@ -108,10 +107,9 @@ namespace FrbaHotel.AbmHotel
         private void buttonBajaHotel_Click(object sender, EventArgs e)
         {
             DataTable dtH = new DataTable();
-            int index = dataGridViewHoteles.CurrentCell.RowIndex;
             string commandString = "SELECT hote_id FROM DERROCHADORES_DE_PAPEL.Hotel WHERE hote_id = @id";
             SqlDataAdapter sda = UtilesSQL.crearDataAdapter(commandString);
-            sda.SelectCommand.Parameters.AddWithValue("@id", dtHoteles.Rows[index][0]);
+            sda.SelectCommand.Parameters.AddWithValue("@id", dataGridViewHoteles.CurrentRow.Cells[0]);
             sda.Fill(dtH);
             this.Hide();
             Form f = new BajaHotel(Int32.Parse(dtH.Rows[0][0].ToString()));
