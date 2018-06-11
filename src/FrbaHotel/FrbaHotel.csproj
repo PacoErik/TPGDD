@@ -158,6 +158,7 @@
     <Compile Include="GenerarModificacionReserva\GenerarReserva.Designer.cs">
       <DependentUpon>GenerarReserva.cs</DependentUpon>
     </Compile>
+    <Compile Include="GenerarModificacionReserva\Reserva.cs" />
     <Compile Include="Login\SeleccionFuncionalidad.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -29,7 +29,18 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         private void modificacion_Click(object sender, EventArgs e)
         {
+            this.Hide();
+            Form reserva = new GenerarModificacionReserva(this);
+            reserva.ShowDialog();
+            this.Show();
+        }
 
+        private void baja_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Form reserva = new CancelarReserva.CancelarReserva();
+            reserva.ShowDialog();
+            this.Show();
         }
 
         private void atras_Click(object sender, EventArgs e)
@@ -37,5 +48,7 @@ namespace FrbaHotel.GenerarModificacionReserva
             this.invocador.Show();
             this.Close();
         }
+
+
     }
 }
