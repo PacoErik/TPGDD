@@ -46,19 +46,20 @@ namespace FrbaHotel.AbmRol
             if (e.ColumnIndex == 0 && e.RowIndex >= 0)
             {
                 funcionalidades_dt.Clear();
-                UtilesSQL.llenarTabla(funcionalidades_dt, "SELECT func_id Funcionalidad, func_detalle Detalle FROM DERROCHADORES_DE_PAPEL.Funcionalidad JOIN DERROCHADORES_DE_PAPEL.FuncionalidadXRol ON fxro_funcionalidad = func_id AND fxro_rol = " + roles_dt.Rows[e.RowIndex]["Rol"].ToString());
+                UtilesSQL.llenarTabla(funcionalidades_dt, "SELECT func_id Funcionalidad, func_detalle Detalle FROM DERROCHADORES_DE_PAPEL.Funcionalidad JOIN DERROCHADORES_DE_PAPEL.FuncionalidadXRol ON fxro_funcionalidad = func_id AND fxro_rol = " + roles.Rows[e.RowIndex].Cells["Rol"].Value.ToString());
             }
             //Confirmar que el usuario quiere deshabilitar el rol cuando aprieta en la columna Eliminar
             else if (e.ColumnIndex == 3 && e.RowIndex >= 0)
             {
-                String nombre_rol = roles_dt.Rows[e.RowIndex]["Nombre"].ToString();
+                DataRow rol = ((DataRowView)roles.Rows[e.RowIndex].DataBoundItem).Row;
+                String nombre_rol = rol["Nombre"].ToString();
                 if (MessageBox.Show("¿Está seguro de que quiere eliminar el rol "+nombre_rol+"?", "Eliminar el rol", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    int resultado = UtilesSQL.ejecutarComandoNonQuery("DERROCHADORES_DE_PAPEL.EliminarRol " + roles_dt.Rows[e.RowIndex]["Rol"].ToString());
+                    int resultado = UtilesSQL.ejecutarComandoNonQuery("DERROCHADORES_DE_PAPEL.EliminarRol " + rol["Rol"].ToString());
                     if (resultado > 0)
                     {
                         funcionalidades_dt.Clear();
-                        roles_dt.Rows.RemoveAt(e.RowIndex);
+                        roles_dt.Rows.Remove(rol);
                         MessageBox.Show("Se eliminó satisfactoriamente el rol " + nombre_rol);
                     }
                     else
