@@ -15,7 +15,7 @@ namespace FrbaHotel.Login
     {
         Form f1;
         int id;
-        string hotelId;
+        static string hotelId;
         SqlCommand com;
         DataSet ds = new DataSet();
         SqlDataAdapter da = new SqlDataAdapter();
@@ -28,6 +28,11 @@ namespace FrbaHotel.Login
             UtilesSQL.inicializar();
             InitializeComponent();
             inicializarComboBox();
+        }
+
+        public static string getHotelId() 
+        {
+            return hotelId;
         }
 
         private void inicializarComboBox()
