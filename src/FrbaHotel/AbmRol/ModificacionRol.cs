@@ -36,14 +36,17 @@ namespace FrbaHotel.AbmRol
 
         private void roles_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            DataGridViewRow rol = roles.Rows[e.RowIndex];
-            if (e.ColumnIndex == 3 && MessageBox.Show("¿Está seguro de que quiere modificar el rol?", "Modificar el rol", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (e.RowIndex >= 0)
             {
-                DataTable funcionalidades_dt = new DataTable();
-                UtilesSQL.llenarTabla(funcionalidades_dt, "SELECT func_id, func_detalle FROM DERROCHADORES_DE_PAPEL.Funcionalidad JOIN DERROCHADORES_DE_PAPEL.FuncionalidadXRol ON func_id = fxro_funcionalidad AND fxro_rol = " + rol.Cells["Rol"].Value.ToString());
-                new ModificacionRolElegido(rol.Cells["Rol"].Value.ToString(), rol.Cells["Nombre"].Value.ToString(), rol.Cells["Estado"].Value.ToString(), funcionalidades_dt).Show();
-                roles_dt.Clear();
-            }   
+                DataGridViewRow rol = roles.Rows[e.RowIndex];
+                if (e.ColumnIndex == 3 && MessageBox.Show("¿Está seguro de que quiere modificar el rol?", "Modificar el rol", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    DataTable funcionalidades_dt = new DataTable();
+                    UtilesSQL.llenarTabla(funcionalidades_dt, "SELECT func_id, func_detalle FROM DERROCHADORES_DE_PAPEL.Funcionalidad JOIN DERROCHADORES_DE_PAPEL.FuncionalidadXRol ON func_id = fxro_funcionalidad AND fxro_rol = " + rol.Cells["Rol"].Value.ToString());
+                    new ModificacionRolElegido(rol.Cells["Rol"].Value.ToString(), rol.Cells["Nombre"].Value.ToString(), rol.Cells["Estado"].Value.ToString(), funcionalidades_dt).Show();
+                    roles_dt.Clear();
+                }   
+            }
         }
     }
 }

@@ -160,8 +160,9 @@ namespace FrbaHotel.AbmRol
         {
             if (e.RowIndex >= 0 && disponibles_dt.Rows.Count > 0)
             {
-                actuales_dt.Rows.Add(disponibles_dt.Rows[e.RowIndex].ItemArray);
-                disponibles_dt.Rows.RemoveAt(e.RowIndex);
+                DataRow funcionalidad = ((DataRowView)disponibles.Rows[e.RowIndex].DataBoundItem).Row;
+                actuales_dt.Rows.Add(funcionalidad.ItemArray);
+                disponibles_dt.Rows.Remove(funcionalidad);
             }
         }
 
@@ -169,8 +170,9 @@ namespace FrbaHotel.AbmRol
         {
             if (e.RowIndex >= 0 && actuales_dt.Rows.Count > 0)
             {
-                disponibles_dt.Rows.Add(actuales_dt.Rows[e.RowIndex].ItemArray);
-                actuales_dt.Rows.RemoveAt(e.RowIndex);
+                DataRow funcionalidad = ((DataRowView)actuales.Rows[e.RowIndex].DataBoundItem).Row;
+                disponibles_dt.Rows.Add(funcionalidad.ItemArray);
+                actuales_dt.Rows.Remove(funcionalidad);
             }
         }
     }

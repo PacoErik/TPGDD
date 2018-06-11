@@ -1,5 +1,4 @@
-﻿
---------------------------------------------------------------
+﻿--------------------------------------------------------------
 -------------------Creación del esquema-----------------------
 --------------------------------------------------------------
 
@@ -41,16 +40,16 @@ BEGIN TRY
 	COMMIT TRAN ta
 
 	IF EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel WHERE rouh_usuario = @user AND rouh_hotel = @hotel AND rouh_rol = @rol)
-		BEGIN
-			UPDATE DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel 
-			SET rouh_habilitado = 1
-			WHERE rouh_usuario = @user AND rouh_hotel = @hotel AND rouh_rol = @rol
-		END
-	ELSE
-		BEGIN
-			INSERT INTO DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel
-			VALUES (@rol, @user, @hotel, 1)
-		END
+	BEGIN
+		UPDATE DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel 
+		SET rouh_habilitado = 1
+		WHERE rouh_usuario = @user AND rouh_hotel = @hotel AND rouh_rol = @rol
+	END
+ELSE
+	BEGIN
+		INSERT INTO DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel
+		VALUES (@rol, @user, @hotel, 1)
+	END
 END TRY
 BEGIN CATCH
 	ROLLBACK TRANSACTION;
@@ -134,7 +133,7 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.Consumible (
 )
 CREATE TABLE DERROCHADORES_DE_PAPEL.Rol (
 	rol_id NUMERIC(18,0) IDENTITY(1,1) NOT NULL,
-	rol_nombre NVARCHAR(50) NOT NULL,
+	rol_nombre NVARCHAR(50) NOT NULL UNIQUE,
 	rol_activo BIT NOT NULL,
 	PRIMARY KEY (rol_id)
 )
@@ -313,6 +312,8 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.ItemDeFactura (
 	item_factura NUMERIC(18,0) NOT NULL,
 	item_descripcion NVARCHAR(50) NOT NULL,
 	item_consumible NUMERIC(18,0),
+	item_habitacionNumero NUMERIC(18,0) NOT NULL,
+	item_habitacionPiso NUMERIC(18,0) NOT NULL,
 	PRIMARY KEY (item_id),
 	FOREIGN KEY (item_factura) REFERENCES DERROCHADORES_DE_PAPEL.Factura(fact_numero),
 	FOREIGN KEY (item_consumible) REFERENCES DERROCHADORES_DE_PAPEL.Consumible(cons_codigo)
@@ -563,8 +564,8 @@ GO
 
 -- Item de factura - Carga automatica
 
-INSERT INTO DERROCHADORES_DE_PAPEL.ItemDeFactura (item_cantidad, item_monto, item_factura, item_descripcion, item_consumible)
-	SELECT Item_Factura_Monto, Item_Factura_Cantidad, Factura_Nro, (CASE WHEN Consumible_Codigo IS NULL THEN 'Hospedaje' ELSE STR(Item_Factura_Monto)+'x '+Consumible_Descripcion END), (CASE WHEN Consumible_Codigo IS NULL THEN NULL ELSE (SELECT cons_codigo FROM DERROCHADORES_DE_PAPEL.Consumible WHERE cons_detalle = Consumible_Descripcion) END)
+INSERT INTO DERROCHADORES_DE_PAPEL.ItemDeFactura (item_cantidad, item_monto, item_factura, item_descripcion, item_consumible, item_habitacionNumero, item_habitacionPiso)
+	SELECT Item_Factura_Monto, Item_Factura_Cantidad, Factura_Nro, (CASE WHEN Consumible_Codigo IS NULL THEN 'Hospedaje' ELSE STR(Item_Factura_Monto)+'x '+Consumible_Descripcion END), (CASE WHEN Consumible_Codigo IS NULL THEN NULL ELSE (SELECT cons_codigo FROM DERROCHADORES_DE_PAPEL.Consumible WHERE cons_detalle = Consumible_Descripcion) END), Habitacion_Numero, Habitacion_Piso
 	FROM gd_esquema.Maestra 
 	WHERE Factura_Nro IS NOT NULL
 	ORDER BY Factura_Nro
