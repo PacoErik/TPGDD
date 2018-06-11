@@ -47,7 +47,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.cbox_tipo_identificacion = new System.Windows.Forms.ComboBox();
             this.txtbox_identificacion = new System.Windows.Forms.TextBox();
             this.txtbox_mail = new System.Windows.Forms.TextBox();
             this.btn_reservar = new System.Windows.Forms.Button();
@@ -63,6 +62,9 @@
             this.cbox_seleccionadas = new System.Windows.Forms.ComboBox();
             this.btn_agregar_habitacion = new System.Windows.Forms.Button();
             this.btn_eliminar_habitacion = new System.Windows.Forms.Button();
+            this.cbox_tipo_identificacion = new System.Windows.Forms.ComboBox();
+            this.lbl_falta_habitaciones_2 = new System.Windows.Forms.Label();
+            this.lbl_falta_habitaciones_1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.grid_hoteles)).BeginInit();
             this.SuspendLayout();
             // 
@@ -183,7 +185,7 @@
             // 
             // atras_Button
             // 
-            this.atras_Button.Location = new System.Drawing.Point(15, 679);
+            this.atras_Button.Location = new System.Drawing.Point(12, 788);
             this.atras_Button.Name = "atras_Button";
             this.atras_Button.Size = new System.Drawing.Size(75, 23);
             this.atras_Button.TabIndex = 22;
@@ -236,22 +238,12 @@
             this.label14.TabIndex = 27;
             this.label14.Text = "Mail";
             // 
-            // cbox_tipo_identificacion
-            // 
-            this.cbox_tipo_identificacion.FormattingEnabled = true;
-            this.cbox_tipo_identificacion.Location = new System.Drawing.Point(29, 605);
-            this.cbox_tipo_identificacion.Name = "cbox_tipo_identificacion";
-            this.cbox_tipo_identificacion.Size = new System.Drawing.Size(91, 21);
-            this.cbox_tipo_identificacion.TabIndex = 28;
-            this.cbox_tipo_identificacion.SelectedIndexChanged += new System.EventHandler(this.cbox_tipo_identificacion_SelectedIndexChanged);
-            // 
             // txtbox_identificacion
             // 
             this.txtbox_identificacion.Location = new System.Drawing.Point(156, 605);
             this.txtbox_identificacion.Name = "txtbox_identificacion";
             this.txtbox_identificacion.Size = new System.Drawing.Size(176, 20);
             this.txtbox_identificacion.TabIndex = 29;
-            this.txtbox_identificacion.TextChanged += new System.EventHandler(this.txtbox_identificacion_TextChanged);
             // 
             // txtbox_mail
             // 
@@ -259,7 +251,6 @@
             this.txtbox_mail.Name = "txtbox_mail";
             this.txtbox_mail.Size = new System.Drawing.Size(414, 20);
             this.txtbox_mail.TabIndex = 30;
-            this.txtbox_mail.TextChanged += new System.EventHandler(this.txtbox_mail_TextChanged);
             // 
             // btn_reservar
             // 
@@ -388,11 +379,41 @@
             this.btn_eliminar_habitacion.UseVisualStyleBackColor = true;
             this.btn_eliminar_habitacion.Click += new System.EventHandler(this.btn_eliminar_habitacion_Click);
             // 
+            // cbox_tipo_identificacion
+            // 
+            this.cbox_tipo_identificacion.FormattingEnabled = true;
+            this.cbox_tipo_identificacion.Location = new System.Drawing.Point(29, 605);
+            this.cbox_tipo_identificacion.Name = "cbox_tipo_identificacion";
+            this.cbox_tipo_identificacion.Size = new System.Drawing.Size(91, 21);
+            this.cbox_tipo_identificacion.TabIndex = 28;
+            // 
+            // lbl_falta_habitaciones_2
+            // 
+            this.lbl_falta_habitaciones_2.AutoSize = true;
+            this.lbl_falta_habitaciones_2.ForeColor = System.Drawing.Color.Red;
+            this.lbl_falta_habitaciones_2.Location = new System.Drawing.Point(231, 547);
+            this.lbl_falta_habitaciones_2.Name = "lbl_falta_habitaciones_2";
+            this.lbl_falta_habitaciones_2.Size = new System.Drawing.Size(269, 13);
+            this.lbl_falta_habitaciones_2.TabIndex = 44;
+            this.lbl_falta_habitaciones_2.Text = "NO ALCANZAN PARA LA CANTIDAD DE PERSONAS";
+            // 
+            // lbl_falta_habitaciones_1
+            // 
+            this.lbl_falta_habitaciones_1.AutoSize = true;
+            this.lbl_falta_habitaciones_1.ForeColor = System.Drawing.Color.Red;
+            this.lbl_falta_habitaciones_1.Location = new System.Drawing.Point(231, 534);
+            this.lbl_falta_habitaciones_1.Name = "lbl_falta_habitaciones_1";
+            this.lbl_falta_habitaciones_1.Size = new System.Drawing.Size(201, 13);
+            this.lbl_falta_habitaciones_1.TabIndex = 45;
+            this.lbl_falta_habitaciones_1.Text = "LAS HABITACIONES SELECCIONADAS";
+            // 
             // GenerarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(518, 823);
+            this.Controls.Add(this.lbl_falta_habitaciones_1);
+            this.Controls.Add(this.lbl_falta_habitaciones_2);
             this.Controls.Add(this.btn_eliminar_habitacion);
             this.Controls.Add(this.btn_agregar_habitacion);
             this.Controls.Add(this.label7);
@@ -430,6 +451,7 @@
             this.Controls.Add(this.date_desde);
             this.Name = "GenerarReserva";
             this.Text = "Generar reserva";
+            this.Load += new System.EventHandler(this.GenerarReserva_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grid_hoteles)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -457,7 +479,6 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.ComboBox cbox_tipo_identificacion;
         private System.Windows.Forms.TextBox txtbox_identificacion;
         private System.Windows.Forms.TextBox txtbox_mail;
         private System.Windows.Forms.Button btn_reservar;
@@ -473,5 +494,8 @@
         private System.Windows.Forms.ComboBox cbox_seleccionadas;
         private System.Windows.Forms.Button btn_agregar_habitacion;
         private System.Windows.Forms.Button btn_eliminar_habitacion;
+        private System.Windows.Forms.ComboBox cbox_tipo_identificacion;
+        private System.Windows.Forms.Label lbl_falta_habitaciones_2;
+        private System.Windows.Forms.Label lbl_falta_habitaciones_1;
     }
 }
