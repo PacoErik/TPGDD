@@ -101,6 +101,7 @@ namespace FrbaHotel.AbmRol
             }
 
             MessageBox.Show("Se agregó el rol con éxito");
+            this.Close();
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)

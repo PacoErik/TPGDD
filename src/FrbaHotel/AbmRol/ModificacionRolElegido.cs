@@ -21,7 +21,7 @@ namespace FrbaHotel.AbmRol
         DataTable funcionalidades_inicial;
         DataTable funcionalidades;
             
-        public ModificacionRolElegido(String idRol, String nombre, String estado, DataTable funcionalidadesRol)
+        public ModificacionRolElegido(String idRol, String nombre, String estado)
         {
             InitializeComponent();
 
@@ -31,10 +31,11 @@ namespace FrbaHotel.AbmRol
             estado_inicial = estado; 
 
             habilitado.Checked = estado.Equals("Habilitado");
-            funcionalidades_inicial = funcionalidadesRol;
 
             funcionalidades = new DataTable();
             UtilesSQL.llenarTabla(funcionalidades, "SELECT * FROM DERROCHADORES_DE_PAPEL.Funcionalidad WHERE func_detalle != \'ABM DE USUARIO\'" );
+            funcionalidades_inicial = new DataTable();
+            UtilesSQL.llenarTabla(funcionalidades_inicial, "SELECT func_id, func_detalle FROM DERROCHADORES_DE_PAPEL.Funcionalidad JOIN DERROCHADORES_DE_PAPEL.FuncionalidadXRol ON func_id = fxro_funcionalidad AND fxro_rol = "+idRol);
 
             actuales_dt = new DataTable();
             disponibles_dt = new DataTable();
