@@ -13,7 +13,6 @@ namespace FrbaHotel.AbmUsuario
 {
     public partial class AbmUsuario : Form
     {
-        int index;
         Form f;
         string hotelId;
         SqlCommand command;
@@ -131,10 +130,10 @@ namespace FrbaHotel.AbmUsuario
             DataTable dtU = new DataTable();
             commandString = "SELECT * FROM DERROCHADORES_DE_PAPEL.Usuario WHERE usur_username = @usur";
             SqlDataAdapter sda2 = UtilesSQL.crearDataAdapter(commandString);
-            sda2.SelectCommand.Parameters.AddWithValue("@usur", dtUsuarios.Rows[index][0]);
+            sda2.SelectCommand.Parameters.AddWithValue("@usur", dataGridViewUsuarios.CurrentRow.Cells[10].Value);
             sda2.Fill(dtU);
             this.Hide();
-            f = new ModificarUsuario(dtU, Int32.Parse(dataGridViewUsuarios.CurrentRow.Cells[10].ToString()));
+            f = new ModificarUsuario(dtU, Int32.Parse(dataGridViewUsuarios.CurrentRow.Cells[10].Value.ToString()));
             limpiarTodo();
             f.ShowDialog();
         }

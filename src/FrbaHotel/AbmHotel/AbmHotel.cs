@@ -83,7 +83,7 @@ namespace FrbaHotel.AbmHotel
             sda.SelectCommand.Parameters.AddWithValue("@nombre", "%" + textBoxNombre.Text + "%");
             sda.SelectCommand.Parameters.AddWithValue("@pais", "%" + textBoxPais.Text + "%");
             sda.SelectCommand.Parameters.AddWithValue("@ciudad", "%" + textBoxCiudad.Text + "%");
-            sda.SelectCommand.Parameters.AddWithValue("@est", comboBoxEstrellas.SelectedIndex + 1);
+            sda.SelectCommand.Parameters.AddWithValue("@est", comboBoxEstrellas.SelectedIndex - 1);
             sda.Fill(dtHoteles);
             dataGridViewHoteles.DataSource = dtHoteles;
             buttonModificarHotel.Enabled = true;
@@ -95,7 +95,7 @@ namespace FrbaHotel.AbmHotel
             DataTable dtH = new DataTable();
             string commandString = "SELECT * FROM DERROCHADORES_DE_PAPEL.Hotel WHERE hote_id = @id";
             SqlDataAdapter sda = UtilesSQL.crearDataAdapter(commandString);
-            sda.SelectCommand.Parameters.AddWithValue("@id", dataGridViewHoteles.CurrentRow.Cells[0]);
+            sda.SelectCommand.Parameters.AddWithValue("@id", dataGridViewHoteles.CurrentRow.Cells[0].Value);
             sda.Fill(dtH);
             this.Hide();
             Form f = new ModificarHotel(dtH);
@@ -109,7 +109,7 @@ namespace FrbaHotel.AbmHotel
             DataTable dtH = new DataTable();
             string commandString = "SELECT hote_id FROM DERROCHADORES_DE_PAPEL.Hotel WHERE hote_id = @id";
             SqlDataAdapter sda = UtilesSQL.crearDataAdapter(commandString);
-            sda.SelectCommand.Parameters.AddWithValue("@id", dataGridViewHoteles.CurrentRow.Cells[0]);
+            sda.SelectCommand.Parameters.AddWithValue("@id", dataGridViewHoteles.CurrentRow.Cells[0].Value);
             sda.Fill(dtH);
             this.Hide();
             Form f = new BajaHotel(Int32.Parse(dtH.Rows[0][0].ToString()));

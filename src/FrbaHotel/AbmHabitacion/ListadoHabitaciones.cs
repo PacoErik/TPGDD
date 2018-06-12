@@ -114,7 +114,7 @@ namespace FrbaHotel.AbmHabitacion
         {
             DataTable dt = new DataTable();
             SqlDataAdapter sda2 = UtilesSQL.crearDataAdapter("SELECT * FROM DERROCHADORES_DE_PAPEL.Habitacion AS h JOIN DERROCHADORES_DE_PAPEL.TipoDeHabitacion AS ta ON h.habi_tipo = ta.tipo_codigo WHERE h.habi_numero = @num AND h.habi_hotel = @hotel");
-            sda2.SelectCommand.Parameters.AddWithValue("@num", dataGridViewHabitaciones.CurrentRow.Cells[0]);
+            sda2.SelectCommand.Parameters.AddWithValue("@num", dataGridViewHabitaciones.CurrentRow.Cells[0].Value);
             sda2.SelectCommand.Parameters.AddWithValue("@hotel", idH);
             sda2.Fill(dt);
             this.Hide();

@@ -40,6 +40,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.buttonCancelar = new System.Windows.Forms.Button();
             this.buttonAceptar = new System.Windows.Forms.Button();
+            this.labelFechaInvalida3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // labelFechaInvalida
@@ -159,11 +160,23 @@
             this.buttonAceptar.UseVisualStyleBackColor = true;
             this.buttonAceptar.Click += new System.EventHandler(this.buttonAceptar_Click);
             // 
+            // labelFechaInvalida3
+            // 
+            this.labelFechaInvalida3.AutoSize = true;
+            this.labelFechaInvalida3.ForeColor = System.Drawing.Color.DarkRed;
+            this.labelFechaInvalida3.Location = new System.Drawing.Point(69, 154);
+            this.labelFechaInvalida3.Name = "labelFechaInvalida3";
+            this.labelFechaInvalida3.Size = new System.Drawing.Size(269, 13);
+            this.labelFechaInvalida3.TabIndex = 247;
+            this.labelFechaInvalida3.Text = "La fecha de finalizacion debe ser menor que la de inicio";
+            this.labelFechaInvalida3.Visible = false;
+            // 
             // BajaHotel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(494, 400);
+            this.Controls.Add(this.labelFechaInvalida3);
             this.Controls.Add(this.buttonAceptar);
             this.Controls.Add(this.buttonCancelar);
             this.Controls.Add(this.label1);
@@ -197,5 +210,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonCancelar;
         private System.Windows.Forms.Button buttonAceptar;
+        private System.Windows.Forms.Label labelFechaInvalida3;
     }
 }
