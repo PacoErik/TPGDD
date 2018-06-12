@@ -53,7 +53,7 @@
             this.lbl_error_fecha = new System.Windows.Forms.Label();
             this.txtbox_personas = new System.Windows.Forms.TextBox();
             this.lbl_error_personas = new System.Windows.Forms.Label();
-            this.btn_cargar_hoteles = new System.Windows.Forms.Button();
+            this.btn_cargar_opciones = new System.Windows.Forms.Button();
             this.lbl_error_carga_hotel = new System.Windows.Forms.Label();
             this.grid_hoteles = new System.Windows.Forms.DataGridView();
             this.cbox_disponibles = new System.Windows.Forms.ComboBox();
@@ -294,15 +294,15 @@
             this.lbl_error_personas.TabIndex = 34;
             this.lbl_error_personas.Text = "ENTRADA INVALIDA";
             // 
-            // btn_cargar_hoteles
+            // btn_cargar_opciones
             // 
-            this.btn_cargar_hoteles.Location = new System.Drawing.Point(384, 103);
-            this.btn_cargar_hoteles.Name = "btn_cargar_hoteles";
-            this.btn_cargar_hoteles.Size = new System.Drawing.Size(116, 23);
-            this.btn_cargar_hoteles.TabIndex = 35;
-            this.btn_cargar_hoteles.Text = "Cargar hoteles";
-            this.btn_cargar_hoteles.UseVisualStyleBackColor = true;
-            this.btn_cargar_hoteles.Click += new System.EventHandler(this.btn_cargar_hoteles_Click);
+            this.btn_cargar_opciones.Location = new System.Drawing.Point(384, 103);
+            this.btn_cargar_opciones.Name = "btn_cargar_opciones";
+            this.btn_cargar_opciones.Size = new System.Drawing.Size(116, 23);
+            this.btn_cargar_opciones.TabIndex = 35;
+            this.btn_cargar_opciones.Text = "Cargar opciones";
+            this.btn_cargar_opciones.UseVisualStyleBackColor = true;
+            this.btn_cargar_opciones.Click += new System.EventHandler(this.btn_cargar_opciones_Click);
             // 
             // lbl_error_carga_hotel
             // 
@@ -327,7 +327,6 @@
             this.grid_hoteles.ReadOnly = true;
             this.grid_hoteles.Size = new System.Drawing.Size(488, 254);
             this.grid_hoteles.TabIndex = 37;
-            this.grid_hoteles.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_hoteles_CellContentClick);
             // 
             // cbox_disponibles
             // 
@@ -470,7 +469,7 @@
             this.Controls.Add(this.cbox_disponibles);
             this.Controls.Add(this.grid_hoteles);
             this.Controls.Add(this.lbl_error_carga_hotel);
-            this.Controls.Add(this.btn_cargar_hoteles);
+            this.Controls.Add(this.btn_cargar_opciones);
             this.Controls.Add(this.lbl_error_personas);
             this.Controls.Add(this.txtbox_personas);
             this.Controls.Add(this.lbl_error_fecha);
@@ -533,7 +532,7 @@
         private System.Windows.Forms.Label lbl_error_fecha;
         private System.Windows.Forms.TextBox txtbox_personas;
         private System.Windows.Forms.Label lbl_error_personas;
-        private System.Windows.Forms.Button btn_cargar_hoteles;
+        private System.Windows.Forms.Button btn_cargar_opciones;
         private System.Windows.Forms.Label lbl_error_carga_hotel;
         private System.Windows.Forms.DataGridView grid_hoteles;
         private System.Windows.Forms.ComboBox cbox_disponibles;

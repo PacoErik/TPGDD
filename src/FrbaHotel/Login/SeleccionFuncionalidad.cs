@@ -79,7 +79,7 @@ namespace FrbaHotel.Login
         }
         private void Cancelar_reserva()
         {
-            Form f1 = new CancelarReserva.CancelarReserva();
+            Form f1 = new CancelarReserva.CancelarReserva(idUser, hotelId);
             this.Hide();
             f1.ShowDialog();
             this.Show();

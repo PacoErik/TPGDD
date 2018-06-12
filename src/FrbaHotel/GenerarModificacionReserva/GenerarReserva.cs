@@ -22,7 +22,6 @@ namespace FrbaHotel.GenerarModificacionReserva
         private SqlConnection conexion = new SqlConnection(@"Data Source=localhost\SQLSERVER2012;Initial Catalog=GD1C2018;User ID=gdHotel2018;Password=gd2018");
         private SqlDataAdapter sda;
         private SqlCommand command;
-        private SqlDataReader sdr;
         //Tablas
         DataTable hoteles = new DataTable();
         DataTable regimenes = new DataTable();
@@ -32,24 +31,14 @@ namespace FrbaHotel.GenerarModificacionReserva
         DataTable habitaciones = new DataTable();
         DataTable estados_reserva = new DataTable();
 
-        public GenerarReserva()
-        {
-            InitializeComponent();
-            this.hotel_fijo = false;
-            this.InicializarTodo();
-            this.SetearUsuarioGuest();
-        }
-
-        public GenerarReserva(int id_usuario, int id_hotel)
+        public GenerarReserva(int id_usuario, string id_hotel)
         {
             InitializeComponent();
             this.hotel_fijo = true;
             this.InicializarTodo();
-            this.SetearUsuarioGuest();
-
             this.reserva.usuario = id_usuario;
-            this.reserva.hotel.ID = id_hotel;
-            this.btn_cargar_hoteles.Text = "Cargar opciones";
+            this.reserva.hotel.ID = Convert.ToInt32(id_hotel);
+            this.btn_cargar_opciones.Text = "Cargar opciones";
         }
 
         private void InicializarTodo()
@@ -79,8 +68,17 @@ namespace FrbaHotel.GenerarModificacionReserva
 
             //Inicializacion de intefaz
             this.lbl_noches.Text = this.lbl_precio_base.Text = this.lbl_recarga_estrellas.Text = String.Empty;
-        }
 
+            //Cambio de estructura
+            this.grid_hoteles.Visible = false;
+            /*
+            this.CargarRegimenes();
+            this.CargarHabitaciones();
+            this.HabilitarRegistroCliente();
+             * */
+            this.lbl_recarga_estrellas.Text = reserva.hotel.recarga_estrellas.ToString();
+        }
+        /*
         private void SetearUsuarioGuest()
         {
             DataTable usuario = new DataTable();
@@ -88,6 +86,7 @@ namespace FrbaHotel.GenerarModificacionReserva
             sda.Fill(usuario);
             this.reserva.usuario = Convert.ToInt32(usuario.Rows[0]["usur_id"]);
         }
+        */
 
         private void date_desde_ValueChanged(object sender, EventArgs e)
         {
@@ -147,6 +146,30 @@ namespace FrbaHotel.GenerarModificacionReserva
             }
         }
 
+        private void btn_cargar_opciones_Click(object sender, EventArgs e)
+        {
+            if (this.reserva.personas == 0 || this.reserva.cantidad_de_noches == 0)
+            {
+                this.lbl_error_carga_hotel.Visible = true;
+            }
+            else
+            {
+                this.lbl_error_carga_hotel.Visible = false;
+                this.CargarHabitaciones();
+                this.CargarRegimenes();
+                this.HabilitarRegistroCliente();
+
+                this.cbox_disponibles.Enabled = true;
+                this.cbox_seleccionadas.Enabled = true;
+
+                /*
+                this.cbox_tipo_identificacion.Enabled = true;
+                this.txtbox_identificacion.Enabled = true;
+                this.txtbox_mail.Enabled = true;
+                 * */
+            }
+        }
+        /*
         private void btn_cargar_hoteles_Click(object sender, EventArgs e)
         {
             if (this.reserva.personas == 0 || this.reserva.cantidad_de_noches == 0)
@@ -156,13 +179,14 @@ namespace FrbaHotel.GenerarModificacionReserva
             else
             {
                 this.lbl_error_carga_hotel.Visible = false;
-                this.CargarHoteles();
+                //this.CargarHoteles();
                 this.cbox_tipo_identificacion.Enabled = true;
                 this.txtbox_identificacion.Enabled = true;
                 this.txtbox_mail.Enabled = true;
             }
         }
-
+        */
+        /*
         private void CargarHoteles()
         {
             if (!hotel_fijo)
@@ -182,7 +206,8 @@ namespace FrbaHotel.GenerarModificacionReserva
             }
 
         }
-  
+  */
+        /*
         private void grid_hoteles_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             this.reserva.hotel.ID = Convert.ToInt32(this.hoteles.Rows[e.RowIndex]["ID"]);
@@ -193,7 +218,7 @@ namespace FrbaHotel.GenerarModificacionReserva
 
             this.lbl_recarga_estrellas.Text = reserva.hotel.recarga_estrellas.ToString();
         }
-
+        */
         private void CargarRegimenes()
         {
             this.cbox_regimenes.Enabled = true;
@@ -362,7 +387,7 @@ namespace FrbaHotel.GenerarModificacionReserva
         bool EsCliente()
         {
             this.clientes = new DataTable();
-            sda = new SqlDataAdapter("SELECT * FROM DERROCHADORES_DE_PAPEL.Cliente as c WHERE c.clie_mail = '" + this.txtbox_mail.Text.ToString() + "'", conexion);
+            sda = new SqlDataAdapter("SELECT * FROM DERROCHADORES_DE_PAPEL.Cliente as c WHERE c.clie_mail = '" + this.txtbox_mail.Text.ToString() + "'" , conexion);
             sda.Fill(clientes);
             return clientes.Rows.Count != 0;
         }
@@ -377,6 +402,7 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         private void AltaReserva()
         {
+            conexion.Open();
             command = new SqlCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Reserva (rese_cliente, rese_cantidadDeNoches, rese_estado, rese_fecha, rese_fin, rese_hotel, rese_inicio, rese_regimen, rese_usuario) VALUES (@clie, @noches, @estado, @fecha, @incio, @fin, @hotel, @user)", conexion);
             command.Parameters.AddWithValue("@clie", this.reserva.cliente);
             command.Parameters.AddWithValue("@noches", this.reserva.cantidad_de_noches );
@@ -387,6 +413,7 @@ namespace FrbaHotel.GenerarModificacionReserva
             command.Parameters.AddWithValue("@hotel", this.reserva.hotel.ID);
             command.Parameters.AddWithValue("@user", this.reserva.usuario);
             command.ExecuteNonQuery();
+            conexion.Close();
         }
 
         private int CargarEstadosDeReserva(string estado_buscado)
@@ -409,6 +436,7 @@ namespace FrbaHotel.GenerarModificacionReserva
         {
 
         }
+
 
     }
 }

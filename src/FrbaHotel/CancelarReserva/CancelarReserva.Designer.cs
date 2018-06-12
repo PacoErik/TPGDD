@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.txtbox_codigo = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtbox_motivo = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.atras = new System.Windows.Forms.Button();
             this.enviar = new System.Windows.Forms.Button();
@@ -47,13 +47,13 @@
             this.txtbox_codigo.Size = new System.Drawing.Size(158, 20);
             this.txtbox_codigo.TabIndex = 2;
             // 
-            // textBox2
+            // txtbox_motivo
             // 
-            this.textBox2.Location = new System.Drawing.Point(60, 109);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(212, 148);
-            this.textBox2.TabIndex = 3;
+            this.txtbox_motivo.Location = new System.Drawing.Point(60, 109);
+            this.txtbox_motivo.Multiline = true;
+            this.txtbox_motivo.Name = "txtbox_motivo";
+            this.txtbox_motivo.Size = new System.Drawing.Size(212, 148);
+            this.txtbox_motivo.TabIndex = 3;
             // 
             // label2
             // 
@@ -148,7 +148,7 @@
             this.Controls.Add(this.enviar);
             this.Controls.Add(this.atras);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.txtbox_motivo);
             this.Controls.Add(this.txtbox_codigo);
             this.Name = "CancelarReserva";
             this.Text = "Cancelar reserva";
@@ -160,7 +160,7 @@
         #endregion
 
         private System.Windows.Forms.TextBox txtbox_codigo;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtbox_motivo;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button atras;
         private System.Windows.Forms.Button enviar;
