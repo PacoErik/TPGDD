@@ -7,15 +7,62 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace FrbaHotel.CancelarReserva
 {
     public partial class CancelarReserva : Form
     {
+        private int usuario;
+        private int hotel;
+
+        private SqlConnection conexion = new SqlConnection(@"Data Source=localhost\SQLSERVER2012;Initial Catalog=GD1C2018;User ID=gdHotel2018;Password=gd2018");
+        private SqlCommand command;
+        private SqlDataAdapter sda;
+
+        private DataTable reserva = new DataTable();
+
         public CancelarReserva()
         {
             InitializeComponent();
+            this.lbl_error.Visible = false;
         }
+
+        public CancelarReserva(int userId, string hotelId)
+        {
+            InitializeComponent();
+            this.usuario = userId;
+            this.hotel = Convert.ToInt32(hotelId);
+            this.lbl_error.Visible = false;
+        }
+
+        private void btn_cargar_reserva_Click(object sender, EventArgs e)
+        {
+            if(this.txtbox_codigo.Text != "")
+            {
+                this.CargarReserva(this.txtbox_codigo.Text);
+            }
+        }
+
+        private void CargarReserva(string codigo_reserva)
+        {
+            this.reserva = new DataTable();
+            this.sda = new SqlDataAdapter("SELECT * FROM DERROCHADORES_DE_PAPEL.Reserva WHERE rese_codigo = '"+ codigo_reserva +"'", conexion);
+            this.sda.Fill(this.reserva);
+            if (this.reserva.Rows.Count == 0)
+            {
+                this.lbl_error.Text = "No se encuentra la reserva";
+            }
+            else {
+                TimeSpan dias_para_reserva = DateTime.Today - Convert.ToDateTime(this.reserva.Rows[0]["rese_inicio"]);
+                if(dias_para_reserva.Days < 1)
+                {
+                    
+                }
+            }
+                
+        }
+
 
         private void enviar_Click(object sender, EventArgs e)
         {
@@ -26,6 +73,8 @@ namespace FrbaHotel.CancelarReserva
         {
 
         }
+
+
 
     }
 }

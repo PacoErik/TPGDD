@@ -28,24 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtbox_codigo = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.atras = new System.Windows.Forms.Button();
             this.enviar = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.btn_cargar_reserva = new System.Windows.Forms.Button();
+            this.lbl_error = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // textBox1
+            // txtbox_codigo
             // 
-            this.textBox1.Location = new System.Drawing.Point(114, 18);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(158, 20);
-            this.textBox1.TabIndex = 2;
+            this.txtbox_codigo.Location = new System.Drawing.Point(114, 18);
+            this.txtbox_codigo.Name = "txtbox_codigo";
+            this.txtbox_codigo.Size = new System.Drawing.Size(158, 20);
+            this.txtbox_codigo.TabIndex = 2;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(60, 53);
+            this.textBox2.Location = new System.Drawing.Point(60, 109);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(212, 148);
@@ -54,7 +56,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 53);
+            this.label2.Location = new System.Drawing.Point(12, 109);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(42, 13);
             this.label2.TabIndex = 5;
@@ -64,7 +66,7 @@
             // 
             this.atras.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.atras.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.atras.Location = new System.Drawing.Point(12, 215);
+            this.atras.Location = new System.Drawing.Point(12, 271);
             this.atras.Name = "atras";
             this.atras.Size = new System.Drawing.Size(62, 34);
             this.atras.TabIndex = 6;
@@ -74,7 +76,7 @@
             // 
             // enviar
             // 
-            this.enviar.Location = new System.Drawing.Point(197, 222);
+            this.enviar.Location = new System.Drawing.Point(197, 278);
             this.enviar.Name = "enviar";
             this.enviar.Size = new System.Drawing.Size(75, 23);
             this.enviar.TabIndex = 7;
@@ -91,17 +93,39 @@
             this.label3.TabIndex = 8;
             this.label3.Text = "Código de reserva:";
             // 
+            // btn_cargar_reserva
+            // 
+            this.btn_cargar_reserva.Location = new System.Drawing.Point(90, 278);
+            this.btn_cargar_reserva.Name = "btn_cargar_reserva";
+            this.btn_cargar_reserva.Size = new System.Drawing.Size(99, 23);
+            this.btn_cargar_reserva.TabIndex = 9;
+            this.btn_cargar_reserva.Text = "Cargar reserva";
+            this.btn_cargar_reserva.UseVisualStyleBackColor = true;
+            this.btn_cargar_reserva.Click += new System.EventHandler(this.btn_cargar_reserva_Click);
+            // 
+            // lbl_error
+            // 
+            this.lbl_error.AutoSize = true;
+            this.lbl_error.ForeColor = System.Drawing.Color.Red;
+            this.lbl_error.Location = new System.Drawing.Point(39, 48);
+            this.lbl_error.Name = "lbl_error";
+            this.lbl_error.Size = new System.Drawing.Size(46, 13);
+            this.lbl_error.TabIndex = 10;
+            this.lbl_error.Text = "ERROR";
+            // 
             // CancelarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(284, 313);
+            this.Controls.Add(this.lbl_error);
+            this.Controls.Add(this.btn_cargar_reserva);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.enviar);
             this.Controls.Add(this.atras);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtbox_codigo);
             this.Name = "CancelarReserva";
             this.Text = "Cancelar reserva";
             this.ResumeLayout(false);
@@ -111,12 +135,14 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtbox_codigo;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button atras;
         private System.Windows.Forms.Button enviar;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btn_cargar_reserva;
+        private System.Windows.Forms.Label lbl_error;
 
     }
 }

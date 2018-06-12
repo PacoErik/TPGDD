@@ -387,8 +387,6 @@ namespace FrbaHotel.GenerarModificacionReserva
             command.Parameters.AddWithValue("@hotel", this.reserva.hotel.ID);
             command.Parameters.AddWithValue("@user", this.reserva.usuario);
             command.ExecuteNonQuery();
-
-            command = 
         }
 
         private int CargarEstadosDeReserva(string estado_buscado)

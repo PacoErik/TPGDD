@@ -61,17 +61,17 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         private void baja_Click(object sender, EventArgs e)
         {
-            //Form baja;
-            //if (es_guest)
-            //{
-            //    baja = new CancelarReserva.CancelarReserva();
-            //}
-            //else
-            //{
-            //    baja = new CancelarReserva.CancelarReserva(id_usuario, Convert.ToInt32(id_hotel));
-            //}
+            Form baja;
+            if (es_guest)
+            {
+                baja = new CancelarReserva.CancelarReserva();
+            }
+            else
+            {
+                baja = new CancelarReserva.CancelarReserva(id_usuario, id_hotel);
+            }
             this.Hide();
-            //reserva.ShowDialog();
+            baja.ShowDialog();
             this.Show();
         }
 
