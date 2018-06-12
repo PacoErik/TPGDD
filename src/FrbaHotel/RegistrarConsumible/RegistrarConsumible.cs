@@ -139,5 +139,10 @@ namespace FrbaHotel.RegistrarConsumible
                 consumibles_elegidos_dt.Rows.Remove(consumible);
             }
         }
+
+        private void volver_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

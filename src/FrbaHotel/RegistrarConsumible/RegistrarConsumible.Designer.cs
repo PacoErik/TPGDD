@@ -38,6 +38,7 @@
             this.elegidos = new System.Windows.Forms.DataGridView();
             this.guardar = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
+            this.volver = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.disponibles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.elegidos)).BeginInit();
             this.SuspendLayout();
@@ -138,11 +139,22 @@
             this.label3.TabIndex = 21;
             this.label3.Text = "(presione Enter para confirmar estadía)";
             // 
+            // volver
+            // 
+            this.volver.Location = new System.Drawing.Point(12, 320);
+            this.volver.Name = "volver";
+            this.volver.Size = new System.Drawing.Size(75, 23);
+            this.volver.TabIndex = 22;
+            this.volver.Text = "Volver";
+            this.volver.UseVisualStyleBackColor = true;
+            this.volver.Click += new System.EventHandler(this.volver_Click);
+            // 
             // RegistrarConsumible
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(786, 355);
+            this.Controls.Add(this.volver);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.guardar);
             this.Controls.Add(this.label6);
@@ -174,5 +186,6 @@
         private System.Windows.Forms.DataGridView elegidos;
         private System.Windows.Forms.Button guardar;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button volver;
     }
 }

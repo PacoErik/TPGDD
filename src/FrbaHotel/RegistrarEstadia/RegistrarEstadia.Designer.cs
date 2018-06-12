@@ -28,49 +28,47 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.atras = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.checkin = new System.Windows.Forms.Button();
+            this.checkout = new System.Windows.Forms.Button();
+            this.volver = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // atras
+            // checkin
             // 
-            this.atras.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.atras.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.atras.Location = new System.Drawing.Point(12, 215);
-            this.atras.Name = "atras";
-            this.atras.Size = new System.Drawing.Size(62, 34);
-            this.atras.TabIndex = 11;
-            this.atras.Text = "Atrás";
-            this.atras.UseVisualStyleBackColor = false;
-            this.atras.Click += new System.EventHandler(this.atras_Click);
+            this.checkin.Location = new System.Drawing.Point(83, 66);
+            this.checkin.Name = "checkin";
+            this.checkin.Size = new System.Drawing.Size(121, 23);
+            this.checkin.TabIndex = 12;
+            this.checkin.Text = "Registrar Check-In";
+            this.checkin.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // checkout
             // 
-            this.button1.Location = new System.Drawing.Point(83, 46);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(121, 23);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "Registrar Check-In";
-            this.button1.UseVisualStyleBackColor = true;
+            this.checkout.Location = new System.Drawing.Point(83, 143);
+            this.checkout.Name = "checkout";
+            this.checkout.Size = new System.Drawing.Size(121, 23);
+            this.checkout.TabIndex = 13;
+            this.checkout.Text = "Registrar Check-Out";
+            this.checkout.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // volver
             // 
-            this.button2.Location = new System.Drawing.Point(83, 128);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(121, 23);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "Registrar Check-Out";
-            this.button2.UseVisualStyleBackColor = true;
+            this.volver.Location = new System.Drawing.Point(12, 226);
+            this.volver.Name = "volver";
+            this.volver.Size = new System.Drawing.Size(75, 23);
+            this.volver.TabIndex = 14;
+            this.volver.Text = "Volver";
+            this.volver.UseVisualStyleBackColor = true;
+            this.volver.Click += new System.EventHandler(this.volver_Click);
             // 
             // RegistrarEstadia
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.atras);
+            this.Controls.Add(this.volver);
+            this.Controls.Add(this.checkout);
+            this.Controls.Add(this.checkin);
             this.Name = "RegistrarEstadia";
             this.Text = "Registrar estadía";
             this.ResumeLayout(false);
@@ -79,8 +77,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Button atras;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button checkin;
+        private System.Windows.Forms.Button checkout;
+        private System.Windows.Forms.Button volver;
     }
 }

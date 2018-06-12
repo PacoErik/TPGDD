@@ -100,5 +100,10 @@ namespace FrbaHotel.ListadoEstadistico
             int mesFinal = mesInicial + 2;
             return mesInicial.ToString()+" AND "+mesFinal.ToString();
         }
+
+        private void volver_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
