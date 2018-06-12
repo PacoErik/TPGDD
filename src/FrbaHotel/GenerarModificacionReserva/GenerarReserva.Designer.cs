@@ -65,6 +65,10 @@
             this.cbox_tipo_identificacion = new System.Windows.Forms.ComboBox();
             this.lbl_falta_habitaciones_2 = new System.Windows.Forms.Label();
             this.lbl_falta_habitaciones_1 = new System.Windows.Forms.Label();
+            this.lbl_falta_tipo_id = new System.Windows.Forms.Label();
+            this.lbl_falta_id = new System.Windows.Forms.Label();
+            this.lbl_falta_mail = new System.Windows.Forms.Label();
+            this.lbl_id_incorrecta = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.grid_hoteles)).BeginInit();
             this.SuspendLayout();
             // 
@@ -292,7 +296,7 @@
             // 
             // btn_cargar_hoteles
             // 
-            this.btn_cargar_hoteles.Location = new System.Drawing.Point(353, 108);
+            this.btn_cargar_hoteles.Location = new System.Drawing.Point(384, 103);
             this.btn_cargar_hoteles.Name = "btn_cargar_hoteles";
             this.btn_cargar_hoteles.Size = new System.Drawing.Size(116, 23);
             this.btn_cargar_hoteles.TabIndex = 35;
@@ -407,11 +411,55 @@
             this.lbl_falta_habitaciones_1.TabIndex = 45;
             this.lbl_falta_habitaciones_1.Text = "LAS HABITACIONES SELECCIONADAS";
             // 
+            // lbl_falta_tipo_id
+            // 
+            this.lbl_falta_tipo_id.AutoSize = true;
+            this.lbl_falta_tipo_id.ForeColor = System.Drawing.Color.Red;
+            this.lbl_falta_tipo_id.Location = new System.Drawing.Point(21, 684);
+            this.lbl_falta_tipo_id.Name = "lbl_falta_tipo_id";
+            this.lbl_falta_tipo_id.Size = new System.Drawing.Size(115, 13);
+            this.lbl_falta_tipo_id.TabIndex = 46;
+            this.lbl_falta_tipo_id.Text = "Falta tipo identificacion";
+            // 
+            // lbl_falta_id
+            // 
+            this.lbl_falta_id.AutoSize = true;
+            this.lbl_falta_id.ForeColor = System.Drawing.Color.Red;
+            this.lbl_falta_id.Location = new System.Drawing.Point(21, 708);
+            this.lbl_falta_id.Name = "lbl_falta_id";
+            this.lbl_falta_id.Size = new System.Drawing.Size(95, 13);
+            this.lbl_falta_id.TabIndex = 47;
+            this.lbl_falta_id.Text = "Falta identificacion";
+            // 
+            // lbl_falta_mail
+            // 
+            this.lbl_falta_mail.AutoSize = true;
+            this.lbl_falta_mail.ForeColor = System.Drawing.Color.Red;
+            this.lbl_falta_mail.Location = new System.Drawing.Point(21, 755);
+            this.lbl_falta_mail.Name = "lbl_falta_mail";
+            this.lbl_falta_mail.Size = new System.Drawing.Size(51, 13);
+            this.lbl_falta_mail.TabIndex = 48;
+            this.lbl_falta_mail.Text = "Falta mail";
+            // 
+            // lbl_id_incorrecta
+            // 
+            this.lbl_id_incorrecta.AutoSize = true;
+            this.lbl_id_incorrecta.ForeColor = System.Drawing.Color.Red;
+            this.lbl_id_incorrecta.Location = new System.Drawing.Point(21, 733);
+            this.lbl_id_incorrecta.Name = "lbl_id_incorrecta";
+            this.lbl_id_incorrecta.Size = new System.Drawing.Size(120, 13);
+            this.lbl_id_incorrecta.TabIndex = 49;
+            this.lbl_id_incorrecta.Text = "Identificacion incorrecta";
+            // 
             // GenerarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(518, 823);
+            this.Controls.Add(this.lbl_id_incorrecta);
+            this.Controls.Add(this.lbl_falta_mail);
+            this.Controls.Add(this.lbl_falta_id);
+            this.Controls.Add(this.lbl_falta_tipo_id);
             this.Controls.Add(this.lbl_falta_habitaciones_1);
             this.Controls.Add(this.lbl_falta_habitaciones_2);
             this.Controls.Add(this.btn_eliminar_habitacion);
@@ -497,5 +545,9 @@
         private System.Windows.Forms.ComboBox cbox_tipo_identificacion;
         private System.Windows.Forms.Label lbl_falta_habitaciones_2;
         private System.Windows.Forms.Label lbl_falta_habitaciones_1;
+        private System.Windows.Forms.Label lbl_falta_tipo_id;
+        private System.Windows.Forms.Label lbl_falta_id;
+        private System.Windows.Forms.Label lbl_falta_mail;
+        private System.Windows.Forms.Label lbl_id_incorrecta;
     }
 }

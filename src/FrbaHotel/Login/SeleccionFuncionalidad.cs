@@ -80,7 +80,9 @@ namespace FrbaHotel.Login
         private void Cancelar_reserva()
         {
             Form f1 = new CancelarReserva.CancelarReserva();
+            this.Hide();
             f1.ShowDialog();
+            this.Show();
         }
         private void Registrar_estadia()
         {
@@ -99,8 +101,10 @@ namespace FrbaHotel.Login
         }
         private void Generar_o_modificar_una_reserva()
         {
-            Form f1 = new GenerarModificacionReserva.GenerarModificacionReserva(this);
+            Form f1 = new GenerarModificacionReserva.GenerarModificacionReserva(id, hotelId);
+            this.Hide();
             f1.ShowDialog();
+            this.Show();
         }
 
         private void Seleccionar_Click(object sender, EventArgs e)
