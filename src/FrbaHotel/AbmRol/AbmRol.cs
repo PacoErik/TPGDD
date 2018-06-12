@@ -76,7 +76,7 @@ namespace FrbaHotel.AbmRol
 
         private void eliminar_Click(object sender, EventArgs e)
         {
-            if (roles.CurrentCell.RowIndex < 0)
+            if (roles.CurrentRow == null)
             {
                 MessageBox.Show("Debe elegir un rol para poder eliminar");
                 return;
