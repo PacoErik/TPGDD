@@ -151,7 +151,6 @@ namespace FrbaHotel.Login
 
         private void Volver_Click(object sender, EventArgs e)
         {
-            f1.Show();
             this.Close();
         }
     }

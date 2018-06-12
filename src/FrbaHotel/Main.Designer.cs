@@ -31,6 +31,9 @@
             this.Huesped = new System.Windows.Forms.Button();
             this.Usuario = new System.Windows.Forms.Button();
             this.Salir = new System.Windows.Forms.Button();
+            this.fechaSistema = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // Huesped
@@ -63,16 +66,39 @@
             this.Salir.UseVisualStyleBackColor = true;
             this.Salir.Click += new System.EventHandler(this.Salir_Click);
             // 
+            // fechaSistema
+            // 
+            this.fechaSistema.AutoSize = true;
+            this.fechaSistema.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fechaSistema.Location = new System.Drawing.Point(44, 16);
+            this.fechaSistema.Name = "fechaSistema";
+            this.fechaSistema.Size = new System.Drawing.Size(46, 15);
+            this.fechaSistema.TabIndex = 3;
+            this.fechaSistema.Text = "Fecha";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.fechaSistema);
+            this.groupBox1.Location = new System.Drawing.Point(12, 336);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(254, 34);
+            this.groupBox1.TabIndex = 4;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Fecha del sistema";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(281, 382);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Salir);
             this.Controls.Add(this.Usuario);
             this.Controls.Add(this.Huesped);
             this.Name = "Main";
             this.Text = "Bienvenido!";
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -82,6 +108,8 @@
         private System.Windows.Forms.Button Huesped;
         private System.Windows.Forms.Button Usuario;
         private System.Windows.Forms.Button Salir;
+        private System.Windows.Forms.Label fechaSistema;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 
