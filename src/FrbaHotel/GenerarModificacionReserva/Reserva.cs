@@ -55,6 +55,7 @@ namespace FrbaHotel.GenerarModificacionReserva
         public int numero;
         public int cantidad_personas;
         public string descripcion;
+        public int piso;
 
         public override string ToString()
         {

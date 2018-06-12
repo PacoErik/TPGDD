@@ -81,29 +81,37 @@ namespace FrbaHotel.CancelarReserva
                 this.lbl_error.Visible = true;
             }
             else {
-                TimeSpan dias_para_reserva = DateTime.Today - Convert.ToDateTime(this.reserva.Rows[0]["rese_inicio"]);
-                if (dias_para_reserva.Days <= 1)
+                if (Convert.ToInt32(this.reserva.Rows[0]["rese_hotel"]) != this.hotel)
                 {
-                    this.lbl_error.Text = "No se puede cancelar a menos de un dia";
+                    this.lbl_error.Text = "La reserva correspondea otro hotel";
                     this.lbl_error.Visible = true;
                 }
                 else
                 {
-                    if (!this.ReservaYaCancelada())
+                    TimeSpan dias_para_reserva = DateTime.Today - Convert.ToDateTime(this.reserva.Rows[0]["rese_inicio"]);
+                    if (dias_para_reserva.Days <= 1)
                     {
-                        this.lbl_error.Visible = false;
-                        this.codigo = this.txtbox_codigo.Text;
-                        this.lbl_cargado_correcto.Visible = true;
-                        this.lbl_ingrese_motivo.Visible = true;
-                        this.txtbox_motivo.Enabled = true;
-                    }
-                    else {
-                        this.lbl_error.Text = "Ya se cancelo esta reserva";
+                        this.lbl_error.Text = "No se puede cancelar a menos de un dia";
                         this.lbl_error.Visible = true;
                     }
+                    else
+                    {
+                        if (!this.ReservaYaCancelada())
+                        {
+                            this.lbl_error.Visible = false;
+                            this.codigo = this.txtbox_codigo.Text;
+                            this.lbl_cargado_correcto.Visible = true;
+                            this.lbl_ingrese_motivo.Visible = true;
+                            this.txtbox_motivo.Enabled = true;
+                        }
+                        else
+                        {
+                            this.lbl_error.Text = "Ya se cancelo esta reserva";
+                            this.lbl_error.Visible = true;
+                        }
+                    }
                 }
-            }
-                
+            }                
         }
 
         private bool ReservaYaCancelada()
@@ -141,8 +149,6 @@ namespace FrbaHotel.CancelarReserva
                 }
             }
         }
-
- 
 
         private int getEstadosDeReserva(string estado_buscado)
         {
