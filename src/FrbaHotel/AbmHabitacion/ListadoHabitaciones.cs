@@ -52,7 +52,7 @@ namespace FrbaHotel.AbmHabitacion
         {
             dtHab.Clear();
             this.Hide();
-            AltaHabitacion f1 = new AltaHabitacion();
+            AltaHabitacion f1 = new AltaHabitacion(idH);
             f1.ShowDialog();
             this.Show();
         }
@@ -61,7 +61,7 @@ namespace FrbaHotel.AbmHabitacion
         {
             int res;
             dtHab.Clear();
-            string commandString = "SELECT h.habi_numero, h.habi_piso, habi_frente, ta.tipo_descripcion, h.habi_descripcion FROM DERROCHADORES_DE_PAPEL.TipoDeHabitacion AS ta JOIN DERROCHADORES_DE_PAPEL.Habitacion AS h ON h.habi_tipo = ta.tipo_codigo JOIN DERROCHADORES_DE_PAPEL.Hotel AS ho ON ho.hote_id = h.habi_hotel WHERE ";
+            string commandString = "SELECT h.habi_numero, h.habi_piso, habi_frente, ta.tipo_descripcion, h.habi_descripcion, h.habi_estado FROM DERROCHADORES_DE_PAPEL.TipoDeHabitacion AS ta JOIN DERROCHADORES_DE_PAPEL.Habitacion AS h ON h.habi_tipo = ta.tipo_codigo JOIN DERROCHADORES_DE_PAPEL.Hotel AS ho ON ho.hote_id = h.habi_hotel WHERE ";
             if (int.TryParse(textBoxNumero.Text, out res))
             {
                 commandString += "h.habi_numero = @num AND ";
@@ -112,7 +112,16 @@ namespace FrbaHotel.AbmHabitacion
 
         private void modificacion_Click(object sender, EventArgs e)
         {
-
+            DataTable dt = new DataTable();
+            SqlDataAdapter sda2 = UtilesSQL.crearDataAdapter("SELECT * FROM DERROCHADORES_DE_PAPEL.Habitacion AS h JOIN DERROCHADORES_DE_PAPEL.TipoDeHabitacion AS ta ON h.habi_tipo = ta.tipo_codigo WHERE h.habi_numero = @num AND h.habi_hotel = @hotel");
+            sda2.SelectCommand.Parameters.AddWithValue("@num", dataGridViewHabitaciones.CurrentRow.Cells[0]);
+            sda2.SelectCommand.Parameters.AddWithValue("@hotel", idH);
+            sda2.Fill(dt);
+            this.Hide();
+            Form f = new ModificarHabitacion(dt);
+            limpiarTodo();
+            f.ShowDialog();
+            this.Show();
         }
     }
 }

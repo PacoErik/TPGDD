@@ -14,7 +14,7 @@ namespace FrbaHotel.Login
     public partial class SeleccionFuncionalidad : Form
     {
         Form f1;
-        int id;
+        int idUser;
         static string hotelId;
         SqlCommand com;
         DataSet ds = new DataSet();
@@ -23,7 +23,7 @@ namespace FrbaHotel.Login
         public SeleccionFuncionalidad(Form f, int id_usuario, string hoteU)
         {
             hotelId = hoteU;
-            id = id_usuario;
+            idUser = id_usuario;
             f1 = f;
             UtilesSQL.inicializar();
             InitializeComponent();
@@ -38,7 +38,7 @@ namespace FrbaHotel.Login
         private void inicializarComboBox()
         {
             com = UtilesSQL.crearCommand("select f.func_detalle, u.rouh_hotel from DERROCHADORES_DE_PAPEL.FuncionalidadXRol as fxr  join DERROCHADORES_DE_PAPEL.Funcionalidad as f on f.func_id = fxro_funcionalidad  join DERROCHADORES_DE_PAPEL.Rol as r ON r.rol_id = fxr.fxro_rol  left join DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel as u ON u.rouh_rol = r.rol_id  where u.rouh_usuario = @id AND u.rouh_hotel = @hote group by f.func_detalle, u.rouh_hotel");
-            com.Parameters.AddWithValue("@id", id);
+            com.Parameters.AddWithValue("@id", idUser);
             com.Parameters.AddWithValue("@hote", hotelId);
             da.SelectCommand = com;
             da.Fill(ds);
@@ -64,12 +64,12 @@ namespace FrbaHotel.Login
         }
         private void Gestion_de_hotel()
         {
-            Form f1 = new AbmHotel.AbmHotel(id);
+            Form f1 = new AbmHotel.AbmHotel(idUser);
             f1.ShowDialog();
         }
         private void Gestion_de_habitaciones()
         {
-            Form f1 = new AbmHabitacion.AbmHabitacion();
+            Form f1 = new AbmHabitacion.AbmHabitacion(idUser);
             f1.ShowDialog();
         }
         private void Registrar_regimen_de_estadia()

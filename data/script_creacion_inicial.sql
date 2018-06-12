@@ -1,5 +1,4 @@
-﻿
---------------------------------------------------------------
+﻿--------------------------------------------------------------
 -------------------Creación del esquema-----------------------
 --------------------------------------------------------------
 
@@ -200,7 +199,7 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.Habitacion (
 	habi_tipo NUMERIC(18,0) NOT NULL,
 	habi_estado BIT NOT NULL,
 	PRIMARY KEY (habi_hotel, habi_numero, habi_piso),
-	FOREIGN KEY (habi_tipo) REFERENCES DERROCHADORES_DE_PAPEL.TipoDeHabitacion(tipo_codigo),
+	FOREIGN KEY (habi_tipo) REFERENCES DERROCHADORES_DE_PAPEL.TipoDeHabitacion(tipo_codigo)
 )
 CREATE TABLE DERROCHADORES_DE_PAPEL.Usuario (
 	usur_id NUMERIC(18,0) IDENTITY(1,1) NOT NULL,
@@ -329,7 +328,7 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.EstadiaXCliente (
 	PRIMARY KEY (esxc_estadia, esxc_cliente),
 	FOREIGN KEY (esxc_estadia) REFERENCES DERROCHADORES_DE_PAPEL.Estadia(esta_id),
 	FOREIGN KEY (esxc_cliente) REFERENCES DERROCHADORES_DE_PAPEL.Cliente(clie_id),
-	FOREIGN KEY (esxc_hotel, esxc_numero, esxc_piso) REFERENCES DERROCHADORES_DE_PAPEL.Habitacion(habi_hotel, habi_numero, habi_piso)
+	FOREIGN KEY (esxc_hotel, esxc_numero, esxc_piso) REFERENCES DERROCHADORES_DE_PAPEL.Habitacion(habi_hotel, habi_numero, habi_piso) ON 	UPDATE CASCADE
 )
 CREATE TABLE DERROCHADORES_DE_PAPEL.FuncionalidadXRol (
 	fxro_funcionalidad NUMERIC(18,0) NOT NULL,
@@ -352,7 +351,7 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.ReservaXHabitacion (
 	rexh_piso NUMERIC(18,0) NOT NULL,
 	PRIMARY KEY (rexh_reserva, rexh_hotel, rexh_numero, rexh_piso),
 	FOREIGN KEY (rexh_reserva) REFERENCES DERROCHADORES_DE_PAPEL.Reserva(rese_codigo),
-	FOREIGN KEY (rexh_hotel, rexh_numero, rexh_piso) REFERENCES DERROCHADORES_DE_PAPEL.Habitacion(habi_hotel, habi_numero, habi_piso)
+	FOREIGN KEY (rexh_hotel, rexh_numero, rexh_piso) REFERENCES DERROCHADORES_DE_PAPEL.Habitacion(habi_hotel, habi_numero, habi_piso) ON 	UPDATE CASCADE
 )
 CREATE TABLE DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel (
 	rouh_rol NUMERIC(18,0) NOT NULL,
