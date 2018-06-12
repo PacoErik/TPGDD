@@ -95,10 +95,9 @@ namespace FrbaHotel.AbmCliente
 
         private void modificarCliente_Click(object sender, EventArgs e)
         {
-            index = dataGridViewClientes.CurrentCell.RowIndex;
             commandString = "SELECT clie_nacionalidad, clie_nombre, clie_apellido, clie_mail, clie_telefono, clie_fechaDeNacimiento, clie_calle, clie_numeroDeCalle, clie_piso, clie_departamento, clie_localidad, clie_tipoDeDocumento, clie_numeroDeDocumento, clie_id FROM DERROCHADORES_DE_PAPEL.Cliente WHERE clie_mail = @mail";
             SqlDataAdapter sda2 = UtilesSQL.crearDataAdapter(commandString);
-            sda2.SelectCommand.Parameters.AddWithValue("@mail", dt2.Rows[index][2]);
+            sda2.SelectCommand.Parameters.AddWithValue("@mail", dataGridViewClientes.CurrentRow.Cells[2].Value);
             sda2.Fill(dtM);
             this.Hide();
             f = new ModificarCliente(this, dtM);
@@ -111,8 +110,7 @@ namespace FrbaHotel.AbmCliente
             var confirmResult = MessageBox.Show("Esta seguro que quiere dar de baja el cliente?", "Esta seguro?", MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.Yes)
             {
-                index = dataGridViewClientes.CurrentCell.RowIndex;
-                command = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Cliente set clie_habilitado = 0 WHERE clie_mail = '" + dt2.Rows[index][2].ToString() + "'");
+                command = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Cliente set clie_habilitado = 0 WHERE clie_mail = '" + dataGridViewClientes.CurrentRow.Cells[2].Value.ToString() + "'");
                 command.ExecuteNonQuery();
                 MessageBox.Show("El usuario ha sido dado de baja");
                 limpiarTodo();

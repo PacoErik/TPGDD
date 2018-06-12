@@ -11,32 +11,18 @@ using System.Windows.Forms;
 
 namespace FrbaHotel.AbmHabitacion
 {
-    public partial class AltaHabitacion : Form
+    public partial class ModificarHabitacion : Form
     {
+        DataTable dtH = new DataTable();
         bool Valido;
-        DataTable dtT = new DataTable();
-        int idH;
 
-        public AltaHabitacion(int id)
+        public ModificarHabitacion(DataTable dt)
         {
             UtilesSQL.inicializar();
-            idH = id;
+            dtH = dt;
             InitializeComponent();
-            iniciarComboBox();
             richTextBoxDesc.MaxLength = 50;
-        }
-        private void iniciarComboBox()
-        {
-            comboBoxTipoHabitacion.Items.Add("");
-            SqlCommand command = UtilesSQL.crearCommand("SELECT tipo_descripcion, tipo_codigo FROM DERROCHADORES_DE_PAPEL.TipoDeHabitacion");
-            SqlDataReader reader = command.ExecuteReader();
-            dtT.Columns.Add("docu_detalle", typeof(string));
-            dtT.Load(reader);
-
-            comboBoxTipoHabitacion.ValueMember = "tipo_codigo";
-            comboBoxTipoHabitacion.DisplayMember = "tipo_descripcion";
-            comboBoxTipoHabitacion.DataSource = dtT;
-            comboBoxTipoHabitacion.SelectedIndex = 0;
+            checkBoxHabilitada.Checked = Convert.ToBoolean(dtH.Rows[0][6]);
 
             comboBoxUbicacion.Items.Add("Vista interna");
             comboBoxUbicacion.Items.Add("Vista al exterior");
@@ -48,7 +34,7 @@ namespace FrbaHotel.AbmHabitacion
             this.Close();
         }
 
-        private void buttonCrear_Click(object sender, EventArgs e)
+        private void buttonAceptar_Click(object sender, EventArgs e)
         {
             var confirmResult = MessageBox.Show("Esta seguro que los datos son correctos?", "Esta seguro?", MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.Yes)
@@ -64,29 +50,24 @@ namespace FrbaHotel.AbmHabitacion
         }
         private void realizarCambios()
         {
-            SqlCommand com = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Habitacion VALUES (@hote, @num, @piso, @frente, @desc, @tipo, @hab)");
-            com.Parameters.AddWithValue("@hote", idH);
+            SqlCommand com = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Habitacion SET habi_estado = @hab, habi_numero = @num, habi_piso = @piso, habi_frente = @ubicacion, habi_descripcion = @desc WHERE habi_hotel = @hote AND habi_numero = @numO AND habi_piso = @pisoO");
+            com.Parameters.AddWithValue("@hote", dtH.Rows[0][0]);
             com.Parameters.AddWithValue("@num", textBoxNumero.Text);
+            com.Parameters.AddWithValue("@numO", dtH.Rows[0][1]);
             com.Parameters.AddWithValue("@piso", textBoxPiso.Text);
-            com.Parameters.AddWithValue("@frente", comboBoxUbicacion.SelectedIndex);
+            com.Parameters.AddWithValue("@pisoO", dtH.Rows[0][2]);
+            com.Parameters.AddWithValue("@ubicacion", comboBoxUbicacion.SelectedIndex);
             com.Parameters.AddWithValue("@desc", richTextBoxDesc.Text);
-            com.Parameters.AddWithValue("@tipo", comboBoxTipoHabitacion.SelectedValue.ToString());
             com.Parameters.AddWithValue("@hab", checkBoxHabilitada.Checked);
             UtilesSQL.ejecutarComandoNonQuery(com);
-
-            MessageBox.Show("Creación exitosa!");
+           
+            MessageBox.Show("Modificación exitosa!");
         }
 
-        private void resetearLabels()
-        {
-            labelNumeroInvalido.Visible = false;
-            labelNumeroInvalido2.Visible = false;
-            labelPisoInvalido.Visible = false;
-        }
         private void checkearDatos()
         {
             Valido = true;
-            if (!(textBoxPiso.Text.All(Char.IsDigit)) || String.IsNullOrEmpty(textBoxPiso.Text))
+            if(!(textBoxPiso.Text.All(Char.IsDigit)) || String.IsNullOrEmpty(textBoxPiso.Text))
             {
                 labelPisoInvalido.Visible = true;
                 Valido = false;
@@ -100,8 +81,8 @@ namespace FrbaHotel.AbmHabitacion
             {
                 DataTable dt = new DataTable();
                 SqlDataAdapter sda = UtilesSQL.crearDataAdapter("SELECT * FROM DERROCHADORES_DE_PAPEL.Habitacion WHERE habi_hotel = @hote AND habi_numero = @num");
-                sda.SelectCommand.Parameters.AddWithValue("@hote", idH);
-                sda.SelectCommand.Parameters.AddWithValue("@num", textBoxNumero.Text);
+                sda.SelectCommand.Parameters.AddWithValue("@hote", dtH.Rows[0][0]);
+                sda.SelectCommand.Parameters.AddWithValue("@num", dtH.Rows[0][1]);
                 sda.Fill(dt);
                 if (dt.Rows.Count != 0) //No hay otra habitacion con el mismo número
                 {
@@ -109,6 +90,12 @@ namespace FrbaHotel.AbmHabitacion
                     Valido = false;
                 }
             }
+        }
+        private void resetearLabels()
+        {
+            labelNumeroInvalido.Visible = false;
+            labelPisoInvalido.Visible = false;
+            labelNumeroInvalido2.Visible = false;
         }
     }
 }

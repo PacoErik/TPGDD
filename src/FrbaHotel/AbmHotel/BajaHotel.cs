@@ -45,7 +45,7 @@ namespace FrbaHotel.AbmHotel
 
         private void buttonAceptar_Click(object sender, EventArgs e)
         {
-            if (fechaValida(textBoxFecha.Text) && fechaValida2(textBoxFecha2.Text))
+            if (validarFechas())
             {
                 SqlCommand com = UtilesSQL.crearCommand("DERROCHADORES_DE_PAPEL.CrearBajaHotel");
                 com.CommandType = CommandType.StoredProcedure;
@@ -60,7 +60,26 @@ namespace FrbaHotel.AbmHotel
                     MessageBox.Show("Baja exitosa!");
                     this.Close();
                 }
-                else { MessageBox.Show("Este hotel tiene resservas o huespedes en esas fechas por lo que no se pudo realizar la baja"); }
+                else 
+                { 
+                    MessageBox.Show("Este hotel tiene resservas o huespedes en esas fechas por lo que no se pudo realizar la baja"); 
+                }
+            }
+        }
+        private bool validarFechas()
+        {
+            if (DateTime.Parse(textBoxFecha.Text) <= DateTime.Parse(textBoxFecha2.Text))
+            {
+                labelFechaInvalida3.Visible = true;
+                return false;
+            }
+            else if (fechaValida(textBoxFecha.Text) && fechaValida2(textBoxFecha2.Text))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
         private bool dateTimeValido(string date)

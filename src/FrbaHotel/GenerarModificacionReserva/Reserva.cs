@@ -18,6 +18,8 @@ namespace FrbaHotel.GenerarModificacionReserva
         public double precio;
         public bool regimen_seleccionado = false;
         public double precio_base;
+        public int cliente;
+        public int usuario;
         
         public void CalcularPrecio()
         {
@@ -40,8 +42,6 @@ namespace FrbaHotel.GenerarModificacionReserva
     class Hotel
     {
         public int ID;
-        public string lugar;
-        public int estrellas;
         public double recarga_estrellas;
     }
 
@@ -53,7 +53,6 @@ namespace FrbaHotel.GenerarModificacionReserva
     class Habitacion
     {
         public int numero;
-        public int hotel;
         public int cantidad_personas;
         public string descripcion;
 
