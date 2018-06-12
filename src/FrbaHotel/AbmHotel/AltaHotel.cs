@@ -336,6 +336,12 @@ namespace FrbaHotel.AbmHotel
             com2.Parameters.AddWithValue("@hotel", hoteId);
             UtilesSQL.ejecutarComandoNonQuery(com2);
 
+            //Asigna al usuario guest el rol de guest para el hotel creado
+            SqlCommand com3;
+            com3 = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel VALUES (4, 2, @hotel, 1)");
+            com3.Parameters.AddWithValue("@hotel", hoteId);
+            UtilesSQL.ejecutarComandoNonQuery(com3);
+
             MessageBox.Show("Creacion exitosa!");
         }
     }
