@@ -13,15 +13,18 @@ namespace FrbaHotel.AbmHabitacion
 {
     public partial class AbmHabitacion : Form
     {
-        SqlDataAdapter sda = UtilesSQL.crearDataAdapter("SELECT hote_id, hote_nombre, hote_estrellas, hote_ciudad FROM DERROCHADORES_DE_PAPEL.Hotel");
-        DataTable dt = new DataTable();
+        DataTable dtHoteles = new DataTable();
+        int idUser;
 
-        public AbmHabitacion()
+        public AbmHabitacion(int idH)
         {
+            idUser = idH;
             UtilesSQL.inicializar();
             InitializeComponent();
-            sda.Fill(dt);
-            Hoteles.DataSource = dt;
+            SqlDataAdapter sda = UtilesSQL.crearDataAdapter("SELECT hote_id, hote_nombre, hote_estrellas, hote_ciudad FROM DERROCHADORES_DE_PAPEL.Hotel AS h JOIN DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel AS r ON r.rouh_hotel = h.hote_id WHERE r.rouh_usuario = @user");
+            sda.SelectCommand.Parameters.AddWithValue("@user", idUser);
+            sda.Fill(dtHoteles);
+            Hoteles.DataSource = dtHoteles;
         }
 
         private void buttonVolver_Click(object sender, EventArgs e)
