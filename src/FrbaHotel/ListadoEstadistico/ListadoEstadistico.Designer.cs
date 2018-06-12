@@ -36,6 +36,7 @@
             this.tipoDeListado = new System.Windows.Forms.ComboBox();
             this.listar = new System.Windows.Forms.Button();
             this.resultados = new System.Windows.Forms.DataGridView();
+            this.volver = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.resultados)).BeginInit();
             this.SuspendLayout();
             // 
@@ -67,7 +68,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 47);
+            this.label2.Location = new System.Drawing.Point(11, 40);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 13);
             this.label2.TabIndex = 2;
@@ -82,7 +83,7 @@
             "Segundo",
             "Tercer",
             "Cuarto"});
-            this.trimestre.Location = new System.Drawing.Point(72, 44);
+            this.trimestre.Location = new System.Drawing.Point(71, 37);
             this.trimestre.Name = "trimestre";
             this.trimestre.Size = new System.Drawing.Size(163, 21);
             this.trimestre.TabIndex = 3;
@@ -90,7 +91,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 82);
+            this.label3.Location = new System.Drawing.Point(11, 67);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(31, 13);
             this.label3.TabIndex = 4;
@@ -106,14 +107,14 @@
             "HOTELES CON MAYOR CANTIDAD DE DIAS FUERA DE SERVICIO",
             "HABITACIONES CON MAYOR CANTIDAD DE DIAS Y VECES QUE FUERON OCUPADAS",
             "CLIENTES CON MAYOR CANTIDAD DE PUNTOS"});
-            this.tipoDeListado.Location = new System.Drawing.Point(48, 79);
+            this.tipoDeListado.Location = new System.Drawing.Point(48, 64);
             this.tipoDeListado.Name = "tipoDeListado";
-            this.tipoDeListado.Size = new System.Drawing.Size(473, 21);
+            this.tipoDeListado.Size = new System.Drawing.Size(549, 21);
             this.tipoDeListado.TabIndex = 5;
             // 
             // listar
             // 
-            this.listar.Location = new System.Drawing.Point(427, 10);
+            this.listar.Location = new System.Drawing.Point(503, 5);
             this.listar.Name = "listar";
             this.listar.Size = new System.Drawing.Size(94, 48);
             this.listar.TabIndex = 6;
@@ -126,17 +127,28 @@
             this.resultados.AllowUserToAddRows = false;
             this.resultados.AllowUserToDeleteRows = false;
             this.resultados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.resultados.Location = new System.Drawing.Point(15, 117);
+            this.resultados.Location = new System.Drawing.Point(16, 95);
             this.resultados.Name = "resultados";
             this.resultados.ReadOnly = true;
-            this.resultados.Size = new System.Drawing.Size(506, 197);
+            this.resultados.Size = new System.Drawing.Size(581, 197);
             this.resultados.TabIndex = 7;
+            // 
+            // volver
+            // 
+            this.volver.Location = new System.Drawing.Point(284, 298);
+            this.volver.Name = "volver";
+            this.volver.Size = new System.Drawing.Size(75, 23);
+            this.volver.TabIndex = 8;
+            this.volver.Text = "Volver";
+            this.volver.UseVisualStyleBackColor = true;
+            this.volver.Click += new System.EventHandler(this.volver_Click);
             // 
             // ListadoEstadistico
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(533, 326);
+            this.ClientSize = new System.Drawing.Size(609, 333);
+            this.Controls.Add(this.volver);
             this.Controls.Add(this.resultados);
             this.Controls.Add(this.listar);
             this.Controls.Add(this.tipoDeListado);
@@ -163,5 +175,6 @@
         private System.Windows.Forms.ComboBox tipoDeListado;
         private System.Windows.Forms.Button listar;
         private System.Windows.Forms.DataGridView resultados;
+        private System.Windows.Forms.Button volver;
     }
 }
