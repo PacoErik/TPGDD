@@ -67,7 +67,7 @@ namespace FrbaHotel.AbmUsuario
         {
             int res;
             dtUsuarios.Clear();
-            commandString = "SELECT u.usur_username, u.usur_nombre, u.usur_apellido, u.usur_mail, u.usur_telefono, u.usur_fechaDeNacimiento, u.usur_calle, u.usur_numeroDeCalle, u.usur_numeroDeDocumento , h.hote_nombre, ruh.rouh_hotel, rol_nombre FROM DERROCHADORES_DE_PAPEL.Usuario AS u join DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel AS ruh ON u.usur_id = ruh.rouh_usuario  join DERROCHADORES_DE_PAPEL.Hotel AS h ON h.hote_id = ruh.rouh_hotel join DERROCHADORES_DE_PAPEL.Rol AS r ON r.rol_id = ruh.rouh_rol WHERE ";
+            commandString = "SELECT u.usur_username, u.usur_nombre, u.usur_apellido, u.usur_mail, u.usur_telefono, u.usur_fechaDeNacimiento, u.usur_calle, u.usur_numeroDeCalle, u.usur_numeroDeDocumento FROM DERROCHADORES_DE_PAPEL.Usuario AS u join DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel AS ruh ON u.usur_id = ruh.rouh_usuario  join DERROCHADORES_DE_PAPEL.Hotel AS h ON h.hote_id = ruh.rouh_hotel join DERROCHADORES_DE_PAPEL.Rol AS r ON r.rol_id = ruh.rouh_rol WHERE ";
             if (!String.IsNullOrEmpty(textBoxNombre.Text))
             {
                 commandString += "u.usur_nombre LIKE @nom and ";
@@ -130,12 +130,13 @@ namespace FrbaHotel.AbmUsuario
             DataTable dtU = new DataTable();
             commandString = "SELECT * FROM DERROCHADORES_DE_PAPEL.Usuario WHERE usur_username = @usur";
             SqlDataAdapter sda2 = UtilesSQL.crearDataAdapter(commandString);
-            sda2.SelectCommand.Parameters.AddWithValue("@usur", dataGridViewUsuarios.CurrentRow.Cells[10].Value);
+            sda2.SelectCommand.Parameters.AddWithValue("@usur", dataGridViewUsuarios.CurrentRow.Cells[0].Value);
             sda2.Fill(dtU);
             this.Hide();
-            f = new ModificarUsuario(dtU, Int32.Parse(dataGridViewUsuarios.CurrentRow.Cells[10].Value.ToString()));
+            f = new ModificarUsuario(dtU, Int32.Parse(hotelId));
             limpiarTodo();
             f.ShowDialog();
+            this.Show();
         }
     }
 }
