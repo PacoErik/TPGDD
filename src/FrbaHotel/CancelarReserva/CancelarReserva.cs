@@ -25,7 +25,7 @@ namespace FrbaHotel.CancelarReserva
         public CancelarReserva()
         {
             InitializeComponent();
-            this.lbl_error.Visible = false;
+            this.Inicializar();
         }
 
         public CancelarReserva(int userId, string hotelId)
@@ -33,8 +33,16 @@ namespace FrbaHotel.CancelarReserva
             InitializeComponent();
             this.usuario = userId;
             this.hotel = Convert.ToInt32(hotelId);
-            this.lbl_error.Visible = false;
+            this.Inicializar();
         }
+
+        private void Inicializar()
+        {
+            this.lbl_error.Visible = false;
+            this.lbl_cargado_correcto.Visible = false;
+            this.lbl_ingrese_motivo.Visible = false;
+        }
+
 
         private void btn_cargar_reserva_Click(object sender, EventArgs e)
         {
@@ -52,12 +60,19 @@ namespace FrbaHotel.CancelarReserva
             if (this.reserva.Rows.Count == 0)
             {
                 this.lbl_error.Text = "No se encuentra la reserva";
+                this.lbl_error.Visible = true;
             }
             else {
                 TimeSpan dias_para_reserva = DateTime.Today - Convert.ToDateTime(this.reserva.Rows[0]["rese_inicio"]);
-                if(dias_para_reserva.Days < 1)
+                if (dias_para_reserva.Days <= 1)
                 {
-                    
+                    this.lbl_error.Text = "No se puede cancelar a menos de un dia";
+                    this.lbl_error.Visible = true;
+                }
+                else
+                {
+                    this.lbl_cargado_correcto.Visible = true;
+                    this.lbl_ingrese_motivo.Visible = true;
                 }
             }
                 

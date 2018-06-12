@@ -101,7 +101,7 @@ namespace FrbaHotel.Login
         }
         private void Generar_o_modificar_una_reserva()
         {
-            Form f1 = new GenerarModificacionReserva.GenerarModificacionReserva(id, hotelId);
+            Form f1 = new GenerarModificacionReserva.GenerarModificacionReserva(idUser, hotelId);
             this.Hide();
             f1.ShowDialog();
             this.Show();

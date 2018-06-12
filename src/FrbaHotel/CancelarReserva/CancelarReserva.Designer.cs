@@ -36,6 +36,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.btn_cargar_reserva = new System.Windows.Forms.Button();
             this.lbl_error = new System.Windows.Forms.Label();
+            this.lbl_ingrese_motivo = new System.Windows.Forms.Label();
+            this.lbl_cargado_correcto = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtbox_codigo
@@ -113,11 +115,33 @@
             this.lbl_error.TabIndex = 10;
             this.lbl_error.Text = "ERROR";
             // 
+            // lbl_ingrese_motivo
+            // 
+            this.lbl_ingrese_motivo.AutoSize = true;
+            this.lbl_ingrese_motivo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F);
+            this.lbl_ingrese_motivo.Location = new System.Drawing.Point(70, 90);
+            this.lbl_ingrese_motivo.Name = "lbl_ingrese_motivo";
+            this.lbl_ingrese_motivo.Size = new System.Drawing.Size(191, 16);
+            this.lbl_ingrese_motivo.TabIndex = 11;
+            this.lbl_ingrese_motivo.Text = "Ingrese motivo de cancelacion";
+            // 
+            // lbl_cargado_correcto
+            // 
+            this.lbl_cargado_correcto.AutoSize = true;
+            this.lbl_cargado_correcto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F);
+            this.lbl_cargado_correcto.Location = new System.Drawing.Point(70, 74);
+            this.lbl_cargado_correcto.Name = "lbl_cargado_correcto";
+            this.lbl_cargado_correcto.Size = new System.Drawing.Size(114, 16);
+            this.lbl_cargado_correcto.TabIndex = 12;
+            this.lbl_cargado_correcto.Text = "Reserva cargada";
+            // 
             // CancelarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 313);
+            this.Controls.Add(this.lbl_cargado_correcto);
+            this.Controls.Add(this.lbl_ingrese_motivo);
             this.Controls.Add(this.lbl_error);
             this.Controls.Add(this.btn_cargar_reserva);
             this.Controls.Add(this.label3);
@@ -143,6 +167,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btn_cargar_reserva;
         private System.Windows.Forms.Label lbl_error;
+        private System.Windows.Forms.Label lbl_ingrese_motivo;
+        private System.Windows.Forms.Label lbl_cargado_correcto;
 
     }
 }
