@@ -23,10 +23,11 @@ namespace FrbaHotel.AbmUsuario
         bool deptoNull = false;
         bool locNull = false;
         DataTable dtDocu = new DataTable();
-        DataTable dtRol = new DataTable();
+        DataTable dtRoles = new DataTable();
         DataTable dtHotel = new DataTable();
         DataTable dtUsuario;
         int hotelU;
+        string rol;
 
         public ModificarUsuario(DataTable dt1, int hotel)
         {
@@ -34,7 +35,7 @@ namespace FrbaHotel.AbmUsuario
             dtUsuario = dt1;
             UtilesSQL.inicializar();
             InitializeComponent();
-            cargarComboBox();
+            cargarCosas();
             llenarTextBox();
         }
         private void llenarTextBox()
@@ -45,17 +46,23 @@ namespace FrbaHotel.AbmUsuario
             textBoxApellido.Text = dtUsuario.Rows[0][4].ToString();
             textBoxMail.Text = dtUsuario.Rows[0][5].ToString();
             textBoxTelefono.Text = dtUsuario.Rows[0][6].ToString();
-            textBoxFecha.Text = DateTime.Parse(dtUsuario.Rows[0][7].ToString()).ToString("yyyy-MM-dd HH:mm:ss.fff");
+            if (!String.IsNullOrEmpty(dtUsuario.Rows[0][7].ToString()))
+            {
+                textBoxFecha.Text = DateTime.Parse(dtUsuario.Rows[0][7].ToString()).ToString("yyyy-MM-dd HH:mm:ss.fff");
+            }
             textBoxDireccion.Text = dtUsuario.Rows[0][8].ToString();
             textBoxNumeroCalle.Text = dtUsuario.Rows[0][9].ToString();
             textBoxPiso.Text = dtUsuario.Rows[0][10].ToString();
             textBoxDepto.Text = dtUsuario.Rows[0][11].ToString();
             textBoxLocalidad.Text = dtUsuario.Rows[0][12].ToString();
-            comboBoxTipoDocumento.SelectedIndex = Int32.Parse(dtUsuario.Rows[0][13].ToString()) - 1;
+            if (!String.IsNullOrEmpty(dtUsuario.Rows[0][13].ToString()))
+            {
+                comboBoxTipoDocumento.SelectedIndex = Int32.Parse(dtUsuario.Rows[0][13].ToString()) - 1;
+            }
             textBoxNumeroDocumento.Text = dtUsuario.Rows[0][14].ToString();
             checkBoxHabilitado.Checked = Convert.ToBoolean(dtUsuario.Rows[0][15]);
         }
-        private void cargarComboBox()
+        private void cargarCosas()
         {
             SqlCommand command = UtilesSQL.crearCommand("select docu_detalle from DERROCHADORES_DE_PAPEL.Documento");
             SqlDataReader reader = command.ExecuteReader();
@@ -65,13 +72,14 @@ namespace FrbaHotel.AbmUsuario
             comboBoxTipoDocumento.ValueMember = "docu_detalle";
             comboBoxTipoDocumento.DataSource = dtDocu;
 
-            SqlCommand command2 = UtilesSQL.crearCommand("SELECT rol_nombre FROM DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre NOT IN (SELECT rol_nombre  from DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre = 'ADMINISTRADOR GENERAL' OR rol_nombre = 'GUEST')");
+            SqlCommand command2 = UtilesSQL.crearCommand("SELECT rol_nombre FROM DERROCHADORES_DE_PAPEL.Rol AS r JOIN DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel AS ru ON r.rol_id = ru.rouh_rol JOIN DERROCHADORES_DE_PAPEL.Usuario AS u ON ru.rouh_usuario = u.usur_id WHERE rol_nombre NOT IN (SELECT rol_nombre from DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre = 'ADMINISTRADOR GENERAL' OR rol_nombre = 'GUEST') AND u.usur_id = @user AND ru.rouh_hotel = @hote");
+            command2.Parameters.AddWithValue("@user", dtUsuario.Rows[0][0].ToString());
+            command2.Parameters.AddWithValue("@hote", hotelU);
             SqlDataReader reader2 = command2.ExecuteReader();
-            dtRol.Columns.Add("rol_nombre", typeof(string));
-            dtRol.Load(reader2);
+            dtRoles.Columns.Add("rol_nombre", typeof(string));
+            dtRoles.Load(reader2);
 
-            comboBoxRoles.ValueMember = "rol_nombre";
-            comboBoxRoles.DataSource = dtRol;
+            dataGridViewRoles.DataSource = dtRoles;
         }
 
         private void resetearTextBox()
@@ -379,14 +387,20 @@ namespace FrbaHotel.AbmUsuario
             command1.Parameters.AddWithValue("@id", dtUsuario.Rows[0][0].ToString());
             UtilesSQL.ejecutarComandoNonQuery(command1);
 
-            SqlCommand command2 = UtilesSQL.crearCommand("DERROCHADORES_DE_PAPEL.ModificarRolesUsuario");
-            command2.CommandType = CommandType.StoredProcedure;
-            command2.Parameters.AddWithValue("@rol", SqlDbType.BigInt).Value = comboBoxRoles.SelectedIndex + 2;
-            command2.Parameters.AddWithValue("@hotel", SqlDbType.BigInt).Value = hotelU;
-            command2.Parameters.AddWithValue("@user", SqlDbType.BigInt).Value = dtUsuario.Rows[0][0].ToString();
-            command2.Parameters.AddWithValue("@hab", SqlDbType.Bit).Value = checkBoxHabilitado.Checked;
-            UtilesSQL.ejecutarComandoNonQuery(command2);
+            SqlCommand command2 = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel SET rouh_habilitado = 0 WHERE rouh_usuario = @user AND rouh_hotel = @hotel");
+            command2.Parameters.AddWithValue("@user", dtUsuario.Rows[0][0].ToString());
+            command2.Parameters.AddWithValue("@hotel", hotelU);
 
+            foreach (DataGridViewRow row in dataGridViewRoles.Rows)
+            {
+                command2 = UtilesSQL.crearCommand("DERROCHADORES_DE_PAPEL.ModificarRolesUsuario");
+                command2.CommandType = CommandType.StoredProcedure;
+                command2.Parameters.AddWithValue("@rol", SqlDbType.BigInt).Value = row.Cells[0].Value.ToString();
+                command2.Parameters.AddWithValue("@hotel", SqlDbType.BigInt).Value = hotelU;
+                command2.Parameters.AddWithValue("@user", SqlDbType.BigInt).Value = dtUsuario.Rows[0][0].ToString();
+                command2.Parameters.AddWithValue("@hab", SqlDbType.Bit).Value = checkBoxHabilitado.Checked;
+                UtilesSQL.ejecutarComandoNonQuery(command2);
+            }
 
             MessageBox.Show("Modificación exitosa!");
             this.Close();
@@ -399,6 +413,25 @@ namespace FrbaHotel.AbmUsuario
         private void buttonAtras_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void buttonAgregarRol_Click(object sender, EventArgs e)
+        {
+            rol = null;
+            SeleccionarRol f1 = new SeleccionarRol(dtRoles);
+            if (!f1.IsDisposed || f1.rol == null)
+            {
+                f1.ShowDialog();
+                rol = f1.rol;
+                dtRoles.Rows.Add(rol);
+            }
+        }
+        private void buttonQuitarRol_Click(object sender, EventArgs e)
+        {
+            if (dtRoles.Rows.Count != 0)
+            {
+                dtRoles.Rows.RemoveAt(dataGridViewRoles.CurrentCell.RowIndex);
+            }
         }
     }
 }

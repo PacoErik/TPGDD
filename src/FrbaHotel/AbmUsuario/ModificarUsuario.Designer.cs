@@ -80,10 +80,13 @@
             this.buttonCrear = new System.Windows.Forms.Button();
             this.buttonAtras = new System.Windows.Forms.Button();
             this.label17 = new System.Windows.Forms.Label();
-            this.comboBoxRoles = new System.Windows.Forms.ComboBox();
             this.labelContraseñaCoinciden = new System.Windows.Forms.Label();
             this.textBoxContraseña2 = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
+            this.dataGridViewRoles = new System.Windows.Forms.DataGridView();
+            this.buttonQuitar = new System.Windows.Forms.Button();
+            this.buttonAgregar = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRoles)).BeginInit();
             this.SuspendLayout();
             // 
             // labelContraseñaObligatoria
@@ -119,7 +122,7 @@
             this.checkBoxHabilitado.AutoSize = true;
             this.checkBoxHabilitado.Checked = true;
             this.checkBoxHabilitado.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxHabilitado.Location = new System.Drawing.Point(569, 424);
+            this.checkBoxHabilitado.Location = new System.Drawing.Point(312, 487);
             this.checkBoxHabilitado.Name = "checkBoxHabilitado";
             this.checkBoxHabilitado.Size = new System.Drawing.Size(110, 17);
             this.checkBoxHabilitado.TabIndex = 265;
@@ -130,7 +133,7 @@
             // 
             this.labelCalleObligatoria.AutoSize = true;
             this.labelCalleObligatoria.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelCalleObligatoria.Location = new System.Drawing.Point(23, 352);
+            this.labelCalleObligatoria.Location = new System.Drawing.Point(22, 329);
             this.labelCalleObligatoria.Name = "labelCalleObligatoria";
             this.labelCalleObligatoria.Size = new System.Drawing.Size(119, 13);
             this.labelCalleObligatoria.TabIndex = 264;
@@ -141,7 +144,7 @@
             // 
             this.labelDireccionObligatoria.AutoSize = true;
             this.labelDireccionObligatoria.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelDireccionObligatoria.Location = new System.Drawing.Point(29, 293);
+            this.labelDireccionObligatoria.Location = new System.Drawing.Point(28, 270);
             this.labelDireccionObligatoria.Name = "labelDireccionObligatoria";
             this.labelDireccionObligatoria.Size = new System.Drawing.Size(130, 13);
             this.labelDireccionObligatoria.TabIndex = 263;
@@ -204,7 +207,7 @@
             // 
             // textBoxDepto
             // 
-            this.textBoxDepto.Location = new System.Drawing.Point(137, 389);
+            this.textBoxDepto.Location = new System.Drawing.Point(136, 366);
             this.textBoxDepto.Name = "textBoxDepto";
             this.textBoxDepto.Size = new System.Drawing.Size(105, 20);
             this.textBoxDepto.TabIndex = 257;
@@ -213,7 +216,7 @@
             // 
             this.labelDepartamentoInvalido.AutoSize = true;
             this.labelDepartamentoInvalido.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelDepartamentoInvalido.Location = new System.Drawing.Point(134, 412);
+            this.labelDepartamentoInvalido.Location = new System.Drawing.Point(133, 389);
             this.labelDepartamentoInvalido.Name = "labelDepartamentoInvalido";
             this.labelDepartamentoInvalido.Size = new System.Drawing.Size(111, 13);
             this.labelDepartamentoInvalido.TabIndex = 256;
@@ -223,7 +226,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(134, 373);
+            this.label16.Location = new System.Drawing.Point(133, 350);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(77, 13);
             this.label16.TabIndex = 255;
@@ -231,7 +234,7 @@
             // 
             // textBoxPiso
             // 
-            this.textBoxPiso.Location = new System.Drawing.Point(26, 389);
+            this.textBoxPiso.Location = new System.Drawing.Point(25, 366);
             this.textBoxPiso.Name = "textBoxPiso";
             this.textBoxPiso.Size = new System.Drawing.Size(105, 20);
             this.textBoxPiso.TabIndex = 254;
@@ -240,7 +243,7 @@
             // 
             this.labelPisoInvalido.AutoSize = true;
             this.labelPisoInvalido.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelPisoInvalido.Location = new System.Drawing.Point(23, 412);
+            this.labelPisoInvalido.Location = new System.Drawing.Point(22, 389);
             this.labelPisoInvalido.Name = "labelPisoInvalido";
             this.labelPisoInvalido.Size = new System.Drawing.Size(69, 13);
             this.labelPisoInvalido.TabIndex = 253;
@@ -250,7 +253,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(23, 373);
+            this.label15.Location = new System.Drawing.Point(22, 350);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(84, 13);
             this.label15.TabIndex = 252;
@@ -293,21 +296,21 @@
             // 
             // textBoxLocalidad
             // 
-            this.textBoxLocalidad.Location = new System.Drawing.Point(26, 444);
+            this.textBoxLocalidad.Location = new System.Drawing.Point(25, 421);
             this.textBoxLocalidad.Name = "textBoxLocalidad";
             this.textBoxLocalidad.Size = new System.Drawing.Size(216, 20);
             this.textBoxLocalidad.TabIndex = 246;
             // 
             // textBoxNumeroCalle
             // 
-            this.textBoxNumeroCalle.Location = new System.Drawing.Point(26, 329);
+            this.textBoxNumeroCalle.Location = new System.Drawing.Point(25, 306);
             this.textBoxNumeroCalle.Name = "textBoxNumeroCalle";
             this.textBoxNumeroCalle.Size = new System.Drawing.Size(216, 20);
             this.textBoxNumeroCalle.TabIndex = 245;
             // 
             // textBoxDireccion
             // 
-            this.textBoxDireccion.Location = new System.Drawing.Point(26, 271);
+            this.textBoxDireccion.Location = new System.Drawing.Point(25, 248);
             this.textBoxDireccion.Name = "textBoxDireccion";
             this.textBoxDireccion.Size = new System.Drawing.Size(216, 20);
             this.textBoxDireccion.TabIndex = 244;
@@ -316,7 +319,7 @@
             // 
             this.labelLocalidadInvalida.AutoSize = true;
             this.labelLocalidadInvalida.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelLocalidadInvalida.Location = new System.Drawing.Point(23, 467);
+            this.labelLocalidadInvalida.Location = new System.Drawing.Point(22, 444);
             this.labelLocalidadInvalida.Name = "labelLocalidadInvalida";
             this.labelLocalidadInvalida.Size = new System.Drawing.Size(92, 13);
             this.labelLocalidadInvalida.TabIndex = 243;
@@ -327,7 +330,7 @@
             // 
             this.labelNumeroDeCalleInvalido.AutoSize = true;
             this.labelNumeroDeCalleInvalido.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelNumeroDeCalleInvalido.Location = new System.Drawing.Point(23, 352);
+            this.labelNumeroDeCalleInvalido.Location = new System.Drawing.Point(22, 329);
             this.labelNumeroDeCalleInvalido.Name = "labelNumeroDeCalleInvalido";
             this.labelNumeroDeCalleInvalido.Size = new System.Drawing.Size(83, 13);
             this.labelNumeroDeCalleInvalido.TabIndex = 242;
@@ -337,7 +340,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(23, 313);
+            this.label13.Location = new System.Drawing.Point(22, 290);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(97, 13);
             this.label13.TabIndex = 241;
@@ -347,7 +350,7 @@
             // 
             this.labelDireccionInvalida.AutoSize = true;
             this.labelDireccionInvalida.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelDireccionInvalida.Location = new System.Drawing.Point(23, 293);
+            this.labelDireccionInvalida.Location = new System.Drawing.Point(22, 270);
             this.labelDireccionInvalida.Name = "labelDireccionInvalida";
             this.labelDireccionInvalida.Size = new System.Drawing.Size(91, 13);
             this.labelDireccionInvalida.TabIndex = 240;
@@ -411,7 +414,7 @@
             // 
             this.labelFechaInvalida.AutoSize = true;
             this.labelFechaInvalida.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelFechaInvalida.Location = new System.Drawing.Point(292, 267);
+            this.labelFechaInvalida.Location = new System.Drawing.Point(262, 270);
             this.labelFechaInvalida.Name = "labelFechaInvalida";
             this.labelFechaInvalida.Size = new System.Drawing.Size(76, 13);
             this.labelFechaInvalida.TabIndex = 234;
@@ -420,13 +423,13 @@
             // 
             // monthCalendar
             // 
-            this.monthCalendar.Location = new System.Drawing.Point(292, 302);
+            this.monthCalendar.Location = new System.Drawing.Point(277, 292);
             this.monthCalendar.Name = "monthCalendar";
             this.monthCalendar.TabIndex = 233;
             // 
             // buttonSeleccionarFecha
             // 
-            this.buttonSeleccionarFecha.Location = new System.Drawing.Point(458, 241);
+            this.buttonSeleccionarFecha.Location = new System.Drawing.Point(428, 244);
             this.buttonSeleccionarFecha.Name = "buttonSeleccionarFecha";
             this.buttonSeleccionarFecha.Size = new System.Drawing.Size(105, 23);
             this.buttonSeleccionarFecha.TabIndex = 232;
@@ -436,7 +439,7 @@
             // 
             // textBoxFecha
             // 
-            this.textBoxFecha.Location = new System.Drawing.Point(292, 244);
+            this.textBoxFecha.Location = new System.Drawing.Point(262, 247);
             this.textBoxFecha.Name = "textBoxFecha";
             this.textBoxFecha.ReadOnly = true;
             this.textBoxFecha.Size = new System.Drawing.Size(160, 20);
@@ -445,7 +448,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(289, 228);
+            this.label10.Location = new System.Drawing.Point(259, 231);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(119, 13);
             this.label10.TabIndex = 230;
@@ -454,7 +457,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(23, 428);
+            this.label8.Location = new System.Drawing.Point(22, 405);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(56, 13);
             this.label8.TabIndex = 229;
@@ -463,7 +466,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(23, 254);
+            this.label7.Location = new System.Drawing.Point(22, 231);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(65, 13);
             this.label7.TabIndex = 228;
@@ -568,20 +571,11 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(566, 314);
+            this.label17.Location = new System.Drawing.Point(553, 227);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(82, 13);
+            this.label17.Size = new System.Drawing.Size(98, 13);
             this.label17.TabIndex = 266;
-            this.label17.Text = "(*)Rol asignado:";
-            // 
-            // comboBoxRoles
-            // 
-            this.comboBoxRoles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxRoles.FormattingEnabled = true;
-            this.comboBoxRoles.Location = new System.Drawing.Point(569, 328);
-            this.comboBoxRoles.Name = "comboBoxRoles";
-            this.comboBoxRoles.Size = new System.Drawing.Size(160, 21);
-            this.comboBoxRoles.TabIndex = 267;
+            this.label17.Text = "(*)Roles asignados:";
             // 
             // labelContraseñaCoinciden
             // 
@@ -611,18 +605,54 @@
             this.label18.TabIndex = 277;
             this.label18.Text = "(*)Repetir contraseña:";
             // 
+            // dataGridViewRoles
+            // 
+            this.dataGridViewRoles.AllowUserToAddRows = false;
+            this.dataGridViewRoles.AllowUserToDeleteRows = false;
+            this.dataGridViewRoles.AllowUserToOrderColumns = true;
+            this.dataGridViewRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewRoles.Location = new System.Drawing.Point(556, 243);
+            this.dataGridViewRoles.MultiSelect = false;
+            this.dataGridViewRoles.Name = "dataGridViewRoles";
+            this.dataGridViewRoles.ReadOnly = true;
+            this.dataGridViewRoles.RowTemplate.ReadOnly = true;
+            this.dataGridViewRoles.Size = new System.Drawing.Size(173, 198);
+            this.dataGridViewRoles.TabIndex = 280;
+            // 
+            // buttonQuitar
+            // 
+            this.buttonQuitar.Location = new System.Drawing.Point(560, 448);
+            this.buttonQuitar.Name = "buttonQuitar";
+            this.buttonQuitar.Size = new System.Drawing.Size(75, 23);
+            this.buttonQuitar.TabIndex = 281;
+            this.buttonQuitar.Text = "Quitar";
+            this.buttonQuitar.UseVisualStyleBackColor = true;
+            this.buttonQuitar.Click += new System.EventHandler(this.buttonQuitarRol_Click);
+            // 
+            // buttonAgregar
+            // 
+            this.buttonAgregar.Location = new System.Drawing.Point(645, 448);
+            this.buttonAgregar.Name = "buttonAgregar";
+            this.buttonAgregar.Size = new System.Drawing.Size(75, 23);
+            this.buttonAgregar.TabIndex = 282;
+            this.buttonAgregar.Text = "Agregar";
+            this.buttonAgregar.UseVisualStyleBackColor = true;
+            this.buttonAgregar.Click += new System.EventHandler(this.buttonAgregarRol_Click);
+            // 
             // ModificarUsuario
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(767, 547);
+            this.Controls.Add(this.buttonAgregar);
+            this.Controls.Add(this.buttonQuitar);
+            this.Controls.Add(this.dataGridViewRoles);
             this.Controls.Add(this.labelContraseñaCoinciden);
             this.Controls.Add(this.textBoxContraseña2);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.labelContraseñaObligatoria);
             this.Controls.Add(this.textBoxContraseña);
             this.Controls.Add(this.label14);
-            this.Controls.Add(this.comboBoxRoles);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.checkBoxHabilitado);
             this.Controls.Add(this.labelCalleObligatoria);
@@ -674,6 +704,7 @@
             this.Controls.Add(this.buttonAtras);
             this.Name = "ModificarUsuario";
             this.Text = "ModificarUsuario";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewRoles)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -733,9 +764,11 @@
         private System.Windows.Forms.Button buttonCrear;
         private System.Windows.Forms.Button buttonAtras;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.ComboBox comboBoxRoles;
         private System.Windows.Forms.Label labelContraseñaCoinciden;
         private System.Windows.Forms.TextBox textBoxContraseña2;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.DataGridView dataGridViewRoles;
+        private System.Windows.Forms.Button buttonQuitar;
+        private System.Windows.Forms.Button buttonAgregar;
     }
 }

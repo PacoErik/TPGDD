@@ -30,13 +30,9 @@ CREATE PROCEDURE DERROCHADORES_DE_PAPEL.ModificarRolesUsuario
 @rol NUMERIC(18,0),
 @user NUMERIC(18,0),
 @hotel NUMERIC(18,0),
-@hab BIT
 AS
 BEGIN TRAN ta
 BEGIN TRY
-	UPDATE DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel 
-	SET rouh_habilitado = 0 
-	WHERE rouh_usuario = @user AND rouh_hotel = @hotel
 	COMMIT TRAN ta
 
 	IF EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel WHERE rouh_usuario = @user AND rouh_hotel = @hotel AND rouh_rol = @rol)
