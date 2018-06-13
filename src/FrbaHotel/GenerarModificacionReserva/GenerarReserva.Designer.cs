@@ -306,7 +306,7 @@
             // 
             this.lbl_error_carga_hotel.AutoSize = true;
             this.lbl_error_carga_hotel.ForeColor = System.Drawing.Color.Red;
-            this.lbl_error_carga_hotel.Location = new System.Drawing.Point(358, 134);
+            this.lbl_error_carga_hotel.Location = new System.Drawing.Point(308, 141);
             this.lbl_error_carga_hotel.Name = "lbl_error_carga_hotel";
             this.lbl_error_carga_hotel.Size = new System.Drawing.Size(88, 13);
             this.lbl_error_carga_hotel.TabIndex = 36;
