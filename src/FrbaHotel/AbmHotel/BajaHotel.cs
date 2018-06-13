@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -68,7 +69,7 @@ namespace FrbaHotel.AbmHotel
         }
         private bool validarFechas()
         {
-            if (DateTime.Parse(textBoxFecha.Text) <= DateTime.Parse(textBoxFecha2.Text))
+            if (DateTime.ParseExact(textBoxFecha.Text, "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture) <= DateTime.ParseExact(textBoxFecha2.Text, "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture))
             {
                 labelFechaInvalida3.Visible = true;
                 return false;
@@ -86,7 +87,7 @@ namespace FrbaHotel.AbmHotel
         {
             try
             {
-                DateTime dateTime = DateTime.Parse(date);
+                DateTime dateTime = DateTime.ParseExact(date, "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture);
                 return true;
             }
             catch

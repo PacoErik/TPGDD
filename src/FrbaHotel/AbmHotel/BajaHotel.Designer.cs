@@ -47,7 +47,7 @@
             // 
             this.labelFechaInvalida.AutoSize = true;
             this.labelFechaInvalida.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelFechaInvalida.Location = new System.Drawing.Point(69, 70);
+            this.labelFechaInvalida.Location = new System.Drawing.Point(69, 127);
             this.labelFechaInvalida.Name = "labelFechaInvalida";
             this.labelFechaInvalida.Size = new System.Drawing.Size(76, 13);
             this.labelFechaInvalida.TabIndex = 238;
@@ -56,7 +56,7 @@
             // 
             // buttonSeleccionarFecha
             // 
-            this.buttonSeleccionarFecha.Location = new System.Drawing.Point(310, 44);
+            this.buttonSeleccionarFecha.Location = new System.Drawing.Point(310, 101);
             this.buttonSeleccionarFecha.Name = "buttonSeleccionarFecha";
             this.buttonSeleccionarFecha.Size = new System.Drawing.Size(105, 23);
             this.buttonSeleccionarFecha.TabIndex = 237;
@@ -66,7 +66,7 @@
             // 
             // textBoxFecha
             // 
-            this.textBoxFecha.Location = new System.Drawing.Point(69, 47);
+            this.textBoxFecha.Location = new System.Drawing.Point(69, 104);
             this.textBoxFecha.Name = "textBoxFecha";
             this.textBoxFecha.ReadOnly = true;
             this.textBoxFecha.Size = new System.Drawing.Size(235, 20);
@@ -76,7 +76,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(66, 29);
+            this.label10.Location = new System.Drawing.Point(66, 86);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(93, 15);
             this.label10.TabIndex = 235;
@@ -86,7 +86,7 @@
             // 
             this.labelFechaInvalida2.AutoSize = true;
             this.labelFechaInvalida2.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelFechaInvalida2.Location = new System.Drawing.Point(69, 130);
+            this.labelFechaInvalida2.Location = new System.Drawing.Point(69, 63);
             this.labelFechaInvalida2.Name = "labelFechaInvalida2";
             this.labelFechaInvalida2.Size = new System.Drawing.Size(76, 13);
             this.labelFechaInvalida2.TabIndex = 242;
@@ -95,7 +95,7 @@
             // 
             // buttonFecha2
             // 
-            this.buttonFecha2.Location = new System.Drawing.Point(310, 104);
+            this.buttonFecha2.Location = new System.Drawing.Point(310, 37);
             this.buttonFecha2.Name = "buttonFecha2";
             this.buttonFecha2.Size = new System.Drawing.Size(105, 23);
             this.buttonFecha2.TabIndex = 241;
@@ -105,7 +105,7 @@
             // 
             // textBoxFecha2
             // 
-            this.textBoxFecha2.Location = new System.Drawing.Point(69, 107);
+            this.textBoxFecha2.Location = new System.Drawing.Point(69, 40);
             this.textBoxFecha2.Name = "textBoxFecha2";
             this.textBoxFecha2.ReadOnly = true;
             this.textBoxFecha2.Size = new System.Drawing.Size(235, 20);
@@ -115,7 +115,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(69, 89);
+            this.label2.Location = new System.Drawing.Point(69, 22);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(126, 15);
             this.label2.TabIndex = 239;

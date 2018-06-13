@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -43,7 +44,7 @@ namespace FrbaHotel.AbmHotel
             textBoxCiudad.Text = dtH.Rows[0][9].ToString();
             textBoxPais.Text = dtH.Rows[0][10].ToString();
             if (!String.IsNullOrEmpty(dtH.Rows[0][11].ToString()))
-            { textBoxFecha.Text = DateTime.Parse(dtH.Rows[0][11].ToString()).ToString("yyyy-MM-dd HH:mm:ss.fff"); }
+            { textBoxFecha.Text = DateTime.Parse(dtH.Rows[0][11].ToString()).ToString("yyyy-dd-MM HH:mm:ss.fff"); }
 
             SqlDataAdapter sda = UtilesSQL.crearDataAdapter("SELECT regi_descripcion FROM DERROCHADORES_DE_PAPEL.Regimen");
             dtRegimen.Columns.Add(new DataColumn("Seleccionado", typeof(bool)));
@@ -76,7 +77,7 @@ namespace FrbaHotel.AbmHotel
         }
         private void buttonSeleccionarFecha_Click(object sender, EventArgs e)
         {
-            textBoxFecha.Text = monthCalendar.SelectionEnd.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            textBoxFecha.Text = monthCalendar.SelectionEnd.ToString("yyyy-dd-MM HH:mm:ss.fff");
         }
 
         private void resetearLabels()
@@ -124,7 +125,7 @@ namespace FrbaHotel.AbmHotel
         {
             try
             {
-                DateTime dateTime = DateTime.Parse(date);
+                DateTime dateTime = DateTime.ParseExact(date, "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture);
                 return true;
             }
             catch

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
@@ -96,7 +97,7 @@ namespace FrbaHotel.AbmCliente
         {
             try
             {
-                DateTime dateTime = DateTime.Parse(date);
+                DateTime dateTime = DateTime.ParseExact(date,"yyyy-dd-MM HH:mm:ss.fff",CultureInfo.InvariantCulture);
                 return true;
             }
             catch
@@ -371,7 +372,7 @@ namespace FrbaHotel.AbmCliente
 
         private void buttonSeleccionarFecha_Click(object sender, EventArgs e)
         {
-            textBoxFecha.Text = monthCalendar.SelectionEnd.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            textBoxFecha.Text = monthCalendar.SelectionEnd.ToString("yyyy-dd-MM HH:mm:ss.fff");
         }
     }
 }
