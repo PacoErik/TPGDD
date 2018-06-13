@@ -281,7 +281,7 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.Estadia (
 	esta_cantidadDeNoches NUMERIC(18,0) NOT NULL,
 	esta_reserva NUMERIC(18,0) NOT NULL,
 	esta_usuarioCheckIn NUMERIC(18,0) NOT NULL,
-	esta_usuarioCheckOut NUMERIC(18,0) NOT NULL,
+	esta_usuarioCheckOut NUMERIC(18,0),
 	PRIMARY KEY (esta_id),
 	FOREIGN KEY (esta_reserva) REFERENCES DERROCHADORES_DE_PAPEL.Reserva(rese_codigo),
 	FOREIGN KEY (esta_usuarioCheckIn) REFERENCES DERROCHADORES_DE_PAPEL.Usuario(usur_id),
@@ -535,7 +535,7 @@ GO
 -- Estadia - Carga automatica
 
 INSERT INTO DERROCHADORES_DE_PAPEL.Estadia (esta_fechaDeInicio, esta_fechaDeFin, esta_cantidadDeNoches, esta_reserva, esta_usuarioCheckIn, esta_usuarioCheckOut)
-	SELECT DISTINCT Estadia_Fecha_Inicio, (Estadia_Fecha_Inicio+Estadia_Cant_Noches), Estadia_Cant_Noches, Reserva_Codigo, 1, 1 
+	SELECT DISTINCT Estadia_Fecha_Inicio, (Estadia_Fecha_Inicio+Estadia_Cant_Noches), Estadia_Cant_Noches, Reserva_Codigo, 1, NULL 
 	FROM gd_esquema.Maestra 
 	WHERE Reserva_Codigo IS NOT NULL AND
 			Estadia_Fecha_Inicio IS NOT NULL
