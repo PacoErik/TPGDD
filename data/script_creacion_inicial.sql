@@ -29,7 +29,7 @@ GO
 CREATE PROCEDURE DERROCHADORES_DE_PAPEL.ModificarRolesUsuario
 @rol NUMERIC(18,0),
 @user NUMERIC(18,0),
-@hotel NUMERIC(18,0),
+@hotel NUMERIC(18,0)
 AS
 BEGIN TRAN ta
 BEGIN TRY
@@ -291,10 +291,10 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.Estadia (
 CREATE TABLE DERROCHADORES_DE_PAPEL.Factura (
 	fact_numero NUMERIC(18,0) IDENTITY(1,1) NOT NULL,
 	fact_fecha DATETIME NOT NULL,
-	fact_costoTotal NUMERIC(18,2) NOT NULL,
+	fact_costoTotal NUMERIC(18,2),
 	fact_estadia NUMERIC(18,0) NOT NULL,
 	fact_cliente NUMERIC(18,0) NOT NULL,
-	fact_modoDePago NUMERIC(18,0) NOT NULL,
+	fact_modoDePago NUMERIC(18,0),
 	fact_tarjeta NUMERIC(18,0),
 	PRIMARY KEY (fact_numero),
 	FOREIGN KEY (fact_estadia) REFERENCES DERROCHADORES_DE_PAPEL.Estadia(esta_id),
