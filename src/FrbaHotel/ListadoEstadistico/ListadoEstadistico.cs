@@ -37,12 +37,12 @@ namespace FrbaHotel.ListadoEstadistico
                                                         + "DERROCHADORES_DE_PAPEL.Reserva ON canc_reserva = rese_codigo JOIN "
                                                         + "DERROCHADORES_DE_PAPEL.Hotel ON rese_hotel = hote_id "
                                                         + "WHERE YEAR(canc_fechaDeCancelacion) = "+anio.SelectedItem+" AND "
-                                                        + "MONTH(canc_fechaDeCancelacion) BETWEEN "+rangoDeMeses()
+                                                        + "MONTH(canc_fechaDeCancelacion) BETWEEN "+rangoDeMeses()+" "
                                                         + "GROUP BY hote_id, hote_nombre "
                                                         + "ORDER BY 3 DESC");
                     break;
                 case "HOTELES CON MAYOR CANTIDAD DE CONSUMIBLES FACTURADOS":
-                    UtilesSQL.llenarTabla(resultados_dt, "SELECT TOP 5 hote_id Hotel, hote_nombre Nombre, COUNT(*) \'Cantidad consumibles\' "
+                    UtilesSQL.llenarTabla(resultados_dt, "SELECT TOP 5 hote_id Hotel, hote_nombre Nombre, SUM(item_cantidad) \'Cantidad consumibles\' "
                                                         +"FROM DERROCHADORES_DE_PAPEL.ItemDeFactura JOIN "
                                                             +"DERROCHADORES_DE_PAPEL.Factura ON item_factura = fact_numero JOIN "
                                                             +"DERROCHADORES_DE_PAPEL.Estadia ON esta_id = fact_estadia JOIN "
@@ -50,12 +50,12 @@ namespace FrbaHotel.ListadoEstadistico
                                                             +"DERROCHADORES_DE_PAPEL.Hotel ON hote_id = rese_hotel "
                                                         +"WHERE item_consumible IS NOT NULL AND "
                                                             +"YEAR(fact_fecha) = "+anio.SelectedItem+" AND "
-                                                            +"MONTH(fact_fecha) BETWEEN "+rangoDeMeses()
+                                                            +"MONTH(fact_fecha) BETWEEN "+rangoDeMeses()+" "
                                                         +"GROUP BY hote_id, hote_nombre "
                                                         +"ORDER BY 3 DESC");
                     break;
                 case "HOTELES CON MAYOR CANTIDAD DE DIAS FUERA DE SERVICIO":
-                    UtilesSQL.llenarTabla(resultados_dt, "SELECT TOP 5 hote_id Hotel, hote_nombre Nombre, ISNULL(SUM(DATEDIFF(DAY, peri_fechaInicio, peri_fechaFin)),0) \'Días sin servicio\' "
+                    UtilesSQL.llenarTabla(resultados_dt, "SELECT TOP 5 hote_id Hotel, hote_nombre Nombre, ISNULL(SUM(DATEDIFF(DAY, peri_fechaFin, peri_fechaInicio)),0) \'Días sin servicio\' "
                                                         +"FROM DERROCHADORES_DE_PAPEL.Hotel LEFT JOIN "
                                                             +"DERROCHADORES_DE_PAPEL.PeriodoDeCierre ON peri_hotel = hote_id "
                                                         +"WHERE (peri_fechaInicio IS NOT NULL AND "
