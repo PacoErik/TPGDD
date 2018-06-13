@@ -20,22 +20,22 @@ namespace FrbaHotel.GenerarModificacionReserva
         public double precio_base;
         public int cliente;
         public int usuario;
-        
+        public int codigo;
         public void CalcularPrecio()
         {
-            double total = this.hotel.recarga_estrellas;
-            total += this.precio_base * this.habitaciones_reservadas.Sum(x => Convert.ToDouble(x.cantidad_personas));
-            this.precio = total;
+            double total = hotel.recarga_estrellas;
+            total += precio_base * habitaciones_reservadas.Sum(x => Convert.ToDouble(x.cantidad_personas)) * cantidad_de_noches;
+            precio = total;
         }
 
         public int PersonasMaximas()
         {
-            return this.habitaciones_reservadas.Sum(x => x.cantidad_personas);
+            return habitaciones_reservadas.Sum(x => x.cantidad_personas);
         }
 
         public bool CapacidadSuficiente()
         {
-            return this.PersonasMaximas() >= this.personas;
+            return PersonasMaximas() >= personas;
         }
     }
 
@@ -43,11 +43,6 @@ namespace FrbaHotel.GenerarModificacionReserva
     {
         public int ID;
         public double recarga_estrellas;
-    }
-
-    class Regimen
-    {
-        public double precio_base;
     }
 
     class Habitacion
@@ -60,9 +55,9 @@ namespace FrbaHotel.GenerarModificacionReserva
         public override string ToString()
         {
             string retorno = string.Empty;
-            retorno += "Nro: " + this.numero.ToString() + ". ";
-            retorno += "Tipo: " + this.descripcion.ToString() + ". ";
-            retorno += "Cantidad de personas: " + this.cantidad_personas.ToString();
+            retorno += "Nro: " + numero.ToString() + ". ";
+            retorno += "Tipo: " + descripcion.ToString() + ". ";
+            retorno += "Cantidad de personas: " + cantidad_personas.ToString();
             return retorno;
         }
     }

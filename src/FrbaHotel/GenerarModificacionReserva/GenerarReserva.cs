@@ -13,14 +13,11 @@ namespace FrbaHotel.GenerarModificacionReserva
 {
     public partial class GenerarReserva : Form
     {
-        bool hotel_fijo;
         //Reserva
         private Reserva reserva = new Reserva();
         private List<Habitacion> habitaciones_disponibles = new List<Habitacion>();
 
         //SQL
-        private SqlConnection conexion = new SqlConnection(@"Data Source=localhost\SQLSERVER2012;Initial Catalog=GD1C2018;User ID=gdHotel2018;Password=gd2018");
-        private SqlDataAdapter sda;
         private SqlCommand command;
         //Tablas
         DataTable hoteles = new DataTable();
@@ -34,87 +31,86 @@ namespace FrbaHotel.GenerarModificacionReserva
         public GenerarReserva(int id_usuario, string id_hotel)
         {
             InitializeComponent();
-            this.hotel_fijo = true;
-            this.InicializarTodo();
-            this.reserva.usuario = id_usuario;
-            this.reserva.hotel.ID = Convert.ToInt32(id_hotel);
-            this.btn_cargar_opciones.Text = "Cargar opciones";
+            UtilesSQL.inicializar();
+            reserva.usuario = id_usuario;
+            reserva.hotel.ID = Convert.ToInt32(id_hotel);
+            btn_cargar_opciones.Text = "Cargar opciones";
+            reserva.fecha_que_se_realizo_reserva = DateTime.Today;
+            reserva.fecha_desde = DateTime.Today;
+            reserva.fecha_hasta = DateTime.Today;
+            date_desde.MinDate = DateTime.Today;
+            date_hasta.MinDate = DateTime.Today;
+            lbl_error_fecha.Visible = false;
+            lbl_error_personas.Visible = false;
+            lbl_error_carga_hotel.Visible = false;
+            reserva.personas = 0;
+            //Inicializaciones
+            cbox_regimenes.Enabled = false;
+            cbox_tipo_identificacion.Enabled = false;
+            txtbox_identificacion.Enabled = false;
+            txtbox_mail.Enabled = false;
+            btn_reservar.Enabled = false;
+            lbl_falta_habitaciones_2.Visible = false;
+            lbl_falta_habitaciones_1.Visible = false;
+            lbl_falta_tipo_id.Visible = false;
+            lbl_falta_id.Visible = false;
+            lbl_falta_mail.Visible = false;
+            lbl_id_incorrecta.Visible = false;
+            //Inicializacion de intefaz
+            lbl_noches.Text = lbl_precio_base.Text = lbl_recarga_estrellas.Text = String.Empty;
+            //Cambio de estructura
+            SetearRecargaEstrella();
         }
 
-        private void InicializarTodo()
+        private void SetearRecargaEstrella()
         {
-            this.reserva.fecha_que_se_realizo_reserva = DateTime.Today;
-            this.reserva.fecha_desde = DateTime.Today;
-            this.reserva.fecha_hasta = DateTime.Today;
-            this.date_desde.MinDate = DateTime.Today;
-            this.date_hasta.MinDate = DateTime.Today;
-            this.lbl_error_fecha.Visible = false;
-            this.lbl_error_personas.Visible = false;
-            this.lbl_error_carga_hotel.Visible = false;
-            this.reserva.personas = 0;
-
-            //Inicializaciones
-            this.cbox_regimenes.Enabled = false;
-            this.cbox_tipo_identificacion.Enabled = false;
-            this.txtbox_identificacion.Enabled = false;
-            this.txtbox_mail.Enabled = false;
-            this.btn_reservar.Enabled = false;
-            this.lbl_falta_habitaciones_2.Visible = false;
-            this.lbl_falta_habitaciones_1.Visible = false;
-            this.lbl_falta_tipo_id.Visible = false;
-            this.lbl_falta_id.Visible = false;
-            this.lbl_falta_mail.Visible = false;
-            this.lbl_id_incorrecta.Visible = false;
-
-            //Inicializacion de intefaz
-            this.lbl_noches.Text = this.lbl_precio_base.Text = this.lbl_recarga_estrellas.Text = String.Empty;
-
-            //Cambio de estructura
-            this.lbl_recarga_estrellas.Text = reserva.hotel.recarga_estrellas.ToString();
+            UtilesSQL.llenarTabla(hoteles, "SELECT * FROM DERROCHADORES_DE_PAPEL.Hotel WHERE hote_id = '" + reserva.hotel.ID.ToString() + "'");
+            reserva.hotel.recarga_estrellas = Convert.ToDouble(hoteles.Rows[0]["hote_recargaEstrella"]);
+            lbl_recarga_estrellas.Text = reserva.hotel.recarga_estrellas.ToString();
         }
 
         private void date_desde_ValueChanged(object sender, EventArgs e)
         {
-            this.reserva.fecha_desde = this.date_desde.Value;
-            this.VerificarFechasCorrectas();
+            reserva.fecha_desde = date_desde.Value;
+            VerificarFechasCorrectas();
         }
 
         private void date_hasta_ValueChanged(object sender, EventArgs e)
         {
-            this.reserva.fecha_hasta = this.date_hasta.Value;
-            this.VerificarFechasCorrectas();
+            reserva.fecha_hasta = date_hasta.Value;
+            VerificarFechasCorrectas();
         }
 
         private void VerificarFechasCorrectas()
         {
             if (reserva.fecha_desde > reserva.fecha_hasta)
             {
-                this.date_hasta.Value = this.date_desde.Value;
+                date_hasta.Value = date_desde.Value;
             }
-            this.CalcularCantidadNoches();
+            CalcularCantidadNoches();
         }
 
         private void CalcularCantidadNoches()
         {
-            TimeSpan dias = this.reserva.fecha_hasta - this.reserva.fecha_desde;
-            this.reserva.cantidad_de_noches = dias.Days;
-            this.lbl_noches.Text = this.reserva.cantidad_de_noches.ToString();
-            this.lbl_error_fecha.Visible = reserva.cantidad_de_noches < 1;
+            TimeSpan dias = reserva.fecha_hasta - reserva.fecha_desde;
+            reserva.cantidad_de_noches = dias.Days;
+            lbl_noches.Text = reserva.cantidad_de_noches.ToString();
+            lbl_error_fecha.Visible = reserva.cantidad_de_noches < 1;
         }
 
         private void txtbox_personas_TextChanged(object sender, EventArgs e)
         {
-            string entrada = this.txtbox_personas.Text;
+            string entrada = txtbox_personas.Text;
             if (entrada.Length > 0)
             {
                 if (CantidadValida(entrada))
                 {
-                    this.reserva.personas = Convert.ToInt32(entrada);
-                    this.lbl_error_personas.Visible = false;
+                    reserva.personas = Convert.ToInt32(entrada);
+                    lbl_error_personas.Visible = false;
                 }
                 else
                 {
-                    this.lbl_error_personas.Visible = true;
+                    lbl_error_personas.Visible = true;
                 }
             }
         }
@@ -133,255 +129,249 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         private void btn_cargar_opciones_Click(object sender, EventArgs e)
         {
-            if (this.reserva.personas == 0 || this.reserva.cantidad_de_noches == 0)
+            if (reserva.personas == 0 || reserva.cantidad_de_noches == 0)
             {
-                this.lbl_error_carga_hotel.Visible = true;
+                lbl_error_carga_hotel.Text = "FALTAN DATOS";
+                lbl_error_carga_hotel.Visible = true;
             }
             else
             {
-                this.lbl_error_carga_hotel.Visible = false;
-                this.CargarHabitaciones();
-                this.CargarRegimenes();
-                this.HabilitarRegistroCliente();
-
-                this.cbox_disponibles.Enabled = true;
-                this.cbox_seleccionadas.Enabled = true;
+                if (CargarHabitaciones())
+                {
+                    lbl_error_carga_hotel.Visible = false;
+                    CargarRegimenes();
+                    HabilitarRegistroCliente();
+                    cbox_disponibles.Enabled = true;
+                    cbox_seleccionadas.Enabled = true;
+                }
+                else
+                {
+                    lbl_error_carga_hotel.Text = "HABITACIONES INSUFICIENTES";
+                    lbl_error_carga_hotel.Visible = true;
+                }
             }
         }
        
         private void CargarRegimenes()
         {
-            this.cbox_regimenes.Enabled = true;
-            this.regimenes = new DataTable();
-            this.sda = new SqlDataAdapter("SELECT * FROM DERROCHADORES_DE_PAPEL.RegimenXHotel as rh JOIN DERROCHADORES_DE_PAPEL.Regimen as r ON ( rh.rexh_regimen = r.regi_codigo AND rh.rexh_hotel = " + reserva.hotel.ID.ToString() + ")", conexion);
-            this.sda.Fill(regimenes);
-
-            this.cbox_regimenes.Items.Clear();
-
-            this.cbox_regimenes.Items.Insert(0, "<No seleccionado>");
-
+            cbox_regimenes.Enabled = true;
+            regimenes = new DataTable();
+            UtilesSQL.llenarTabla(regimenes, "SELECT * FROM DERROCHADORES_DE_PAPEL.RegimenXHotel as rh JOIN DERROCHADORES_DE_PAPEL.Regimen as r ON ( rh.rexh_regimen = r.regi_codigo AND rh.rexh_hotel = " + reserva.hotel.ID.ToString() + ")");
+            cbox_regimenes.Items.Clear();
+            cbox_regimenes.Items.Insert(0, "<No seleccionado>");
             for (int indice = 0; indice < regimenes.Rows.Count - 1; indice++)
             {
-                this.cbox_regimenes.Items.Add(regimenes.Rows[indice]["regi_descripcion"].ToString());
+                cbox_regimenes.Items.Add(regimenes.Rows[indice]["regi_descripcion"].ToString());
             }
-
-            this.cbox_regimenes.SelectedIndex = 0;
+            cbox_regimenes.SelectedIndex = 0;
         }
 
         private void cbox_regimenes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int indice_regimen_seleccionado = this.cbox_regimenes.SelectedIndex;
+            int indice_regimen_seleccionado = cbox_regimenes.SelectedIndex;
             string precio_base = String.Empty;
-            if (this.cbox_regimenes.SelectedIndex == 0)
+            if (cbox_regimenes.SelectedIndex == 0)
             {
                 precio_base = regimenes.Rows[1]["regi_precioBase"].ToString();
-                this.lbl_precio_base.Text = precio_base;
-                this.reserva.precio_base = Convert.ToDouble(precio_base);
-                this.reserva.regimen_seleccionado = false;
+                lbl_precio_base.Text = precio_base;
+                reserva.precio_base = Convert.ToDouble(precio_base);
+                reserva.regimen_seleccionado = false;
             }
             else
             {
-                precio_base = this.regimenes.Rows[indice_regimen_seleccionado]["regi_precioBase"].ToString();
-                this.lbl_precio_base.Text = precio_base;
-                this.reserva.precio_base = Convert.ToDouble(precio_base);
-                this.reserva.regimen_seleccionado = true;
+                precio_base = regimenes.Rows[indice_regimen_seleccionado]["regi_precioBase"].ToString();
+                lbl_precio_base.Text = precio_base;
+                reserva.precio_base = Convert.ToDouble(precio_base);
+                reserva.regimen_seleccionado = true;
             }
         }
 
-        private void CargarHabitaciones()
+        private bool CargarHabitaciones()
         {
-            this.habitaciones = new DataTable();
-            this.sda = new SqlDataAdapter("SELECT * FROM DERROCHADORES_DE_PAPEL.Habitacion as h, DERROCHADORES_DE_PAPEL.TipoDeHabitacion as t WHERE h.habi_tipo = t.tipo_codigo AND h.habi_hotel = " + this.reserva.hotel.ID.ToString(), conexion);
-            this.sda.Fill(habitaciones);
 
-            for (int indice = 0; indice < this.habitaciones.Rows.Count; indice++ )
+            UtilesSQL.llenarTabla(hoteles, "SELECT * From DERROCHADORES_DE_PAPEL.Habitacion JOIN DERROCHADORES_DE_PAPEL.PeriodoDeCierre ON (peri_hotel = '" + reserva.hotel.ID + "') WHERE (peri_fechaFin >= '" + reserva.fecha_desde + "' AND peri_fechaFin <= '" + reserva.fecha_hasta + "') OR (peri_fechaInicio >= '" + reserva.fecha_desde + "' AND peri_fechaInicio <= '" + reserva.fecha_hasta + "') OR ( peri_fechaInicio <='" + reserva.fecha_desde + "' AND peri_fechaFin >= '" + reserva.fecha_hasta + "') " );
+            if (hoteles.Rows.Count == 0)
             {
-                Habitacion habitacion = new Habitacion();
-                habitacion.descripcion = this.habitaciones.Rows[indice]["tipo_descripcion"].ToString();
-                habitacion.cantidad_personas = Convert.ToInt32(this.habitaciones.Rows[indice]["tipo_cantidadDePersonas"].ToString());
-                habitacion.numero = Convert.ToInt32(this.habitaciones.Rows[indice]["habi_numero"].ToString());
-                habitacion.piso = Convert.ToInt32(this.habitaciones.Rows[indice]["habi_piso"].ToString());
-                this.habitaciones_disponibles.Add(habitacion);
+                lbl_error_carga_hotel.Text = "HOTEL CERRADO POR ESAS FECHAS";
+                lbl_error_carga_hotel.Visible = true;
+                return false;
+            }
+            else
+            {
+                habitaciones = new DataTable();
+                string consulta = "SELECT h1.habi_numero, h1.habi_piso, th1.tipo_cantidadDePersonas, th1.tipo_descripcion FROM  DERROCHADORES_DE_PAPEL.TipoDeHabitacion as th1 JOIN DERROCHADORES_DE_PAPEL.Habitacion as h1 ON (th1.tipo_codigo = h1.habi_tipo) WHERE h1.habi_hotel = '" + reserva.hotel.ID + "' AND NOT (EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.Habitacion as h2 JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion as rh2 ON ( rh2.rexh_hotel = h2.habi_hotel AND rh2.rexh_numero = h2.habi_numero AND rh2.rexh_piso = h2.habi_piso) JOIN DERROCHADORES_DE_PAPEL.Reserva as r2 ON (r2.rese_codigo = rh2.rexh_reserva) JOIN DERROCHADORES_DE_PAPEL.EstadoDeReserva as er2 ON (er2.esta_id = r2.rese_estado) WHERE h2.habi_hotel = h1.habi_hotel AND h2.habi_numero = h1.habi_numero AND h2.habi_piso = h1.habi_piso AND ( ((r2.rese_inicio BETWEEN '" + reserva.fecha_desde + "' AND '" + reserva.fecha_hasta + "') OR (r2.rese_fin BETWEEN '" + reserva.fecha_desde + "' AND '" + reserva.fecha_hasta + "') OR (r2.rese_fin <= '" + reserva.fecha_desde + "' AND r2.rese_fin >= '" + reserva.fecha_hasta + "') ) AND (NOT ( (esta_detalle = 'RESERVA CANCELADA POR RECEPCION') OR (esta_detalle = 'RESERVA CANCELADA POR CLIENTE' ) OR (esta_detalle = 'RESERVA CANCELADA POR NO-SHOW')) ) ) ) )";
+                UtilesSQL.llenarTabla(habitaciones, consulta);
+                for (int indice = 0; indice < habitaciones.Rows.Count; indice++)
+                {
+                    Habitacion habitacion = new Habitacion();
+                    habitacion.descripcion = habitaciones.Rows[indice]["tipo_descripcion"].ToString();
+                    habitacion.cantidad_personas = Convert.ToInt32(habitaciones.Rows[indice]["tipo_cantidadDePersonas"].ToString());
+                    habitacion.numero = Convert.ToInt32(habitaciones.Rows[indice]["habi_numero"].ToString());
+                    habitacion.piso = Convert.ToInt32(habitaciones.Rows[indice]["habi_piso"].ToString());
+                    habitaciones_disponibles.Add(habitacion);
+                }
+                ActualizarComboBoxHabitaciones();
+                return true;
             }
 
-            this.ActualizarComboBoxHabitaciones();
         }
 
         private void btn_agregar_habitacion_Click(object sender, EventArgs e)
         {
-            if (this.cbox_disponibles.SelectedIndex != 0)
+            if (cbox_disponibles.SelectedIndex != 0)
             {
-                this.reserva.habitaciones_reservadas.Add(this.habitaciones_disponibles[cbox_disponibles.SelectedIndex - 1]);
-                this.habitaciones_disponibles.RemoveAt(cbox_disponibles.SelectedIndex - 1);
-                this.ActualizarComboBoxHabitaciones();
+                reserva.habitaciones_reservadas.Add(habitaciones_disponibles[cbox_disponibles.SelectedIndex - 1]);
+                habitaciones_disponibles.RemoveAt(cbox_disponibles.SelectedIndex - 1);
+                ActualizarComboBoxHabitaciones();
             }
         }
 
         private void btn_eliminar_habitacion_Click(object sender, EventArgs e)
         {
-            if (this.cbox_seleccionadas.SelectedIndex != 0)
+            if (cbox_seleccionadas.SelectedIndex != 0)
             {
-                this.habitaciones_disponibles.Add(this.reserva.habitaciones_reservadas[this.cbox_seleccionadas.SelectedIndex - 1]);
-                this.reserva.habitaciones_reservadas.RemoveAt(this.cbox_seleccionadas.SelectedIndex - 1);
-                this.ActualizarComboBoxHabitaciones();
+                habitaciones_disponibles.Add(reserva.habitaciones_reservadas[cbox_seleccionadas.SelectedIndex - 1]);
+                reserva.habitaciones_reservadas.RemoveAt(cbox_seleccionadas.SelectedIndex - 1);
+                ActualizarComboBoxHabitaciones();
             }
         }
 
         private void ActualizarComboBoxHabitaciones()
         {
-            this.cbox_disponibles.Items.Clear();
-            this.cbox_seleccionadas.Items.Clear();
-
-            this.cbox_disponibles.Items.Add("<Seleccionar habitacion para reservar>");
-            this.cbox_seleccionadas.Items.Add("<Seleccionar habitacion para eliminar>");
-
-            for (int indice = 0; indice < this.habitaciones_disponibles.Count; indice++) 
+            cbox_disponibles.Items.Clear();
+            cbox_seleccionadas.Items.Clear();
+            cbox_disponibles.Items.Add("<Seleccionar habitacion para reservar>");
+            cbox_seleccionadas.Items.Add("<Seleccionar habitacion para eliminar>");
+            for (int indice = 0; indice < habitaciones_disponibles.Count; indice++) 
             {
-                this.cbox_disponibles.Items.Add(this.habitaciones_disponibles[indice].ToString());
+                cbox_disponibles.Items.Add(habitaciones_disponibles[indice].ToString());
             }
-
-            for (int indice = 0; indice < this.reserva.habitaciones_reservadas.Count; indice++)
+            for (int indice = 0; indice < reserva.habitaciones_reservadas.Count; indice++)
             {
-                this.cbox_seleccionadas.Items.Add(this.reserva.habitaciones_reservadas[indice].ToString());
+                cbox_seleccionadas.Items.Add(reserva.habitaciones_reservadas[indice].ToString());
             }
-
-            this.cbox_disponibles.SelectedIndex = 0;
-            this.cbox_seleccionadas.SelectedIndex = 0;
-
-            this.CalcularPrecio();
-            this.VerificarCapacidadReserva();
+            cbox_disponibles.SelectedIndex = 0;
+            cbox_seleccionadas.SelectedIndex = 0;
+            CalcularPrecio();
+            VerificarCapacidadReserva();
         }
 
         private void CalcularPrecio()
         {
-            this.reserva.CalcularPrecio();
-            this.lbl_precio.Text = this.reserva.precio.ToString();
-            
+            reserva.CalcularPrecio();
+            lbl_precio.Text = reserva.precio.ToString();
         }
 
         private void VerificarCapacidadReserva()
         {
-            this.lbl_falta_habitaciones_2.Visible = this.lbl_falta_habitaciones_1.Visible = !this.reserva.CapacidadSuficiente();
+            lbl_falta_habitaciones_2.Visible = lbl_falta_habitaciones_1.Visible = !reserva.CapacidadSuficiente();
         }
 
         void HabilitarRegistroCliente()
         {
-            this.cbox_tipo_identificacion.Enabled = true;
-            this.txtbox_identificacion.Enabled = true;
-            this.txtbox_mail.Enabled = true;
-            this.btn_reservar.Enabled = true;
-            this.CargarTipoIdentificacion();
+            cbox_tipo_identificacion.Enabled = true;
+            txtbox_identificacion.Enabled = true;
+            txtbox_mail.Enabled = true;
+            btn_reservar.Enabled = true;
+            CargarTipoIdentificacion();
         }
 
         private void CargarTipoIdentificacion()
         {
-            this.identificaciones = new DataTable();
-            this.sda = new SqlDataAdapter("SELECT * FROM DERROCHADORES_DE_PAPEL.Documento", conexion);
-            this.sda.Fill(this.identificaciones);
-
-            this.cbox_tipo_identificacion.Items.Clear();
-
-            for (int indice = 0; indice < this.identificaciones.Rows.Count; indice++)
+            identificaciones = new DataTable();
+            UtilesSQL.llenarTabla(identificaciones, "SELECT * FROM DERROCHADORES_DE_PAPEL.Documento");
+            cbox_tipo_identificacion.Items.Clear();
+            for (int indice = 0; indice < identificaciones.Rows.Count; indice++)
             {
-                this.cbox_tipo_identificacion.Items.Add(identificaciones.Rows[indice]["docu_detalle"]);
+                cbox_tipo_identificacion.Items.Add(identificaciones.Rows[indice]["docu_detalle"]);
             }
-
         }
 
         private void btn_reservar_Click(object sender, EventArgs e)
         {
-            this.lbl_falta_id.Visible = this.txtbox_identificacion.Text == "";
-            this.lbl_falta_mail.Visible = this.txtbox_mail.Text == "";
-            this.lbl_falta_tipo_id.Visible = this.cbox_tipo_identificacion.Text == "";
-            this.lbl_id_incorrecta.Visible = !this.DocumentoValido();
-
-            if ((!this.lbl_falta_id.Visible) && (!this.lbl_falta_mail.Visible) && (!this.lbl_falta_tipo_id.Visible) && (!this.lbl_id_incorrecta.Visible) )
+            lbl_falta_id.Visible = txtbox_identificacion.Text == "";
+            lbl_falta_mail.Visible = txtbox_mail.Text == "";
+            lbl_falta_tipo_id.Visible = cbox_tipo_identificacion.Text == "";
+            lbl_id_incorrecta.Visible = !DocumentoValido();
+            if ((!lbl_falta_id.Visible) && (!lbl_falta_mail.Visible) && (!lbl_falta_tipo_id.Visible) && (!lbl_id_incorrecta.Visible) && (!lbl_falta_habitaciones_1.Visible) )
             {
-                if (!this.EsCliente())
+                if (!EsCliente())
                 {
                     MessageBox.Show("Se debe registrar cliente");
-                    this.RegistrarCliente();
+                    RegistrarCliente();
                 }
                 else
                 {
-                    this.reserva.cliente = Convert.ToInt32(this.clientes.Rows[0]["clie_id"]);
-                    this.AltaReserva();
+                    reserva.cliente = Convert.ToInt32(clientes.Rows[0]["clie_id"]);
+                    AltaReserva();
+                    Close();
+                    MessageBox.Show("Se genero un reserva en el hotel " + reserva.hotel.ID.ToString() + " desde el dia " + reserva.fecha_desde.ToString() + " hasta el dia " + reserva.fecha_hasta.ToString() + "\n Codigo de reserva: " + reserva.codigo.ToString());
                 }
             }
         }
 
         bool DocumentoValido()
         {
-            return this.txtbox_identificacion.Text.All( char.IsDigit );
+            return txtbox_identificacion.Text.All( char.IsDigit );
         }
 
         bool EsCliente()
         {
-            this.clientes = new DataTable();
-            sda = new SqlDataAdapter("SELECT * FROM DERROCHADORES_DE_PAPEL.Cliente as c WHERE c.clie_mail = '" + this.txtbox_mail.Text.ToString() + "'" , conexion);
-            sda.Fill(clientes);
+            clientes = new DataTable();
+            UtilesSQL.llenarTabla(clientes, "SELECT * FROM DERROCHADORES_DE_PAPEL.Cliente as c WHERE c.clie_mail = '" + txtbox_mail.Text.ToString() + "'");
             return clientes.Rows.Count != 0;
         }
 
         private void RegistrarCliente()
         {
             Form alta_cliente = new AbmCliente.AltaCliente();
-            this.Hide();
+            Hide();
             alta_cliente.ShowDialog();
-            this.Show();
+            Show();
         }
 
         private void AltaReserva()
         {
-            conexion.Open();
-            command = new SqlCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Reserva (rese_cliente, rese_cantidadDeNoches, rese_estado, rese_fecha, rese_inicio, rese_fin, rese_hotel, rese_regimen, rese_usuario) VALUES (@clie, @noches, @estado, @fecha, @incio, @fin, @hotel, @regimen ,@user) SELECT SCOPE_IDENTITY()", conexion);
-            command.Parameters.AddWithValue("@clie", this.reserva.cliente);
-            command.Parameters.AddWithValue("@noches", this.reserva.cantidad_de_noches );
-            command.Parameters.AddWithValue("@estado", this.CargarEstadosDeReserva("RESERVA CORRECTA") );
-            command.Parameters.AddWithValue("@fecha", this.reserva.fecha_que_se_realizo_reserva );
-            command.Parameters.AddWithValue("@incio", this.reserva.fecha_desde);
-            command.Parameters.AddWithValue("@fin", this.reserva.fecha_hasta);
-            command.Parameters.AddWithValue("@hotel", this.reserva.hotel.ID);
+            command = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Reserva (rese_cliente, rese_cantidadDeNoches, rese_estado, rese_fecha, rese_inicio, rese_fin, rese_hotel, rese_regimen, rese_usuario) VALUES (@clie, @noches, @estado, @fecha, @incio, @fin, @hotel, @regimen ,@user) SELECT SCOPE_IDENTITY()");
+            command.Parameters.AddWithValue("@clie", reserva.cliente);
+            command.Parameters.AddWithValue("@noches", reserva.cantidad_de_noches );
+            command.Parameters.AddWithValue("@estado", CargarEstadosDeReserva("RESERVA CORRECTA") );
+            command.Parameters.AddWithValue("@fecha", reserva.fecha_que_se_realizo_reserva );
+            command.Parameters.AddWithValue("@incio", reserva.fecha_desde);
+            command.Parameters.AddWithValue("@fin", reserva.fecha_hasta);
+            command.Parameters.AddWithValue("@hotel", reserva.hotel.ID);
             if (reserva.regimen_seleccionado)
             {
-                command.Parameters.AddWithValue("@regimen", this.reserva.regimen_seleccionado);
+                command.Parameters.AddWithValue("@regimen", reserva.regimen_seleccionado);
             }
             else
             {
                 command.Parameters.AddWithValue("@regimen", DBNull.Value);
             }
-            command.Parameters.AddWithValue("@user", this.reserva.usuario);
-            int pk_de_reserva_recien_generada = Convert.ToInt32(command.ExecuteScalar());
-            conexion.Close();
+            command.Parameters.AddWithValue("@user", reserva.usuario);
+            reserva.codigo = Convert.ToInt32(command.ExecuteScalar());
 
-            for (int indice = 0; indice < this.reserva.habitaciones_reservadas.Count; indice++)
+            for (int indice = 0; indice < reserva.habitaciones_reservadas.Count; indice++)
             {
-                conexion.Open();
-                command = new SqlCommand("INSERT INTO DERROCHADORES_DE_PAPEL.ReservaXHabitacion (rexh_reserva, rexh_hotel, rexh_numero, rexh_piso) VALUES (@reserva, @hotel, @numero, @piso)", conexion);
-                command.Parameters.AddWithValue("@reserva", pk_de_reserva_recien_generada);
-                command.Parameters.AddWithValue("@hotel", this.reserva.hotel.ID);
-                command.Parameters.AddWithValue("@piso", this.reserva.habitaciones_reservadas[indice].piso);
-                command.Parameters.AddWithValue("@numero", this.reserva.habitaciones_reservadas[indice].numero);
-                command.ExecuteNonQuery();
-                conexion.Close();
+                command = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.ReservaXHabitacion (rexh_reserva, rexh_hotel, rexh_numero, rexh_piso) VALUES (@reserva, @hotel, @numero, @piso)");
+                command.Parameters.AddWithValue("@reserva", reserva.codigo);
+                command.Parameters.AddWithValue("@hotel", reserva.hotel.ID);
+                command.Parameters.AddWithValue("@piso", reserva.habitaciones_reservadas[indice].piso);
+                command.Parameters.AddWithValue("@numero", reserva.habitaciones_reservadas[indice].numero);
+                UtilesSQL.ejecutarComandoNonQuery(command);
             }
-
         }
 
         private int CargarEstadosDeReserva(string estado_buscado)
         {
-            this.estados_reserva = new DataTable();
-            sda = new SqlDataAdapter("SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = '" + estado_buscado +"'", conexion);
-            sda.Fill(estados_reserva);
+            estados_reserva = new DataTable();
+            UtilesSQL.llenarTabla(estados_reserva, "SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = '" + estado_buscado + "'");
             return Convert.ToInt32(estados_reserva.Rows[0]["esta_id"]);
         }
 
-
-
-
         private void atras_Button_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         private void GenerarReserva_Load(object sender, EventArgs e)
