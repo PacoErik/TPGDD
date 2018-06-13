@@ -248,6 +248,7 @@ CREATE TABLE DERROCHADORES_DE_PAPEL.Reserva (
 	rese_usuario NUMERIC(18,0) NOT NULL,
 	rese_estado NUMERIC(18,0) NOT NULL,
 	rese_cantidadDeNoches NUMERIC(18,0) NOT NULL,
+	rese_cantidadDePersonas NUMERIC(18,0) NOT NULL, 
 	PRIMARY KEY (rese_codigo),
 	FOREIGN KEY (rese_hotel) REFERENCES DERROCHADORES_DE_PAPEL.Hotel(hote_id),
 	FOREIGN KEY (rese_cliente) REFERENCES DERROCHADORES_DE_PAPEL.Cliente(clie_id),
@@ -509,8 +510,8 @@ GO
 
 SET IDENTITY_INSERT DERROCHADORES_DE_PAPEL.Reserva ON
 
-INSERT INTO DERROCHADORES_DE_PAPEL.Reserva (rese_codigo, rese_fecha, rese_hotel, rese_inicio, rese_fin, rese_cliente, rese_regimen, rese_usuario, rese_estado, rese_cantidadDeNoches)
-	SELECT Reserva_Codigo, CONVERT(datetime,'2017-01-01'), hote_id, Reserva_Fecha_Inicio, (Reserva_Fecha_Inicio+Reserva_Cant_Noches), (SELECT clie_id FROM DERROCHADORES_DE_PAPEL.Cliente WHERE Cliente_Mail = clie_mail AND Cliente_Pasaporte_Nro = clie_numeroDeDocumento), (SELECT regi_codigo FROM DERROCHADORES_DE_PAPEL.Regimen WHERE regi_descripcion = Regimen_Descripcion), 2, (CASE WHEN MAX(Factura_Nro) IS NULL THEN (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = 'RESERVA CANCELADA POR NO-SHOW') ELSE (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = 'RESERVA EFECTIVIZADA') END), Reserva_Cant_Noches
+INSERT INTO DERROCHADORES_DE_PAPEL.Reserva (rese_codigo, rese_fecha, rese_hotel, rese_inicio, rese_fin, rese_cliente, rese_regimen, rese_usuario, rese_estado, rese_cantidadDeNoches, rese_cantidadDePersonas)
+	SELECT Reserva_Codigo, CONVERT(datetime,'2017-01-01'), hote_id, Reserva_Fecha_Inicio, (Reserva_Fecha_Inicio+Reserva_Cant_Noches), (SELECT clie_id FROM DERROCHADORES_DE_PAPEL.Cliente WHERE Cliente_Mail = clie_mail AND Cliente_Pasaporte_Nro = clie_numeroDeDocumento), (SELECT regi_codigo FROM DERROCHADORES_DE_PAPEL.Regimen WHERE regi_descripcion = Regimen_Descripcion), 2, (CASE WHEN MAX(Factura_Nro) IS NULL THEN (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = 'RESERVA CANCELADA POR NO-SHOW') ELSE (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = 'RESERVA EFECTIVIZADA') END), Reserva_Cant_Noches, 1
 	FROM DERROCHADORES_DE_PAPEL.Hotel JOIN gd_esquema.Maestra ON (Hotel_Ciudad = hote_ciudad AND
 																	Hotel_Calle = hote_calle AND
 																	Hotel_Nro_Calle = hote_numeroDeCalle)

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace FrbaHotel.RegistrarEstadia
     public partial class RegistrarEstadia : Form
     {
         DataTable reserva_dt;
+        int cantidad_personas;
 
         public RegistrarEstadia()
         {
@@ -55,7 +57,7 @@ namespace FrbaHotel.RegistrarEstadia
             }
 
             reserva_dt = new DataTable();
-            UtilesSQL.llenarTabla(reserva_dt, "SELECT rese_codigo, clie_apellido+' ,'+clie_nombre, regi_descripcion, usur_username, esta_detalle, rese_fecha, rese_cantidadDeNoches, rese_inicio, rese_fin "
+            UtilesSQL.llenarTabla(reserva_dt, "SELECT rese_codigo, clie_apellido+' ,'+clie_nombre, regi_descripcion, usur_username, esta_detalle, rese_fecha, rese_cantidadDeNoches, rese_inicio, rese_fin, rese_cantidadDePersonas "
                                             + "FROM DERROCHADORES_DE_PAPEL.Reserva JOIN "
                                                 + "DERROCHADORES_DE_PAPEL.Cliente ON rese_cliente = clie_id JOIN "
                                                 + "DERROCHADORES_DE_PAPEL.Regimen ON rese_regimen = regi_codigo JOIN "
@@ -82,6 +84,7 @@ namespace FrbaHotel.RegistrarEstadia
             cantidad_noches.Text = reserva_dt.Rows[0][6].ToString();
             fecha_inicio.Text = reserva_dt.Rows[0][7].ToString();
             fecha_fin.Text = reserva_dt.Rows[0][8].ToString();
+            cantidad_personas = Convert.ToInt32(reserva_dt.Rows[0][9].ToString());
         }
 
         private void checkin_Click(object sender, EventArgs e)
@@ -101,14 +104,56 @@ namespace FrbaHotel.RegistrarEstadia
                     return;
                 }
 
+                DataTable distribucionClientes_dt;
+
+                //Cargamos y distribuimos los clientes en caso de que sean más que uno
+                //Si es solo 1, se asume que solo tiene una habitación reservada y se lo asigna a ella
+
+                if (cantidad_personas > 1)
+                {
+                    Form elegirClientes = new ElegirClientes();
+                    if (elegirClientes.estaBien())
+                    {
+                        distribucionClientes_dt = elegirClientes.distribucionClientes();
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                else 
+                {
+                    distribucionClientes_dt = new DataTable();
+                    UtilesSQL.llenarTabla(distribucionClientes_dt, "SELECT rese_cliente, rexh_hotel, rexh_numero, rexh_piso FROM DERROCHADORES_DE_PAPEL.Reserva JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion ON rexh_reserva = "+reserva.Text);
+                }
+
                 //Se efectiviza la reserva
-                //Se genera la factura inicial
-                //Se cargan los demás huéspedes que acompañan al cliente original
-                //Se distribuyen los huéspedes en las habitaciones
+                UtilesSQL.ejecutarComandoNonQuery("UPDATE DERROCHADORES_DE_PAPEL.Reserva SET rese_estado = (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = \'RESERVA EFECTIVIZADA\')");
+
+                //Se genera la estadía
+                SqlCommand comando = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Estadia (esta_fechaDeInicio, esta_fechaDeFin, esta_cantidadDeNoches, esta_reserva, esta_usuarioCheckIn, esta_usuarioCheckOut) VALUES (@inicio, @fin, @noches, @reserva, @usuarioCheckIn, NULL)");
+                comando.Parameters.AddWithValue("@inicio", fecha_inicio.Text);
+                comando.Parameters.AddWithValue("@fin", fecha_fin.Text);
+                comando.Parameters.AddWithValue("@noches", cantidad_noches.Text);
+                comando.Parameters.AddWithValue("@reserva", reserva.Text);
+                comando.Parameters.AddWithValue("@usuarioCheckIn", Login.SeleccionFuncionalidad.getUserId());
+
+                String estadia_id = comando.ExecuteScalar().ToString();
+
+                MessageBox.Show(estadia_id);
+
+                //Se asignan los clientes a la estadía
+                foreach (DataRow cliente in distribucionClientes_dt.Rows)
+                {
+                    UtilesSQL.ejecutarComandoNonQuery("INSERT INTO DERROCHADORES_DE_PAPEL.EstadiaXCliente (esxc_estadia, esxc_cliente, esxc_hotel, esxc_numero, esxc_piso) VALUES ()");
+                }
+
+                //Se actualiza la reserva en pantalla
+                estado.Text = "RESERVA EFECTIVIZADA";
             }
             else if (estado.Text.Equals("RESERVA EFECTIVIZADA"))
             {
-                MessageBox.Show("La reserva ya tuvo su check-in correspondiente");
+                MessageBox.Show("La reserva ya tuvo su check-in previamente");
                 return;
             }
             else
