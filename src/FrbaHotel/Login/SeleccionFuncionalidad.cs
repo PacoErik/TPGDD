@@ -91,7 +91,7 @@ namespace FrbaHotel.Login
         }
         private void Registrar_consumibles()
         {
-            Form f1 = new RegistrarConsumible.RegistrarConsumible();
+            Form f1 = new RegistrarConsumible.ElegirHabitacion();
             f1.ShowDialog();
         }
         private void Listado_estadistico()
