@@ -58,6 +58,7 @@
             // 
             this.estadia.Location = new System.Drawing.Point(119, 33);
             this.estadia.Name = "estadia";
+            this.estadia.ReadOnly = true;
             this.estadia.Size = new System.Drawing.Size(100, 20);
             this.estadia.TabIndex = 1;
             // 
