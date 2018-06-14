@@ -64,6 +64,8 @@
             // habilitado
             // 
             this.habilitado.AutoSize = true;
+            this.habilitado.Checked = true;
+            this.habilitado.CheckState = System.Windows.Forms.CheckState.Checked;
             this.habilitado.Location = new System.Drawing.Point(282, 47);
             this.habilitado.Name = "habilitado";
             this.habilitado.Size = new System.Drawing.Size(73, 17);
