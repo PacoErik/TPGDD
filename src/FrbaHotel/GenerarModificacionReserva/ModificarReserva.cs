@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Globalization;
 
 namespace FrbaHotel.GenerarModificacionReserva
 {
@@ -43,8 +44,8 @@ namespace FrbaHotel.GenerarModificacionReserva
             lbl_cargado_correcto.Visible = false;
             CargarEstadosReserva();
 
-            date_desde.MinDate = Convert.ToDateTime(Main.fecha());
-            date_hasta.MinDate = Convert.ToDateTime(Main.fecha());
+            date_desde.MinDate = DateTime.ParseExact(Main.fecha(), "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture);
+            date_hasta.MinDate = DateTime.ParseExact(Main.fecha(), "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture);
             date_desde.Enabled = false;
             date_desde.Enabled = false;
             lbl_error_fecha.Visible = false;
@@ -114,8 +115,8 @@ namespace FrbaHotel.GenerarModificacionReserva
                 }
                 else
                 {
-                    TimeSpan dias_para_reserva = Convert.ToDateTime(tabla_reserva.Rows[0]["rese_inicio"]) - Convert.ToDateTime(Main.fecha());
-                    if (dias_para_reserva.Duration().Days <= 1)
+                    TimeSpan dias_para_reserva = Convert.ToDateTime(tabla_reserva.Rows[0]["rese_inicio"]) - DateTime.ParseExact(Main.fecha(), "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture);
+                    if (dias_para_reserva.Days <= 1)
                     {
                         if (dias_para_reserva.Days < 0)
                         {
@@ -184,7 +185,7 @@ namespace FrbaHotel.GenerarModificacionReserva
 
                             DataTable reg_seleccionado = new DataTable();
                             UtilesSQL.llenarTabla(reg_seleccionado, "select * from DERROCHADORES_DE_PAPEL.Regimen where regi_codigo = '"+ reserva.regimen_seleccionado +"'");
-                            reserva.precio_base = Convert.ToDouble(reg_seleccionado.Rows[0]["regi_precioBase"]);
+                            reserva.precio_base = Convert.ToDouble(reg_seleccionado.Rows[reserva.regimen_seleccionado]["regi_precioBase"]);
 
                             UtilesSQL.llenarTabla(hoteles, "SELECT * FROM DERROCHADORES_DE_PAPEL.Hotel WHERE hote_id = '" + reserva.hotel.ID + "'");
 

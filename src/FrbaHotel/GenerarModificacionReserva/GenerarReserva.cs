@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Globalization;
 
 namespace FrbaHotel.GenerarModificacionReserva
 {
@@ -35,11 +36,11 @@ namespace FrbaHotel.GenerarModificacionReserva
             reserva.usuario = id_usuario;
             reserva.hotel.ID = Convert.ToInt32(id_hotel);
             btn_cargar_opciones.Text = "Cargar opciones";
-            reserva.fecha_que_se_realizo_reserva = Convert.ToDateTime(Main.fecha());
-            reserva.fecha_desde = Convert.ToDateTime(Main.fecha());
-            reserva.fecha_hasta = Convert.ToDateTime(Main.fecha());
-            date_desde.Value = date_desde.MinDate = Convert.ToDateTime(Main.fecha());
-            date_hasta.Value = date_hasta.MinDate = Convert.ToDateTime(Main.fecha());
+            reserva.fecha_que_se_realizo_reserva = DateTime.ParseExact(Main.fecha(), "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture);
+            reserva.fecha_desde = DateTime.ParseExact(Main.fecha(), "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture);
+            reserva.fecha_hasta = DateTime.ParseExact(Main.fecha(), "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture);
+            date_desde.Value = date_desde.MinDate = DateTime.ParseExact(Main.fecha(), "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture);
+            date_hasta.Value = date_hasta.MinDate = DateTime.ParseExact(Main.fecha(), "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture);
             lbl_error_fecha.Visible = false;
             lbl_error_personas.Visible = false;
             lbl_error_carga_hotel.Visible = false;
@@ -178,9 +179,9 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         private bool CargarHabitaciones()
         {
-
+            hoteles = new DataTable();
             UtilesSQL.llenarTabla(hoteles, "SELECT * From DERROCHADORES_DE_PAPEL.Habitacion JOIN DERROCHADORES_DE_PAPEL.PeriodoDeCierre ON (peri_hotel = '" + reserva.hotel.ID + "') WHERE (peri_fechaFin >= '" + reserva.fecha_desde + "' AND peri_fechaFin <= '" + reserva.fecha_hasta + "') OR (peri_fechaInicio >= '" + reserva.fecha_desde + "' AND peri_fechaInicio <= '" + reserva.fecha_hasta + "') OR ( peri_fechaInicio <='" + reserva.fecha_desde + "' AND peri_fechaFin >= '" + reserva.fecha_hasta + "') " );
-            if (hoteles.Rows.Count == 0)
+            if (hoteles.Rows.Count != 0)
             {
                 lbl_error_carga_hotel.Text = "HOTEL CERRADO POR ESAS FECHAS";
                 lbl_error_carga_hotel.Visible = true;
@@ -191,7 +192,7 @@ namespace FrbaHotel.GenerarModificacionReserva
                 habitaciones.Clear();
                 string consulta = "SELECT h1.habi_numero, h1.habi_piso, th1.tipo_cantidadDePersonas, th1.tipo_descripcion FROM  DERROCHADORES_DE_PAPEL.TipoDeHabitacion as th1 JOIN DERROCHADORES_DE_PAPEL.Habitacion as h1 ON (th1.tipo_codigo = h1.habi_tipo) WHERE h1.habi_hotel = '" + reserva.hotel.ID + "' AND NOT (EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.Habitacion as h2 JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion as rh2 ON ( rh2.rexh_hotel = h2.habi_hotel AND rh2.rexh_numero = h2.habi_numero AND rh2.rexh_piso = h2.habi_piso) JOIN DERROCHADORES_DE_PAPEL.Reserva as r2 ON (r2.rese_codigo = rh2.rexh_reserva) JOIN DERROCHADORES_DE_PAPEL.EstadoDeReserva as er2 ON (er2.esta_id = r2.rese_estado) WHERE h2.habi_hotel = h1.habi_hotel AND h2.habi_numero = h1.habi_numero AND h2.habi_piso = h1.habi_piso AND ( ((r2.rese_inicio BETWEEN '" + reserva.fecha_desde + "' AND '" + reserva.fecha_hasta + "') OR (r2.rese_fin BETWEEN '" + reserva.fecha_desde + "' AND '" + reserva.fecha_hasta + "') OR (r2.rese_fin <= '" + reserva.fecha_desde + "' AND r2.rese_fin >= '" + reserva.fecha_hasta + "') ) AND (NOT ( (esta_detalle = 'RESERVA CANCELADA POR RECEPCION') OR (esta_detalle = 'RESERVA CANCELADA POR CLIENTE' ) OR (esta_detalle = 'RESERVA CANCELADA POR NO-SHOW')) ) ) ) )";
                 UtilesSQL.llenarTabla(habitaciones, consulta);
-                habitaciones_disponibles.Clear();
+                habitaciones_disponibles = new List<Habitacion>();
                 for (int indice = 0; indice < habitaciones.Rows.Count; indice++)
                 {
                     Habitacion habitacion = new Habitacion();
