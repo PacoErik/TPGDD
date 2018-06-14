@@ -12,7 +12,7 @@ namespace FrbaHotel.GenerarModificacionReserva
         public DateTime fecha_desde = new DateTime();
         public DateTime fecha_hasta = new DateTime();
         public int personas;
-        public int cantidad_de_noches;
+        public double cantidad_de_noches;
         public Hotel hotel = new Hotel();
         public List<Habitacion> habitaciones_reservadas = new List<Habitacion>();
         public double precio;

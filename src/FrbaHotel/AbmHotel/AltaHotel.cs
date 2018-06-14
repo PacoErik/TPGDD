@@ -71,7 +71,7 @@ namespace FrbaHotel.AbmHotel
         }
         private void buttonSeleccionarFecha_Click(object sender, EventArgs e)
         {
-            textBoxFecha.Text = monthCalendar.SelectionEnd.ToString("yyyy-dd-MM HH:mm:ss.fff");
+            textBoxFecha.Text = monthCalendar.SelectionEnd.ToString("yyyy-MM-dd");
         }
 
 
@@ -95,7 +95,7 @@ namespace FrbaHotel.AbmHotel
         {
             try
             {
-                DateTime dateTime = DateTime.ParseExact(date, "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture);
+                DateTime dateTime = DateTime.ParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture);
                 return true;
             }
             catch
