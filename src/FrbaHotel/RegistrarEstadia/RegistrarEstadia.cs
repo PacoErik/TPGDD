@@ -190,7 +190,7 @@ namespace FrbaHotel.RegistrarEstadia
 
             //Checkea que no se haya realizado el check out
             dtH.Clear();
-            UtilesSQL.llenarTabla(dtH, "SELECT h.habi_numero, h.habi_piso, e.esta_id FROM DERROCHADORES_DE_PAPEL.Habitacion AS h JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion AS rh ON rh.rexh_piso = h.habi_piso AND rh.rexh_numero = h.habi_numero JOIN DERROCHADORES_DE_PAPEL.Reserva AS r ON r.rese_codigo = rh.rexh_reserva JOIN DERROCHADORES_DE_PAPEL.Estadia AS e ON e.esta_id = r.rese_codigo WHERE rh.rexh_reserva = '" + reserva.Text + "' AND e.esta_usuarioCheckOut = NULL GROUP BY h.habi_numero, h.habi_piso, e.esta_id");
+            UtilesSQL.llenarTabla(dtH, "SELECT h.habi_numero, h.habi_piso, e.esta_id FROM DERROCHADORES_DE_PAPEL.Habitacion AS h JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion AS rh ON rh.rexh_piso = h.habi_piso AND rh.rexh_numero = h.habi_numero JOIN DERROCHADORES_DE_PAPEL.Reserva AS r ON r.rese_codigo = rh.rexh_reserva JOIN DERROCHADORES_DE_PAPEL.Estadia AS e ON e.esta_id = r.rese_codigo WHERE rh.rexh_reserva = '" + reserva.Text + "' AND e.esta_usuarioCheckOut IS NULL GROUP BY h.habi_numero, h.habi_piso, e.esta_id");
             if (dtH.Rows.Count == 0)
             {
                 MessageBox.Show("Esta reserva ya realizo el check out.");
@@ -205,7 +205,7 @@ namespace FrbaHotel.RegistrarEstadia
             {
                 //Crea la factura para poder iniciar el proceso de check out
                 com = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Factura (fact_fecha, fact_estadia, fact_cliente) VALUES (@fecha, @estadia, @cliente)");
-                com.Parameters.AddWithValue("@fecha", DateTime.Today.ToString("yyyy-dd-MM HH:mm:ss.fff"));
+                com.Parameters.AddWithValue("@fecha", Main.fecha());
                 com.Parameters.AddWithValue("@estadia", dtH.Rows[0][2].ToString());
                 com.Parameters.AddWithValue("@cliente", reserva_dt.Rows[0][9].ToString());
                 UtilesSQL.ejecutarComandoNonQuery(com);

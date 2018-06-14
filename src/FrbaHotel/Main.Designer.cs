@@ -33,6 +33,7 @@
             this.Salir = new System.Windows.Forms.Button();
             this.fechaSistema = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cambiarFecha = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,18 +80,29 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.fechaSistema);
-            this.groupBox1.Location = new System.Drawing.Point(12, 336);
+            this.groupBox1.Location = new System.Drawing.Point(12, 315);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(254, 34);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Fecha del sistema";
             // 
+            // cambiarFecha
+            // 
+            this.cambiarFecha.Location = new System.Drawing.Point(94, 355);
+            this.cambiarFecha.Name = "cambiarFecha";
+            this.cambiarFecha.Size = new System.Drawing.Size(93, 23);
+            this.cambiarFecha.TabIndex = 5;
+            this.cambiarFecha.Text = "Cambiar fecha";
+            this.cambiarFecha.UseVisualStyleBackColor = true;
+            this.cambiarFecha.Click += new System.EventHandler(this.cambiarFecha_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(281, 382);
+            this.Controls.Add(this.cambiarFecha);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.Salir);
             this.Controls.Add(this.Usuario);
@@ -110,6 +122,7 @@
         private System.Windows.Forms.Button Salir;
         private System.Windows.Forms.Label fechaSistema;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button cambiarFecha;
     }
 }
 

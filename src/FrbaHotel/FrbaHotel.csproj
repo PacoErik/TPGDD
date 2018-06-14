@@ -74,12 +74,6 @@
     <Compile Include="AbmCliente\ModificarCliente.Designer.cs">
       <DependentUpon>ModificarCliente.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmHabitacion\AbmHabitacion.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AbmHabitacion\AbmHabitacion.Designer.cs">
-      <DependentUpon>AbmHabitacion.cs</DependentUpon>
-    </Compile>
     <Compile Include="AbmHabitacion\AltaHabitacion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -127,12 +121,6 @@
     </Compile>
     <Compile Include="AbmHotel\SeleccionarFecha.Designer.cs">
       <DependentUpon>SeleccionarFecha.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AbmRegimen\AbmRegimen.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AbmRegimen\AbmRegimen.Designer.cs">
-      <DependentUpon>AbmRegimen.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmRol\AbmRol.cs">
       <SubType>Form</SubType>
@@ -194,6 +182,12 @@
     <Compile Include="CancelarReserva\CancelarReserva.Designer.cs">
       <DependentUpon>CancelarReserva.cs</DependentUpon>
     </Compile>
+    <Compile Include="ElegirFechaDelSistema.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ElegirFechaDelSistema.Designer.cs">
+      <DependentUpon>ElegirFechaDelSistema.cs</DependentUpon>
+    </Compile>
     <Compile Include="GenerarModificacionReserva\GenerarReserva.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -246,23 +240,29 @@
     <Compile Include="NotificadorErrores.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegistrarConsumible\ElegirHabitacion.cs">
+    <Compile Include="RegistrarEstadia\ElegirHabitacion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RegistrarConsumible\ElegirHabitacion.Designer.cs">
+    <Compile Include="RegistrarEstadia\ElegirHabitacion.Designer.cs">
       <DependentUpon>ElegirHabitacion.cs</DependentUpon>
     </Compile>
-    <Compile Include="RegistrarConsumible\RegistrarConsumible.cs">
+    <Compile Include="RegistrarEstadia\RegistrarConsumible.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RegistrarConsumible\RegistrarConsumible.Designer.cs">
+    <Compile Include="RegistrarEstadia\RegistrarConsumible.Designer.cs">
       <DependentUpon>RegistrarConsumible.cs</DependentUpon>
     </Compile>
     <Compile Include="RegistrarEstadia\CheckOut.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RegistrarEstadia\CheckOut.Designer.cs">
+    <Compile Include="RegistrarEstadia\CheckOut.designer.cs">
       <DependentUpon>CheckOut.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RegistrarEstadia\ElegirClientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RegistrarEstadia\ElegirClientes.Designer.cs">
+      <DependentUpon>ElegirClientes.cs</DependentUpon>
     </Compile>
     <Compile Include="RegistrarEstadia\RegistrarEstadia.cs">
       <SubType>Form</SubType>
@@ -280,9 +280,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AbmCliente\ModificarCliente.resx">
       <DependentUpon>ModificarCliente.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AbmHabitacion\AbmHabitacion.resx">
-      <DependentUpon>AbmHabitacion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmHabitacion\AltaHabitacion.resx">
       <DependentUpon>AltaHabitacion.cs</DependentUpon>
@@ -307,9 +304,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AbmHotel\SeleccionarFecha.resx">
       <DependentUpon>SeleccionarFecha.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AbmRegimen\AbmRegimen.resx">
-      <DependentUpon>AbmRegimen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\AbmRol.resx">
       <DependentUpon>AbmRol.cs</DependentUpon>
@@ -340,6 +334,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CancelarReserva\CancelarReserva.resx">
       <DependentUpon>CancelarReserva.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ElegirFechaDelSistema.resx">
+      <DependentUpon>ElegirFechaDelSistema.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GenerarModificacionReserva\GenerarModificacionReserva.resx">
       <DependentUpon>GenerarModificacionReserva.cs</DependentUpon>
@@ -375,14 +372,17 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="RegistrarConsumible\ElegirHabitacion.resx">
+    <EmbeddedResource Include="RegistrarEstadia\ElegirHabitacion.resx">
       <DependentUpon>ElegirHabitacion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RegistrarConsumible\RegistrarConsumible.resx">
+    <EmbeddedResource Include="RegistrarEstadia\RegistrarConsumible.resx">
       <DependentUpon>RegistrarConsumible.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RegistrarEstadia\CheckOut.resx">
       <DependentUpon>CheckOut.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RegistrarEstadia\ElegirClientes.resx">
+      <DependentUpon>ElegirClientes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RegistrarEstadia\RegistrarEstadia.resx">
       <DependentUpon>RegistrarEstadia.cs</DependentUpon>

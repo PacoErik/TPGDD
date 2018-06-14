@@ -84,10 +84,10 @@ namespace FrbaHotel.RegistrarConsumible
             }
 
             //Encontrar factura asociada a la estadía y validar que no se haya hecho el Check-out
-            SqlCommand com = UtilesSQL.crearCommand("SELECT f.fact_numero FROM DERROCHADORES_DE_PAPEL.Factura AS f JOIN DERROCHADORES_DE_PAPEL.Estadia AS e ON e.esta_id = f.fact_estadia WHERE e.esta_id = @estadia AND e.esta_usuarioCheckOut = NULL");
+            SqlCommand com = UtilesSQL.crearCommand("SELECT f.fact_numero FROM DERROCHADORES_DE_PAPEL.Factura AS f JOIN DERROCHADORES_DE_PAPEL.Estadia AS e ON e.esta_id = f.fact_estadia WHERE e.esta_id = @estadia AND e.esta_usuarioCheckOut IS NULL");
             com.Parameters.AddWithValue("@estadia", estadia.Text);
-            String factura = com.ExecuteScalar().ToString(); //decimal
-            if (String.IsNullOrEmpty(factura))
+            object factura = com.ExecuteScalar();
+            if (factura != null)
             {
                 MessageBox.Show("La estadia ingresada ya hizo el check-out");
                 return;
@@ -165,7 +165,7 @@ namespace FrbaHotel.RegistrarConsumible
             MessageBox.Show("Consumibles registrados!");
 
             this.Hide();
-            Form f1 = new RegistrarEstadia.CheckOut(factura);
+            Form f1 = new RegistrarEstadia.CheckOut(factura.ToString());
             f1.ShowDialog();
             this.Close();
         }

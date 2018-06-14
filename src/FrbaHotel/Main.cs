@@ -49,5 +49,18 @@ namespace FrbaHotel
         {
             this.Close();
         }
+
+        private void cambiarFecha_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            new ElegirFechaDelSistema().ShowDialog();
+            fechaSistema.Text = fechaDelSistema;
+            this.Show();
+        }
+
+        public static void cambiarFechaDelSistema(String fechaNueva) 
+        {
+            fechaDelSistema = fechaNueva;
+        }
     }
 }

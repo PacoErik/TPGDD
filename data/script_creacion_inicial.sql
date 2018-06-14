@@ -374,11 +374,9 @@ INSERT INTO DERROCHADORES_DE_PAPEL.Funcionalidad (func_detalle) VALUES 	('ABM DE
 																		('ABM DE CLIENTE'),
 																		('ABM DE HOTEL'),
 																		('ABM DE HABITACION'),
-																		('ABM REGIMEN DE ESTADIA'),
 																		('GENERAR O MODIFICAR UNA RESERVA'),
 																		('CANCELAR RESERVA' ),
 																		('REGISTRAR ESTADIA'),
-																		('REGISTRAR CONSUMIBLES'),
 																		('LISTADO ESTADISTICO')
 
 GO																		

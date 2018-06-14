@@ -14,7 +14,7 @@ namespace FrbaHotel.Login
     public partial class SeleccionFuncionalidad : Form
     {
         Form f1;
-        int idUser;
+        static int idUser;
         static string hotelId;
         SqlCommand com;
         DataSet ds = new DataSet();
@@ -33,6 +33,11 @@ namespace FrbaHotel.Login
         public static string getHotelId() 
         {
             return hotelId;
+        }
+
+        public static string getUserId()
+        {
+            return idUser.ToString();
         }
 
         private void inicializarComboBox()
@@ -69,12 +74,7 @@ namespace FrbaHotel.Login
         }
         private void Gestion_de_habitaciones()
         {
-            Form f1 = new AbmHabitacion.AbmHabitacion(idUser);
-            f1.ShowDialog();
-        }
-        private void Registrar_regimen_de_estadia()
-        {
-            Form f1 = new AbmRegimen.AbmRegimen();
+            Form f1 = new AbmHabitacion.ListadoHabitaciones(Int32.Parse(hotelId));
             f1.ShowDialog();
         }
         private void Cancelar_reserva()
@@ -87,11 +87,6 @@ namespace FrbaHotel.Login
         private void Registrar_estadia()
         {
             Form f1 = new RegistrarEstadia.RegistrarEstadia();
-            f1.ShowDialog();
-        }
-        private void Registrar_consumibles()
-        {
-            Form f1 = new RegistrarConsumible.ElegirHabitacion();
             f1.ShowDialog();
         }
         private void Listado_estadistico()
@@ -138,9 +133,6 @@ namespace FrbaHotel.Login
                     break;
                 case "REGISTRAR ESTADIA":
                     Registrar_estadia();
-                    break;
-                case "REGISTRAR CONSUMIBLES":
-                    Registrar_consumibles();
                     break;
                 case "LISTADO ESTADISTICO":
                     Listado_estadistico();
