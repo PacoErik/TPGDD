@@ -17,8 +17,12 @@ namespace FrbaHotel.RegistrarConsumible
         DataTable consumibles_dt;
         DataTable consumibles_elegidos_dt;
 
-        public RegistrarConsumible(String numeroDeHabitacion, String pisoDeHabitacion, String estadiaElegida)
+        String factura;
+
+        public RegistrarConsumible(String numeroDeHabitacion, String pisoDeHabitacion, String estadiaElegida, String factura)
         {
+            this.factura = factura;
+
             InitializeComponent();
 
             habitacion.Text = numeroDeHabitacion;
@@ -77,24 +81,14 @@ namespace FrbaHotel.RegistrarConsumible
                 return;
             }
 
-            var confirmResult = MessageBox.Show("Esta seguro que desea registrar estos consumibles? Una vez registrados se deberá hacer el check out.", "Registrar consumibles?", MessageBoxButtons.YesNo);
+            var confirmResult = MessageBox.Show("¿Está seguro que desea registrar estos consumibles?", "¿Registrar consumibles?", MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.No)
             {
                 return;
             }
 
-            //Encontrar factura asociada a la estadía y validar que no se haya hecho el Check-out
-            SqlCommand com = UtilesSQL.crearCommand("SELECT f.fact_numero FROM DERROCHADORES_DE_PAPEL.Factura AS f JOIN DERROCHADORES_DE_PAPEL.Estadia AS e ON e.esta_id = f.fact_estadia WHERE e.esta_id = @estadia AND e.esta_usuarioCheckOut IS NULL");
-            com.Parameters.AddWithValue("@estadia", estadia.Text);
-            object factura = com.ExecuteScalar();
-            if (factura != null)
-            {
-                MessageBox.Show("La estadia ingresada ya hizo el check-out");
-                return;
-            }
-
             //Validar que no se hayan registrado consumibles para la habitación elegida
-            com = UtilesSQL.crearCommand("SELECT item_id FROM DERROCHADORES_DE_PAPEL.ItemDeFactura WHERE item_factura = @factura AND item_habitacionNumero = @hab AND item_habitacionPiso = @piso AND item_consumible IS NOT NULL");
+            SqlCommand com = UtilesSQL.crearCommand("SELECT item_id FROM DERROCHADORES_DE_PAPEL.ItemDeFactura WHERE item_factura = @factura AND item_habitacionNumero = @hab AND item_habitacionPiso = @piso AND item_consumible IS NOT NULL");
             com.Parameters.AddWithValue("@factura", factura);
             com.Parameters.AddWithValue("@hab", habitacion.Text);
             com.Parameters.AddWithValue("@piso", piso.Text);
@@ -127,46 +121,7 @@ namespace FrbaHotel.RegistrarConsumible
                 UtilesSQL.ejecutarComandoNonQuery(com2);
             }
 
-            //En caso de ser un régimen "All inclusive" hay que netear los costos de los consumibles 
-            SqlCommand com3 = UtilesSQL.crearCommand("SELECT re.regi_descripcion FROM DERROCHADORES_DE_PAPEL.Estadia AS e JOIN DERROCHADORES_DE_PAPEL.Reserva AS r ON e.esta_reserva = r.rese_codigo JOIN DERROCHADORES_DE_PAPEL.Regimen AS re ON re.regi_codigo = r.rese_regimen WHERE esta_id = @est");
-            com3.Parameters.AddWithValue("@est", estadia.Text);
-            String regimen = (String)com3.ExecuteScalar();
-            if (!String.IsNullOrEmpty(regimen) && regimen.Equals("All inclusive"))
-            {
-                //Si el item correspondiente al descuento ya está creado solo hay que actualizarlo, sino hay que crearlo
-                com3 = UtilesSQL.crearCommand("SELECT item_id FROM DERROCHADORES_DE_PAPEL.ItemDeFactura WHERE item_factura = @factura AND item_descripcion = \'@descripcion\'");
-                com3.Parameters.AddWithValue("@factura", factura);
-                com3.Parameters.AddWithValue("@descripcion", "descuento por régimen de estadía");
-                String item = com3.ExecuteScalar().ToString();
-
-                if (!String.IsNullOrEmpty(item))
-                {
-                    //El item de descuento ya estaba creado
-                    com3 = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.ItemDeFactura SET item_monto = item_monto + CONVERT(NUMERIC(18,2),@monto) WHERE item_id = @item");
-                    com3.Parameters.AddWithValue("@monto", costoTotal.ToString());
-                    com3.Parameters.AddWithValue("@item", item);
-                    UtilesSQL.ejecutarComandoNonQuery(com3);
-                }
-                else
-                {
-                    //Hay que crear el item de descuento
-                    com3 = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.ItemDeFactura (item_cantidad, item_monto, item_factura, item_descripcion, item_consumible, item_habitacionNumero, item_habitacionPiso) VALUES (1, CONVERT(NUMERIC(18,2),@monto), @fact, @desc, NULL, @hab, @piso)");
-                    com3.Parameters.AddWithValue("@monto", costoTotal.ToString());
-                    com3.Parameters.AddWithValue("@fact", factura);
-                    com3.Parameters.AddWithValue("@desc", "descuento por régimen de estadía");
-                    com3.Parameters.AddWithValue("@hab", habitacion.Text);
-                    com3.Parameters.AddWithValue("@piso", piso.Text);
-                    UtilesSQL.ejecutarComandoNonQuery(com3);
-                }
-
-
-            }
-
             MessageBox.Show("Consumibles registrados!");
-
-            this.Hide();
-            Form f1 = new RegistrarEstadia.CheckOut(factura.ToString());
-            f1.ShowDialog();
             this.Close();
         }
     }

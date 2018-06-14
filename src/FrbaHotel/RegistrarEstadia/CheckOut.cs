@@ -17,13 +17,18 @@ namespace FrbaHotel.RegistrarEstadia
         DataTable dtC = new DataTable();
         DataTable dtF = new DataTable();
         String factId;
-        string costoTotal = null;
+        float costoTotal;
 
         public CheckOut(String factura)
         {
             UtilesSQL.inicializar();
             factId = factura;
             InitializeComponent();
+            tarjeta.Enabled = true;
+            propietario.Enabled = true;
+
+            costoTotal = 0;
+
             cargarCosas();
         }
         private void cargarCosas()
@@ -37,7 +42,7 @@ namespace FrbaHotel.RegistrarEstadia
             comboBoxFormaDePago.DataSource = dtModos;
             comboBoxFormaDePago.SelectedIndex = 0;
 
-            SqlDataAdapter sda = UtilesSQL.crearDataAdapter("SELECT item_descripcion, item_cantidad, item_monto FROM DERROCHADORES_DE_PAPEL.ItemDeFactura WHERE item_factura = @fact");
+            SqlDataAdapter sda = UtilesSQL.crearDataAdapter("SELECT item_descripcion, item_cantidad, item_monto, item_habitacionNumero, item_habitacionPiso FROM DERROCHADORES_DE_PAPEL.ItemDeFactura WHERE item_factura = @fact");
             sda.SelectCommand.Parameters.AddWithValue("@fact", factId);
             sda.Fill(dtC);
             dataGridViewConsumibles.DataSource = dtC;
@@ -50,21 +55,36 @@ namespace FrbaHotel.RegistrarEstadia
             textBoxCostoTotal.Text = dtF.Rows[0][1].ToString();
             textBoxEstadia.Text = dtF.Rows[0][2].ToString();
             textBoxCliente.Text = dtF.Rows[0][3].ToString();
+
+            //calculo de costo total de consumibles
+            foreach (DataRow row in dtC.Rows)
+            {
+                if (row[0].ToString().Equals("1x Descuento por régimen All Inclusive"))
+                {
+                    costoTotal -= float.Parse(row[2].ToString());
+                }
+                else
+                {
+                    costoTotal += float.Parse(row[1].ToString()) * float.Parse(row[2].ToString());
+                }
+
+            }
+            textBoxCostoTotal.Text = costoTotal.ToString();
         }
 
         private void comboBoxFormaDePago_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (comboBoxFormaDePago.SelectedText == "TARJETA DE CREDITO")
+            if (comboBoxFormaDePago.SelectedItem.ToString().Equals("TARJETA DE CREDITO"))
             {
-                textBoxNumeroTarjeta.Enabled = true;
-                textBoxNumeroTarjeta.Enabled = true;
+                tarjeta.Enabled = true;
+                propietario.Enabled = true;
             }
             else
             {
-                textBoxNombreTarjeta.Clear();
-                textBoxNombreTarjeta.Enabled = false;
-                textBoxNumeroTarjeta.Clear();
-                textBoxNumeroTarjeta.Enabled = false;
+                propietario.Clear();
+                propietario.Enabled = false;
+                tarjeta.Clear();
+                tarjeta.Enabled = false;
             }
         }
 
@@ -76,17 +96,11 @@ namespace FrbaHotel.RegistrarEstadia
                 return;
             }
             
-            //calculo de costo total de consumibles
-            foreach(DataRow row in dtC.Rows)
-            {
-                costoTotal += row[2].ToString();
-            }
-
-            SqlCommand com = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Estadia SET esta_usuarioCheckOut = 1 WHERE esta_id = @est");
+            SqlCommand com = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Estadia SET esta_usuarioCheckOut = "+Login.SeleccionFuncionalidad.getUserId()+" WHERE esta_id = @est");
             com.Parameters.AddWithValue("@est", dtF.Rows[0][2].ToString());
             UtilesSQL.ejecutarComandoNonQuery(com);
 
-            if (comboBoxFormaDePago.SelectedText != "TARJETA DE CREDITO")
+            if (!comboBoxFormaDePago.SelectedItem.ToString().Equals("TARJETA DE CREDITO"))
             {
                 resetearLabels();
                 finalizarFactura();
@@ -102,25 +116,27 @@ namespace FrbaHotel.RegistrarEstadia
         private void finalizarFactura()
         {
             SqlCommand com = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Factura SET fact_costoTotal = @costo, fact_modoDePago = @modo WHERE fact_estadia = @est");
-            //com.Parameters.AddWithValue("@costo", );
+            com.Parameters.AddWithValue("@costo", costoTotal.ToString());
             com.Parameters.AddWithValue("@modo", comboBoxFormaDePago.SelectedIndex+1);
             com.Parameters.AddWithValue("@est", dtF.Rows[0][2].ToString());
             UtilesSQL.ejecutarComandoNonQuery(com);
         }
         private void finalizarFacturaTarjeta()
         {
-            SqlCommand com = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.TarjetaBancaria VALUES (@nombre, @numero)");
-            com.Parameters.AddWithValue("@nombre", textBoxNombreTarjeta.Text);
-            com.Parameters.AddWithValue("@modo", textBoxNumeroTarjeta.Text);
+            SqlCommand com = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.TarjetaBancaria VALUES (\'@nombre\', @numero)");
+            com.Parameters.AddWithValue("@nombre", propietario.Text);
+            com.Parameters.AddWithValue("@numero", tarjeta.Text);
             UtilesSQL.ejecutarComandoNonQuery(com);
 
-            SqlCommand com2 = UtilesSQL.crearCommand("SELECT COUNT(*) FROM DERROCHADORES_DE_PAPEL.TarjetaBancaria");
-            long tarjeta = (long)com2.ExecuteScalar();
+            SqlCommand com2 = UtilesSQL.crearCommand("SELECT tarj_id FROM DERROCHADORES_DE_PAPEL.TarjetaBancaria WHERE \'@nombre\' = tarj_nombreDeEntidad AND @numero = tarj_numeroDeCuenta");
+            com.Parameters.AddWithValue("@nombre", propietario.Text);
+            com.Parameters.AddWithValue("@modo", tarjeta.Text);
+            String tarjetaId = com2.ExecuteScalar().ToString();
 
             com = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Factura SET fact_costoTotal = @costo, fact_modoDePago = @modo, fact_tarjeta = @tarj WHERE fact_estadia = @est");
-            //com.Parameters.AddWithValue("@costo", );
+            com.Parameters.AddWithValue("@costo", costoTotal.ToString());
             com.Parameters.AddWithValue("@modo", comboBoxFormaDePago.SelectedIndex+1);
-            com.Parameters.AddWithValue("@tarj", tarjeta);
+            com.Parameters.AddWithValue("@tarj", tarjetaId);
             com.Parameters.AddWithValue("@est", dtF.Rows[0][2].ToString());
             UtilesSQL.ejecutarComandoNonQuery(com);
         }
@@ -135,22 +151,22 @@ namespace FrbaHotel.RegistrarEstadia
         private bool validar()
         {
             bool Valido = true;
-            if (String.IsNullOrEmpty(textBoxNumeroTarjeta.Text))
+            if (String.IsNullOrEmpty(tarjeta.Text))
             {
                 labelNumeroVacio.Visible = true;
                 Valido = false;
             }
-            if (!textBoxNumeroTarjeta.Text.All(Char.IsDigit))
+            if (!tarjeta.Text.All(Char.IsDigit))
             {
                 labelTarjetaInvalida.Visible = true;
                 Valido = false;
             }
-            if (String.IsNullOrEmpty(textBoxNombreTarjeta.Text))
+            if (String.IsNullOrEmpty(propietario.Text))
             {
                 labelNombreVacio.Visible = true;
                 Valido = false;
             }
-            if (!textBoxNombreTarjeta.Text.All(Char.IsLetter))
+            if (!propietario.Text.All(Char.IsLetter))
             {
                 labelNombreInvalido.Visible = true;
                 Valido = false;

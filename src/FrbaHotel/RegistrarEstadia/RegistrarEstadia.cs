@@ -188,39 +188,49 @@ namespace FrbaHotel.RegistrarEstadia
         {
             if (!estado.Text.Equals("RESERVA EFECTIVIZADA"))
             {
-                MessageBox.Show("La reserva no hizo el check-in");
+                MessageBox.Show("La reserva no hizo el check-in o fue cancelada");
                 return;
             }
 
             //Checkea que no se haya realizado el check out
             dtH.Clear();
-            UtilesSQL.llenarTabla(dtH, "SELECT h.habi_numero, h.habi_piso, e.esta_id FROM DERROCHADORES_DE_PAPEL.Habitacion AS h JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion AS rh ON rh.rexh_piso = h.habi_piso AND rh.rexh_numero = h.habi_numero JOIN DERROCHADORES_DE_PAPEL.Reserva AS r ON r.rese_codigo = rh.rexh_reserva JOIN DERROCHADORES_DE_PAPEL.Estadia AS e ON e.esta_id = r.rese_codigo WHERE rh.rexh_reserva = '" + reserva.Text + "' AND e.esta_usuarioCheckOut IS NULL GROUP BY h.habi_numero, h.habi_piso, e.esta_id");
+            UtilesSQL.llenarTabla(dtH, "SELECT h.habi_numero, h.habi_piso, e.esta_id FROM DERROCHADORES_DE_PAPEL.Habitacion AS h JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion AS rh ON rh.rexh_piso = h.habi_piso AND rh.rexh_numero = h.habi_numero JOIN DERROCHADORES_DE_PAPEL.Reserva AS r ON r.rese_codigo = rh.rexh_reserva JOIN DERROCHADORES_DE_PAPEL.Estadia AS e ON e.esta_reserva = r.rese_codigo WHERE rh.rexh_reserva = '" + reserva.Text + "' AND e.esta_usuarioCheckOut IS NULL GROUP BY h.habi_numero, h.habi_piso, e.esta_id");
             if (dtH.Rows.Count == 0)
             {
                 MessageBox.Show("Esta reserva ya realizo el check out.");
                 return;
             }
             
-            
-            SqlCommand com = UtilesSQL.crearCommand("SELECT f.fact_numero FROM DERROCHADORES_DE_PAPEL.Factura AS f JOIN DERROCHADORES_DE_PAPEL.Estadia AS e ON e.esta_id = f.fact_estadia WHERE e.esta_id = @estadia");
+            //Crea la factura para poder iniciar el proceso de check out
+            SqlCommand com = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Factura (fact_fecha, fact_estadia, fact_cliente) VALUES (@fecha, @estadia, @cliente)");
+            com.Parameters.AddWithValue("@fecha", Main.fecha());
+            com.Parameters.AddWithValue("@estadia", dtH.Rows[0][2].ToString());
+            com.Parameters.AddWithValue("@cliente", reserva_dt.Rows[0][9].ToString());
+            UtilesSQL.ejecutarComandoNonQuery(com);
+
+            com = UtilesSQL.crearCommand("SELECT f.fact_numero FROM DERROCHADORES_DE_PAPEL.Factura AS f JOIN DERROCHADORES_DE_PAPEL.Estadia AS e ON e.esta_id = f.fact_estadia WHERE e.esta_id = @estadia");
             com.Parameters.AddWithValue("@estadia", dtH.Rows[0][2].ToString());
             factura = com.ExecuteScalar().ToString();
-            if (String.IsNullOrEmpty(factura))
-            {
-                //Crea la factura para poder iniciar el proceso de check out
-                com = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Factura (fact_fecha, fact_estadia, fact_cliente) VALUES (@fecha, @estadia, @cliente)");
-                com.Parameters.AddWithValue("@fecha", Main.fecha());
-                com.Parameters.AddWithValue("@estadia", dtH.Rows[0][2].ToString());
-                com.Parameters.AddWithValue("@cliente", reserva_dt.Rows[0][9].ToString());
-                UtilesSQL.ejecutarComandoNonQuery(com);
 
-                com = UtilesSQL.crearCommand("SELECT f.fact_numero FROM DERROCHADORES_DE_PAPEL.Factura AS f JOIN DERROCHADORES_DE_PAPEL.Estadia AS e ON e.esta_id = f.fact_estadia WHERE e.esta_id = @estadia");
-                com.Parameters.AddWithValue("@estadia", dtH.Rows[0][2].ToString());
-                factura = com.ExecuteScalar().ToString();
-            }
+            UtilesSQL.ejecutarComandoNonQuery("INSERT INTO DERROCHADORES_DE_PAPEL.ItemDeFactura (item_cantidad, item_monto, item_factura, item_descripcion, item_consumible, item_habitacionNumero, item_habitacionPiso) VALUES (1, (SELECT regi_precioBase * SUM(tipo_cantidadDePersonas) * rese_cantidadDeNoches FROM DERROCHADORES_DE_PAPEL.Reserva JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion ON rese_codigo = rexh_reserva JOIN DERROCHADORES_DE_PAPEL.Habitacion ON habi_hotel = rexh_hotel AND habi_numero = rexh_numero AND habi_piso = rexh_piso JOIN DERROCHADORES_DE_PAPEL.TipoDeHabitacion ON habi_tipo = tipo_codigo JOIN DERROCHADORES_DE_PAPEL.Regimen ON regi_codigo = rese_regimen WHERE rese_codigo = " + reserva.Text + " AND habi_hotel = " + Login.SeleccionFuncionalidad.getHotelId() + " GROUP BY regi_precioBase, rese_cantidadDeNoches), " + factura + ", \'Hospedaje\', NULL, " + dtH.Rows[0][0].ToString() + ", " + dtH.Rows[0][1].ToString() + ")");
 
             Consumibles();
         }
+
+        private String costoDeEstadia()
+        {
+            SqlCommand com = UtilesSQL.crearCommand("(SELECT regi_precioBase * SUM(tipo_cantidadDePersonas) * rese_cantidadDeNoches "
+                                                    +"FROM DERROCHADORES_DE_PAPEL.Reserva JOIN "
+                                                        +"DERROCHADORES_DE_PAPEL.ReservaXHabitacion ON rese_codigo = rexh_reserva JOIN "
+                                                        +"DERROCHADORES_DE_PAPEL.Habitacion ON habi_hotel = rexh_hotel AND habi_numero = rexh_numero AND habi_piso = rexh_piso JOIN "
+                                                        +"DERROCHADORES_DE_PAPEL.TipoDeHabitacion ON habi_tipo = tipo_codigo JOIN "
+                                                        +"DERROCHADORES_DE_PAPEL.Regimen ON regi_codigo = rese_regimen "
+                                                    +"WHERE rese_codigo = "+reserva.Text+" AND habi_hotel = "+Login.SeleccionFuncionalidad.getHotelId()+" "
+                                                    +"GROUP BY regi_precioBase, rese_cantidadDeNoches)");
+            return com.ExecuteScalar().ToString();
+            //"(SELECT regi_precioBase * SUM(tipo_cantidadDePersonas) * rese_cantidadDeNoches FROM DERROCHADORES_DE_PAPEL.Reserva JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion ON rese_codigo = rexh_reserva JOIN DERROCHADORES_DE_PAPEL.Habitacion ON habi_hotel = rexh_hotel AND habi_numero = rexh_numero AND habi_piso = rexh_piso JOIN DERROCHADORES_DE_PAPEL.TipoDeHabitacion ON habi_tipo = tipo_codigo JOIN DERROCHADORES_DE_PAPEL.Regimen ON regi_codigo = rese_regimen WHERE rese_codigo = "+reserva.Text+" AND habi_hotel = "+Login.SeleccionFuncionalidad.getHotelId()+" GROUP BY regi_precioBase, rese_cantidadDeNoches)"
+        }
+
         private void Consumibles()
         {
             //Si ya registro consumibles va directo al check out, sino pregunta
@@ -240,8 +250,8 @@ namespace FrbaHotel.RegistrarEstadia
             if (confirmResult == DialogResult.Yes)
             {
                 this.Hide();
-                Form f1 = new RegistrarConsumible.RegistrarConsumible(dtH.Rows[0][0].ToString(), dtH.Rows[0][1].ToString(), dtH.Rows[0][2].ToString());
-                f1.ShowDialog();
+                new RegistrarConsumible.ElegirHabitacion(factura, dtH).ShowDialog();
+                new CheckOut(factura).ShowDialog();
                 this.Close();
             }
             else

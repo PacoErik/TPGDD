@@ -30,10 +30,8 @@
         {
             this.label2 = new System.Windows.Forms.Label();
             this.comboBoxFormaDePago = new System.Windows.Forms.ComboBox();
-            this.textBoxNumeroTarjeta = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBoxNombreTarjeta = new System.Windows.Forms.TextBox();
             this.labelNumeroVacio = new System.Windows.Forms.Label();
             this.labelNombreVacio = new System.Windows.Forms.Label();
             this.labelNombreInvalido = new System.Windows.Forms.Label();
@@ -49,6 +47,8 @@
             this.dataGridViewConsumibles = new System.Windows.Forms.DataGridView();
             this.label10 = new System.Windows.Forms.Label();
             this.buttonFinalizar = new System.Windows.Forms.Button();
+            this.tarjeta = new System.Windows.Forms.TextBox();
+            this.propietario = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewConsumibles)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,14 +71,6 @@
             this.comboBoxFormaDePago.TabIndex = 5;
             this.comboBoxFormaDePago.SelectedIndexChanged += new System.EventHandler(this.comboBoxFormaDePago_SelectedIndexChanged);
             // 
-            // textBoxNumeroTarjeta
-            // 
-            this.textBoxNumeroTarjeta.Enabled = false;
-            this.textBoxNumeroTarjeta.Location = new System.Drawing.Point(25, 128);
-            this.textBoxNumeroTarjeta.Name = "textBoxNumeroTarjeta";
-            this.textBoxNumeroTarjeta.Size = new System.Drawing.Size(184, 20);
-            this.textBoxNumeroTarjeta.TabIndex = 7;
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -96,14 +88,6 @@
             this.label3.Size = new System.Drawing.Size(174, 13);
             this.label3.TabIndex = 10;
             this.label3.Text = "Nombre del propietario de la tarjeta:";
-            // 
-            // textBoxNombreTarjeta
-            // 
-            this.textBoxNombreTarjeta.Enabled = false;
-            this.textBoxNombreTarjeta.Location = new System.Drawing.Point(28, 185);
-            this.textBoxNombreTarjeta.Name = "textBoxNombreTarjeta";
-            this.textBoxNombreTarjeta.Size = new System.Drawing.Size(184, 20);
-            this.textBoxNombreTarjeta.TabIndex = 9;
             // 
             // labelNumeroVacio
             // 
@@ -154,6 +138,7 @@
             this.textBoxFecha.Enabled = false;
             this.textBoxFecha.Location = new System.Drawing.Point(260, 38);
             this.textBoxFecha.Name = "textBoxFecha";
+            this.textBoxFecha.ReadOnly = true;
             this.textBoxFecha.Size = new System.Drawing.Size(202, 20);
             this.textBoxFecha.TabIndex = 20;
             // 
@@ -180,6 +165,7 @@
             this.textBoxCostoTotal.Enabled = false;
             this.textBoxCostoTotal.Location = new System.Drawing.Point(260, 89);
             this.textBoxCostoTotal.Name = "textBoxCostoTotal";
+            this.textBoxCostoTotal.ReadOnly = true;
             this.textBoxCostoTotal.Size = new System.Drawing.Size(202, 20);
             this.textBoxCostoTotal.TabIndex = 22;
             // 
@@ -197,6 +183,7 @@
             this.textBoxEstadia.Enabled = false;
             this.textBoxEstadia.Location = new System.Drawing.Point(260, 135);
             this.textBoxEstadia.Name = "textBoxEstadia";
+            this.textBoxEstadia.ReadOnly = true;
             this.textBoxEstadia.Size = new System.Drawing.Size(202, 20);
             this.textBoxEstadia.TabIndex = 24;
             // 
@@ -214,6 +201,7 @@
             this.textBoxCliente.Enabled = false;
             this.textBoxCliente.Location = new System.Drawing.Point(260, 185);
             this.textBoxCliente.Name = "textBoxCliente";
+            this.textBoxCliente.ReadOnly = true;
             this.textBoxCliente.Size = new System.Drawing.Size(202, 20);
             this.textBoxCliente.TabIndex = 26;
             // 
@@ -223,10 +211,10 @@
             this.dataGridViewConsumibles.AllowUserToDeleteRows = false;
             this.dataGridViewConsumibles.AllowUserToOrderColumns = true;
             this.dataGridViewConsumibles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewConsumibles.Location = new System.Drawing.Point(137, 251);
+            this.dataGridViewConsumibles.Location = new System.Drawing.Point(31, 251);
             this.dataGridViewConsumibles.Name = "dataGridViewConsumibles";
             this.dataGridViewConsumibles.ReadOnly = true;
-            this.dataGridViewConsumibles.Size = new System.Drawing.Size(246, 150);
+            this.dataGridViewConsumibles.Size = new System.Drawing.Size(431, 150);
             this.dataGridViewConsumibles.TabIndex = 28;
             // 
             // label10
@@ -249,11 +237,27 @@
             this.buttonFinalizar.UseVisualStyleBackColor = true;
             this.buttonFinalizar.Click += new System.EventHandler(this.buttonFinalizar_Click);
             // 
+            // tarjeta
+            // 
+            this.tarjeta.Location = new System.Drawing.Point(25, 128);
+            this.tarjeta.Name = "tarjeta";
+            this.tarjeta.Size = new System.Drawing.Size(190, 20);
+            this.tarjeta.TabIndex = 31;
+            // 
+            // propietario
+            // 
+            this.propietario.Location = new System.Drawing.Point(25, 185);
+            this.propietario.Name = "propietario";
+            this.propietario.Size = new System.Drawing.Size(190, 20);
+            this.propietario.TabIndex = 32;
+            // 
             // CheckOut
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(530, 457);
+            this.Controls.Add(this.propietario);
+            this.Controls.Add(this.tarjeta);
             this.Controls.Add(this.buttonFinalizar);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.dataGridViewConsumibles);
@@ -270,9 +274,7 @@
             this.Controls.Add(this.labelNombreVacio);
             this.Controls.Add(this.labelNumeroVacio);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBoxNombreTarjeta);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.textBoxNumeroTarjeta);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.comboBoxFormaDePago);
             this.Name = "CheckOut";
@@ -287,10 +289,8 @@
 
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBoxFormaDePago;
-        private System.Windows.Forms.TextBox textBoxNumeroTarjeta;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBoxNombreTarjeta;
         private System.Windows.Forms.Label labelNumeroVacio;
         private System.Windows.Forms.Label labelNombreVacio;
         private System.Windows.Forms.Label labelNombreInvalido;
@@ -306,5 +306,7 @@
         private System.Windows.Forms.DataGridView dataGridViewConsumibles;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button buttonFinalizar;
+        private System.Windows.Forms.TextBox tarjeta;
+        private System.Windows.Forms.TextBox propietario;
     }
 }
