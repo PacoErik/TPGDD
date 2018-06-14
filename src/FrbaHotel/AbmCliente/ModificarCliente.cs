@@ -47,7 +47,7 @@ namespace FrbaHotel.AbmCliente
             textBoxApellido.Text = dt.Rows[0][2].ToString();
             textBoxMail.Text = dt.Rows[0][3].ToString();
             textBoxTelefono.Text = dt.Rows[0][4].ToString();
-            textBoxFecha.Text = DateTime.Parse(dt.Rows[0][5].ToString()).ToString("yyyy-dd-MM HH:mm:ss.fff");
+            textBoxFecha.Text = DateTime.Parse(dt.Rows[0][5].ToString()).ToString("yyyy-MM-dd");
             textBoxDireccion.Text = dt.Rows[0][6].ToString();
             textBoxNumeroCalle.Text = dt.Rows[0][7].ToString();
             textBoxPiso.Text = dt.Rows[0][8].ToString();
