@@ -94,7 +94,7 @@ namespace FrbaHotel.GenerarModificacionReserva
         private void CalcularCantidadNoches()
         {
             TimeSpan dias = reserva.fecha_hasta - reserva.fecha_desde;
-            reserva.cantidad_de_noches = dias.Days;
+            reserva.cantidad_de_noches = dias.Duration().Days;
             lbl_noches.Text = reserva.cantidad_de_noches.ToString();
             lbl_error_fecha.Visible = reserva.cantidad_de_noches < 1;
         }
