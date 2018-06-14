@@ -84,7 +84,7 @@ namespace FrbaHotel.CancelarReserva
                 else
                 {
                     TimeSpan dias_para_reserva = Convert.ToDateTime(Main.fecha()) - Convert.ToDateTime(reserva.Rows[0]["rese_inicio"]);
-                    if (dias_para_reserva.Days <= 1)
+                    if (dias_para_reserva.Duration().Days <= 1)
                     {
                         lbl_error.Text = "No se puede cancelar a menos de un dia";
                         lbl_error.Visible = true;
