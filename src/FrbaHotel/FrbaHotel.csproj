@@ -246,6 +246,18 @@
     <Compile Include="NotificadorErrores.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegistrarEstadia\DistribuirClientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RegistrarEstadia\DistribuirClientes.Designer.cs">
+      <DependentUpon>DistribuirClientes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RegistrarEstadia\ElegirCliente.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RegistrarEstadia\ElegirCliente.Designer.cs">
+      <DependentUpon>ElegirCliente.cs</DependentUpon>
+    </Compile>
     <Compile Include="RegistrarEstadia\ElegirHabitacion.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -381,6 +393,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="RegistrarEstadia\DistribuirClientes.resx">
+      <DependentUpon>DistribuirClientes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RegistrarEstadia\ElegirCliente.resx">
+      <DependentUpon>ElegirCliente.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="RegistrarEstadia\ElegirHabitacion.resx">
       <DependentUpon>ElegirHabitacion.cs</DependentUpon>
     </EmbeddedResource>

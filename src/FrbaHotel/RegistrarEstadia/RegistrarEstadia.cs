@@ -20,6 +20,7 @@ namespace FrbaHotel.RegistrarEstadia
         String cliente_id;
         String cliente_nombre;
         String cliente_apellido;
+        String cliente_mail;
 
         public RegistrarEstadia()
         {
@@ -63,7 +64,7 @@ namespace FrbaHotel.RegistrarEstadia
 
             reserva_dt = new DataTable();
 
-            UtilesSQL.llenarTabla(reserva_dt, "SELECT rese_codigo, clie_apellido, regi_descripcion, usur_username, esta_detalle, rese_fecha, rese_cantidadDeNoches, rese_inicio, rese_fin, clie_id, rese_cantidadDePersonas, clie_nombre "
+            UtilesSQL.llenarTabla(reserva_dt, "SELECT rese_codigo, clie_apellido, regi_descripcion, usur_username, esta_detalle, rese_fecha, rese_cantidadDeNoches, rese_inicio, rese_fin, clie_id, rese_cantidadDePersonas, clie_nombre, clie_mail "
                                             + "FROM DERROCHADORES_DE_PAPEL.Reserva JOIN "
                                                 + "DERROCHADORES_DE_PAPEL.Cliente ON rese_cliente = clie_id JOIN "
                                                 + "DERROCHADORES_DE_PAPEL.Regimen ON rese_regimen = regi_codigo JOIN "
@@ -85,6 +86,7 @@ namespace FrbaHotel.RegistrarEstadia
             cliente_id = reserva_dt.Rows[0][9].ToString();
             cliente_apellido = reserva_dt.Rows[0][1].ToString();
             cliente_nombre = reserva_dt.Rows[0][11].ToString();
+            cliente_mail = reserva_dt.Rows[0][12].ToString();
 
             reserva.Text = reserva_dt.Rows[0][0].ToString();
             cliente.Text = cliente_apellido+", "+cliente_nombre;
@@ -123,9 +125,8 @@ namespace FrbaHotel.RegistrarEstadia
 
                 if (cantidad_personas > 1)
                 {
-                    /*
                     this.Hide();
-                    Form elegirClientes = new ElegirClientes(cliente_id, cliente_apellido, cliente_nombre, reserva.Text, cantidad_personas, this) { correcto = true, distribucionClientes_dt = null};
+                    ElegirClientes elegirClientes = new ElegirClientes(cliente_id, cliente_apellido, cliente_nombre, cliente_mail, reserva.Text, cantidad_personas);
                     elegirClientes.ShowDialog();
                     this.Show();
                     if (elegirClientes.correcto)
@@ -136,12 +137,12 @@ namespace FrbaHotel.RegistrarEstadia
                     {
                         return;
                     }
-                     * */
+                    
                 }
                 else 
                 {
                     distribucionClientes_dt = new DataTable();
-                    UtilesSQL.llenarTabla(distribucionClientes_dt, "SELECT rese_cliente, rexh_hotel, rexh_numero, rexh_piso FROM DERROCHADORES_DE_PAPEL.Reserva JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion ON rexh_reserva = "+reserva.Text);
+                    UtilesSQL.llenarTabla(distribucionClientes_dt, "SELECT rese_cliente, rexh_hotel, rexh_numero, rexh_piso FROM DERROCHADORES_DE_PAPEL.Reserva JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion ON rexh_reserva = rese_codigo WHERE rese_codigo = " + reserva.Text);
                 }
 
                 //Se efectiviza la reserva
@@ -154,7 +155,9 @@ namespace FrbaHotel.RegistrarEstadia
                 comando.Parameters.AddWithValue("@noches", cantidad_noches.Text);
                 comando.Parameters.AddWithValue("@reserva", reserva.Text);
                 comando.Parameters.AddWithValue("@usuarioCheckIn", Login.SeleccionFuncionalidad.getUserId());
+                comando.ExecuteNonQuery();
 
+                comando = UtilesSQL.crearCommand("SELECT esta_id FROM DERROCHADORES_DE_PAPEL.Estadia WHERE esta_reserva = " + reserva.Text);
                 String estadia_id = comando.ExecuteScalar().ToString();
 
                 MessageBox.Show(estadia_id);
@@ -162,7 +165,7 @@ namespace FrbaHotel.RegistrarEstadia
                 //Se asignan los clientes a la estadía
                 foreach (DataRow cliente in distribucionClientes_dt.Rows)
                 {
-                    UtilesSQL.ejecutarComandoNonQuery("INSERT INTO DERROCHADORES_DE_PAPEL.EstadiaXCliente (esxc_estadia, esxc_cliente, esxc_hotel, esxc_numero, esxc_piso) VALUES ()");
+                    UtilesSQL.ejecutarComandoNonQuery("INSERT INTO DERROCHADORES_DE_PAPEL.EstadiaXCliente (esxc_estadia, esxc_cliente, esxc_hotel, esxc_numero, esxc_piso) VALUES ("+estadia_id+","+cliente[0].ToString()+","+Login.SeleccionFuncionalidad.getHotelId()+","+cliente[1].ToString()+","+cliente[2].ToString()+")");
                 }
 
                 //Se actualiza la reserva en pantalla

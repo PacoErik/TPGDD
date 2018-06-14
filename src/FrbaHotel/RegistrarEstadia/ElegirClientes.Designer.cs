@@ -33,13 +33,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.cantidadDePersonas = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.responsable = new System.Windows.Forms.TextBox();
+            this.clientes = new System.Windows.Forms.DataGridView();
             this.label4 = new System.Windows.Forms.Label();
             this.volver = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.agregar = new System.Windows.Forms.Button();
+            this.continuar = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.clientes)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -85,21 +85,24 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "Responsable:";
             // 
-            // textBox1
+            // responsable
             // 
-            this.textBox1.Location = new System.Drawing.Point(94, 71);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(178, 20);
-            this.textBox1.TabIndex = 5;
+            this.responsable.Location = new System.Drawing.Point(94, 71);
+            this.responsable.Name = "responsable";
+            this.responsable.ReadOnly = true;
+            this.responsable.Size = new System.Drawing.Size(178, 20);
+            this.responsable.TabIndex = 5;
             // 
-            // dataGridView1
+            // clientes
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(19, 122);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(340, 182);
-            this.dataGridView1.TabIndex = 6;
+            this.clientes.AllowUserToAddRows = false;
+            this.clientes.AllowUserToDeleteRows = false;
+            this.clientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.clientes.Location = new System.Drawing.Point(19, 122);
+            this.clientes.Name = "clientes";
+            this.clientes.ReadOnly = true;
+            this.clientes.Size = new System.Drawing.Size(474, 182);
+            this.clientes.TabIndex = 6;
             // 
             // label4
             // 
@@ -120,36 +123,37 @@
             this.volver.UseVisualStyleBackColor = true;
             this.volver.Click += new System.EventHandler(this.volver_Click);
             // 
-            // button1
+            // agregar
             // 
-            this.button1.Location = new System.Drawing.Point(247, 13);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(112, 23);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "Agregar cliente";
-            this.button1.UseVisualStyleBackColor = true;
+            this.agregar.Location = new System.Drawing.Point(320, 39);
+            this.agregar.Name = "agregar";
+            this.agregar.Size = new System.Drawing.Size(148, 34);
+            this.agregar.TabIndex = 9;
+            this.agregar.Text = "Agregar cliente";
+            this.agregar.UseVisualStyleBackColor = true;
+            this.agregar.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // continuar
             // 
-            this.button2.Location = new System.Drawing.Point(284, 320);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 10;
-            this.button2.Text = "Continuar";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.continuar.Location = new System.Drawing.Point(418, 320);
+            this.continuar.Name = "continuar";
+            this.continuar.Size = new System.Drawing.Size(75, 23);
+            this.continuar.TabIndex = 10;
+            this.continuar.Text = "Continuar";
+            this.continuar.UseVisualStyleBackColor = true;
+            this.continuar.Click += new System.EventHandler(this.button2_Click);
             // 
             // ElegirClientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(385, 355);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(505, 355);
+            this.Controls.Add(this.continuar);
+            this.Controls.Add(this.agregar);
             this.Controls.Add(this.volver);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.clientes);
+            this.Controls.Add(this.responsable);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.cantidadDePersonas);
             this.Controls.Add(this.label2);
@@ -157,7 +161,7 @@
             this.Controls.Add(this.label1);
             this.Name = "ElegirClientes";
             this.Text = "Elegir clientes";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.clientes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -170,11 +174,11 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox cantidadDePersonas;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.TextBox responsable;
+        private System.Windows.Forms.DataGridView clientes;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button volver;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button agregar;
+        private System.Windows.Forms.Button continuar;
     }
 }
