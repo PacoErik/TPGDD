@@ -173,6 +173,7 @@ namespace FrbaHotel.GenerarModificacionReserva
             precio_base = regimenes.Rows[indice_regimen_seleccionado]["regi_precioBase"].ToString();
             lbl_precio_base.Text = precio_base;
             reserva.precio_base = Convert.ToDouble(precio_base);
+            reserva.regimen_seleccionado = Convert.ToInt32(regimenes.Rows[indice_regimen_seleccionado]["regi_codigo"]);
         }
 
         private bool CargarHabitaciones()

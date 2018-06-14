@@ -182,7 +182,9 @@ namespace FrbaHotel.GenerarModificacionReserva
                             CargarHabitaciones();
                             CargarRegimenes();
 
-                            reserva.precio_base = Convert.ToDouble(regimenes.Rows[reserva.regimen_seleccionado]["regi_precioBase"]);
+                            DataTable reg_seleccionado = new DataTable();
+                            UtilesSQL.llenarTabla(reg_seleccionado, "select * from DERROCHADORES_DE_PAPEL.Regimen where regi_codigo = '"+ reserva.regimen_seleccionado +"'");
+                            reserva.precio_base = Convert.ToDouble(reg_seleccionado.Rows[0]["regi_precioBase"]);
 
                             UtilesSQL.llenarTabla(hoteles, "SELECT * FROM DERROCHADORES_DE_PAPEL.Hotel WHERE hote_id = '" + reserva.hotel.ID + "'");
 
