@@ -120,7 +120,7 @@
             this.labelCalleObligatoria.Name = "labelCalleObligatoria";
             this.labelCalleObligatoria.Size = new System.Drawing.Size(119, 13);
             this.labelCalleObligatoria.TabIndex = 140;
-            this.labelCalleObligatoria.Text = "El número es olbigatorio";
+            this.labelCalleObligatoria.Text = "El número es obligatorio";
             this.labelCalleObligatoria.Visible = false;
             // 
             // labelDireccionObligatoria
@@ -131,7 +131,7 @@
             this.labelDireccionObligatoria.Name = "labelDireccionObligatoria";
             this.labelDireccionObligatoria.Size = new System.Drawing.Size(130, 13);
             this.labelDireccionObligatoria.TabIndex = 139;
-            this.labelDireccionObligatoria.Text = "La dirección es olbigatorio";
+            this.labelDireccionObligatoria.Text = "La dirección es obligatorio";
             this.labelDireccionObligatoria.Visible = false;
             // 
             // labelNumeroDocObligatorio
@@ -142,7 +142,7 @@
             this.labelNumeroDocObligatorio.Name = "labelNumeroDocObligatorio";
             this.labelNumeroDocObligatorio.Size = new System.Drawing.Size(119, 13);
             this.labelNumeroDocObligatorio.TabIndex = 138;
-            this.labelNumeroDocObligatorio.Text = "El número es olbigatorio";
+            this.labelNumeroDocObligatorio.Text = "El número es obligatorio";
             this.labelNumeroDocObligatorio.Visible = false;
             // 
             // labelApellidoObligatorio
@@ -153,7 +153,7 @@
             this.labelApellidoObligatorio.Name = "labelApellidoObligatorio";
             this.labelApellidoObligatorio.Size = new System.Drawing.Size(120, 13);
             this.labelApellidoObligatorio.TabIndex = 137;
-            this.labelApellidoObligatorio.Text = "El apellido es olbigatorio";
+            this.labelApellidoObligatorio.Text = "El apellido es obligatorio";
             this.labelApellidoObligatorio.Visible = false;
             // 
             // labelNombreObligatorio
@@ -164,7 +164,7 @@
             this.labelNombreObligatorio.Name = "labelNombreObligatorio";
             this.labelNombreObligatorio.Size = new System.Drawing.Size(119, 13);
             this.labelNombreObligatorio.TabIndex = 136;
-            this.labelNombreObligatorio.Text = "El nombre es olbigatorio";
+            this.labelNombreObligatorio.Text = "El nombre es obligatorio";
             this.labelNombreObligatorio.Visible = false;
             // 
             // label11
@@ -185,7 +185,7 @@
             this.labelMailObligatorio.Name = "labelMailObligatorio";
             this.labelMailObligatorio.Size = new System.Drawing.Size(102, 13);
             this.labelMailObligatorio.TabIndex = 134;
-            this.labelMailObligatorio.Text = "El mail es olbigatorio";
+            this.labelMailObligatorio.Text = "El mail es obligatorio";
             this.labelMailObligatorio.Visible = false;
             // 
             // comboBoxNacionalidad
@@ -210,9 +210,9 @@
             this.labelDepartamentoInvalido.ForeColor = System.Drawing.Color.DarkRed;
             this.labelDepartamentoInvalido.Location = new System.Drawing.Point(150, 360);
             this.labelDepartamentoInvalido.Name = "labelDepartamentoInvalido";
-            this.labelDepartamentoInvalido.Size = new System.Drawing.Size(111, 13);
+            this.labelDepartamentoInvalido.Size = new System.Drawing.Size(113, 13);
             this.labelDepartamentoInvalido.TabIndex = 131;
-            this.labelDepartamentoInvalido.Text = "DepartamentoInvalido";
+            this.labelDepartamentoInvalido.Text = "Departamento inválido";
             this.labelDepartamentoInvalido.Visible = false;
             // 
             // label16
@@ -239,7 +239,7 @@
             this.labelPisoInvalido.Name = "labelPisoInvalido";
             this.labelPisoInvalido.Size = new System.Drawing.Size(69, 13);
             this.labelPisoInvalido.TabIndex = 128;
-            this.labelPisoInvalido.Text = "Piso  invalido";
+            this.labelPisoInvalido.Text = "Piso  inválido";
             this.labelPisoInvalido.Visible = false;
             // 
             // label15
@@ -315,7 +315,7 @@
             this.labelLocalidadInvalida.Name = "labelLocalidadInvalida";
             this.labelLocalidadInvalida.Size = new System.Drawing.Size(92, 13);
             this.labelLocalidadInvalida.TabIndex = 118;
-            this.labelLocalidadInvalida.Text = "Localidad invalida";
+            this.labelLocalidadInvalida.Text = "Localidad inválida";
             this.labelLocalidadInvalida.Visible = false;
             // 
             // labelNumeroDeCalleInvalido
@@ -357,7 +357,7 @@
             this.labelNumeroDocInvalido.Name = "labelNumeroDocInvalido";
             this.labelNumeroDocInvalido.Size = new System.Drawing.Size(163, 13);
             this.labelNumeroDocInvalido.TabIndex = 114;
-            this.labelNumeroDocInvalido.Text = "Numero de identificación invalido";
+            this.labelNumeroDocInvalido.Text = "Numero de identificación inválido";
             this.labelNumeroDocInvalido.Visible = false;
             // 
             // labelTelefonoInvalido
@@ -368,7 +368,7 @@
             this.labelTelefonoInvalido.Name = "labelTelefonoInvalido";
             this.labelTelefonoInvalido.Size = new System.Drawing.Size(88, 13);
             this.labelTelefonoInvalido.TabIndex = 113;
-            this.labelTelefonoInvalido.Text = "Telefono invalido";
+            this.labelTelefonoInvalido.Text = "Teléfono inválido";
             this.labelTelefonoInvalido.Visible = false;
             // 
             // labelApellidoInvalido
@@ -410,7 +410,7 @@
             this.labelFechaInvalida.Name = "labelFechaInvalida";
             this.labelFechaInvalida.Size = new System.Drawing.Size(76, 13);
             this.labelFechaInvalida.TabIndex = 109;
-            this.labelFechaInvalida.Text = "Fecha invalida";
+            this.labelFechaInvalida.Text = "Fecha inválida";
             this.labelFechaInvalida.Visible = false;
             // 
             // monthCalendar
@@ -535,7 +535,7 @@
             this.labelMailEnUso.Name = "labelMailEnUso";
             this.labelMailEnUso.Size = new System.Drawing.Size(118, 13);
             this.labelMailEnUso.TabIndex = 95;
-            this.labelMailEnUso.Text = "Ese mail ya esta en uso";
+            this.labelMailEnUso.Text = "Ese mail ya está en uso";
             this.labelMailEnUso.Visible = false;
             // 
             // labelMailInvalido

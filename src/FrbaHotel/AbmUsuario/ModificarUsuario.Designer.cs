@@ -97,7 +97,7 @@
             this.labelContraseñaObligatoria.Name = "labelContraseñaObligatoria";
             this.labelContraseñaObligatoria.Size = new System.Drawing.Size(140, 13);
             this.labelContraseñaObligatoria.TabIndex = 274;
-            this.labelContraseñaObligatoria.Text = "La contraseña es olbigatoria";
+            this.labelContraseñaObligatoria.Text = "La contraseña es obligatoria";
             this.labelContraseñaObligatoria.Visible = false;
             // 
             // textBoxContraseña
@@ -148,7 +148,7 @@
             this.labelDireccionObligatoria.Name = "labelDireccionObligatoria";
             this.labelDireccionObligatoria.Size = new System.Drawing.Size(130, 13);
             this.labelDireccionObligatoria.TabIndex = 263;
-            this.labelDireccionObligatoria.Text = "La dirección es olbigatorio";
+            this.labelDireccionObligatoria.Text = "La dirección es obligatorio";
             this.labelDireccionObligatoria.Visible = false;
             // 
             // labelNumeroDocObligatorio
@@ -170,7 +170,7 @@
             this.labelApellidoObligatorio.Name = "labelApellidoObligatorio";
             this.labelApellidoObligatorio.Size = new System.Drawing.Size(120, 13);
             this.labelApellidoObligatorio.TabIndex = 261;
-            this.labelApellidoObligatorio.Text = "El apellido es olbigatorio";
+            this.labelApellidoObligatorio.Text = "El apellido es obligatorio";
             this.labelApellidoObligatorio.Visible = false;
             // 
             // labelNombreObligatorio
@@ -181,7 +181,7 @@
             this.labelNombreObligatorio.Name = "labelNombreObligatorio";
             this.labelNombreObligatorio.Size = new System.Drawing.Size(119, 13);
             this.labelNombreObligatorio.TabIndex = 260;
-            this.labelNombreObligatorio.Text = "El nombre es olbigatorio";
+            this.labelNombreObligatorio.Text = "El nombre es obligatorio";
             this.labelNombreObligatorio.Visible = false;
             // 
             // label11
@@ -202,7 +202,7 @@
             this.labelMailObligatorio.Name = "labelMailObligatorio";
             this.labelMailObligatorio.Size = new System.Drawing.Size(102, 13);
             this.labelMailObligatorio.TabIndex = 258;
-            this.labelMailObligatorio.Text = "El mail es olbigatorio";
+            this.labelMailObligatorio.Text = "El mail es obligatorio";
             this.labelMailObligatorio.Visible = false;
             // 
             // textBoxDepto

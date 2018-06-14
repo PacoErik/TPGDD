@@ -107,7 +107,7 @@
             this.labelNombreObligatorio.Name = "labelNombreObligatorio";
             this.labelNombreObligatorio.Size = new System.Drawing.Size(119, 13);
             this.labelNombreObligatorio.TabIndex = 260;
-            this.labelNombreObligatorio.Text = "El nombre es olbigatorio";
+            this.labelNombreObligatorio.Text = "El nombre es obligatorio";
             this.labelNombreObligatorio.Visible = false;
             // 
             // labelMailObligatorio
@@ -118,7 +118,7 @@
             this.labelMailObligatorio.Name = "labelMailObligatorio";
             this.labelMailObligatorio.Size = new System.Drawing.Size(102, 13);
             this.labelMailObligatorio.TabIndex = 258;
-            this.labelMailObligatorio.Text = "El mail es olbigatorio";
+            this.labelMailObligatorio.Text = "El mail es obligatorio";
             this.labelMailObligatorio.Visible = false;
             // 
             // textBoxTelefono
@@ -244,7 +244,7 @@
             this.labelFechaInvalida.Name = "labelFechaInvalida";
             this.labelFechaInvalida.Size = new System.Drawing.Size(76, 13);
             this.labelFechaInvalida.TabIndex = 234;
-            this.labelFechaInvalida.Text = "Fecha invalida";
+            this.labelFechaInvalida.Text = "Fecha inválida";
             this.labelFechaInvalida.Visible = false;
             // 
             // monthCalendar
@@ -447,7 +447,7 @@
             this.labelLocalidadInvalida.Name = "labelLocalidadInvalida";
             this.labelLocalidadInvalida.Size = new System.Drawing.Size(92, 13);
             this.labelLocalidadInvalida.TabIndex = 276;
-            this.labelLocalidadInvalida.Text = "Localidad invalida";
+            this.labelLocalidadInvalida.Text = "Localidad inválida";
             this.labelLocalidadInvalida.Visible = false;
             // 
             // textBoxLocalidad
@@ -485,7 +485,7 @@
             this.labelPaisInvalido.Name = "labelPaisInvalido";
             this.labelPaisInvalido.Size = new System.Drawing.Size(66, 13);
             this.labelPaisInvalido.TabIndex = 280;
-            this.labelPaisInvalido.Text = "Pais invalido";
+            this.labelPaisInvalido.Text = "Pais inválido";
             this.labelPaisInvalido.Visible = false;
             // 
             // textBoxPais

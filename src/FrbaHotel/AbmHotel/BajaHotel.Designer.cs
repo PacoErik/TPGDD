@@ -51,7 +51,7 @@
             this.labelFechaInvalida.Name = "labelFechaInvalida";
             this.labelFechaInvalida.Size = new System.Drawing.Size(76, 13);
             this.labelFechaInvalida.TabIndex = 238;
-            this.labelFechaInvalida.Text = "Fecha invalida";
+            this.labelFechaInvalida.Text = "Fecha inválida";
             this.labelFechaInvalida.Visible = false;
             // 
             // buttonSeleccionarFecha
@@ -90,7 +90,7 @@
             this.labelFechaInvalida2.Name = "labelFechaInvalida2";
             this.labelFechaInvalida2.Size = new System.Drawing.Size(76, 13);
             this.labelFechaInvalida2.TabIndex = 242;
-            this.labelFechaInvalida2.Text = "Fecha invalida";
+            this.labelFechaInvalida2.Text = "Fecha inválida";
             this.labelFechaInvalida2.Visible = false;
             // 
             // buttonFecha2

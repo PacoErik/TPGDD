@@ -179,7 +179,7 @@
             this.labelPisoInvalido.Name = "labelPisoInvalido";
             this.labelPisoInvalido.Size = new System.Drawing.Size(67, 13);
             this.labelPisoInvalido.TabIndex = 78;
-            this.labelPisoInvalido.Text = "Piso Invalido";
+            this.labelPisoInvalido.Text = "Piso Inválido";
             this.labelPisoInvalido.Visible = false;
             // 
             // labelNumeroInvalido2

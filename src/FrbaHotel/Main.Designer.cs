@@ -46,7 +46,7 @@
             this.Huesped.Name = "Huesped";
             this.Huesped.Size = new System.Drawing.Size(150, 38);
             this.Huesped.TabIndex = 0;
-            this.Huesped.Text = "Huesped";
+            this.Huesped.Text = "Huésped";
             this.Huesped.UseVisualStyleBackColor = true;
             this.Huesped.Click += new System.EventHandler(this.Huesped_Click);
             // 
@@ -127,11 +127,11 @@
             this.label3.AutoSize = true;
             this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label3.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(174, 85);
+            this.label3.Location = new System.Drawing.Point(160, 85);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(92, 28);
+            this.label3.Size = new System.Drawing.Size(109, 28);
             this.label3.TabIndex = 8;
-            this.label3.Text = "Hotelera";
+            this.label3.Text = "de Hoteles";
             // 
             // Main
             // 

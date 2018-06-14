@@ -150,7 +150,7 @@
             this.labelPisoInvalido.Name = "labelPisoInvalido";
             this.labelPisoInvalido.Size = new System.Drawing.Size(83, 13);
             this.labelPisoInvalido.TabIndex = 77;
-            this.labelPisoInvalido.Text = "Numero invalido";
+            this.labelPisoInvalido.Text = "Numero inválido";
             this.labelPisoInvalido.Visible = false;
             // 
             // labelNumeroInvalido2
@@ -161,7 +161,7 @@
             this.labelNumeroInvalido2.Name = "labelNumeroInvalido2";
             this.labelNumeroInvalido2.Size = new System.Drawing.Size(178, 13);
             this.labelNumeroInvalido2.TabIndex = 78;
-            this.labelNumeroInvalido2.Text = "Hay otra habitacion con ese número";
+            this.labelNumeroInvalido2.Text = "Hay otra habitación con ese número";
             this.labelNumeroInvalido2.Visible = false;
             // 
             // checkBoxHabilitada

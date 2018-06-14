@@ -100,7 +100,7 @@
             this.labelMailEnUso.Name = "labelMailEnUso";
             this.labelMailEnUso.Size = new System.Drawing.Size(118, 13);
             this.labelMailEnUso.TabIndex = 33;
-            this.labelMailEnUso.Text = "Ese mail ya esta en uso";
+            this.labelMailEnUso.Text = "Ese mail ya está en uso";
             this.labelMailEnUso.Visible = false;
             // 
             // monthCalendar
@@ -225,7 +225,7 @@
             this.labelFechaInvalida.Name = "labelFechaInvalida";
             this.labelFechaInvalida.Size = new System.Drawing.Size(76, 13);
             this.labelFechaInvalida.TabIndex = 56;
-            this.labelFechaInvalida.Text = "Fecha invalida";
+            this.labelFechaInvalida.Text = "Fecha inválida";
             this.labelFechaInvalida.Visible = false;
             // 
             // labelNombreInvalido
@@ -256,7 +256,7 @@
             this.labelApellidoInvalido.Name = "labelApellidoInvalido";
             this.labelApellidoInvalido.Size = new System.Drawing.Size(83, 13);
             this.labelApellidoInvalido.TabIndex = 59;
-            this.labelApellidoInvalido.Text = "Apellido invalido";
+            this.labelApellidoInvalido.Text = "Apellido inválido";
             this.labelApellidoInvalido.Visible = false;
             // 
             // labelTelefonoInvalido
@@ -267,7 +267,7 @@
             this.labelTelefonoInvalido.Name = "labelTelefonoInvalido";
             this.labelTelefonoInvalido.Size = new System.Drawing.Size(88, 13);
             this.labelTelefonoInvalido.TabIndex = 60;
-            this.labelTelefonoInvalido.Text = "Telefono invalido";
+            this.labelTelefonoInvalido.Text = "Teléfono inválido";
             this.labelTelefonoInvalido.Visible = false;
             // 
             // labelNumeroDocInvalido
@@ -278,7 +278,7 @@
             this.labelNumeroDocInvalido.Name = "labelNumeroDocInvalido";
             this.labelNumeroDocInvalido.Size = new System.Drawing.Size(163, 13);
             this.labelNumeroDocInvalido.TabIndex = 61;
-            this.labelNumeroDocInvalido.Text = "Numero de identificación invalido";
+            this.labelNumeroDocInvalido.Text = "Numero de identificación inválido";
             this.labelNumeroDocInvalido.Visible = false;
             // 
             // labelDireccionInvalida
@@ -289,7 +289,7 @@
             this.labelDireccionInvalida.Name = "labelDireccionInvalida";
             this.labelDireccionInvalida.Size = new System.Drawing.Size(91, 13);
             this.labelDireccionInvalida.TabIndex = 62;
-            this.labelDireccionInvalida.Text = "Direccion invalida";
+            this.labelDireccionInvalida.Text = "Direccion inválida";
             this.labelDireccionInvalida.Visible = false;
             // 
             // label13
@@ -320,7 +320,7 @@
             this.labelLocalidadInvalida.Name = "labelLocalidadInvalida";
             this.labelLocalidadInvalida.Size = new System.Drawing.Size(92, 13);
             this.labelLocalidadInvalida.TabIndex = 66;
-            this.labelLocalidadInvalida.Text = "Localidad invalida";
+            this.labelLocalidadInvalida.Text = "Localidad inválida";
             this.labelLocalidadInvalida.Visible = false;
             // 
             // textBoxDireccion
@@ -470,7 +470,7 @@
             this.labelMailObligatorio.Name = "labelMailObligatorio";
             this.labelMailObligatorio.Size = new System.Drawing.Size(102, 13);
             this.labelMailObligatorio.TabIndex = 86;
-            this.labelMailObligatorio.Text = "El mail es olbigatorio";
+            this.labelMailObligatorio.Text = "El mail es obligatorio";
             this.labelMailObligatorio.Visible = false;
             // 
             // label11
@@ -491,7 +491,7 @@
             this.labelNombreObligatorio.Name = "labelNombreObligatorio";
             this.labelNombreObligatorio.Size = new System.Drawing.Size(119, 13);
             this.labelNombreObligatorio.TabIndex = 88;
-            this.labelNombreObligatorio.Text = "El nombre es olbigatorio";
+            this.labelNombreObligatorio.Text = "El nombre es obligatorio";
             this.labelNombreObligatorio.Visible = false;
             // 
             // labelApellidoObligatorio
@@ -502,7 +502,7 @@
             this.labelApellidoObligatorio.Name = "labelApellidoObligatorio";
             this.labelApellidoObligatorio.Size = new System.Drawing.Size(120, 13);
             this.labelApellidoObligatorio.TabIndex = 89;
-            this.labelApellidoObligatorio.Text = "El apellido es olbigatorio";
+            this.labelApellidoObligatorio.Text = "El apellido es obligatorio";
             this.labelApellidoObligatorio.Visible = false;
             // 
             // labelNumeroDocObligatorio
@@ -513,7 +513,7 @@
             this.labelNumeroDocObligatorio.Name = "labelNumeroDocObligatorio";
             this.labelNumeroDocObligatorio.Size = new System.Drawing.Size(119, 13);
             this.labelNumeroDocObligatorio.TabIndex = 90;
-            this.labelNumeroDocObligatorio.Text = "El número es olbigatorio";
+            this.labelNumeroDocObligatorio.Text = "El número es obligatorio";
             this.labelNumeroDocObligatorio.Visible = false;
             // 
             // labelDireccionObligatoria
@@ -524,7 +524,7 @@
             this.labelDireccionObligatoria.Name = "labelDireccionObligatoria";
             this.labelDireccionObligatoria.Size = new System.Drawing.Size(130, 13);
             this.labelDireccionObligatoria.TabIndex = 91;
-            this.labelDireccionObligatoria.Text = "La dirección es olbigatorio";
+            this.labelDireccionObligatoria.Text = "La dirección es obligatorio";
             this.labelDireccionObligatoria.Visible = false;
             // 
             // labelCalleObligatoria
@@ -546,7 +546,7 @@
             this.labelNacionalidadObligatoria.Name = "labelNacionalidadObligatoria";
             this.labelNacionalidadObligatoria.Size = new System.Drawing.Size(147, 13);
             this.labelNacionalidadObligatoria.TabIndex = 93;
-            this.labelNacionalidadObligatoria.Text = "La nacionalidad es olbigatoria";
+            this.labelNacionalidadObligatoria.Text = "La nacionalidad es obligatoria";
             this.labelNacionalidadObligatoria.Visible = false;
             // 
             // checkBoxHabilitado

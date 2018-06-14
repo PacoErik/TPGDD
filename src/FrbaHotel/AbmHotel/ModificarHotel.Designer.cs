@@ -235,7 +235,7 @@
             this.labelDireccionObligatoria.Name = "labelDireccionObligatoria";
             this.labelDireccionObligatoria.Size = new System.Drawing.Size(130, 13);
             this.labelDireccionObligatoria.TabIndex = 311;
-            this.labelDireccionObligatoria.Text = "La dirección es olbigatoria";
+            this.labelDireccionObligatoria.Text = "La dirección es obligatoria";
             this.labelDireccionObligatoria.Visible = false;
             // 
             // labelNombreObligatorio
@@ -246,7 +246,7 @@
             this.labelNombreObligatorio.Name = "labelNombreObligatorio";
             this.labelNombreObligatorio.Size = new System.Drawing.Size(119, 13);
             this.labelNombreObligatorio.TabIndex = 310;
-            this.labelNombreObligatorio.Text = "El nombre es olbigatorio";
+            this.labelNombreObligatorio.Text = "El nombre es obligatorio";
             this.labelNombreObligatorio.Visible = false;
             // 
             // labelMailObligatorio
@@ -257,7 +257,7 @@
             this.labelMailObligatorio.Name = "labelMailObligatorio";
             this.labelMailObligatorio.Size = new System.Drawing.Size(102, 13);
             this.labelMailObligatorio.TabIndex = 309;
-            this.labelMailObligatorio.Text = "El mail es olbigatorio";
+            this.labelMailObligatorio.Text = "El mail es obligatorio";
             this.labelMailObligatorio.Visible = false;
             // 
             // textBoxTelefono
