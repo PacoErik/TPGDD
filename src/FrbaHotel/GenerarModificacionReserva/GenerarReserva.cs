@@ -35,11 +35,11 @@ namespace FrbaHotel.GenerarModificacionReserva
             reserva.usuario = id_usuario;
             reserva.hotel.ID = Convert.ToInt32(id_hotel);
             btn_cargar_opciones.Text = "Cargar opciones";
-            reserva.fecha_que_se_realizo_reserva = DateTime.Today;
-            reserva.fecha_desde = DateTime.Today;
-            reserva.fecha_hasta = DateTime.Today;
-            date_desde.MinDate = DateTime.Today;
-            date_hasta.MinDate = DateTime.Today;
+            reserva.fecha_que_se_realizo_reserva = Convert.ToDateTime(Main.fecha());
+            reserva.fecha_desde = Convert.ToDateTime(Main.fecha());
+            reserva.fecha_hasta = Convert.ToDateTime(Main.fecha());
+            date_desde.MinDate = Convert.ToDateTime(Main.fecha());
+            date_hasta.MinDate = Convert.ToDateTime(Main.fecha());
             lbl_error_fecha.Visible = false;
             lbl_error_personas.Visible = false;
             lbl_error_carga_hotel.Visible = false;

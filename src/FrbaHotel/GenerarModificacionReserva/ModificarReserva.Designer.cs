@@ -37,7 +37,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cbox_disponibles = new System.Windows.Forms.ComboBox();
             this.lbl_error_carga_hotel = new System.Windows.Forms.Label();
-            this.btn_cargar_opciones = new System.Windows.Forms.Button();
             this.lbl_error_personas = new System.Windows.Forms.Label();
             this.txtbox_personas = new System.Windows.Forms.TextBox();
             this.lbl_error_fecha = new System.Windows.Forms.Label();
@@ -151,15 +150,6 @@
             this.lbl_error_carga_hotel.TabIndex = 77;
             this.lbl_error_carga_hotel.Text = "FALTAN DATOS";
             // 
-            // btn_cargar_opciones
-            // 
-            this.btn_cargar_opciones.Location = new System.Drawing.Point(382, 225);
-            this.btn_cargar_opciones.Name = "btn_cargar_opciones";
-            this.btn_cargar_opciones.Size = new System.Drawing.Size(116, 23);
-            this.btn_cargar_opciones.TabIndex = 76;
-            this.btn_cargar_opciones.Text = "Cargar opciones";
-            this.btn_cargar_opciones.UseVisualStyleBackColor = true;
-            // 
             // lbl_error_personas
             // 
             this.lbl_error_personas.AutoSize = true;
@@ -196,6 +186,7 @@
             this.btn_reservar.TabIndex = 72;
             this.btn_reservar.Text = "Modificar Reserva";
             this.btn_reservar.UseVisualStyleBackColor = true;
+            this.btn_reservar.Click += new System.EventHandler(this.btn_reservar_Click);
             // 
             // lbl_precio
             // 
@@ -422,7 +413,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cbox_disponibles);
             this.Controls.Add(this.lbl_error_carga_hotel);
-            this.Controls.Add(this.btn_cargar_opciones);
             this.Controls.Add(this.lbl_error_personas);
             this.Controls.Add(this.txtbox_personas);
             this.Controls.Add(this.lbl_error_fecha);
@@ -461,7 +451,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbox_disponibles;
         private System.Windows.Forms.Label lbl_error_carga_hotel;
-        private System.Windows.Forms.Button btn_cargar_opciones;
         private System.Windows.Forms.Label lbl_error_personas;
         private System.Windows.Forms.TextBox txtbox_personas;
         private System.Windows.Forms.Label lbl_error_fecha;

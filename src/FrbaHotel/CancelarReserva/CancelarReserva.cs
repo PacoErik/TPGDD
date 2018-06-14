@@ -83,7 +83,7 @@ namespace FrbaHotel.CancelarReserva
                 }
                 else
                 {
-                    TimeSpan dias_para_reserva = DateTime.Today - Convert.ToDateTime(reserva.Rows[0]["rese_inicio"]);
+                    TimeSpan dias_para_reserva = Convert.ToDateTime(Main.fecha()) - Convert.ToDateTime(reserva.Rows[0]["rese_inicio"]);
                     if (dias_para_reserva.Days <= 1)
                     {
                         lbl_error.Text = "No se puede cancelar a menos de un dia";
@@ -127,7 +127,7 @@ namespace FrbaHotel.CancelarReserva
                     command = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.CancelacionReserva (canc_reserva, canc_motivo, canc_fechaDeCancelacion, canc_usuario) VALUES (@reserva, @motivo, @fecha, @user)");
                     command.Parameters.AddWithValue("@reserva", Convert.ToInt32(codigo));
                     command.Parameters.AddWithValue("@motivo", txtbox_motivo.Text);
-                    command.Parameters.AddWithValue("@fecha", DateTime.Today);
+                    command.Parameters.AddWithValue("@fecha", Convert.ToDateTime(Main.fecha()));
                     command.Parameters.AddWithValue("@user", usuario);
                     UtilesSQL.ejecutarComandoNonQuery(command);
 
