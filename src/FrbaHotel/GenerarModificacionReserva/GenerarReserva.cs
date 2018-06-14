@@ -158,7 +158,6 @@ namespace FrbaHotel.GenerarModificacionReserva
             regimenes = new DataTable();
             UtilesSQL.llenarTabla(regimenes, "SELECT * FROM DERROCHADORES_DE_PAPEL.RegimenXHotel as rh JOIN DERROCHADORES_DE_PAPEL.Regimen as r ON ( rh.rexh_regimen = r.regi_codigo AND rh.rexh_hotel = " + reserva.hotel.ID.ToString() + ")");
             cbox_regimenes.Items.Clear();
-            cbox_regimenes.Items.Insert(0, "<No seleccionado>");
             for (int indice = 0; indice < regimenes.Rows.Count - 1; indice++)
             {
                 cbox_regimenes.Items.Add(regimenes.Rows[indice]["regi_descripcion"].ToString());
@@ -170,20 +169,9 @@ namespace FrbaHotel.GenerarModificacionReserva
         {
             int indice_regimen_seleccionado = cbox_regimenes.SelectedIndex;
             string precio_base = String.Empty;
-            if (cbox_regimenes.SelectedIndex == 0)
-            {
-                precio_base = regimenes.Rows[1]["regi_precioBase"].ToString();
-                lbl_precio_base.Text = precio_base;
-                reserva.precio_base = Convert.ToDouble(precio_base);
-                reserva.regimen_seleccionado = false;
-            }
-            else
-            {
-                precio_base = regimenes.Rows[indice_regimen_seleccionado]["regi_precioBase"].ToString();
-                lbl_precio_base.Text = precio_base;
-                reserva.precio_base = Convert.ToDouble(precio_base);
-                reserva.regimen_seleccionado = true;
-            }
+            precio_base = regimenes.Rows[indice_regimen_seleccionado]["regi_precioBase"].ToString();
+            lbl_precio_base.Text = precio_base;
+            reserva.precio_base = Convert.ToDouble(precio_base);
         }
 
         private bool CargarHabitaciones()
@@ -198,9 +186,10 @@ namespace FrbaHotel.GenerarModificacionReserva
             }
             else
             {
-                habitaciones = new DataTable();
+                habitaciones.Clear();
                 string consulta = "SELECT h1.habi_numero, h1.habi_piso, th1.tipo_cantidadDePersonas, th1.tipo_descripcion FROM  DERROCHADORES_DE_PAPEL.TipoDeHabitacion as th1 JOIN DERROCHADORES_DE_PAPEL.Habitacion as h1 ON (th1.tipo_codigo = h1.habi_tipo) WHERE h1.habi_hotel = '" + reserva.hotel.ID + "' AND NOT (EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.Habitacion as h2 JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion as rh2 ON ( rh2.rexh_hotel = h2.habi_hotel AND rh2.rexh_numero = h2.habi_numero AND rh2.rexh_piso = h2.habi_piso) JOIN DERROCHADORES_DE_PAPEL.Reserva as r2 ON (r2.rese_codigo = rh2.rexh_reserva) JOIN DERROCHADORES_DE_PAPEL.EstadoDeReserva as er2 ON (er2.esta_id = r2.rese_estado) WHERE h2.habi_hotel = h1.habi_hotel AND h2.habi_numero = h1.habi_numero AND h2.habi_piso = h1.habi_piso AND ( ((r2.rese_inicio BETWEEN '" + reserva.fecha_desde + "' AND '" + reserva.fecha_hasta + "') OR (r2.rese_fin BETWEEN '" + reserva.fecha_desde + "' AND '" + reserva.fecha_hasta + "') OR (r2.rese_fin <= '" + reserva.fecha_desde + "' AND r2.rese_fin >= '" + reserva.fecha_hasta + "') ) AND (NOT ( (esta_detalle = 'RESERVA CANCELADA POR RECEPCION') OR (esta_detalle = 'RESERVA CANCELADA POR CLIENTE' ) OR (esta_detalle = 'RESERVA CANCELADA POR NO-SHOW')) ) ) ) )";
                 UtilesSQL.llenarTabla(habitaciones, consulta);
+                habitaciones_disponibles.Clear();
                 for (int indice = 0; indice < habitaciones.Rows.Count; indice++)
                 {
                     Habitacion habitacion = new Habitacion();
@@ -267,7 +256,7 @@ namespace FrbaHotel.GenerarModificacionReserva
             lbl_falta_habitaciones_2.Visible = lbl_falta_habitaciones_1.Visible = !reserva.CapacidadSuficiente();
         }
 
-        void HabilitarRegistroCliente()
+        private void HabilitarRegistroCliente()
         {
             cbox_tipo_identificacion.Enabled = true;
             txtbox_identificacion.Enabled = true;
@@ -279,8 +268,10 @@ namespace FrbaHotel.GenerarModificacionReserva
         private void CargarTipoIdentificacion()
         {
             identificaciones = new DataTable();
-            UtilesSQL.llenarTabla(identificaciones, "SELECT * FROM DERROCHADORES_DE_PAPEL.Documento");
             cbox_tipo_identificacion.Items.Clear();
+
+            UtilesSQL.llenarTabla(identificaciones, "SELECT * FROM DERROCHADORES_DE_PAPEL.Documento");
+
             for (int indice = 0; indice < identificaciones.Rows.Count; indice++)
             {
                 cbox_tipo_identificacion.Items.Add(identificaciones.Rows[indice]["docu_detalle"]);
@@ -332,7 +323,7 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         private void AltaReserva()
         {
-            command = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Reserva (rese_cliente, rese_cantidadDeNoches, rese_estado, rese_fecha, rese_inicio, rese_fin, rese_hotel, rese_regimen, rese_usuario) VALUES (@clie, @noches, @estado, @fecha, @incio, @fin, @hotel, @regimen ,@user) SELECT SCOPE_IDENTITY()");
+            command = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Reserva (rese_cliente, rese_cantidadDeNoches, rese_estado, rese_fecha, rese_inicio, rese_fin, rese_hotel, rese_regimen, rese_usuario, rese_cantidadDePersonas) VALUES (@clie, @noches, @estado, @fecha, @incio, @fin, @hotel, @regimen ,@user, @personas) SELECT SCOPE_IDENTITY()");
             command.Parameters.AddWithValue("@clie", reserva.cliente);
             command.Parameters.AddWithValue("@noches", reserva.cantidad_de_noches );
             command.Parameters.AddWithValue("@estado", CargarEstadosDeReserva("RESERVA CORRECTA") );
@@ -340,15 +331,10 @@ namespace FrbaHotel.GenerarModificacionReserva
             command.Parameters.AddWithValue("@incio", reserva.fecha_desde);
             command.Parameters.AddWithValue("@fin", reserva.fecha_hasta);
             command.Parameters.AddWithValue("@hotel", reserva.hotel.ID);
-            if (reserva.regimen_seleccionado)
-            {
-                command.Parameters.AddWithValue("@regimen", reserva.regimen_seleccionado);
-            }
-            else
-            {
-                command.Parameters.AddWithValue("@regimen", DBNull.Value);
-            }
+            command.Parameters.AddWithValue("@regimen", reserva.regimen_seleccionado);
             command.Parameters.AddWithValue("@user", reserva.usuario);
+            command.Parameters.AddWithValue("@cantidad", reserva.personas);
+
             reserva.codigo = Convert.ToInt32(command.ExecuteScalar());
 
             for (int indice = 0; indice < reserva.habitaciones_reservadas.Count; indice++)

@@ -35,16 +35,9 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         private void modificacion_Click(object sender, EventArgs e)
         {
-            //Form modificacion;
-            //if (es_guest)
-            //{
-            //    modificacion = new GenerarReserva();
-            //}
-            //else
-            //{
-            //    modificacion = new GenerarReserva(id_usuario, Convert.ToInt32(id_hotel));
-            //}
+            Form modificacion = new ModificarReserva(id_usuario, id_hotel);
             this.Hide();
+            modificacion.ShowDialog();
             this.Show();
         }
 

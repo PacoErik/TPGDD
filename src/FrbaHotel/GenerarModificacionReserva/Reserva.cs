@@ -16,7 +16,7 @@ namespace FrbaHotel.GenerarModificacionReserva
         public Hotel hotel = new Hotel();
         public List<Habitacion> habitaciones_reservadas = new List<Habitacion>();
         public double precio;
-        public bool regimen_seleccionado = false;
+        public int regimen_seleccionado;
         public double precio_base;
         public int cliente;
         public int usuario;
