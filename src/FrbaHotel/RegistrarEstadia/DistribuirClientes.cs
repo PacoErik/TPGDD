@@ -14,7 +14,7 @@ namespace FrbaHotel.RegistrarEstadia
     {
         public bool correcto = false;
         private DataTable clientes_dt;
-        private DataTable distribucion_dt;
+        public DataTable distribucion_dt;
         private DataTable habitaciones_dt;
 
         private String reserva;
@@ -36,6 +36,7 @@ namespace FrbaHotel.RegistrarEstadia
             distribucion_dt.Columns.Add("Nombre");
             distribucion_dt.Columns.Add("Habitación");
             distribucion_dt.Columns.Add("Piso");
+            distribucion.DataSource = distribucion_dt;
 
             habitaciones_dt = new DataTable();
             UtilesSQL.llenarTabla(habitaciones_dt, "SELECT rexh_numero Número, rexh_piso Piso, tipo_cantidadDePersonas Cantidad FROM DERROCHADORES_DE_PAPEL.ReservaXHabitacion JOIN DERROCHADORES_DE_PAPEL.Habitacion ON rexh_hotel = habi_hotel AND rexh_numero = habi_numero AND rexh_piso = habi_piso JOIN DERROCHADORES_DE_PAPEL.TipoDeHabitacion ON tipo_codigo = habi_tipo WHERE rexh_reserva = "+reserva+" AND rexh_hotel = "+Login.SeleccionFuncionalidad.getHotelId());
@@ -64,6 +65,10 @@ namespace FrbaHotel.RegistrarEstadia
             {
                 correcto = true;
                 this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Todavía no fueron asignados todos los clientes");
             }
         }
 

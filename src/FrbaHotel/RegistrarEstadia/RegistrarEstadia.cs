@@ -118,7 +118,7 @@ namespace FrbaHotel.RegistrarEstadia
                     return;
                 }
 
-                DataTable distribucionClientes_dt = new DataTable();
+                DataTable distribucionClientes_dt;
 
                 //Cargamos y distribuimos los clientes en caso de que sean más que uno
                 //Si es solo 1, se asume que solo tiene una habitación reservada y se lo asigna a ella
@@ -129,9 +129,9 @@ namespace FrbaHotel.RegistrarEstadia
                     ElegirClientes elegirClientes = new ElegirClientes(cliente_id, cliente_apellido, cliente_nombre, cliente_mail, reserva.Text, cantidad_personas);
                     elegirClientes.ShowDialog();
                     this.Show();
-                    if (elegirClientes.correcto)
+                    if (elegirClientes.esCorrecto())
                     {
-                        distribucionClientes_dt = elegirClientes.distribucionClientes_dt;
+                        distribucionClientes_dt = elegirClientes.getDistribucionClientes_dt().Copy();
                     }
                     else
                     {
@@ -142,7 +142,7 @@ namespace FrbaHotel.RegistrarEstadia
                 else 
                 {
                     distribucionClientes_dt = new DataTable();
-                    UtilesSQL.llenarTabla(distribucionClientes_dt, "SELECT rese_cliente, rexh_hotel, rexh_numero, rexh_piso FROM DERROCHADORES_DE_PAPEL.Reserva JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion ON rexh_reserva = rese_codigo WHERE rese_codigo = " + reserva.Text);
+                    UtilesSQL.llenarTabla(distribucionClientes_dt, "SELECT rese_cliente, NULL, NULL, rexh_numero, rexh_piso FROM DERROCHADORES_DE_PAPEL.Reserva JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion ON rexh_reserva = rese_codigo WHERE rese_codigo = " + reserva.Text);
                 }
 
                 //Se efectiviza la reserva
@@ -159,16 +159,15 @@ namespace FrbaHotel.RegistrarEstadia
 
                 comando = UtilesSQL.crearCommand("SELECT esta_id FROM DERROCHADORES_DE_PAPEL.Estadia WHERE esta_reserva = " + reserva.Text);
                 String estadia_id = comando.ExecuteScalar().ToString();
-
-                MessageBox.Show(estadia_id);
-
+                
                 //Se asignan los clientes a la estadía
                 foreach (DataRow cliente in distribucionClientes_dt.Rows)
                 {
-                    UtilesSQL.ejecutarComandoNonQuery("INSERT INTO DERROCHADORES_DE_PAPEL.EstadiaXCliente (esxc_estadia, esxc_cliente, esxc_hotel, esxc_numero, esxc_piso) VALUES ("+estadia_id+","+cliente[0].ToString()+","+Login.SeleccionFuncionalidad.getHotelId()+","+cliente[1].ToString()+","+cliente[2].ToString()+")");
+                    UtilesSQL.ejecutarComandoNonQuery("INSERT INTO DERROCHADORES_DE_PAPEL.EstadiaXCliente (esxc_estadia, esxc_cliente, esxc_hotel, esxc_numero, esxc_piso) VALUES ("+estadia_id+","+cliente[0].ToString()+","+Login.SeleccionFuncionalidad.getHotelId()+","+cliente[3].ToString()+","+cliente[4].ToString()+")");
                 }
 
                 //Se actualiza la reserva en pantalla
+                MessageBox.Show("El check-in se realizó con éxito");
                 estado.Text = "RESERVA EFECTIVIZADA";
             }
             else if (estado.Text.Equals("RESERVA EFECTIVIZADA"))

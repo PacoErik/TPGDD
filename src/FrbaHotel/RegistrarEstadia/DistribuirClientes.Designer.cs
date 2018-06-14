@@ -65,13 +65,13 @@
             this.clientes.Location = new System.Drawing.Point(26, 70);
             this.clientes.Name = "clientes";
             this.clientes.ReadOnly = true;
-            this.clientes.Size = new System.Drawing.Size(262, 150);
+            this.clientes.Size = new System.Drawing.Size(332, 150);
             this.clientes.TabIndex = 2;
             this.clientes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // asignar
             // 
-            this.asignar.Location = new System.Drawing.Point(294, 134);
+            this.asignar.Location = new System.Drawing.Point(364, 129);
             this.asignar.Name = "asignar";
             this.asignar.Size = new System.Drawing.Size(75, 23);
             this.asignar.TabIndex = 3;
@@ -84,10 +84,10 @@
             this.distribucion.AllowUserToAddRows = false;
             this.distribucion.AllowUserToDeleteRows = false;
             this.distribucion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.distribucion.Location = new System.Drawing.Point(375, 70);
+            this.distribucion.Location = new System.Drawing.Point(445, 70);
             this.distribucion.Name = "distribucion";
             this.distribucion.ReadOnly = true;
-            this.distribucion.Size = new System.Drawing.Size(356, 150);
+            this.distribucion.Size = new System.Drawing.Size(480, 150);
             this.distribucion.TabIndex = 4;
             // 
             // volver
@@ -114,7 +114,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(743, 272);
+            this.ClientSize = new System.Drawing.Size(937, 272);
             this.Controls.Add(this.finalizar);
             this.Controls.Add(this.volver);
             this.Controls.Add(this.distribucion);

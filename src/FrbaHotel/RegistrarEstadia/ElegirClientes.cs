@@ -12,8 +12,8 @@ namespace FrbaHotel.RegistrarEstadia
 {
     public partial class ElegirClientes : Form
     {
-        public bool correcto { get; set; }
-        public DataTable distribucionClientes_dt { get; set; }
+        public bool correcto = false;
+        public DataTable distribucionClientes_dt;
 
         String cliente_id;
         String cliente_apellido;
@@ -59,7 +59,7 @@ namespace FrbaHotel.RegistrarEstadia
                 distribucion.ShowDialog();
                 if (distribucion.esCorrecto())
                 {
-                    distribucionClientes_dt = distribucion.distribucionClientes();
+                    distribucionClientes_dt = distribucion.distribucionClientes().Copy();
                     correcto = true;
                     this.Close();
                 }
@@ -89,7 +89,14 @@ namespace FrbaHotel.RegistrarEstadia
                 elegir.ShowDialog();
                 if (elegir.estaElegido())
                 {
-                    clientes_dt.Rows.Add(elegir.id(), elegir.apellido(), elegir.nombre(), elegir.mail());
+                    if (yaExisteCliente(elegir.id()))
+                    {
+                        MessageBox.Show("Ese cliente ya fue agregado previamente");
+                    }
+                    else
+                    {
+                        clientes_dt.Rows.Add(elegir.id(), elegir.apellido(), elegir.nombre(), elegir.mail());
+                    }
                 }
                 this.Show();
             }
@@ -98,6 +105,28 @@ namespace FrbaHotel.RegistrarEstadia
                 MessageBox.Show("Ya no se pueden agregar más personas");
             }
 
+        }
+
+        public bool esCorrecto()
+        {
+            return correcto;
+        }
+
+        public DataTable getDistribucionClientes_dt()
+        {
+            return distribucionClientes_dt;
+        }
+
+        private bool yaExisteCliente(String id)
+        {
+            foreach (DataRow cliente in clientes_dt.Rows)
+            {
+                if (cliente[0].ToString().Equals(id))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
