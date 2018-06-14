@@ -387,7 +387,7 @@ namespace FrbaHotel.AbmHotel
         {
             SqlDataAdapter sda = UtilesSQL.crearDataAdapter("SELECT * FROM DERROCHADORES_DE_PAPEL.Estadia AS e JOIN DERROCHADORES_DE_PAPEL.Reserva AS r ON r.rese_codigo = e.esta_reserva WHERE e.esta_fechaDeFin > @fecha AND r.rese_fin > @fecha AND r.rese_regimen = @reg AND r.rese_hotel = @hotel");
             sda.SelectCommand.Parameters.AddWithValue("@reg", reg);
-            sda.SelectCommand.Parameters.AddWithValue("@fecha", DateTime.Today);
+            sda.SelectCommand.Parameters.AddWithValue("@fecha", Convert.ToDateTime(Main.fecha()));
             sda.SelectCommand.Parameters.AddWithValue("@hotel", Int32.Parse(dtH.Rows[0][0].ToString()));
             DataTable dt = new DataTable();
             sda.Fill(dt);

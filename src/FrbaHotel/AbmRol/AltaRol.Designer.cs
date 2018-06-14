@@ -37,6 +37,7 @@
             this.elegidas = new System.Windows.Forms.ComboBox();
             this.limpiar = new System.Windows.Forms.Button();
             this.aceptar = new System.Windows.Forms.Button();
+            this.buttonCancelar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -108,7 +109,7 @@
             // 
             // limpiar
             // 
-            this.limpiar.Location = new System.Drawing.Point(98, 226);
+            this.limpiar.Location = new System.Drawing.Point(107, 226);
             this.limpiar.Name = "limpiar";
             this.limpiar.Size = new System.Drawing.Size(75, 23);
             this.limpiar.TabIndex = 7;
@@ -126,11 +127,22 @@
             this.aceptar.UseVisualStyleBackColor = true;
             this.aceptar.Click += new System.EventHandler(this.aceptar_Click);
             // 
+            // buttonCancelar
+            // 
+            this.buttonCancelar.Location = new System.Drawing.Point(12, 226);
+            this.buttonCancelar.Name = "buttonCancelar";
+            this.buttonCancelar.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancelar.TabIndex = 9;
+            this.buttonCancelar.Text = "Cancelar";
+            this.buttonCancelar.UseVisualStyleBackColor = true;
+            this.buttonCancelar.Click += new System.EventHandler(this.buttonCancelar_Click);
+            // 
             // AltaRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.buttonCancelar);
             this.Controls.Add(this.aceptar);
             this.Controls.Add(this.limpiar);
             this.Controls.Add(this.elegidas);
@@ -158,5 +170,6 @@
         private System.Windows.Forms.ComboBox elegidas;
         private System.Windows.Forms.Button limpiar;
         private System.Windows.Forms.Button aceptar;
+        private System.Windows.Forms.Button buttonCancelar;
     }
 }

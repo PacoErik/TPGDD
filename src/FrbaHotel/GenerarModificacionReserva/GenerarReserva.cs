@@ -35,14 +35,15 @@ namespace FrbaHotel.GenerarModificacionReserva
             reserva.usuario = id_usuario;
             reserva.hotel.ID = Convert.ToInt32(id_hotel);
             btn_cargar_opciones.Text = "Cargar opciones";
-            reserva.fecha_que_se_realizo_reserva = DateTime.Today;
-            reserva.fecha_desde = DateTime.Today;
-            reserva.fecha_hasta = DateTime.Today;
-            date_desde.MinDate = DateTime.Today;
-            date_hasta.MinDate = DateTime.Today;
+            reserva.fecha_que_se_realizo_reserva = Convert.ToDateTime(Main.fecha());
+            reserva.fecha_desde = Convert.ToDateTime(Main.fecha());
+            reserva.fecha_hasta = Convert.ToDateTime(Main.fecha());
+            date_desde.Value = date_desde.MinDate = Convert.ToDateTime(Main.fecha());
+            date_hasta.Value = date_hasta.MinDate = Convert.ToDateTime(Main.fecha());
             lbl_error_fecha.Visible = false;
             lbl_error_personas.Visible = false;
             lbl_error_carga_hotel.Visible = false;
+            lbl_cliente_inhabilitado.Visible = false;
             reserva.personas = 0;
             //Inicializaciones
             cbox_regimenes.Enabled = false;
@@ -93,7 +94,7 @@ namespace FrbaHotel.GenerarModificacionReserva
         private void CalcularCantidadNoches()
         {
             TimeSpan dias = reserva.fecha_hasta - reserva.fecha_desde;
-            reserva.cantidad_de_noches = dias.Days;
+            reserva.cantidad_de_noches = dias.Duration().Days;
             lbl_noches.Text = reserva.cantidad_de_noches.ToString();
             lbl_error_fecha.Visible = reserva.cantidad_de_noches < 1;
         }
@@ -172,6 +173,7 @@ namespace FrbaHotel.GenerarModificacionReserva
             precio_base = regimenes.Rows[indice_regimen_seleccionado]["regi_precioBase"].ToString();
             lbl_precio_base.Text = precio_base;
             reserva.precio_base = Convert.ToDouble(precio_base);
+            reserva.regimen_seleccionado = Convert.ToInt32(regimenes.Rows[indice_regimen_seleccionado]["regi_codigo"]);
         }
 
         private bool CargarHabitaciones()
@@ -309,8 +311,24 @@ namespace FrbaHotel.GenerarModificacionReserva
         bool EsCliente()
         {
             clientes = new DataTable();
-            UtilesSQL.llenarTabla(clientes, "SELECT * FROM DERROCHADORES_DE_PAPEL.Cliente as c WHERE c.clie_mail = '" + txtbox_mail.Text.ToString() + "'");
-            return clientes.Rows.Count != 0;
+            UtilesSQL.llenarTabla(clientes, "SELECT * FROM DERROCHADORES_DE_PAPEL.Cliente as c WHERE c.clie_mail = '" + txtbox_mail.Text + "' and c.clie_tipoDeDocumento = '" + cbox_tipo_identificacion.SelectedIndex + "' and c.clie_numeroDeDocumento = '" + txtbox_identificacion.Text +"'" );
+
+            if(clientes.Rows.Count != 0)
+            {
+                return false;
+            }
+            else
+            {
+                if (Convert.ToInt32(clientes.Rows[0]["clie_habilitado"]) != 1)
+                {
+                    lbl_cliente_inhabilitado.Visible = true;
+                    return false;
+                }
+                else {
+                    return true;
+                }
+
+            }
         }
 
         private void RegistrarCliente()

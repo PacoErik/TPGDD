@@ -37,7 +37,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cbox_disponibles = new System.Windows.Forms.ComboBox();
             this.lbl_error_carga_hotel = new System.Windows.Forms.Label();
-            this.btn_cargar_opciones = new System.Windows.Forms.Button();
             this.lbl_error_personas = new System.Windows.Forms.Label();
             this.txtbox_personas = new System.Windows.Forms.TextBox();
             this.lbl_error_fecha = new System.Windows.Forms.Label();
@@ -95,6 +94,7 @@
             this.btn_eliminar_habitacion.TabIndex = 83;
             this.btn_eliminar_habitacion.Text = "Eliminar";
             this.btn_eliminar_habitacion.UseVisualStyleBackColor = true;
+            this.btn_eliminar_habitacion.Click += new System.EventHandler(this.btn_eliminar_habitacion_Click_1);
             // 
             // btn_agregar_habitacion
             // 
@@ -104,6 +104,7 @@
             this.btn_agregar_habitacion.TabIndex = 82;
             this.btn_agregar_habitacion.Text = "Agregar";
             this.btn_agregar_habitacion.UseVisualStyleBackColor = true;
+            this.btn_agregar_habitacion.Click += new System.EventHandler(this.btn_agregar_habitacion_Click_1);
             // 
             // label7
             // 
@@ -149,16 +150,6 @@
             this.lbl_error_carga_hotel.TabIndex = 77;
             this.lbl_error_carga_hotel.Text = "FALTAN DATOS";
             // 
-            // btn_cargar_opciones
-            // 
-            this.btn_cargar_opciones.Location = new System.Drawing.Point(382, 225);
-            this.btn_cargar_opciones.Name = "btn_cargar_opciones";
-            this.btn_cargar_opciones.Size = new System.Drawing.Size(116, 23);
-            this.btn_cargar_opciones.TabIndex = 76;
-            this.btn_cargar_opciones.Text = "Cargar opciones";
-            this.btn_cargar_opciones.UseVisualStyleBackColor = true;
-            //this.btn_cargar_opciones.Click += new System.EventHandler(this.btn_cargar_opciones_Click);
-            // 
             // lbl_error_personas
             // 
             this.lbl_error_personas.AutoSize = true;
@@ -175,6 +166,7 @@
             this.txtbox_personas.Name = "txtbox_personas";
             this.txtbox_personas.Size = new System.Drawing.Size(84, 20);
             this.txtbox_personas.TabIndex = 74;
+            this.txtbox_personas.TextChanged += new System.EventHandler(this.txtbox_personas_TextChanged_1);
             // 
             // lbl_error_fecha
             // 
@@ -194,6 +186,7 @@
             this.btn_reservar.TabIndex = 72;
             this.btn_reservar.Text = "Modificar Reserva";
             this.btn_reservar.UseVisualStyleBackColor = true;
+            this.btn_reservar.Click += new System.EventHandler(this.btn_reservar_Click);
             // 
             // lbl_precio
             // 
@@ -221,6 +214,7 @@
             this.atras_Button.TabIndex = 63;
             this.atras_Button.Text = "Atras";
             this.atras_Button.UseVisualStyleBackColor = true;
+            this.atras_Button.Click += new System.EventHandler(this.atras_Button_Click);
             // 
             // lbl_noches
             // 
@@ -301,6 +295,7 @@
             this.cbox_regimenes.Name = "cbox_regimenes";
             this.cbox_regimenes.Size = new System.Drawing.Size(197, 21);
             this.cbox_regimenes.TabIndex = 54;
+            this.cbox_regimenes.SelectedIndexChanged += new System.EventHandler(this.cbox_regimenes_SelectedIndexChanged);
             // 
             // date_hasta
             // 
@@ -308,6 +303,7 @@
             this.date_hasta.Name = "date_hasta";
             this.date_hasta.Size = new System.Drawing.Size(200, 20);
             this.date_hasta.TabIndex = 53;
+            this.date_hasta.ValueChanged += new System.EventHandler(this.date_hasta_ValueChanged_1);
             // 
             // label3
             // 
@@ -333,6 +329,7 @@
             this.date_desde.Name = "date_desde";
             this.date_desde.Size = new System.Drawing.Size(200, 20);
             this.date_desde.TabIndex = 50;
+            this.date_desde.ValueChanged += new System.EventHandler(this.date_desde_ValueChanged_1);
             // 
             // label9
             // 
@@ -417,7 +414,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cbox_disponibles);
             this.Controls.Add(this.lbl_error_carga_hotel);
-            this.Controls.Add(this.btn_cargar_opciones);
             this.Controls.Add(this.lbl_error_personas);
             this.Controls.Add(this.txtbox_personas);
             this.Controls.Add(this.lbl_error_fecha);
@@ -456,7 +452,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbox_disponibles;
         private System.Windows.Forms.Label lbl_error_carga_hotel;
-        private System.Windows.Forms.Button btn_cargar_opciones;
         private System.Windows.Forms.Label lbl_error_personas;
         private System.Windows.Forms.TextBox txtbox_personas;
         private System.Windows.Forms.Label lbl_error_fecha;

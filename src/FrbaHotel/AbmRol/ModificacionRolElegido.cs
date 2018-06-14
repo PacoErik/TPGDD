@@ -176,5 +176,10 @@ namespace FrbaHotel.AbmRol
                 actuales_dt.Rows.Remove(funcionalidad);
             }
         }
+
+        private void buttonCancelar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

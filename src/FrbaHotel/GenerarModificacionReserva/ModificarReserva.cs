@@ -37,14 +37,14 @@ namespace FrbaHotel.GenerarModificacionReserva
             UtilesSQL.inicializar();
             usuario = userId;
             hotel = Convert.ToInt32(hotelId);
-            reserva.cliente = userId;
+            //reserva.cliente = userId;
             reserva.hotel.ID = Convert.ToInt32(hotelId);
             lbl_error.Visible = false;
             lbl_cargado_correcto.Visible = false;
             CargarEstadosReserva();
 
-            date_desde.MinDate = DateTime.Today;
-            date_hasta.MinDate = DateTime.Today;
+            date_desde.MinDate = Convert.ToDateTime(Main.fecha());
+            date_hasta.MinDate = Convert.ToDateTime(Main.fecha());
             date_desde.Enabled = false;
             date_desde.Enabled = false;
             lbl_error_fecha.Visible = false;
@@ -68,7 +68,7 @@ namespace FrbaHotel.GenerarModificacionReserva
             btn_reservar.Enabled = false;
             lbl_precio.Visible = false;
             txtbox_personas.Enabled = false;
-            btn_cargar_opciones.Enabled = false;
+            //btn_cargar_opciones.Enabled = false;
             //Inicializacion de intefaz
             lbl_noches.Text = lbl_precio_base.Text = lbl_recarga_estrellas.Text = String.Empty;
             //Cambio de estructura
@@ -114,8 +114,8 @@ namespace FrbaHotel.GenerarModificacionReserva
                 }
                 else
                 {
-                    TimeSpan dias_para_reserva = Convert.ToDateTime(tabla_reserva.Rows[0]["rese_inicio"]) - DateTime.Today;
-                    if (dias_para_reserva.Days <= 1)
+                    TimeSpan dias_para_reserva = Convert.ToDateTime(tabla_reserva.Rows[0]["rese_inicio"]) - Convert.ToDateTime(Main.fecha());
+                    if (dias_para_reserva.Duration().Days <= 1)
                     {
                         if (dias_para_reserva.Days < 0)
                         {
@@ -145,8 +145,8 @@ namespace FrbaHotel.GenerarModificacionReserva
                             btn_eliminar_habitacion.Enabled = true;
                             btn_reservar.Enabled = true;
                             lbl_precio.Visible = true;
+                            lbl_precio.Enabled = true;
                             txtbox_personas.Enabled = true;
-                            btn_cargar_opciones.Enabled = true;
 
                             reserva.codigo = Convert.ToInt32(txtbox_reserva.Text);
                             reserva.cantidad_de_noches = Convert.ToInt32(tabla_reserva.Rows[0]["rese_cantidadDeNoches"]);
@@ -157,7 +157,7 @@ namespace FrbaHotel.GenerarModificacionReserva
                             reserva.hotel.ID = Convert.ToInt32(tabla_reserva.Rows[0]["rese_hotel"]);
                             reserva.regimen_seleccionado = Convert.ToInt32(tabla_reserva.Rows[0]["rese_regimen"]);
                             reserva.personas = Convert.ToInt32(tabla_reserva.Rows[0]["rese_cantidadDePersonas"]);
-                            
+
                             DataTable habitaciones_reservadas = new DataTable();
                             UtilesSQL.llenarTabla(habitaciones_reservadas, "SELECT * FROM DERROCHADORES_DE_PAPEL.Habitacion JOIN DERROCHADORES_DE_PAPEL.TipoDeHabitacion ON (habi_tipo = tipo_codigo) JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion ON (habi_hotel = rexh_hotel AND habi_piso = rexh_piso AND habi_numero = rexh_numero) WHERE rexh_reserva = '" + reserva.codigo + "'");
 
@@ -181,6 +181,17 @@ namespace FrbaHotel.GenerarModificacionReserva
 
                             CargarHabitaciones();
                             CargarRegimenes();
+
+                            DataTable reg_seleccionado = new DataTable();
+                            UtilesSQL.llenarTabla(reg_seleccionado, "select * from DERROCHADORES_DE_PAPEL.Regimen where regi_codigo = '"+ reserva.regimen_seleccionado +"'");
+                            reserva.precio_base = Convert.ToDouble(reg_seleccionado.Rows[0]["regi_precioBase"]);
+
+                            UtilesSQL.llenarTabla(hoteles, "SELECT * FROM DERROCHADORES_DE_PAPEL.Hotel WHERE hote_id = '" + reserva.hotel.ID + "'");
+
+                            reserva.hotel.recarga_estrellas = Convert.ToDouble(hoteles.Rows[0]["hote_recargaEstrella"]);
+
+                            CalcularCantidadNoches();
+                            CalcularPrecio();
                         }
                         else
                         {
@@ -212,17 +223,6 @@ namespace FrbaHotel.GenerarModificacionReserva
             lbl_recarga_estrellas.Text = reserva.hotel.recarga_estrellas.ToString();
         }
 
-        private void date_desde_ValueChanged(object sender, EventArgs e)
-        {
-            reserva.fecha_desde = date_desde.Value;
-            VerificarFechasCorrectas();
-        }
-
-        private void date_hasta_ValueChanged(object sender, EventArgs e)
-        {
-            reserva.fecha_hasta = date_hasta.Value;
-            VerificarFechasCorrectas();
-        }
 
         private void VerificarFechasCorrectas()
         {
@@ -236,26 +236,10 @@ namespace FrbaHotel.GenerarModificacionReserva
         private void CalcularCantidadNoches()
         {
             TimeSpan dias = reserva.fecha_hasta - reserva.fecha_desde;
-            reserva.cantidad_de_noches = dias.Days;
+            reserva.cantidad_de_noches = dias.Duration().Days;
             lbl_noches.Text = reserva.cantidad_de_noches.ToString();
             lbl_error_fecha.Visible = reserva.cantidad_de_noches < 1;
-        }
-
-        private void txtbox_personas_TextChanged(object sender, EventArgs e)
-        {
-            string entrada = txtbox_personas.Text;
-            if (entrada.Length > 0)
-            {
-                if (CantidadValida(entrada))
-                {
-                    reserva.personas = Convert.ToInt32(entrada);
-                    lbl_error_personas.Visible = false;
-                }
-                else
-                {
-                    lbl_error_personas.Visible = true;
-                }
-            }
+            CalcularPrecio();
         }
 
         private bool CantidadValida(string texto)
@@ -344,6 +328,25 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         }
 
+        private void txtbox_personas_TextChanged_1(object sender, EventArgs e)
+        {
+            string entrada = txtbox_personas.Text;
+            if (entrada.Length > 0)
+            {
+                if (CantidadValida(entrada))
+                {
+                    reserva.personas = Convert.ToInt32(entrada);
+                    lbl_error_personas.Visible = false;
+                    //CalcularPrecio();
+                }
+                else
+                {
+                    lbl_error_personas.Visible = true;
+                }
+            }
+            
+        }
+
         private void cbox_regimenes_SelectedIndexChanged(object sender, EventArgs e)
         {
             int indice_regimen_seleccionado = cbox_regimenes.SelectedIndex;
@@ -351,9 +354,10 @@ namespace FrbaHotel.GenerarModificacionReserva
             precio_base = regimenes.Rows[indice_regimen_seleccionado]["regi_precioBase"].ToString();
             lbl_precio_base.Text = precio_base;
             reserva.precio_base = Convert.ToDouble(precio_base);
+            CalcularPrecio();
         }
 
-        private void btn_agregar_habitacion_Click(object sender, EventArgs e)
+        private void btn_agregar_habitacion_Click_1(object sender, EventArgs e)
         {
             if (cbox_disponibles.SelectedIndex != 0)
             {
@@ -363,7 +367,7 @@ namespace FrbaHotel.GenerarModificacionReserva
             }
         }
 
-        private void btn_eliminar_habitacion_Click(object sender, EventArgs e)
+        private void btn_eliminar_habitacion_Click_1(object sender, EventArgs e)
         {
             if (cbox_seleccionadas.SelectedIndex != 0)
             {
@@ -373,5 +377,67 @@ namespace FrbaHotel.GenerarModificacionReserva
             }
         }
 
+        private void date_desde_ValueChanged_1(object sender, EventArgs e)
+        {
+            reserva.fecha_desde = date_desde.Value;
+            VerificarFechasCorrectas();
+        }
+
+        private void date_hasta_ValueChanged_1(object sender, EventArgs e)
+        {
+            reserva.fecha_hasta = date_hasta.Value;
+            VerificarFechasCorrectas();
+        }
+
+        private void btn_reservar_Click(object sender, EventArgs e)
+        {
+            //ELIMINAR las reserva x habitacion que ya estan
+            command = UtilesSQL.crearCommand("DELETE FROM DERROCHADORES_DE_PAPEL.ReservaXHabitacion WHERE rexh_reserva = '" + reserva.codigo + "'");
+            UtilesSQL.ejecutarComandoNonQuery(command);
+
+            //Updatear la reserva que ya esta
+            command = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Reserva SET rese_cantidadDeNoches = @noches , rese_estado = @estado , rese_inicio = @incio, rese_fin = @fin, rese_regimen =  @regimen, rese_cantidadDePersonas = @personas WHERE rese_codigo = '"+ reserva.codigo +"'");
+            command.Parameters.AddWithValue("@noches", reserva.cantidad_de_noches );
+            command.Parameters.AddWithValue("@estado", CargarEstadosDeReserva("RESERVA MODIFICADA") );
+            command.Parameters.AddWithValue("@incio", reserva.fecha_desde);
+            command.Parameters.AddWithValue("@fin", reserva.fecha_hasta);
+            command.Parameters.AddWithValue("@hotel", reserva.hotel.ID);
+            command.Parameters.AddWithValue("@regimen", reserva.regimen_seleccionado);
+            command.Parameters.AddWithValue("@personas", reserva.personas);
+            UtilesSQL.ejecutarComandoNonQuery(command);
+
+            //PONER LAS NUEVAS RESERVAS X HABITACION
+            for (int indice = 0; indice < reserva.habitaciones_reservadas.Count; indice++)
+            {
+                command = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.ReservaXHabitacion (rexh_reserva, rexh_hotel, rexh_numero, rexh_piso) VALUES (@reserva, @hotel, @numero, @piso)");
+                command.Parameters.AddWithValue("@reserva", reserva.codigo);
+                command.Parameters.AddWithValue("@hotel", reserva.hotel.ID);
+                command.Parameters.AddWithValue("@piso", reserva.habitaciones_reservadas[indice].piso);
+                command.Parameters.AddWithValue("@numero", reserva.habitaciones_reservadas[indice].numero);
+                UtilesSQL.ejecutarComandoNonQuery(command);
+            }
+
+            //Insertar una nueva modificacion
+            command = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.ModificacionReserva (modi_reserva, modi_fechaDeModificacion, modi_usuario) VALUES (@reserva ,@fecha ,@usuario)");
+            command.Parameters.AddWithValue("@reserva", reserva.codigo);
+            command.Parameters.AddWithValue("@fecha",  Convert.ToDateTime(Main.fecha()));
+            command.Parameters.AddWithValue("@usuario", usuario);
+            UtilesSQL.ejecutarComandoNonQuery(command);
+
+            MessageBox.Show("Se modifico la reserva correctamente");
+            this.Close();
+        }
+
+        private int CargarEstadosDeReserva(string estado_buscado)
+        {
+            estados_reserva = new DataTable();
+            UtilesSQL.llenarTabla(estados_reserva, "SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = '" + estado_buscado + "'");
+            return Convert.ToInt32(estados_reserva.Rows[0]["esta_id"]);
+        }
+
+        private void atras_Button_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
