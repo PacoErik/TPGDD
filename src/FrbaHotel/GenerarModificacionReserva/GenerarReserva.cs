@@ -38,11 +38,12 @@ namespace FrbaHotel.GenerarModificacionReserva
             reserva.fecha_que_se_realizo_reserva = Convert.ToDateTime(Main.fecha());
             reserva.fecha_desde = Convert.ToDateTime(Main.fecha());
             reserva.fecha_hasta = Convert.ToDateTime(Main.fecha());
-            date_desde.MinDate = Convert.ToDateTime(Main.fecha());
-            date_hasta.MinDate = Convert.ToDateTime(Main.fecha());
+            date_desde.Value = date_desde.MinDate = Convert.ToDateTime(Main.fecha());
+            date_hasta.Value = date_hasta.MinDate = Convert.ToDateTime(Main.fecha());
             lbl_error_fecha.Visible = false;
             lbl_error_personas.Visible = false;
             lbl_error_carga_hotel.Visible = false;
+            lbl_cliente_inhabilitado.Visible = false;
             reserva.personas = 0;
             //Inicializaciones
             cbox_regimenes.Enabled = false;
@@ -309,8 +310,16 @@ namespace FrbaHotel.GenerarModificacionReserva
         bool EsCliente()
         {
             clientes = new DataTable();
-            UtilesSQL.llenarTabla(clientes, "SELECT * FROM DERROCHADORES_DE_PAPEL.Cliente as c WHERE c.clie_mail = '" + txtbox_mail.Text.ToString() + "'");
-            return clientes.Rows.Count != 0;
+            UtilesSQL.llenarTabla(clientes, "SELECT * FROM DERROCHADORES_DE_PAPEL.Cliente as c WHERE c.clie_mail = '" + txtbox_mail.Text.ToString() + "' and c.clie_tipoDeDocumento = '" + cbox_tipo_identificacion.SelectedIndex + "' and c.clie_numeroDeDocumento = '" + txtbox_identificacion +"'" );
+            if (Convert.ToInt32(clientes.Rows[0]["clie_habilitado"]) != 1)
+            {
+                lbl_cliente_inhabilitado.Visible = true;
+                return false;
+            }
+            else {
+                lbl_cliente_inhabilitado.Visible = false;
+                return clientes.Rows.Count != 0;
+            }
         }
 
         private void RegistrarCliente()

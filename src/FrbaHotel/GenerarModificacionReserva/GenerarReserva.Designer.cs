@@ -68,6 +68,7 @@
             this.lbl_falta_id = new System.Windows.Forms.Label();
             this.lbl_falta_mail = new System.Windows.Forms.Label();
             this.lbl_id_incorrecta = new System.Windows.Forms.Label();
+            this.lbl_cliente_inhabilitado = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // date_desde
@@ -434,11 +435,22 @@
             this.lbl_id_incorrecta.TabIndex = 49;
             this.lbl_id_incorrecta.Text = "Identificacion incorrecta";
             // 
+            // lbl_cliente_inhabilitado
+            // 
+            this.lbl_cliente_inhabilitado.AutoSize = true;
+            this.lbl_cliente_inhabilitado.ForeColor = System.Drawing.Color.Red;
+            this.lbl_cliente_inhabilitado.Location = new System.Drawing.Point(279, 407);
+            this.lbl_cliente_inhabilitado.Name = "lbl_cliente_inhabilitado";
+            this.lbl_cliente_inhabilitado.Size = new System.Drawing.Size(95, 13);
+            this.lbl_cliente_inhabilitado.TabIndex = 50;
+            this.lbl_cliente_inhabilitado.Text = "Falta identificacion";
+            // 
             // GenerarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(518, 474);
+            this.Controls.Add(this.lbl_cliente_inhabilitado);
             this.Controls.Add(this.lbl_id_incorrecta);
             this.Controls.Add(this.lbl_falta_mail);
             this.Controls.Add(this.lbl_falta_id);
@@ -529,5 +541,6 @@
         private System.Windows.Forms.Label lbl_falta_id;
         private System.Windows.Forms.Label lbl_falta_mail;
         private System.Windows.Forms.Label lbl_id_incorrecta;
+        private System.Windows.Forms.Label lbl_cliente_inhabilitado;
     }
 }
