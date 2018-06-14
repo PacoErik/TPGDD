@@ -38,6 +38,7 @@
             this.habilitado = new System.Windows.Forms.CheckBox();
             this.nombre = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.buttonCancelar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.funcionalidades)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.roles)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -55,7 +56,7 @@
             // 
             // limpiar
             // 
-            this.limpiar.Location = new System.Drawing.Point(48, 85);
+            this.limpiar.Location = new System.Drawing.Point(213, 84);
             this.limpiar.Name = "limpiar";
             this.limpiar.Size = new System.Drawing.Size(75, 23);
             this.limpiar.TabIndex = 13;
@@ -142,11 +143,21 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Nombre:";
             // 
+            // buttonCancelar
+            // 
+            this.buttonCancelar.Location = new System.Drawing.Point(33, 84);
+            this.buttonCancelar.Name = "buttonCancelar";
+            this.buttonCancelar.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancelar.TabIndex = 15;
+            this.buttonCancelar.Text = "Cancelar";
+            this.buttonCancelar.UseVisualStyleBackColor = true;
+            // 
             // BajaRol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(520, 332);
+            this.Controls.Add(this.buttonCancelar);
             this.Controls.Add(this.buscar);
             this.Controls.Add(this.limpiar);
             this.Controls.Add(this.funcionalidades);
@@ -177,6 +188,7 @@
         private System.Windows.Forms.CheckBox habilitado;
         private System.Windows.Forms.TextBox nombre;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button buttonCancelar;
 
     }
 }

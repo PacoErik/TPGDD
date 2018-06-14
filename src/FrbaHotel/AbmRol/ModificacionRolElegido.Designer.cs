@@ -37,6 +37,7 @@
             this.aceptar = new System.Windows.Forms.Button();
             this.disponibles = new System.Windows.Forms.DataGridView();
             this.actuales = new System.Windows.Forms.DataGridView();
+            this.buttonCancelar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.disponibles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.actuales)).BeginInit();
             this.SuspendLayout();
@@ -89,7 +90,7 @@
             // 
             // limpiar
             // 
-            this.limpiar.Location = new System.Drawing.Point(15, 298);
+            this.limpiar.Location = new System.Drawing.Point(206, 298);
             this.limpiar.Name = "limpiar";
             this.limpiar.Size = new System.Drawing.Size(75, 23);
             this.limpiar.TabIndex = 7;
@@ -131,11 +132,22 @@
             this.actuales.TabIndex = 10;
             this.actuales.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.actuales_CellClick);
             // 
+            // buttonCancelar
+            // 
+            this.buttonCancelar.Location = new System.Drawing.Point(37, 298);
+            this.buttonCancelar.Name = "buttonCancelar";
+            this.buttonCancelar.Size = new System.Drawing.Size(75, 23);
+            this.buttonCancelar.TabIndex = 11;
+            this.buttonCancelar.Text = "Cancelar";
+            this.buttonCancelar.UseVisualStyleBackColor = true;
+            this.buttonCancelar.Click += new System.EventHandler(this.buttonCancelar_Click);
+            // 
             // ModificacionRolElegido
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(467, 333);
+            this.Controls.Add(this.buttonCancelar);
             this.Controls.Add(this.actuales);
             this.Controls.Add(this.disponibles);
             this.Controls.Add(this.aceptar);
@@ -165,5 +177,6 @@
         private System.Windows.Forms.Button aceptar;
         private System.Windows.Forms.DataGridView disponibles;
         private System.Windows.Forms.DataGridView actuales;
+        private System.Windows.Forms.Button buttonCancelar;
     }
 }
