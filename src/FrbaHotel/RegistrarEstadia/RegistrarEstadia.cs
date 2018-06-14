@@ -244,7 +244,7 @@ namespace FrbaHotel.RegistrarEstadia
                 this.Hide();
                 Form f1 = new CheckOut(factura);
                 f1.ShowDialog();
-                this.Close();
+                return;
             }
             var confirmResult = MessageBox.Show("Desea registrar consumibles?", "Registrar consumibles?", MessageBoxButtons.YesNo);
             if (confirmResult == DialogResult.Yes)

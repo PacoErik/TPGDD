@@ -72,22 +72,6 @@ namespace FrbaHotel.RegistrarEstadia
             textBoxCostoTotal.Text = costoTotal.ToString();
         }
 
-        private void comboBoxFormaDePago_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBoxFormaDePago.SelectedItem.ToString().Equals("TARJETA DE CREDITO"))
-            {
-                tarjeta.Enabled = true;
-                propietario.Enabled = true;
-            }
-            else
-            {
-                propietario.Clear();
-                propietario.Enabled = false;
-                tarjeta.Clear();
-                tarjeta.Enabled = false;
-            }
-        }
-
         private void buttonFinalizar_Click(object sender, EventArgs e)
         {
             var confirmResult = MessageBox.Show("Esta seguro que los datos son correctos?", "Finalizar factura?", MessageBoxButtons.YesNo);
@@ -100,16 +84,20 @@ namespace FrbaHotel.RegistrarEstadia
             com.Parameters.AddWithValue("@est", dtF.Rows[0][2].ToString());
             UtilesSQL.ejecutarComandoNonQuery(com);
 
-            if (!comboBoxFormaDePago.SelectedItem.ToString().Equals("TARJETA DE CREDITO"))
+            if (!comboBoxFormaDePago.Text.Equals("TARJETA DE CREDITO"))
             {
                 resetearLabels();
                 finalizarFactura();
+                MessageBox.Show("Check out completado!");
+                this.Close();
             }
             else
             {
                 if (validar())
                 {
                     finalizarFacturaTarjeta();
+                    MessageBox.Show("Check out completado!");
+                    this.Close();
                 }
             }
         }
@@ -129,16 +117,16 @@ namespace FrbaHotel.RegistrarEstadia
             UtilesSQL.ejecutarComandoNonQuery(com);
 
             SqlCommand com2 = UtilesSQL.crearCommand("SELECT tarj_id FROM DERROCHADORES_DE_PAPEL.TarjetaBancaria WHERE \'@nombre\' = tarj_nombreDeEntidad AND @numero = tarj_numeroDeCuenta");
-            com.Parameters.AddWithValue("@nombre", propietario.Text);
-            com.Parameters.AddWithValue("@modo", tarjeta.Text);
+            com2.Parameters.AddWithValue("@nombre", propietario.Text);
+            com2.Parameters.AddWithValue("@numero", tarjeta.Text);
             String tarjetaId = com2.ExecuteScalar().ToString();
 
-            com = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Factura SET fact_costoTotal = @costo, fact_modoDePago = @modo, fact_tarjeta = @tarj WHERE fact_estadia = @est");
-            com.Parameters.AddWithValue("@costo", costoTotal.ToString());
-            com.Parameters.AddWithValue("@modo", comboBoxFormaDePago.SelectedIndex+1);
-            com.Parameters.AddWithValue("@tarj", tarjetaId);
-            com.Parameters.AddWithValue("@est", dtF.Rows[0][2].ToString());
-            UtilesSQL.ejecutarComandoNonQuery(com);
+            SqlCommand com3 = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Factura SET fact_costoTotal = @costo, fact_modoDePago = @modo, fact_tarjeta = @tarj WHERE fact_estadia = @est");
+            com3.Parameters.AddWithValue("@costo", costoTotal.ToString());
+            com3.Parameters.AddWithValue("@modo", comboBoxFormaDePago.SelectedIndex+1);
+            com3.Parameters.AddWithValue("@tarj", tarjetaId);
+            com3.Parameters.AddWithValue("@est", dtF.Rows[0][2].ToString());
+            UtilesSQL.ejecutarComandoNonQuery(com3);
         }
 
         private void resetearLabels()
@@ -172,6 +160,22 @@ namespace FrbaHotel.RegistrarEstadia
                 Valido = false;
             }
             return Valido;
+        }
+
+        private void comboBoxFormaDePago_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBoxFormaDePago.Text == "TARJETA DE CREDITO")
+            {
+                tarjeta.ReadOnly = false;
+                propietario.ReadOnly = false;
+            }
+            else
+            {
+                tarjeta.Clear();
+                tarjeta.ReadOnly = true;
+                propietario.Clear();
+                propietario.ReadOnly = true;
+            }
         }
     }
 }

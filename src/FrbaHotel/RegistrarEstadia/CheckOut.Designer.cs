@@ -220,7 +220,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(133, 235);
+            this.label10.Location = new System.Drawing.Point(33, 235);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(69, 13);
             this.label10.TabIndex = 29;
@@ -241,6 +241,7 @@
             // 
             this.tarjeta.Location = new System.Drawing.Point(25, 128);
             this.tarjeta.Name = "tarjeta";
+            this.tarjeta.ReadOnly = true;
             this.tarjeta.Size = new System.Drawing.Size(190, 20);
             this.tarjeta.TabIndex = 31;
             // 
@@ -248,6 +249,7 @@
             // 
             this.propietario.Location = new System.Drawing.Point(25, 185);
             this.propietario.Name = "propietario";
+            this.propietario.ReadOnly = true;
             this.propietario.Size = new System.Drawing.Size(190, 20);
             this.propietario.TabIndex = 32;
             // 
