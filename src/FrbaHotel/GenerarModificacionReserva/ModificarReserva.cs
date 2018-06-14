@@ -432,5 +432,10 @@ namespace FrbaHotel.GenerarModificacionReserva
             UtilesSQL.llenarTabla(estados_reserva, "SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = '" + estado_buscado + "'");
             return Convert.ToInt32(estados_reserva.Rows[0]["esta_id"]);
         }
+
+        private void atras_Button_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

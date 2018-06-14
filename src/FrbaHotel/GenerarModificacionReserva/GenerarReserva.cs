@@ -310,15 +310,23 @@ namespace FrbaHotel.GenerarModificacionReserva
         bool EsCliente()
         {
             clientes = new DataTable();
-            UtilesSQL.llenarTabla(clientes, "SELECT * FROM DERROCHADORES_DE_PAPEL.Cliente as c WHERE c.clie_mail = '" + txtbox_mail.Text.ToString() + "' and c.clie_tipoDeDocumento = '" + cbox_tipo_identificacion.SelectedIndex + "' and c.clie_numeroDeDocumento = '" + txtbox_identificacion +"'" );
-            if (Convert.ToInt32(clientes.Rows[0]["clie_habilitado"]) != 1)
+            UtilesSQL.llenarTabla(clientes, "SELECT * FROM DERROCHADORES_DE_PAPEL.Cliente as c WHERE c.clie_mail = '" + txtbox_mail.Text + "' and c.clie_tipoDeDocumento = '" + cbox_tipo_identificacion.SelectedIndex + "' and c.clie_numeroDeDocumento = '" + txtbox_identificacion.Text +"'" );
+
+            if(clientes.Rows.Count != 0)
             {
-                lbl_cliente_inhabilitado.Visible = true;
                 return false;
             }
-            else {
-                lbl_cliente_inhabilitado.Visible = false;
-                return clientes.Rows.Count != 0;
+            else
+            {
+                if (Convert.ToInt32(clientes.Rows[0]["clie_habilitado"]) != 1)
+                {
+                    lbl_cliente_inhabilitado.Visible = true;
+                    return false;
+                }
+                else {
+                    return true;
+                }
+
             }
         }
 

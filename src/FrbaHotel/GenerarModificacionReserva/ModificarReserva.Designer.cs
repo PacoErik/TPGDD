@@ -214,6 +214,7 @@
             this.atras_Button.TabIndex = 63;
             this.atras_Button.Text = "Atras";
             this.atras_Button.UseVisualStyleBackColor = true;
+            this.atras_Button.Click += new System.EventHandler(this.atras_Button_Click);
             // 
             // lbl_noches
             // 
