@@ -95,6 +95,7 @@
             this.btn_eliminar_habitacion.TabIndex = 83;
             this.btn_eliminar_habitacion.Text = "Eliminar";
             this.btn_eliminar_habitacion.UseVisualStyleBackColor = true;
+            this.btn_eliminar_habitacion.Click += new System.EventHandler(this.btn_eliminar_habitacion_Click_1);
             // 
             // btn_agregar_habitacion
             // 
@@ -104,6 +105,7 @@
             this.btn_agregar_habitacion.TabIndex = 82;
             this.btn_agregar_habitacion.Text = "Agregar";
             this.btn_agregar_habitacion.UseVisualStyleBackColor = true;
+            this.btn_agregar_habitacion.Click += new System.EventHandler(this.btn_agregar_habitacion_Click_1);
             // 
             // label7
             // 
@@ -157,7 +159,6 @@
             this.btn_cargar_opciones.TabIndex = 76;
             this.btn_cargar_opciones.Text = "Cargar opciones";
             this.btn_cargar_opciones.UseVisualStyleBackColor = true;
-            //this.btn_cargar_opciones.Click += new System.EventHandler(this.btn_cargar_opciones_Click);
             // 
             // lbl_error_personas
             // 
@@ -175,6 +176,7 @@
             this.txtbox_personas.Name = "txtbox_personas";
             this.txtbox_personas.Size = new System.Drawing.Size(84, 20);
             this.txtbox_personas.TabIndex = 74;
+            this.txtbox_personas.TextChanged += new System.EventHandler(this.txtbox_personas_TextChanged_1);
             // 
             // lbl_error_fecha
             // 
@@ -301,6 +303,7 @@
             this.cbox_regimenes.Name = "cbox_regimenes";
             this.cbox_regimenes.Size = new System.Drawing.Size(197, 21);
             this.cbox_regimenes.TabIndex = 54;
+            this.cbox_regimenes.SelectedIndexChanged += new System.EventHandler(this.cbox_regimenes_SelectedIndexChanged);
             // 
             // date_hasta
             // 
@@ -308,6 +311,7 @@
             this.date_hasta.Name = "date_hasta";
             this.date_hasta.Size = new System.Drawing.Size(200, 20);
             this.date_hasta.TabIndex = 53;
+            this.date_hasta.ValueChanged += new System.EventHandler(this.date_hasta_ValueChanged_1);
             // 
             // label3
             // 
@@ -333,6 +337,7 @@
             this.date_desde.Name = "date_desde";
             this.date_desde.Size = new System.Drawing.Size(200, 20);
             this.date_desde.TabIndex = 50;
+            this.date_desde.ValueChanged += new System.EventHandler(this.date_desde_ValueChanged_1);
             // 
             // label9
             // 
