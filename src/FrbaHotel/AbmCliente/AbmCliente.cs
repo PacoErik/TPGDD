@@ -13,7 +13,6 @@ namespace FrbaHotel.AbmCliente
 {
     public partial class AbmCliente : Form
     {
-        int index;
         private SqlCommand command;
         DataTable dt = new DataTable();
         DataTable dt2 = new DataTable();
