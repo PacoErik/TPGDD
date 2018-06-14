@@ -115,6 +115,7 @@ namespace FrbaHotel.RegistrarEstadia
                 if (fechaActual > fechaInicio)
                 {
                     MessageBox.Show("La fecha para hacer el check-in ya pasó. La reserva será cancelada");
+                    UtilesSQL.ejecutarComandoNonQuery("UPDATE DERROCHADORES_DE_PAPEL.Reserva SET rese_estado = (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = \'RESERVA CANCELADA POR RECEPCION\')");
                     return;
                 }
 
