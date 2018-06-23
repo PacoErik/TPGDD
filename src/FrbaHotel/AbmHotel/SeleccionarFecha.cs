@@ -21,7 +21,7 @@ namespace FrbaHotel.AbmHotel
 
         private void buttonSeleccionar_Click(object sender, EventArgs e)
         {
-            fecha = monthCalendar.SelectionEnd.ToString("yyyy-MM-dd");
+            fecha = monthCalendar.SelectionRange.Start.ToString("yyyy-MM-dd");
             this.Close();
         }
     }

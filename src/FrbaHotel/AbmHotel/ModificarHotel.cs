@@ -324,7 +324,7 @@ namespace FrbaHotel.AbmHotel
         private void realizarCambios()
         {
             //Modifica el hotel
-            SqlCommand com = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Hotel SET hote_nombre=@nom, hote_mail=@mail, hote_telefono=@tel, hote_calle=@calle, hote_numeroDeCalle=@numCalle, hote_localidad=@loc, hote_estrellas=@estr, hote_ciudad=@ciudad, hote_pais=@pais, hote_fechaDeCreacion=@fecha WHERE hote_id = @id");
+            SqlCommand com = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Hotel SET hote_nombre=@nom, hote_mail=@mail, hote_telefono=@tel, hote_calle=@calle, hote_numeroDeCalle=@numCalle, hote_localidad=@loc, hote_estrellas=@estr, hote_ciudad=@ciudad, hote_pais=@pais, hote_fechaDeCreacion=CONVERT(datetime, @fecha) WHERE hote_id = @id");
             com.Parameters.AddWithValue("@nom", textBoxNombre.Text);
             com.Parameters.AddWithValue("@mail", textBoxMail.Text);
             com.Parameters.AddWithValue("@tel", textBoxTelefono.Text);

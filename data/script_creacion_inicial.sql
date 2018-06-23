@@ -57,19 +57,28 @@ GO
 
 CREATE PROCEDURE DERROCHADORES_DE_PAPEL.CrearBajaHotel
 @hotel NUMERIC(18,0),
-@fechaI datetime,
-@fechaF datetime,
+@fechaI VARCHAR(15),
+@fechaF VARCHAR(15),
 @motivo NVARCHAR(255)
 AS
-	IF NOT EXISTS ( SELECT * FROM DERROCHADORES_DE_PAPEL.Estadia AS e 
-					JOIN DERROCHADORES_DE_PAPEL.Reserva AS r ON r.rese_codigo = e.esta_reserva 
-					WHERE (e.esta_fechaDeFin < @fechaF AND e.esta_fechaDeInicio > @fechaI) 
-					OR (r.rese_fin < @fechaF AND r.rese_inicio > @fechaI) 
-					AND r.rese_hotel = @hotel )
+	DECLARE @fechaInicio DATETIME
+	DECLARE @fechaFin DATETIME
+	SET @fechaInicio = CONVERT(datetime, @fechaI)
+	SET @fechaFin = CONVERT(datetime, @fechaF)
+
+	IF NOT EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.Reserva 
+			WHERE rese_hotel = 1 AND rese_fin BETWEEN @fechaFin AND @fechaInicio
+			OR rese_inicio BETWEEN @fechaFin AND @fechaInicio)
+	   AND NOT EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.Estadia AS e LEFT JOIN DERROCHADORES_DE_PAPEL.Reserva AS r ON 					r.rese_codigo = e.esta_reserva 
+			WHERE r.rese_hotel = 1 AND e.esta_fechaDeFin BETWEEN @fechaFin AND @fechaInicio 
+			OR e.esta_fechaDeInicio BETWEEN @fechaFin AND @fechaInicio)
+	   AND NOT EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.PeriodoDeCierre 
+			WHERE peri_hotel = 1 AND peri_fechaFin BETWEEN @fechaFin AND @fechaInicio 
+			OR peri_fechaInicio BETWEEN @fechaFin AND @fechaInicio)
 
 	BEGIN
 		INSERT INTO DERROCHADORES_DE_PAPEL.PeriodoDeCierre (peri_hotel, peri_fechaInicio, peri_fechaFin, peri_motivo)
-		VALUES (@hotel, @fechaI, @fechaF, @motivo)
+		VALUES (@hotel, @fechaInicio, @fechaFin, @motivo)
 		SELECT 1
 	END
 	ELSE

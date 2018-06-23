@@ -29,6 +29,13 @@ namespace FrbaHotel.AbmHotel
             this.Close();
         }
 
+        private void resetearLabels()
+        {
+            labelFechaInvalida.Visible = false;
+            labelFechaInvalida2.Visible = false;
+            labelFechaInvalida3.Visible = false;
+        }
+
         private void buttonSeleccionarFecha_Click(object sender, EventArgs e)
         {
             textBoxFecha.Text = seleccionarFecha();
@@ -46,13 +53,14 @@ namespace FrbaHotel.AbmHotel
 
         private void buttonAceptar_Click(object sender, EventArgs e)
         {
+            resetearLabels();
             if (validarFechas())
             {
                 SqlCommand com = UtilesSQL.crearCommand("DERROCHADORES_DE_PAPEL.CrearBajaHotel");
                 com.CommandType = CommandType.StoredProcedure;
                 com.Parameters.AddWithValue("@hotel", SqlDbType.BigInt).Value = idH;
-                com.Parameters.AddWithValue("@fechaI", SqlDbType.DateTime).Value = textBoxFecha.Text;
-                com.Parameters.AddWithValue("@fechaF", SqlDbType.DateTime).Value = textBoxFecha2.Text;
+                com.Parameters.AddWithValue("@fechaI", SqlDbType.VarChar).Value = textBoxFecha.Text;
+                com.Parameters.AddWithValue("@fechaF", SqlDbType.VarChar).Value = textBoxFecha2.Text;
                 com.Parameters.AddWithValue("@motivo", SqlDbType.NVarChar).Value = richTextBoxMotivo.Text;
                 int resultado = (int)com.ExecuteScalar();
 
@@ -63,23 +71,23 @@ namespace FrbaHotel.AbmHotel
                 }
                 else 
                 { 
-                    MessageBox.Show("Este hotel tiene resservas o huespedes en esas fechas por lo que no se pudo realizar la baja"); 
+                    MessageBox.Show("Este hotel tiene reservas o huespedes o un periodo de cierre en esas fechas, por lo que no se pudo realizar la baja"); 
                 }
             }
         }
         private bool validarFechas()
         {
-            if (DateTime.ParseExact(textBoxFecha.Text, "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture) <= DateTime.ParseExact(textBoxFecha2.Text, "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture))
+            if (!fechaValida(textBoxFecha.Text) || !fechaValida2(textBoxFecha2.Text))
             {
-                labelFechaInvalida3.Visible = true;
                 return false;
             }
-            else if (fechaValida(textBoxFecha.Text) && fechaValida2(textBoxFecha2.Text))
+            else if (DateTime.Parse(textBoxFecha.Text) > DateTime.Parse(textBoxFecha2.Text))
             {
                 return true;
             }
             else
             {
+                labelFechaInvalida3.Visible = true;
                 return false;
             }
         }
@@ -87,7 +95,7 @@ namespace FrbaHotel.AbmHotel
         {
             try
             {
-                DateTime dateTime = DateTime.ParseExact(date, "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture);
+                DateTime dateTime = DateTime.Parse(date);
                 return true;
             }
             catch
@@ -97,23 +105,21 @@ namespace FrbaHotel.AbmHotel
         }
         private bool fechaValida(string fecha)
         {
-            if (!(dateTimeValido(fecha)))
+            if (dateTimeValido(fecha))
             {
-                labelFechaInvalida.Visible = true;
-                return false;
+                return true;
             }
-            return true;
+            labelFechaInvalida.Visible = true;
+            return false;
         }
         private bool fechaValida2(string fecha)
         {
-            if (!(dateTimeValido(fecha)))
+            if (dateTimeValido(fecha))
             {
-                labelFechaInvalida2.Visible = true;
-                return false;
+                return true;
             }
-            return true;
+            labelFechaInvalida2.Visible = true;
+            return false;
         }
-
-
     }
 }

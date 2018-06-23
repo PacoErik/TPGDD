@@ -338,7 +338,7 @@ namespace FrbaHotel.AbmCliente
        
         private void realizarCambios()
         {
-            command = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Cliente SET clie_nombre = @nom, clie_apellido = @ape, clie_mail = @mail, clie_telefono = @tel, clie_tipoDeDocumento = @doc, clie_numeroDeDocumento = @numeroDoc, clie_calle = @calle, clie_numeroDeCalle = @numCalle, clie_piso = @piso, clie_departamento = @depto, clie_localidad = @loc, clie_nacionalidad = @nac, clie_fechaDeNacimiento = @fecha, clie_habilitado = @habilitado WHERE clie_id = @id");
+            command = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Cliente SET clie_nombre = @nom, clie_apellido = @ape, clie_mail = @mail, clie_telefono = @tel, clie_tipoDeDocumento = @doc, clie_numeroDeDocumento = @numeroDoc, clie_calle = @calle, clie_numeroDeCalle = @numCalle, clie_piso = @piso, clie_departamento = @depto, clie_localidad = @loc, clie_nacionalidad = @nac, clie_fechaDeNacimiento = CONVERT(datetime, @fecha), clie_habilitado = @habilitado WHERE clie_id = @id");
             command.Parameters.AddWithValue("@nom", textBoxNombre.Text);
             command.Parameters.AddWithValue("@ape", textBoxApellido.Text);
             command.Parameters.AddWithValue("@mail", textBoxMail.Text);

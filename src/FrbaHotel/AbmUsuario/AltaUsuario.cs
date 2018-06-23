@@ -360,7 +360,7 @@ namespace FrbaHotel.AbmUsuario
         }
         private void realizarCambios()
         {
-            SqlCommand command1 = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Usuario (usur_username, usur_password, usur_nombre, usur_apellido, usur_mail, usur_telefono, usur_fechaDeNacimiento, usur_calle, usur_numeroDeCalle, usur_piso, usur_departamento, usur_localidad, usur_tipoDeDocumento, usur_numeroDeDocumento, usur_habilitado) VALUES (@user, @pass, @nombre, @ape, @mail, @tel, @fecha, @calle, @numCalle, @piso, @depto, @loc, @doc, @numDoc, @hab)");
+            SqlCommand command1 = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Usuario (usur_username, usur_password, usur_nombre, usur_apellido, usur_mail, usur_telefono, usur_fechaDeNacimiento, usur_calle, usur_numeroDeCalle, usur_piso, usur_departamento, usur_localidad, usur_tipoDeDocumento, usur_numeroDeDocumento, usur_habilitado) VALUES (@user, @pass, @nombre, @ape, @mail, @tel, CONVERT(datetime, @fecha), @calle, @numCalle, @piso, @depto, @loc, @doc, @numDoc, @hab)");
             command1.Parameters.AddWithValue("@user", textBoxUsuario.Text);
             command1.Parameters.AddWithValue("@pass", sha256.GenerarSHA256String(textBoxContraseña.Text));
             command1.Parameters.AddWithValue("@nombre", textBoxNombre.Text);
