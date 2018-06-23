@@ -48,6 +48,7 @@ namespace FrbaHotel.AbmCliente
 
         private void buscar_Click(object sender, EventArgs e)
         {
+            buttonModificarCliente.Enabled = false;
             dt2.Clear();
             commandString = "SELECT c.clie_nombre, c.clie_apellido, c.clie_mail, c.clie_numeroDeDocumento, d.docu_detalle, c.clie_habilitado FROM DERROCHADORES_DE_PAPEL.Cliente AS c JOIN DERROCHADORES_DE_PAPEL.Documento AS d ON c.clie_tipoDeDocumento = d.docu_tipo WHERE ";
             if (!String.IsNullOrEmpty(textBoxNombre.Text)) 
@@ -84,7 +85,10 @@ namespace FrbaHotel.AbmCliente
             sda.SelectCommand.Parameters.AddWithValue("@hab", 1);
             sda.Fill(dt2);
             dataGridViewClientes.DataSource = dt2;
-            buttonModificarCliente.Enabled = true;
+            if (dt2.Rows.Count != 0)
+            {
+                buttonModificarCliente.Enabled = true;
+            }
         }
 
         private void listBoxClientes_SelectedIndexChanged(object sender, EventArgs e)

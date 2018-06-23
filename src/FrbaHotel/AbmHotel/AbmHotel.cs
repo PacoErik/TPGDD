@@ -60,6 +60,8 @@ namespace FrbaHotel.AbmHotel
 
         private void buttonBuscar_Click(object sender, EventArgs e)
         {
+            buttonModificarHotel.Enabled = false;
+            buttonBajaHotel.Enabled = false;
             dtHoteles.Clear();
             string comString = "SELECT hote_id, hote_nombre, hote_estrellas, hote_pais, hote_ciudad FROM DERROCHADORES_DE_PAPEL.Hotel WHERE ";
             if (!String.IsNullOrEmpty(textBoxNombre.Text))
@@ -86,8 +88,11 @@ namespace FrbaHotel.AbmHotel
             sda.SelectCommand.Parameters.AddWithValue("@est", comboBoxEstrellas.SelectedIndex - 1);
             sda.Fill(dtHoteles);
             dataGridViewHoteles.DataSource = dtHoteles;
-            buttonModificarHotel.Enabled = true;
-            buttonBajaHotel.Enabled = true;
+            if (dtHoteles.Rows.Count != 0)
+            {
+                buttonModificarHotel.Enabled = true;
+                buttonBajaHotel.Enabled = true;
+            }
         }
 
         private void buttonModificarHotel_Click(object sender, EventArgs e)

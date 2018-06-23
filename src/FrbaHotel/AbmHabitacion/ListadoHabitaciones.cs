@@ -59,6 +59,7 @@ namespace FrbaHotel.AbmHabitacion
 
         private void buttonBuscar_Click(object sender, EventArgs e)
         {
+            modificacion.Enabled = false;
             int res;
             dtHab.Clear();
             string commandString = "SELECT h.habi_numero, h.habi_piso, habi_frente, ta.tipo_descripcion, h.habi_descripcion, h.habi_estado FROM DERROCHADORES_DE_PAPEL.TipoDeHabitacion AS ta JOIN DERROCHADORES_DE_PAPEL.Habitacion AS h ON h.habi_tipo = ta.tipo_codigo JOIN DERROCHADORES_DE_PAPEL.Hotel AS ho ON ho.hote_id = h.habi_hotel WHERE ";
@@ -92,7 +93,10 @@ namespace FrbaHotel.AbmHabitacion
             sda.SelectCommand.Parameters.AddWithValue("@hote", idH);
             sda.Fill(dtHab);
             dataGridViewHabitaciones.DataSource = dtHab;
-            modificacion.Enabled = true;
+            if (dtHab.Rows.Count != 0)
+            {
+                modificacion.Enabled = true;
+            }
         }
 
         private void buttonLimpiar_Click(object sender, EventArgs e)

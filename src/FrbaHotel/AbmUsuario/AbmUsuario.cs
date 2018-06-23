@@ -65,6 +65,7 @@ namespace FrbaHotel.AbmUsuario
 
         private void buttonBuscar_Click(object sender, EventArgs e)
         {
+            buttonModificarUsuario.Enabled = false;
             int res;
             dtUsuarios.Clear();
             commandString = "SELECT u.usur_username, u.usur_nombre, u.usur_apellido, u.usur_mail, u.usur_telefono, u.usur_fechaDeNacimiento, u.usur_calle, u.usur_numeroDeCalle, u.usur_numeroDeDocumento FROM DERROCHADORES_DE_PAPEL.Usuario AS u join DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel AS ruh ON u.usur_id = ruh.rouh_usuario  join DERROCHADORES_DE_PAPEL.Hotel AS h ON h.hote_id = ruh.rouh_hotel join DERROCHADORES_DE_PAPEL.Rol AS r ON r.rol_id = ruh.rouh_rol WHERE ";
@@ -113,7 +114,10 @@ namespace FrbaHotel.AbmUsuario
             sda.SelectCommand.Parameters.AddWithValue("@hotel", hotelId);
             sda.Fill(dtUsuarios);
             dataGridViewUsuarios.DataSource = dtUsuarios;
-            buttonModificarUsuario.Enabled = true;
+            if (dtUsuarios.Rows.Count != 0)
+            {
+                buttonModificarUsuario.Enabled = true;
+            }
         }
 
         private void buttonAlta_Click(object sender, EventArgs e)
