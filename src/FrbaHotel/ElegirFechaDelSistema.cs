@@ -17,13 +17,13 @@ namespace FrbaHotel
         {
             InitializeComponent();
             String fecha = Main.fecha();
-            monthCalendar1.SelectionStart = DateTime.ParseExact(fecha, "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture);
-            monthCalendar1.SelectionEnd = DateTime.ParseExact(fecha, "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture);
+            monthCalendar1.SelectionStart = DateTime.ParseExact(fecha, "yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
+            monthCalendar1.SelectionEnd = DateTime.ParseExact(fecha, "yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Main.cambiarFechaDelSistema(monthCalendar1.SelectionStart.ToString("yyyy-dd-MM HH:mm:ss.fff"));
+            Main.cambiarFechaDelSistema(monthCalendar1.SelectionStart.ToString("yyyy-MM-dd HH:mm:ss.fff"));
             this.Close();
         }
     }
