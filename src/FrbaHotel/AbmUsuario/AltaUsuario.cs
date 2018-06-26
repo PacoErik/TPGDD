@@ -140,14 +140,6 @@ namespace FrbaHotel.AbmUsuario
             {
                 locNull = true;
             }
-            else
-            {
-                if (!(loc.All(Char.IsLetter)))
-                {
-                    labelLocalidadInvalida.Visible = true;
-                    Valido = false;
-                }
-            }
         }
         private void deptoValido(string depto)
         {
@@ -186,14 +178,6 @@ namespace FrbaHotel.AbmUsuario
             {
                 labelDireccionObligatoria.Visible = true;
                 Valido = false;
-            }
-            else
-            {
-                if (!(Regex.IsMatch(dir, @"^[\d \w \s]+$")))
-                {
-                    labelDireccionInvalida.Visible = true;
-                    Valido = false;
-                }
             }
         }
         private void numeroDocumentoValido(string num)

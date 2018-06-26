@@ -498,7 +498,7 @@
             // 
             this.labelApellidoObligatorio.AutoSize = true;
             this.labelApellidoObligatorio.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelApellidoObligatorio.Location = new System.Drawing.Point(43, 159);
+            this.labelApellidoObligatorio.Location = new System.Drawing.Point(37, 159);
             this.labelApellidoObligatorio.Name = "labelApellidoObligatorio";
             this.labelApellidoObligatorio.Size = new System.Drawing.Size(120, 13);
             this.labelApellidoObligatorio.TabIndex = 89;
@@ -520,7 +520,7 @@
             // 
             this.labelDireccionObligatoria.AutoSize = true;
             this.labelDireccionObligatoria.ForeColor = System.Drawing.Color.DarkRed;
-            this.labelDireccionObligatoria.Location = new System.Drawing.Point(43, 240);
+            this.labelDireccionObligatoria.Location = new System.Drawing.Point(37, 240);
             this.labelDireccionObligatoria.Name = "labelDireccionObligatoria";
             this.labelDireccionObligatoria.Size = new System.Drawing.Size(130, 13);
             this.labelDireccionObligatoria.TabIndex = 91;

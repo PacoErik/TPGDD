@@ -118,14 +118,6 @@ namespace FrbaHotel.AbmHotel
                 labelCiudadNoEscrita.Visible = true;
                 Valido = false;
             }
-            else
-            {
-                if (!(loc.All(Char.IsLetter)))
-                {
-                    labelCiudadInvalida.Visible = true;
-                    Valido = false;
-                }
-            }
         }
         private void numeroCalleValido(string num)
         {
@@ -149,14 +141,6 @@ namespace FrbaHotel.AbmHotel
             {
                 labelDireccionObligatoria.Visible = true;
                 Valido = false;
-            }
-            else
-            {
-                if (!(Regex.IsMatch(dir, @"^[\d \w \s]+$")))
-                {
-                    labelDireccionInvalida.Visible = true;
-                    Valido = false;
-                }
             }
         }
         private void nombreValido(string nombre)
@@ -238,14 +222,6 @@ namespace FrbaHotel.AbmHotel
                 labelLocalidadNoIndicada.Visible = true;
                 Valido = false;
             }
-            else
-            {
-                if (!(loc.All(Char.IsLetter)))
-                {
-                    labelLocalidadInvalida.Visible = true;
-                    Valido = false;
-                }
-            }
         }
         private void paisValido(string pais)
         {
@@ -253,14 +229,6 @@ namespace FrbaHotel.AbmHotel
             {
                 labelPaisVacio.Visible = true;
                 Valido = false;
-            }
-            else
-            {
-                if (!(pais.All(Char.IsLetter)))
-                {
-                    labelPaisInvalido.Visible = true;
-                    Valido = false;
-                }
             }
         }
         private void regimenValido()
@@ -309,7 +277,7 @@ namespace FrbaHotel.AbmHotel
             com.Parameters.AddWithValue("@fecha", textBoxFecha.Text);
             UtilesSQL.ejecutarComandoNonQuery(com);
 
-            com = UtilesSQL.crearCommand("SELECT COUNT(*) FROM DERROCHADORES_DE_PAPEL.Hotel");
+            com = UtilesSQL.crearCommand("SELECT MAX(*) FROM DERROCHADORES_DE_PAPEL.Hotel");
             SqlDataReader dr = com.ExecuteReader();
             dr.Read();
             var hoteId = dr.GetInt32(0);

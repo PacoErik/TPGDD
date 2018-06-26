@@ -143,7 +143,7 @@ namespace FrbaHotel.AbmCliente
         {
             try
             {
-                DateTime dateTime = DateTime.ParseExact(date, "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture);
+                DateTime dateTime = DateTime.ParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture);
                 return true;
             }
             catch
@@ -179,14 +179,6 @@ namespace FrbaHotel.AbmCliente
             if (string.IsNullOrWhiteSpace(loc))
             {
                 locNull = true;
-            }
-            else
-            {
-                if (!(loc.All(Char.IsLetter)))
-                {
-                    labelLocalidadInvalida.Visible = true;
-                    Valido = false;
-                }
             }
         }
         private void deptoValido(string depto)
@@ -226,14 +218,6 @@ namespace FrbaHotel.AbmCliente
             {
                 labelDireccionObligatoria.Visible = true;
                 Valido = false;
-            }
-            else
-            {
-                if (!(Regex.IsMatch(dir, @"^[\d \w \s]+$")))
-                {
-                    labelDireccionInvalida.Visible = true;
-                    Valido = false;
-                }
             }
         }
         private void numeroDocumentoValido(string num)
