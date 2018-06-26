@@ -277,11 +277,8 @@ namespace FrbaHotel.AbmHotel
             com.Parameters.AddWithValue("@fecha", textBoxFecha.Text);
             UtilesSQL.ejecutarComandoNonQuery(com);
 
-            com = UtilesSQL.crearCommand("SELECT MAX(*) FROM DERROCHADORES_DE_PAPEL.Hotel");
-            SqlDataReader dr = com.ExecuteReader();
-            dr.Read();
-            var hoteId = dr.GetInt32(0);
-            dr.Close();
+            com = UtilesSQL.crearCommand("SELECT MAX(hote_id) FROM DERROCHADORES_DE_PAPEL.Hotel");
+            var hoteId = com.ExecuteScalar();
 
             //Crea los regimenes que esten seleccionados
             SqlCommand com1;
