@@ -34,9 +34,10 @@
             // 
             // monthCalendar1
             // 
-            this.monthCalendar1.Location = new System.Drawing.Point(46, 18);
+            this.monthCalendar1.Location = new System.Drawing.Point(28, 18);
             this.monthCalendar1.Name = "monthCalendar1";
             this.monthCalendar1.TabIndex = 0;
+            this.monthCalendar1.TodayDate = new System.DateTime(2017, 11, 1, 0, 0, 0, 0);
             // 
             // button1
             // 
