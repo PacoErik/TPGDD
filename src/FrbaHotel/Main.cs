@@ -16,7 +16,7 @@ namespace FrbaHotel
 
         public Main()
         {
-            fechaDelSistema = Properties.Settings.Default["fechaDelSistema"].ToString();
+            fechaDelSistema = Properties.Settings.Default["FechaDelSistema"].ToString();
             UtilesSQL.inicializar();
             InitializeComponent();
             fechaSistema.Text = fechaDelSistema.ToString();

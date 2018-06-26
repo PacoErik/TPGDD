@@ -25,7 +25,7 @@ namespace FrbaHotel.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2017-01-11 00:00:00.000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("2017-11-01 00:00:00.000")]
         public string FechaDelSistema {
             get {
                 return ((string)(this["FechaDelSistema"]));
