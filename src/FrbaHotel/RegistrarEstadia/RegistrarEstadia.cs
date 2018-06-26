@@ -203,7 +203,7 @@ namespace FrbaHotel.RegistrarEstadia
             
             //Crea la factura para poder iniciar el proceso de check out
             SqlCommand com = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Factura (fact_fecha, fact_estadia, fact_cliente) VALUES (CONVERT(datetime, @fecha), @estadia, @cliente)");
-            com.Parameters.AddWithValue("@fecha", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+            com.Parameters.AddWithValue("@fecha", Main.fecha());
             com.Parameters.AddWithValue("@estadia", dtH.Rows[0][2].ToString());
             com.Parameters.AddWithValue("@cliente", reserva_dt.Rows[0][9].ToString());
             UtilesSQL.ejecutarComandoNonQuery(com);
