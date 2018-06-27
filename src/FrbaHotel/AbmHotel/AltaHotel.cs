@@ -308,14 +308,11 @@ namespace FrbaHotel.AbmHotel
             com3.Parameters.AddWithValue("@hotel", hoteId);
             UtilesSQL.ejecutarComandoNonQuery(com3);
 
-            //Asigna al usuario admin el rol de administrador general para el hotel creado (mientras que el admin no sea el admin gral)
-            if (userId != 1)
-            {
-                SqlCommand com4;
-                com4 = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel VALUES (1, 1, @hotel, 1)");
-                com4.Parameters.AddWithValue("@hotel", hoteId);
-                UtilesSQL.ejecutarComandoNonQuery(com4);
-            }
+            //Asigna al usuario admin el rol de administrador general para el hotel creado
+            SqlCommand com4;
+            com4 = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel VALUES (1, 1, @hotel, 1)");
+            com4.Parameters.AddWithValue("@hotel", hoteId);
+            UtilesSQL.ejecutarComandoNonQuery(com4);
             MessageBox.Show("Creacion exitosa!");
         }
     }

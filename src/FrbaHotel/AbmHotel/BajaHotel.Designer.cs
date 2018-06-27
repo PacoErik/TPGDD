@@ -78,9 +78,9 @@
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.Location = new System.Drawing.Point(66, 86);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(93, 15);
+            this.label10.Size = new System.Drawing.Size(136, 15);
             this.label10.TabIndex = 235;
-            this.label10.Text = "Fecha de inicio:";
+            this.label10.Text = "Fecha finalización baja:";
             // 
             // labelFechaInvalida2
             // 
@@ -117,9 +117,9 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(69, 22);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(126, 15);
+            this.label2.Size = new System.Drawing.Size(103, 15);
             this.label2.TabIndex = 239;
-            this.label2.Text = "Fecha de finalización:";
+            this.label2.Text = "Fecha inicio baja:";
             // 
             // richTextBoxMotivo
             // 

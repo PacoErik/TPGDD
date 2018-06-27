@@ -16,6 +16,7 @@ namespace FrbaHotel.AbmHotel
     {
         int idH;
 
+
         public BajaHotel(int hoteId)
         {
             UtilesSQL.inicializar();
@@ -59,8 +60,8 @@ namespace FrbaHotel.AbmHotel
                 SqlCommand com = UtilesSQL.crearCommand("DERROCHADORES_DE_PAPEL.CrearBajaHotel");
                 com.CommandType = CommandType.StoredProcedure;
                 com.Parameters.AddWithValue("@hotel", SqlDbType.BigInt).Value = idH;
-                com.Parameters.AddWithValue("@fechaI", SqlDbType.VarChar).Value = textBoxFecha.Text;
-                com.Parameters.AddWithValue("@fechaF", SqlDbType.VarChar).Value = textBoxFecha2.Text;
+                com.Parameters.AddWithValue("@fechaF", SqlDbType.VarChar).Value = textBoxFecha.Text;
+                com.Parameters.AddWithValue("@fechaI", SqlDbType.VarChar).Value = textBoxFecha2.Text;
                 com.Parameters.AddWithValue("@motivo", SqlDbType.NVarChar).Value = richTextBoxMotivo.Text;
                 int resultado = (int)com.ExecuteScalar();
 
@@ -105,7 +106,7 @@ namespace FrbaHotel.AbmHotel
         }
         private bool fechaValida(string fecha)
         {
-            if (dateTimeValido(fecha))
+            if (dateTimeValido(fecha) && DateTime.Parse(fecha) >= DateTime.Parse(Main.fecha()))
             {
                 return true;
             }
@@ -114,7 +115,7 @@ namespace FrbaHotel.AbmHotel
         }
         private bool fechaValida2(string fecha)
         {
-            if (dateTimeValido(fecha))
+            if (dateTimeValido(fecha) && DateTime.Parse(fecha) >= DateTime.Parse(Main.fecha()))
             {
                 return true;
             }

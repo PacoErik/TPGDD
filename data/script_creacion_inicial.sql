@@ -67,14 +67,14 @@ AS
 	SET @fechaFin = CONVERT(datetime, @fechaF)
 
 	IF NOT EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.Reserva 
-			WHERE rese_hotel = 1 AND rese_fin BETWEEN @fechaFin AND @fechaInicio
-			OR rese_inicio BETWEEN @fechaFin AND @fechaInicio)
-	   AND NOT EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.Estadia AS e LEFT JOIN DERROCHADORES_DE_PAPEL.Reserva AS r ON 					r.rese_codigo = e.esta_reserva 
-			WHERE r.rese_hotel = 1 AND e.esta_fechaDeFin BETWEEN @fechaFin AND @fechaInicio 
-			OR e.esta_fechaDeInicio BETWEEN @fechaFin AND @fechaInicio)
-	   AND NOT EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.PeriodoDeCierre 
-			WHERE peri_hotel = 1 AND peri_fechaFin BETWEEN @fechaFin AND @fechaInicio 
-			OR peri_fechaInicio BETWEEN @fechaFin AND @fechaInicio)
+		          WHERE rese_hotel = @hotel AND (rese_fin BETWEEN @fechaInicio AND @fechaFin 
+		          OR rese_inicio BETWEEN @fechaInicio AND @fechaFin))
+	AND NOT EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.Estadia AS e LEFT JOIN DERROCHADORES_DE_PAPEL.Reserva AS r ON 			  		r.rese_codigo = e.esta_reserva 
+			WHERE r.rese_hotel = @hotel AND (e.esta_fechaDeFin BETWEEN @fechaInicio AND @fechaFin 
+			OR e.esta_fechaDeInicio BETWEEN @fechaInicio AND @fechaFin))
+	AND NOT EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.PeriodoDeCierre 
+			WHERE peri_hotel = @hotel AND (peri_fechaFin BETWEEN @fechaInicio AND @fechaFin 
+			OR peri_fechaInicio BETWEEN @fechaInicio AND @fechaFin))
 
 	BEGIN
 		INSERT INTO DERROCHADORES_DE_PAPEL.PeriodoDeCierre (peri_hotel, peri_fechaInicio, peri_fechaFin, peri_motivo)
