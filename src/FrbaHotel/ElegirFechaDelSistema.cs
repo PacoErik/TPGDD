@@ -17,6 +17,7 @@ namespace FrbaHotel
         {
             InitializeComponent();
             String fecha = Main.fecha();
+            monthCalendar1.MaxSelectionCount = 1;
             monthCalendar1.SelectionStart = DateTime.ParseExact(fecha, "yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
             monthCalendar1.SelectionEnd = DateTime.ParseExact(fecha, "yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
         }

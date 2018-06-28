@@ -99,8 +99,10 @@
             this.clientes.AllowUserToDeleteRows = false;
             this.clientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.clientes.Location = new System.Drawing.Point(19, 122);
+            this.clientes.MultiSelect = false;
             this.clientes.Name = "clientes";
             this.clientes.ReadOnly = true;
+            this.clientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.clientes.Size = new System.Drawing.Size(474, 182);
             this.clientes.TabIndex = 6;
             // 

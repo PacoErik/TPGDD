@@ -187,11 +187,13 @@
             this.dataGridViewClientes.AllowUserToAddRows = false;
             this.dataGridViewClientes.AllowUserToDeleteRows = false;
             this.dataGridViewClientes.AllowUserToOrderColumns = true;
+            this.dataGridViewClientes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridViewClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewClientes.Location = new System.Drawing.Point(12, 163);
             this.dataGridViewClientes.MultiSelect = false;
             this.dataGridViewClientes.Name = "dataGridViewClientes";
             this.dataGridViewClientes.ReadOnly = true;
+            this.dataGridViewClientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewClientes.Size = new System.Drawing.Size(659, 341);
             this.dataGridViewClientes.TabIndex = 22;
             this.dataGridViewClientes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewClientes_CellContentClick);

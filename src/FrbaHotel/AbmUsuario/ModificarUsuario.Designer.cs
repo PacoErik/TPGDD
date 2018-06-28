@@ -610,13 +610,15 @@
             this.dataGridViewRoles.AllowUserToAddRows = false;
             this.dataGridViewRoles.AllowUserToDeleteRows = false;
             this.dataGridViewRoles.AllowUserToOrderColumns = true;
+            this.dataGridViewRoles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewRoles.Location = new System.Drawing.Point(556, 243);
             this.dataGridViewRoles.MultiSelect = false;
             this.dataGridViewRoles.Name = "dataGridViewRoles";
             this.dataGridViewRoles.ReadOnly = true;
             this.dataGridViewRoles.RowTemplate.ReadOnly = true;
-            this.dataGridViewRoles.Size = new System.Drawing.Size(173, 198);
+            this.dataGridViewRoles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewRoles.Size = new System.Drawing.Size(199, 198);
             this.dataGridViewRoles.TabIndex = 280;
             // 
             // buttonQuitar
@@ -631,7 +633,7 @@
             // 
             // buttonAgregar
             // 
-            this.buttonAgregar.Location = new System.Drawing.Point(645, 448);
+            this.buttonAgregar.Location = new System.Drawing.Point(669, 448);
             this.buttonAgregar.Name = "buttonAgregar";
             this.buttonAgregar.Size = new System.Drawing.Size(75, 23);
             this.buttonAgregar.TabIndex = 282;

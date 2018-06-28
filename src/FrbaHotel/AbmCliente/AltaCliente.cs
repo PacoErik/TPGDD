@@ -33,6 +33,9 @@ namespace FrbaHotel.AbmCliente
             UtilesSQL.inicializar();
             InitializeComponent();
             cargarComboBox();
+            monthCalendar.MaxSelectionCount = 1;
+            monthCalendar.TodayDate = DateTime.Parse(Main.fecha());
+            monthCalendar.SelectionStart = DateTime.Parse(Main.fecha());
         }
 
         private void buttonAtras_Click(object sender, EventArgs e)

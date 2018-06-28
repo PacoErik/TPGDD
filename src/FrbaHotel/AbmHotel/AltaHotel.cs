@@ -38,6 +38,11 @@ namespace FrbaHotel.AbmHotel
             dtRegimen.Columns.Add(new DataColumn("Seleccionado", typeof(bool)));
             sda.Fill(dtRegimen);
             dataGridViewRegimenes.DataSource = dtRegimen;
+            dataGridViewRegimenes.Columns[1].ReadOnly = true;
+
+            monthCalendar.MaxSelectionCount = 1;
+            monthCalendar.TodayDate = DateTime.Parse(Main.fecha());
+            monthCalendar.SelectionStart = DateTime.Parse(Main.fecha());
         }
 
         private void resetearLabels()

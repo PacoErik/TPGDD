@@ -35,6 +35,7 @@
             // monthCalendar
             // 
             this.monthCalendar.Location = new System.Drawing.Point(18, 18);
+            this.monthCalendar.MaxSelectionCount = 1;
             this.monthCalendar.Name = "monthCalendar";
             this.monthCalendar.TabIndex = 0;
             // 

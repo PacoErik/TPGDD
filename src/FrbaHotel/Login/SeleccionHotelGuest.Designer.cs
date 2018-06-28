@@ -46,9 +46,16 @@
             // 
             // hoteles
             // 
+            this.hoteles.AllowUserToAddRows = false;
+            this.hoteles.AllowUserToDeleteRows = false;
+            this.hoteles.AllowUserToOrderColumns = true;
+            this.hoteles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.hoteles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.hoteles.Location = new System.Drawing.Point(41, 41);
+            this.hoteles.MultiSelect = false;
             this.hoteles.Name = "hoteles";
+            this.hoteles.ReadOnly = true;
+            this.hoteles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.hoteles.Size = new System.Drawing.Size(328, 205);
             this.hoteles.TabIndex = 1;
             // 

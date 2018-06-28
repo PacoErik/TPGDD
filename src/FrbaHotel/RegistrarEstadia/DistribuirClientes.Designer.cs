@@ -63,8 +63,10 @@
             this.clientes.AllowUserToDeleteRows = false;
             this.clientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.clientes.Location = new System.Drawing.Point(26, 70);
+            this.clientes.MultiSelect = false;
             this.clientes.Name = "clientes";
             this.clientes.ReadOnly = true;
+            this.clientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.clientes.Size = new System.Drawing.Size(332, 150);
             this.clientes.TabIndex = 2;
             this.clientes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
@@ -85,8 +87,10 @@
             this.distribucion.AllowUserToDeleteRows = false;
             this.distribucion.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.distribucion.Location = new System.Drawing.Point(445, 70);
+            this.distribucion.MultiSelect = false;
             this.distribucion.Name = "distribucion";
             this.distribucion.ReadOnly = true;
+            this.distribucion.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.distribucion.Size = new System.Drawing.Size(480, 150);
             this.distribucion.TabIndex = 4;
             // 

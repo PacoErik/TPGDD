@@ -97,10 +97,13 @@
             // 
             this.roles.AllowUserToAddRows = false;
             this.roles.AllowUserToDeleteRows = false;
+            this.roles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.roles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.roles.Location = new System.Drawing.Point(12, 146);
+            this.roles.MultiSelect = false;
             this.roles.Name = "roles";
             this.roles.ReadOnly = true;
+            this.roles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.roles.Size = new System.Drawing.Size(311, 164);
             this.roles.TabIndex = 6;
             this.roles.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.roles_CellClick);
@@ -111,8 +114,10 @@
             this.funcionalidades.AllowUserToDeleteRows = false;
             this.funcionalidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.funcionalidades.Location = new System.Drawing.Point(329, 146);
+            this.funcionalidades.MultiSelect = false;
             this.funcionalidades.Name = "funcionalidades";
             this.funcionalidades.ReadOnly = true;
+            this.funcionalidades.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.funcionalidades.Size = new System.Drawing.Size(311, 164);
             this.funcionalidades.TabIndex = 7;
             // 
@@ -142,7 +147,7 @@
             this.alta.Name = "alta";
             this.alta.Size = new System.Drawing.Size(102, 23);
             this.alta.TabIndex = 10;
-            this.alta.Text = "Dar de alta rol";
+            this.alta.Text = "Alta de rol";
             this.alta.UseVisualStyleBackColor = true;
             this.alta.Click += new System.EventHandler(this.alta_Click);
             // 

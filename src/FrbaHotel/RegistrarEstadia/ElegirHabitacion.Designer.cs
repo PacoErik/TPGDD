@@ -40,14 +40,16 @@
             this.habitaciones.AllowUserToDeleteRows = false;
             this.habitaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.habitaciones.Location = new System.Drawing.Point(48, 57);
+            this.habitaciones.MultiSelect = false;
             this.habitaciones.Name = "habitaciones";
             this.habitaciones.ReadOnly = true;
-            this.habitaciones.Size = new System.Drawing.Size(236, 174);
+            this.habitaciones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.habitaciones.Size = new System.Drawing.Size(251, 174);
             this.habitaciones.TabIndex = 35;
             // 
             // finalizar
             // 
-            this.finalizar.Location = new System.Drawing.Point(106, 247);
+            this.finalizar.Location = new System.Drawing.Point(116, 247);
             this.finalizar.Name = "finalizar";
             this.finalizar.Size = new System.Drawing.Size(119, 40);
             this.finalizar.TabIndex = 36;
@@ -57,7 +59,7 @@
             // 
             // agregar
             // 
-            this.agregar.Location = new System.Drawing.Point(97, 28);
+            this.agregar.Location = new System.Drawing.Point(106, 28);
             this.agregar.Name = "agregar";
             this.agregar.Size = new System.Drawing.Size(138, 23);
             this.agregar.TabIndex = 37;

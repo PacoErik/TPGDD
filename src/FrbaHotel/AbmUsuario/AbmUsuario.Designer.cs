@@ -65,12 +65,14 @@
             this.dataGridViewUsuarios.AllowUserToAddRows = false;
             this.dataGridViewUsuarios.AllowUserToDeleteRows = false;
             this.dataGridViewUsuarios.AllowUserToOrderColumns = true;
+            this.dataGridViewUsuarios.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridViewUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewUsuarios.Location = new System.Drawing.Point(12, 190);
             this.dataGridViewUsuarios.MultiSelect = false;
             this.dataGridViewUsuarios.Name = "dataGridViewUsuarios";
             this.dataGridViewUsuarios.ReadOnly = true;
             this.dataGridViewUsuarios.RowTemplate.ReadOnly = true;
+            this.dataGridViewUsuarios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewUsuarios.Size = new System.Drawing.Size(659, 338);
             this.dataGridViewUsuarios.TabIndex = 37;
             // 

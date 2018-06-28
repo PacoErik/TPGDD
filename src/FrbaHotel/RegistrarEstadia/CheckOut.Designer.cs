@@ -212,8 +212,10 @@
             this.dataGridViewConsumibles.AllowUserToOrderColumns = true;
             this.dataGridViewConsumibles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewConsumibles.Location = new System.Drawing.Point(31, 251);
+            this.dataGridViewConsumibles.MultiSelect = false;
             this.dataGridViewConsumibles.Name = "dataGridViewConsumibles";
             this.dataGridViewConsumibles.ReadOnly = true;
+            this.dataGridViewConsumibles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewConsumibles.Size = new System.Drawing.Size(431, 150);
             this.dataGridViewConsumibles.TabIndex = 28;
             // 
@@ -257,7 +259,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(530, 457);
+            this.ClientSize = new System.Drawing.Size(488, 457);
             this.Controls.Add(this.propietario);
             this.Controls.Add(this.tarjeta);
             this.Controls.Add(this.buttonFinalizar);

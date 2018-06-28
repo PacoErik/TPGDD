@@ -37,6 +37,7 @@
             // 
             this.Hoteles.AllowUserToAddRows = false;
             this.Hoteles.AllowUserToDeleteRows = false;
+            this.Hoteles.AllowUserToOrderColumns = true;
             this.Hoteles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.Hoteles.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.Hoteles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -46,6 +47,7 @@
             this.Hoteles.ReadOnly = true;
             this.Hoteles.RowTemplate.ReadOnly = true;
             this.Hoteles.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Hoteles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.Hoteles.Size = new System.Drawing.Size(479, 425);
             this.Hoteles.TabIndex = 5;
             // 

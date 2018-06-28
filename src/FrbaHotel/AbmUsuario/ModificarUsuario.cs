@@ -36,6 +36,7 @@ namespace FrbaHotel.AbmUsuario
             dtUsuario = dt1;
             UtilesSQL.inicializar();
             InitializeComponent();
+            monthCalendar.MaxSelectionCount = 1;
             cargarCosas();
             llenarTextBox();
         }
@@ -49,7 +50,15 @@ namespace FrbaHotel.AbmUsuario
             textBoxTelefono.Text = dtUsuario.Rows[0][6].ToString();
             if (!String.IsNullOrEmpty(dtUsuario.Rows[0][7].ToString()))
             {
-                textBoxFecha.Text = DateTime.Parse(dtUsuario.Rows[0][7].ToString()).ToString("yyyy-dd-MM HH:mm:ss.fff");
+                DateTime fechaUser = DateTime.Parse(dtUsuario.Rows[0][7].ToString());
+                textBoxFecha.Text = fechaUser.ToString("yyyy-dd-MM HH:mm:ss.fff");
+                monthCalendar.TodayDate = fechaUser;
+                monthCalendar.SelectionStart = fechaUser;
+            }
+            else
+            {
+                monthCalendar.TodayDate = DateTime.Parse(Main.fecha());
+                monthCalendar.SelectionStart = DateTime.Parse(Main.fecha());
             }
             textBoxDireccion.Text = dtUsuario.Rows[0][8].ToString();
             textBoxNumeroCalle.Text = dtUsuario.Rows[0][9].ToString();

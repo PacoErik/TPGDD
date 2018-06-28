@@ -17,6 +17,9 @@ namespace FrbaHotel.AbmHotel
         public SeleccionarFecha()
         {
             InitializeComponent();
+            monthCalendar.MaxSelectionCount = 1;
+            monthCalendar.TodayDate = DateTime.Parse(Main.fecha());
+            monthCalendar.SelectionStart = DateTime.Parse(Main.fecha());
         }
 
         private void buttonSeleccionar_Click(object sender, EventArgs e)

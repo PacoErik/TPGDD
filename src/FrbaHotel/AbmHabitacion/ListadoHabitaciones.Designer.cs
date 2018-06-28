@@ -136,12 +136,14 @@
             this.dataGridViewHabitaciones.AllowUserToAddRows = false;
             this.dataGridViewHabitaciones.AllowUserToDeleteRows = false;
             this.dataGridViewHabitaciones.AllowUserToOrderColumns = true;
+            this.dataGridViewHabitaciones.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridViewHabitaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewHabitaciones.Location = new System.Drawing.Point(12, 153);
             this.dataGridViewHabitaciones.MultiSelect = false;
             this.dataGridViewHabitaciones.Name = "dataGridViewHabitaciones";
             this.dataGridViewHabitaciones.ReadOnly = true;
             this.dataGridViewHabitaciones.RowTemplate.ReadOnly = true;
+            this.dataGridViewHabitaciones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewHabitaciones.Size = new System.Drawing.Size(659, 316);
             this.dataGridViewHabitaciones.TabIndex = 53;
             // 

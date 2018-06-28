@@ -180,6 +180,7 @@
             this.dataGridViewClientes.MultiSelect = false;
             this.dataGridViewClientes.Name = "dataGridViewClientes";
             this.dataGridViewClientes.ReadOnly = true;
+            this.dataGridViewClientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewClientes.Size = new System.Drawing.Size(659, 341);
             this.dataGridViewClientes.TabIndex = 22;
             this.dataGridViewClientes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewClientes_CellContentClick);

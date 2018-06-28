@@ -126,12 +126,14 @@
             this.dataGridViewHoteles.AllowUserToAddRows = false;
             this.dataGridViewHoteles.AllowUserToDeleteRows = false;
             this.dataGridViewHoteles.AllowUserToOrderColumns = true;
+            this.dataGridViewHoteles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridViewHoteles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewHoteles.Location = new System.Drawing.Point(22, 182);
             this.dataGridViewHoteles.MultiSelect = false;
             this.dataGridViewHoteles.Name = "dataGridViewHoteles";
             this.dataGridViewHoteles.ReadOnly = true;
             this.dataGridViewHoteles.RowTemplate.ReadOnly = true;
+            this.dataGridViewHoteles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewHoteles.Size = new System.Drawing.Size(476, 338);
             this.dataGridViewHoteles.TabIndex = 58;
             // 

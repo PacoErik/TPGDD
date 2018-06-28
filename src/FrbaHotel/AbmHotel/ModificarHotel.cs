@@ -43,8 +43,19 @@ namespace FrbaHotel.AbmHotel
             comboBoxEstrellas.SelectedIndex = Int32.Parse(dtH.Rows[0][7].ToString());
             textBoxCiudad.Text = dtH.Rows[0][9].ToString();
             textBoxPais.Text = dtH.Rows[0][10].ToString();
+            monthCalendar.MaxSelectionCount = 1;
             if (!String.IsNullOrEmpty(dtH.Rows[0][11].ToString()))
-            { textBoxFecha.Text = DateTime.Parse(dtH.Rows[0][11].ToString()).ToString("yyyy-MM-dd"); }
+            {
+                DateTime fecha = DateTime.Parse(dtH.Rows[0][11].ToString());
+                textBoxFecha.Text = fecha.ToString("yyyy-MM-dd");
+                monthCalendar.TodayDate = fecha;
+                monthCalendar.SelectionStart = fecha;
+            }
+            else
+            {
+                monthCalendar.TodayDate = DateTime.Parse(Main.fecha());
+                monthCalendar.SelectionStart = DateTime.Parse(Main.fecha());
+            }
 
             SqlDataAdapter sda = UtilesSQL.crearDataAdapter("SELECT regi_descripcion FROM DERROCHADORES_DE_PAPEL.Regimen");
             dtRegimen.Columns.Add(new DataColumn("Seleccionado", typeof(bool)));
@@ -69,6 +80,7 @@ namespace FrbaHotel.AbmHotel
                     pos2++;
                 }
             }
+            dataGridViewRegimenes.Columns[1].ReadOnly = true;
         }
 
         private void buttonAtras_Click(object sender, EventArgs e)

@@ -190,9 +190,12 @@
             // 
             this.dataGridViewRegimenes.AllowUserToAddRows = false;
             this.dataGridViewRegimenes.AllowUserToDeleteRows = false;
+            this.dataGridViewRegimenes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewRegimenes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewRegimenes.Location = new System.Drawing.Point(300, 42);
+            this.dataGridViewRegimenes.MultiSelect = false;
             this.dataGridViewRegimenes.Name = "dataGridViewRegimenes";
+            this.dataGridViewRegimenes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridViewRegimenes.Size = new System.Drawing.Size(246, 156);
             this.dataGridViewRegimenes.TabIndex = 315;
             // 

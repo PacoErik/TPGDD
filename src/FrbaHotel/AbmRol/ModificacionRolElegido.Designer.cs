@@ -114,8 +114,10 @@
             this.disponibles.AllowUserToDeleteRows = false;
             this.disponibles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.disponibles.Location = new System.Drawing.Point(18, 78);
+            this.disponibles.MultiSelect = false;
             this.disponibles.Name = "disponibles";
             this.disponibles.ReadOnly = true;
+            this.disponibles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.disponibles.Size = new System.Drawing.Size(437, 93);
             this.disponibles.TabIndex = 9;
             this.disponibles.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.disponibles_CellClick);
@@ -126,8 +128,10 @@
             this.actuales.AllowUserToDeleteRows = false;
             this.actuales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.actuales.Location = new System.Drawing.Point(15, 190);
+            this.actuales.MultiSelect = false;
             this.actuales.Name = "actuales";
             this.actuales.ReadOnly = true;
+            this.actuales.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.actuales.Size = new System.Drawing.Size(437, 93);
             this.actuales.TabIndex = 10;
             this.actuales.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.actuales_CellClick);

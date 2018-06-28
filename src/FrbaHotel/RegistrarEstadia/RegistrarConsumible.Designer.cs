@@ -81,6 +81,7 @@
             this.disponibles.MultiSelect = false;
             this.disponibles.Name = "disponibles";
             this.disponibles.ReadOnly = true;
+            this.disponibles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.disponibles.Size = new System.Drawing.Size(378, 160);
             this.disponibles.TabIndex = 16;
             // 
@@ -93,6 +94,7 @@
             this.elegidos.MultiSelect = false;
             this.elegidos.Name = "elegidos";
             this.elegidos.ReadOnly = true;
+            this.elegidos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.elegidos.Size = new System.Drawing.Size(382, 160);
             this.elegidos.TabIndex = 18;
             // 

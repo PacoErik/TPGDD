@@ -66,9 +66,14 @@
             // 
             // funcionalidades
             // 
+            this.funcionalidades.AllowUserToAddRows = false;
+            this.funcionalidades.AllowUserToDeleteRows = false;
             this.funcionalidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.funcionalidades.Location = new System.Drawing.Point(12, 231);
+            this.funcionalidades.MultiSelect = false;
             this.funcionalidades.Name = "funcionalidades";
+            this.funcionalidades.ReadOnly = true;
+            this.funcionalidades.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.funcionalidades.Size = new System.Drawing.Size(496, 90);
             this.funcionalidades.TabIndex = 12;
             // 
@@ -99,6 +104,7 @@
             this.roles.MultiSelect = false;
             this.roles.Name = "roles";
             this.roles.ReadOnly = true;
+            this.roles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.roles.Size = new System.Drawing.Size(496, 81);
             this.roles.TabIndex = 9;
             this.roles.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.roles_CellClick);

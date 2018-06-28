@@ -37,7 +37,7 @@
             // 
             // Entrar
             // 
-            this.Entrar.Location = new System.Drawing.Point(251, 242);
+            this.Entrar.Location = new System.Drawing.Point(296, 242);
             this.Entrar.Name = "Entrar";
             this.Entrar.Size = new System.Drawing.Size(75, 23);
             this.Entrar.TabIndex = 2;
@@ -49,7 +49,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(38, 22);
+            this.label1.Location = new System.Drawing.Point(12, 22);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(144, 13);
             this.label1.TabIndex = 0;
@@ -57,7 +57,7 @@
             // 
             // Cancelar
             // 
-            this.Cancelar.Location = new System.Drawing.Point(74, 242);
+            this.Cancelar.Location = new System.Drawing.Point(38, 242);
             this.Cancelar.Name = "Cancelar";
             this.Cancelar.Size = new System.Drawing.Size(75, 23);
             this.Cancelar.TabIndex = 3;
@@ -70,15 +70,18 @@
             // 
             this.RolXHotel.AllowUserToAddRows = false;
             this.RolXHotel.AllowUserToDeleteRows = false;
+            this.RolXHotel.AllowUserToOrderColumns = true;
             this.RolXHotel.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.RolXHotel.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.RolXHotel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.RolXHotel.Location = new System.Drawing.Point(41, 38);
+            this.RolXHotel.Location = new System.Drawing.Point(12, 38);
+            this.RolXHotel.MultiSelect = false;
             this.RolXHotel.Name = "RolXHotel";
             this.RolXHotel.ReadOnly = true;
             this.RolXHotel.RowTemplate.ReadOnly = true;
             this.RolXHotel.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.RolXHotel.Size = new System.Drawing.Size(336, 180);
+            this.RolXHotel.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.RolXHotel.Size = new System.Drawing.Size(386, 180);
             this.RolXHotel.TabIndex = 4;
             // 
             // SeleccionRol
