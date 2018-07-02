@@ -51,7 +51,7 @@ namespace FrbaHotel.AbmUsuario
             if (!String.IsNullOrEmpty(dtUsuario.Rows[0][7].ToString()))
             {
                 DateTime fechaUser = DateTime.Parse(dtUsuario.Rows[0][7].ToString());
-                textBoxFecha.Text = fechaUser.ToString("yyyy-dd-MM HH:mm:ss.fff");
+                textBoxFecha.Text = fechaUser.ToString("yyyy-dd-MM");
                 monthCalendar.TodayDate = fechaUser;
                 monthCalendar.SelectionStart = fechaUser;
             }
@@ -384,15 +384,15 @@ namespace FrbaHotel.AbmUsuario
             SqlCommand command2 = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel SET rouh_habilitado = 0 WHERE rouh_usuario = @user AND rouh_hotel = @hotel");
             command2.Parameters.AddWithValue("@user", dtUsuario.Rows[0][0].ToString());
             command2.Parameters.AddWithValue("@hotel", hotelU);
+            UtilesSQL.ejecutarComandoNonQuery(command2);
 
             foreach (DataGridViewRow row in dataGridViewRoles.Rows)
             {
                 command2 = UtilesSQL.crearCommand("DERROCHADORES_DE_PAPEL.ModificarRolesUsuario");
                 command2.CommandType = CommandType.StoredProcedure;
-                command2.Parameters.AddWithValue("@rol", SqlDbType.BigInt).Value = row.Cells[0].Value.ToString();
+                command2.Parameters.AddWithValue("@rol", SqlDbType.NVarChar).Value = row.Cells[0].Value.ToString();
                 command2.Parameters.AddWithValue("@hotel", SqlDbType.BigInt).Value = hotelU;
-                command2.Parameters.AddWithValue("@user", SqlDbType.BigInt).Value = dtUsuario.Rows[0][0].ToString();
-                command2.Parameters.AddWithValue("@hab", SqlDbType.Bit).Value = checkBoxHabilitado.Checked;
+                command2.Parameters.AddWithValue("@user", SqlDbType.BigInt).Value = dtUsuario.Rows[0][0];
                 UtilesSQL.ejecutarComandoNonQuery(command2);
             }
 
@@ -411,13 +411,40 @@ namespace FrbaHotel.AbmUsuario
 
         private void buttonAgregarRol_Click(object sender, EventArgs e)
         {
-            rol = null;
-            SeleccionarRol f1 = new SeleccionarRol(dtRoles);
-            if (!f1.IsDisposed || f1.rol == null)
+            SqlCommand command2 = UtilesSQL.crearCommand("SELECT rol_nombre FROM DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre NOT IN (SELECT rol_nombre  from DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre = 'ADMINISTRADOR GENERAL' OR rol_nombre = 'GUEST')");
+            SqlDataReader reader2 = command2.ExecuteReader();
+            DataTable dtRol = new DataTable();
+            dtRol.Columns.Add("rol_nombre", typeof(string));
+            DataColumn[] keyColumns = new DataColumn[1];
+            keyColumns[0] = dtRol.Columns["rol_nombre"];
+            dtRol.PrimaryKey = keyColumns;
+            dtRol.Load(reader2);
+
+            foreach (DataRow row in dtRoles.Rows)
             {
+                for (int i = 0; i < dtRol.Rows.Count; i++)
+                {
+                    if (dtRol.Rows[i][0].ToString() == row[0].ToString())
+                    {
+                        dtRol.Rows.RemoveAt(i);
+                    }
+                }
+            }
+
+            if (dtRol.Rows.Count == 0)
+            {
+                MessageBox.Show("No hay mas roles para agregar");
+                return;
+            }
+            else
+            {
+                SeleccionarRol f1 = new SeleccionarRol(dtRol);
                 f1.ShowDialog();
                 rol = f1.rol;
-                dtRoles.Rows.Add(rol);
+                if (f1.rol != null)
+                {
+                    dtRoles.Rows.Add(rol);
+                }
             }
         }
         private void buttonQuitarRol_Click(object sender, EventArgs e)

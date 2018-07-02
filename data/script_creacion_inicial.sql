@@ -27,30 +27,24 @@ GO
 -------------------------------------------------------------
 
 CREATE PROCEDURE DERROCHADORES_DE_PAPEL.ModificarRolesUsuario
-@rol NUMERIC(18,0),
+@rol NVARCHAR(50),
 @user NUMERIC(18,0),
 @hotel NUMERIC(18,0)
 AS
-BEGIN TRAN ta
-BEGIN TRY
-	COMMIT TRAN ta
+	DECLARE @rol1 NUMERIC(18,0)
+	SELECT @rol1 = r.rol_id FROM DERROCHADORES_DE_PAPEL.Rol r WHERE rol_nombre = @rol
 
-	IF EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel WHERE rouh_usuario = @user AND rouh_hotel = @hotel AND rouh_rol = @rol)
+	IF EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel WHERE rouh_usuario = @user AND rouh_hotel = @hotel AND rouh_rol = @rol1)
 	BEGIN
 		UPDATE DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel 
 		SET rouh_habilitado = 1
-		WHERE rouh_usuario = @user AND rouh_hotel = @hotel AND rouh_rol = @rol
+		WHERE rouh_usuario = @user AND rouh_hotel = @hotel AND rouh_rol = @rol1
 	END
 ELSE
 	BEGIN
 		INSERT INTO DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel
-		VALUES (@rol, @user, @hotel, 1)
+		VALUES (@rol1, @user, @hotel, 1)
 	END
-END TRY
-BEGIN CATCH
-	ROLLBACK TRANSACTION;
-END CATCH
-
 GO
 
 -------------------------------------------------------------

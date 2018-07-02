@@ -101,7 +101,7 @@ namespace FrbaHotel.AbmUsuario
             {
                 commandString += "u.usur_username LIKE @usur and ";
             }
-            commandString += "h.hote_id = @hotel AND NOT usur_id = 2";
+            commandString += "h.hote_id = @hotel AND NOT usur_id = 2 AND rouh_habilitado = 1 GROUP BY u.usur_username, u.usur_nombre, u.usur_apellido, u.usur_mail, u.usur_telefono, u.usur_fechaDeNacimiento, u.usur_calle, u.usur_numeroDeCalle, u.usur_numeroDeDocumento ORDER BY u.usur_username";
             SqlDataAdapter sda = UtilesSQL.crearDataAdapter(commandString);
             sda.SelectCommand.Parameters.AddWithValue("@nom", "%" + textBoxNombre.Text + "%");
             sda.SelectCommand.Parameters.AddWithValue("@ape", "%" + textBoxApellido.Text + "%");
