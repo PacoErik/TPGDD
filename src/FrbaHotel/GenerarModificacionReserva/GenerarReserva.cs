@@ -34,7 +34,8 @@ namespace FrbaHotel.GenerarModificacionReserva
             reserva.usuario = id_usuario;
             reserva.hotel.ID = Convert.ToInt32(id_hotel);
             btn_cargar_opciones.Text = "Cargar opciones";
-            DateTime fecha = DateTime.ParseExact(Main.fecha(), "yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
+            DateTime fecha = Convert.ToDateTime(Main.fecha());
+            //DateTime fecha = DateTime.ParseExact(Main.fecha(), "yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
             reserva.fecha_que_se_realizo_reserva = fecha;
             reserva.fecha_desde = fecha;
             reserva.fecha_hasta = fecha;
