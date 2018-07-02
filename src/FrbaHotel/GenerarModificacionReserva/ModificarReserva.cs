@@ -181,8 +181,10 @@ namespace FrbaHotel.GenerarModificacionReserva
             reserva.precio_base = Convert.ToDouble(reg_seleccionado.Rows[0]["regi_precioBase"]);
             cbox_regimenes.SelectedIndex = cbox_regimenes.Items.IndexOf(reg_seleccionado.Rows[0]["regi_descripcion"]);
 
-            UtilesSQL.llenarTabla(hoteles, "SELECT * FROM DERROCHADORES_DE_PAPEL.Hotel WHERE hote_id = '" + reserva.hotel.ID + "'");
-            reserva.hotel.recarga_estrellas = Convert.ToDouble(hoteles.Rows[0]["hote_recargaEstrella"]);
+            DataTable dt = new DataTable();
+            UtilesSQL.llenarTabla(dt, "SELECT * FROM DERROCHADORES_DE_PAPEL.Hotel WHERE hote_id = '" + reserva.hotel.ID.ToString() + "'");
+            reserva.hotel.recarga_estrellas = Convert.ToDouble(dt.Rows[0][8]);
+            MessageBox.Show(dt.Rows[0][8].ToString());
             lbl_recarga_estrellas.Visible = true;
             lbl_recarga_estrellas.Text = "U$S" + reserva.hotel.recarga_estrellas.ToString();
 
@@ -192,7 +194,7 @@ namespace FrbaHotel.GenerarModificacionReserva
         private void CargarHabitaciones()
         {
             hoteles = new DataTable();
-            UtilesSQL.llenarTabla(hoteles, "SELECT * FROM  DERROCHADORES_DE_PAPEL.PeriodoDeCierre WHERE (peri_fechaFin >= CONVERT(DATETIME, '" + reserva.fecha_desde.ToString("yyyy-MM-dd") + "') AND peri_fechaFin <= CONVERT(DATETIME, '" + reserva.fecha_hasta.ToString("yyyy-MM-dd") + "')) OR (peri_fechaInicio >= CONVERT(DATETIME, '" + reserva.fecha_desde.ToString("yyyy-MM-dd") + "') AND peri_fechaInicio <= CONVERT(DATETIME, '" + reserva.fecha_hasta + "')) OR ( peri_fechaInicio <= CONVERT(DATETIME, '" + reserva.fecha_desde.ToString("yyyy-MM-dd") + "') AND peri_fechaFin >= CONVERT(DATETIME, '" + reserva.fecha_hasta.ToString("yyyy-MM-dd") + "')) AND peri_hotel = '" + reserva.hotel.ID.ToString("yyyy-MM-dd") + "' ");
+            UtilesSQL.llenarTabla(hoteles, "SELECT * FROM  DERROCHADORES_DE_PAPEL.PeriodoDeCierre WHERE (peri_fechaFin >= CONVERT(DATETIME, '" + reserva.fecha_desde.ToString("yyyy-MM-dd") + "') AND peri_fechaFin <= CONVERT(DATETIME, '" + reserva.fecha_hasta.ToString("yyyy-MM-dd") + "')) OR (peri_fechaInicio >= CONVERT(DATETIME, '" + reserva.fecha_desde.ToString("yyyy-MM-dd") + "') AND peri_fechaInicio <= CONVERT(DATETIME, '" + reserva.fecha_hasta.ToString("yyyy-MM-dd") + "')) OR ( peri_fechaInicio <= CONVERT(DATETIME, '" + reserva.fecha_desde.ToString("yyyy-MM-dd") + "') AND peri_fechaFin >= CONVERT(DATETIME, '" + reserva.fecha_hasta.ToString("yyyy-MM-dd") + "')) AND peri_hotel = '" + reserva.hotel.ID.ToString() + "' ");
             if (hoteles.Rows.Count != 0)
             {
                 lbl_error_carga_hotel.Text = "HOTEL CERRADO POR ESAS FECHAS";
