@@ -50,7 +50,7 @@ namespace FrbaHotel.GenerarModificacionReserva
             lbl_falta_habitaciones_2.Visible = false;
             lbl_falta_habitaciones_1.Visible = false;
             //Inicializacion de intefaz
-            lbl_noches.Text = lbl_precio_base.Text = lbl_recarga_estrellas.Text = String.Empty;
+            lbl_noches.Text = precio_base.Text = recarga_por_estrellas.Text = String.Empty;
             //Cambio de estructura
             SetearRecargaEstrella();
         }
@@ -59,7 +59,7 @@ namespace FrbaHotel.GenerarModificacionReserva
         {
             UtilesSQL.llenarTabla(hoteles, "SELECT * FROM DERROCHADORES_DE_PAPEL.Hotel WHERE hote_id = '" + reserva.hotel.ID.ToString() + "'");
             reserva.hotel.recarga_estrellas = Convert.ToDouble(hoteles.Rows[0]["hote_recargaEstrella"]);
-            lbl_recarga_estrellas.Text = reserva.hotel.recarga_estrellas.ToString();
+            recarga_por_estrellas.Text = reserva.hotel.recarga_estrellas.ToString()+"$";
         }
 
         private void date_desde_ValueChanged(object sender, EventArgs e)
@@ -131,10 +131,17 @@ namespace FrbaHotel.GenerarModificacionReserva
             {
                 if (CargarHabitaciones())
                 {
+
                     lbl_error_carga_hotel.Visible = false;
                     CargarRegimenes();
                     cbox_disponibles.Enabled = true;
                     cbox_seleccionadas.Enabled = true;
+                    btn_agregar_habitacion.Enabled = true;
+                    btn_eliminar_habitacion.Enabled = true;
+                    btn_cargar_opciones.Enabled = false;
+                    date_desde.Enabled = false;
+                    date_hasta.Enabled = false;
+                    txtbox_personas.Enabled = false;
                 }
                 else
                 {
@@ -160,11 +167,13 @@ namespace FrbaHotel.GenerarModificacionReserva
         private void cbox_regimenes_SelectedIndexChanged(object sender, EventArgs e)
         {
             int indice_regimen_seleccionado = cbox_regimenes.SelectedIndex;
-            string precio_base = String.Empty;
-            precio_base = regimenes.Rows[indice_regimen_seleccionado]["regi_precioBase"].ToString();
-            lbl_precio_base.Text = precio_base;
-            reserva.precio_base = Convert.ToDouble(precio_base);
+            string preciobase = String.Empty;
+            preciobase = regimenes.Rows[indice_regimen_seleccionado]["regi_precioBase"].ToString();
+            precio_base.Text = preciobase+"$";
+            reserva.precio_base = Convert.ToDouble(preciobase);
             reserva.regimen_seleccionado = Convert.ToInt32(regimenes.Rows[indice_regimen_seleccionado]["regi_codigo"]);
+            reserva.CalcularPrecio();
+            precio_total.Text = reserva.precio.ToString()+"$";
         }
 
         private bool CargarHabitaciones()
@@ -195,6 +204,9 @@ namespace FrbaHotel.GenerarModificacionReserva
                 }*/
                 if (habitaciones.Rows.Count == 0)
                     return false;
+                if (habitaciones.Select().Sum(hab => Int32.Parse(hab[2].ToString())) < reserva.personas)
+                    return false;
+                  
                 for (int indice = 0; indice < habitaciones.Rows.Count; indice++)
                 {
                     Habitacion habitacion = new Habitacion();
@@ -267,7 +279,7 @@ namespace FrbaHotel.GenerarModificacionReserva
         private void CalcularPrecio()
         {
             reserva.CalcularPrecio();
-            lbl_precio.Text = reserva.precio.ToString();
+            precio_total.Text = reserva.precio.ToString()+"$";
         }
 
         private void VerificarCapacidadReserva()
@@ -349,6 +361,46 @@ namespace FrbaHotel.GenerarModificacionReserva
                 clie_mail.Text = elegir.mail();
             }
             Show();
+        }
+
+        private void limpiar_Click(object sender, EventArgs e)
+        {
+            clie_nombre.Clear();
+            clie_apellido.Clear();
+            clie_mail.Clear();
+            cbox_disponibles.Items.Clear();
+            cbox_seleccionadas.Items.Clear();
+            cbox_disponibles.Enabled = false;
+            cbox_seleccionadas.Enabled = false;
+            btn_agregar_habitacion.Enabled = false;
+            btn_eliminar_habitacion.Enabled = false;
+            precio_total.Text = "";
+            precio_base.Text = "";
+
+            DateTime fecha = reserva.fecha_que_se_realizo_reserva;
+            reserva.fecha_desde = fecha;
+            reserva.fecha_hasta = fecha;
+            date_desde.Value = date_desde.MinDate = fecha;
+            date_hasta.Value = date_hasta.MinDate = fecha;
+            lbl_error_fecha.Visible = false;
+            lbl_error_personas.Visible = false;
+            lbl_error_carga_hotel.Visible = false;
+            reserva.personas = 0;
+            //Inicializaciones
+            cbox_regimenes.Enabled = false;
+            btn_reservar.Enabled = false;
+            lbl_falta_habitaciones_2.Visible = false;
+            lbl_falta_habitaciones_1.Visible = false;
+            //Inicializacion de intefaz
+            lbl_noches.Text = "";
+
+            cbox_regimenes.Items.Clear();
+            txtbox_personas.Clear();
+            btn_cargar_opciones.Enabled = true;
+
+            date_desde.Enabled = true;
+            date_hasta.Enabled = true;
+            txtbox_personas.Enabled = true;
         }
 
 

@@ -36,14 +36,11 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.lbl_precio_base = new System.Windows.Forms.Label();
-            this.lbl_recarga_estrellas = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.lbl_noches = new System.Windows.Forms.Label();
             this.atras_Button = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
-            this.lbl_precio = new System.Windows.Forms.Label();
             this.btn_reservar = new System.Windows.Forms.Button();
             this.lbl_error_fecha = new System.Windows.Forms.Label();
             this.txtbox_personas = new System.Windows.Forms.TextBox();
@@ -62,13 +59,17 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.clie_nombre = new System.Windows.Forms.TextBox();
-            this.clie_apellido = new System.Windows.Forms.TextBox();
-            this.clie_mail = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.clie_mail = new System.Windows.Forms.TextBox();
+            this.clie_apellido = new System.Windows.Forms.TextBox();
+            this.clie_nombre = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.limpiar = new System.Windows.Forms.Button();
+            this.precio_base = new System.Windows.Forms.TextBox();
+            this.precio_total = new System.Windows.Forms.TextBox();
+            this.recarga_por_estrellas = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -111,6 +112,7 @@
             // 
             // cbox_regimenes
             // 
+            this.cbox_regimenes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbox_regimenes.FormattingEnabled = true;
             this.cbox_regimenes.Location = new System.Drawing.Point(9, 164);
             this.cbox_regimenes.Name = "cbox_regimenes";
@@ -130,7 +132,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 16);
+            this.label5.Location = new System.Drawing.Point(53, 28);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(63, 13);
             this.label5.TabIndex = 8;
@@ -139,29 +141,11 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(92, 16);
+            this.label6.Location = new System.Drawing.Point(9, 54);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(107, 13);
             this.label6.TabIndex = 9;
             this.label6.Text = "Recarga por estrellas";
-            // 
-            // lbl_precio_base
-            // 
-            this.lbl_precio_base.AutoSize = true;
-            this.lbl_precio_base.Location = new System.Drawing.Point(12, 33);
-            this.lbl_precio_base.Name = "lbl_precio_base";
-            this.lbl_precio_base.Size = new System.Drawing.Size(35, 13);
-            this.lbl_precio_base.TabIndex = 12;
-            this.lbl_precio_base.Text = "label8";
-            // 
-            // lbl_recarga_estrellas
-            // 
-            this.lbl_recarga_estrellas.AutoSize = true;
-            this.lbl_recarga_estrellas.Location = new System.Drawing.Point(92, 33);
-            this.lbl_recarga_estrellas.Name = "lbl_recarga_estrellas";
-            this.lbl_recarga_estrellas.Size = new System.Drawing.Size(35, 13);
-            this.lbl_recarga_estrellas.TabIndex = 13;
-            this.lbl_recarga_estrellas.Text = "label9";
             // 
             // label8
             // 
@@ -203,20 +187,11 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(9, 56);
+            this.label11.Location = new System.Drawing.Point(275, 39);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(63, 13);
             this.label11.TabIndex = 23;
             this.label11.Text = "Precio total:";
-            // 
-            // lbl_precio
-            // 
-            this.lbl_precio.AutoSize = true;
-            this.lbl_precio.Location = new System.Drawing.Point(78, 56);
-            this.lbl_precio.Name = "lbl_precio";
-            this.lbl_precio.Size = new System.Drawing.Size(47, 13);
-            this.lbl_precio.TabIndex = 24;
-            this.lbl_precio.Text = "PRECIO";
             // 
             // btn_reservar
             // 
@@ -279,6 +254,7 @@
             // cbox_disponibles
             // 
             this.cbox_disponibles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbox_disponibles.Enabled = false;
             this.cbox_disponibles.FormattingEnabled = true;
             this.cbox_disponibles.Location = new System.Drawing.Point(145, 20);
             this.cbox_disponibles.Name = "cbox_disponibles";
@@ -306,6 +282,7 @@
             // cbox_seleccionadas
             // 
             this.cbox_seleccionadas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbox_seleccionadas.Enabled = false;
             this.cbox_seleccionadas.FormattingEnabled = true;
             this.cbox_seleccionadas.Location = new System.Drawing.Point(145, 47);
             this.cbox_seleccionadas.Name = "cbox_seleccionadas";
@@ -314,6 +291,7 @@
             // 
             // btn_agregar_habitacion
             // 
+            this.btn_agregar_habitacion.Enabled = false;
             this.btn_agregar_habitacion.Location = new System.Drawing.Point(426, 18);
             this.btn_agregar_habitacion.Name = "btn_agregar_habitacion";
             this.btn_agregar_habitacion.Size = new System.Drawing.Size(63, 23);
@@ -324,6 +302,7 @@
             // 
             // btn_eliminar_habitacion
             // 
+            this.btn_eliminar_habitacion.Enabled = false;
             this.btn_eliminar_habitacion.Location = new System.Drawing.Point(427, 45);
             this.btn_eliminar_habitacion.Name = "btn_eliminar_habitacion";
             this.btn_eliminar_habitacion.Size = new System.Drawing.Size(62, 23);
@@ -394,11 +373,11 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.recarga_por_estrellas);
+            this.groupBox3.Controls.Add(this.precio_total);
+            this.groupBox3.Controls.Add(this.precio_base);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Controls.Add(this.lbl_precio_base);
-            this.groupBox3.Controls.Add(this.lbl_recarga_estrellas);
-            this.groupBox3.Controls.Add(this.lbl_precio);
             this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Location = new System.Drawing.Point(12, 344);
             this.groupBox3.Name = "groupBox3";
@@ -423,57 +402,6 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Datos de cliente";
             // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(12, 16);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(47, 13);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "Nombre:";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(12, 42);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(47, 13);
-            this.label12.TabIndex = 1;
-            this.label12.Text = "Apellido:";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(30, 67);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(29, 13);
-            this.label13.TabIndex = 2;
-            this.label13.Text = "Mail:";
-            // 
-            // clie_nombre
-            // 
-            this.clie_nombre.Location = new System.Drawing.Point(65, 13);
-            this.clie_nombre.Name = "clie_nombre";
-            this.clie_nombre.ReadOnly = true;
-            this.clie_nombre.Size = new System.Drawing.Size(188, 20);
-            this.clie_nombre.TabIndex = 3;
-            // 
-            // clie_apellido
-            // 
-            this.clie_apellido.Location = new System.Drawing.Point(65, 39);
-            this.clie_apellido.Name = "clie_apellido";
-            this.clie_apellido.ReadOnly = true;
-            this.clie_apellido.Size = new System.Drawing.Size(188, 20);
-            this.clie_apellido.TabIndex = 4;
-            // 
-            // clie_mail
-            // 
-            this.clie_mail.Location = new System.Drawing.Point(65, 64);
-            this.clie_mail.Name = "clie_mail";
-            this.clie_mail.ReadOnly = true;
-            this.clie_mail.Size = new System.Drawing.Size(188, 20);
-            this.clie_mail.TabIndex = 5;
-            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(319, 30);
@@ -484,11 +412,97 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // clie_mail
+            // 
+            this.clie_mail.Location = new System.Drawing.Point(65, 64);
+            this.clie_mail.Name = "clie_mail";
+            this.clie_mail.ReadOnly = true;
+            this.clie_mail.Size = new System.Drawing.Size(188, 20);
+            this.clie_mail.TabIndex = 5;
+            // 
+            // clie_apellido
+            // 
+            this.clie_apellido.Location = new System.Drawing.Point(65, 39);
+            this.clie_apellido.Name = "clie_apellido";
+            this.clie_apellido.ReadOnly = true;
+            this.clie_apellido.Size = new System.Drawing.Size(188, 20);
+            this.clie_apellido.TabIndex = 4;
+            // 
+            // clie_nombre
+            // 
+            this.clie_nombre.Location = new System.Drawing.Point(65, 13);
+            this.clie_nombre.Name = "clie_nombre";
+            this.clie_nombre.ReadOnly = true;
+            this.clie_nombre.Size = new System.Drawing.Size(188, 20);
+            this.clie_nombre.TabIndex = 3;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(30, 67);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(29, 13);
+            this.label13.TabIndex = 2;
+            this.label13.Text = "Mail:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(12, 42);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(47, 13);
+            this.label12.TabIndex = 1;
+            this.label12.Text = "Apellido:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(12, 16);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(47, 13);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "Nombre:";
+            // 
+            // limpiar
+            // 
+            this.limpiar.Location = new System.Drawing.Point(190, 525);
+            this.limpiar.Name = "limpiar";
+            this.limpiar.Size = new System.Drawing.Size(75, 23);
+            this.limpiar.TabIndex = 50;
+            this.limpiar.Text = "Limpiar";
+            this.limpiar.UseVisualStyleBackColor = true;
+            this.limpiar.Click += new System.EventHandler(this.limpiar_Click);
+            // 
+            // precio_base
+            // 
+            this.precio_base.Location = new System.Drawing.Point(122, 25);
+            this.precio_base.Name = "precio_base";
+            this.precio_base.ReadOnly = true;
+            this.precio_base.Size = new System.Drawing.Size(100, 20);
+            this.precio_base.TabIndex = 24;
+            // 
+            // precio_total
+            // 
+            this.precio_total.Location = new System.Drawing.Point(344, 36);
+            this.precio_total.Name = "precio_total";
+            this.precio_total.ReadOnly = true;
+            this.precio_total.Size = new System.Drawing.Size(100, 20);
+            this.precio_total.TabIndex = 25;
+            // 
+            // recarga_por_estrellas
+            // 
+            this.recarga_por_estrellas.Location = new System.Drawing.Point(122, 51);
+            this.recarga_por_estrellas.Name = "recarga_por_estrellas";
+            this.recarga_por_estrellas.ReadOnly = true;
+            this.recarga_por_estrellas.Size = new System.Drawing.Size(100, 20);
+            this.recarga_por_estrellas.TabIndex = 26;
+            // 
             // GenerarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(518, 560);
+            this.Controls.Add(this.limpiar);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -520,14 +534,11 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label lbl_precio_base;
-        private System.Windows.Forms.Label lbl_recarga_estrellas;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label lbl_noches;
         private System.Windows.Forms.Button atras_Button;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label lbl_precio;
         private System.Windows.Forms.Button btn_reservar;
         private System.Windows.Forms.Label lbl_error_fecha;
         private System.Windows.Forms.TextBox txtbox_personas;
@@ -553,5 +564,9 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Button limpiar;
+        private System.Windows.Forms.TextBox recarga_por_estrellas;
+        private System.Windows.Forms.TextBox precio_total;
+        private System.Windows.Forms.TextBox precio_base;
     }
 }
