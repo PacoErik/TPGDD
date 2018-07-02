@@ -24,8 +24,6 @@ namespace FrbaHotel.GenerarModificacionReserva
         DataTable hoteles = new DataTable();
         DataTable regimenes = new DataTable();
         DataTable tipo_habitaciones = new DataTable();
-        DataTable identificaciones = new DataTable();
-        DataTable clientes = new DataTable();
         DataTable habitaciones = new DataTable();
         DataTable estados_reserva = new DataTable();
 
@@ -36,28 +34,21 @@ namespace FrbaHotel.GenerarModificacionReserva
             reserva.usuario = id_usuario;
             reserva.hotel.ID = Convert.ToInt32(id_hotel);
             btn_cargar_opciones.Text = "Cargar opciones";
-            reserva.fecha_que_se_realizo_reserva = DateTime.ParseExact(Main.fecha(), "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture);
-            reserva.fecha_desde = DateTime.ParseExact(Main.fecha(), "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture);
-            reserva.fecha_hasta = DateTime.ParseExact(Main.fecha(), "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture);
-            date_desde.Value = date_desde.MinDate = DateTime.ParseExact(Main.fecha(), "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture);
-            date_hasta.Value = date_hasta.MinDate = DateTime.ParseExact(Main.fecha(), "yyyy-dd-MM HH:mm:ss.fff", CultureInfo.InvariantCulture);
+            DateTime fecha = DateTime.ParseExact(Main.fecha(), "yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture);
+            reserva.fecha_que_se_realizo_reserva = fecha;
+            reserva.fecha_desde = fecha;
+            reserva.fecha_hasta = fecha;
+            date_desde.Value = date_desde.MinDate = fecha;
+            date_hasta.Value = date_hasta.MinDate = fecha;
             lbl_error_fecha.Visible = false;
             lbl_error_personas.Visible = false;
             lbl_error_carga_hotel.Visible = false;
-            lbl_cliente_inhabilitado.Visible = false;
             reserva.personas = 0;
             //Inicializaciones
             cbox_regimenes.Enabled = false;
-            cbox_tipo_identificacion.Enabled = false;
-            txtbox_identificacion.Enabled = false;
-            txtbox_mail.Enabled = false;
             btn_reservar.Enabled = false;
             lbl_falta_habitaciones_2.Visible = false;
             lbl_falta_habitaciones_1.Visible = false;
-            lbl_falta_tipo_id.Visible = false;
-            lbl_falta_id.Visible = false;
-            lbl_falta_mail.Visible = false;
-            lbl_id_incorrecta.Visible = false;
             //Inicializacion de intefaz
             lbl_noches.Text = lbl_precio_base.Text = lbl_recarga_estrellas.Text = String.Empty;
             //Cambio de estructura
@@ -142,7 +133,6 @@ namespace FrbaHotel.GenerarModificacionReserva
                 {
                     lbl_error_carga_hotel.Visible = false;
                     CargarRegimenes();
-                    HabilitarRegistroCliente();
                     cbox_disponibles.Enabled = true;
                     cbox_seleccionadas.Enabled = true;
                 }
@@ -190,13 +180,21 @@ namespace FrbaHotel.GenerarModificacionReserva
             else
             {
                 habitaciones.Clear();
-                string consulta = "SELECT h1.habi_numero, h1.habi_piso, th1.tipo_cantidadDePersonas, th1.tipo_descripcion FROM  DERROCHADORES_DE_PAPEL.TipoDeHabitacion as th1 JOIN DERROCHADORES_DE_PAPEL.Habitacion as h1 ON (th1.tipo_codigo = h1.habi_tipo) WHERE h1.habi_hotel = '" + reserva.hotel.ID + "' AND NOT (EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.Habitacion as h2 JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion as rh2 ON ( rh2.rexh_hotel = h2.habi_hotel AND rh2.rexh_numero = h2.habi_numero AND rh2.rexh_piso = h2.habi_piso) JOIN DERROCHADORES_DE_PAPEL.Reserva as r2 ON (r2.rese_codigo = rh2.rexh_reserva) JOIN DERROCHADORES_DE_PAPEL.EstadoDeReserva as er2 ON (er2.esta_id = r2.rese_estado) WHERE h2.habi_hotel = h1.habi_hotel AND h2.habi_numero = h1.habi_numero AND h2.habi_piso = h1.habi_piso AND ( ((r2.rese_inicio BETWEEN '" + reserva.fecha_desde + "' AND '" + reserva.fecha_hasta + "') OR (r2.rese_fin BETWEEN '" + reserva.fecha_desde + "' AND '" + reserva.fecha_hasta + "') OR (r2.rese_fin <= '" + reserva.fecha_desde + "' AND r2.rese_fin >= '" + reserva.fecha_hasta + "') ) AND (NOT ( (esta_detalle = 'RESERVA CANCELADA POR RECEPCION') OR (esta_detalle = 'RESERVA CANCELADA POR CLIENTE' ) OR (esta_detalle = 'RESERVA CANCELADA POR NO-SHOW')) ) ) ) )";
-                UtilesSQL.llenarTabla(habitaciones, consulta);
+
+                string consulta = "SELECT h1.habi_numero, h1.habi_piso, th1.tipo_cantidadDePersonas, th1.tipo_descripcion FROM  DERROCHADORES_DE_PAPEL.TipoDeHabitacion as th1 JOIN DERROCHADORES_DE_PAPEL.Habitacion as h1 ON (th1.tipo_codigo = h1.habi_tipo) WHERE h1.habi_hotel = @hotel AND NOT (EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.Habitacion as h2 JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion as rh2 ON ( rh2.rexh_hotel = h2.habi_hotel AND rh2.rexh_numero = h2.habi_numero AND rh2.rexh_piso = h2.habi_piso) JOIN DERROCHADORES_DE_PAPEL.Reserva as r2 ON (r2.rese_codigo = rh2.rexh_reserva) JOIN DERROCHADORES_DE_PAPEL.EstadoDeReserva as er2 ON (er2.esta_id = r2.rese_estado) WHERE h2.habi_hotel = h1.habi_hotel AND h2.habi_numero = h1.habi_numero AND h2.habi_piso = h1.habi_piso AND ( ((r2.rese_inicio BETWEEN @fechaDesde AND @fechaHasta) OR (r2.rese_fin BETWEEN @fechaDesde AND @fechaHasta) OR (r2.rese_fin <= @fechaDesde AND r2.rese_fin >= @fechaHasta) ) AND (NOT ( (esta_detalle = 'RESERVA CANCELADA POR RECEPCION') OR (esta_detalle = 'RESERVA CANCELADA POR CLIENTE' ) OR (esta_detalle = 'RESERVA CANCELADA POR NO-SHOW')) ) ) ) )";
+                SqlDataAdapter sda = UtilesSQL.crearDataAdapter(consulta);
+                sda.SelectCommand.Parameters.AddWithValue("@hotel", reserva.hotel.ID);
+                sda.SelectCommand.Parameters.AddWithValue("@fechaDesde", reserva.fecha_desde);
+                sda.SelectCommand.Parameters.AddWithValue("@fechaHasta", reserva.fecha_hasta);
+                sda.Fill(habitaciones);
+
                 habitaciones_disponibles = new List<Habitacion>();
-                if (habitaciones_disponibles.Count == 0)
+                /*if (habitaciones_disponibles.Count == 0)
                 {
                     return false;
-                }
+                }*/
+                if (habitaciones.Rows.Count == 0)
+                    return false;
                 for (int indice = 0; indice < habitaciones.Rows.Count; indice++)
                 {
                     Habitacion habitacion = new Habitacion();
@@ -206,6 +204,7 @@ namespace FrbaHotel.GenerarModificacionReserva
                     habitacion.piso = Convert.ToInt32(habitaciones.Rows[indice]["habi_piso"].ToString());
                     habitaciones_disponibles.Add(habitacion);
                 }
+                reserva.habitaciones_reservadas.Clear();
                 ActualizarComboBoxHabitaciones();
                 return true;
             }
@@ -214,21 +213,34 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         private void btn_agregar_habitacion_Click(object sender, EventArgs e)
         {
-            if (cbox_disponibles.SelectedIndex != 0)
+            if (cbox_disponibles.SelectedIndex > 0)
             {
+                if (reserva.PersonasMaximas() >= reserva.personas)
+                {
+                    MessageBox.Show("Las habitaciones elegidas ya satisfacen la cantidad de personas estipuladas");
+                    return;
+                }
                 reserva.habitaciones_reservadas.Add(habitaciones_disponibles[cbox_disponibles.SelectedIndex - 1]);
                 habitaciones_disponibles.RemoveAt(cbox_disponibles.SelectedIndex - 1);
                 ActualizarComboBoxHabitaciones();
+                if (reserva.PersonasMaximas() >= reserva.personas)
+                {
+                    btn_reservar.Enabled = true;
+                }
             }
         }
 
         private void btn_eliminar_habitacion_Click(object sender, EventArgs e)
         {
-            if (cbox_seleccionadas.SelectedIndex != 0)
+            if (cbox_seleccionadas.SelectedIndex > 0)
             {
                 habitaciones_disponibles.Add(reserva.habitaciones_reservadas[cbox_seleccionadas.SelectedIndex - 1]);
                 reserva.habitaciones_reservadas.RemoveAt(cbox_seleccionadas.SelectedIndex - 1);
                 ActualizarComboBoxHabitaciones();
+                if (reserva.PersonasMaximas() < reserva.personas)
+                {
+                    btn_reservar.Enabled = false;
+                }
             }
         }
 
@@ -263,85 +275,21 @@ namespace FrbaHotel.GenerarModificacionReserva
             lbl_falta_habitaciones_2.Visible = lbl_falta_habitaciones_1.Visible = !reserva.CapacidadSuficiente();
         }
 
-        private void HabilitarRegistroCliente()
-        {
-            cbox_tipo_identificacion.Enabled = true;
-            txtbox_identificacion.Enabled = true;
-            txtbox_mail.Enabled = true;
-            btn_reservar.Enabled = true;
-            CargarTipoIdentificacion();
-        }
-
-        private void CargarTipoIdentificacion()
-        {
-            identificaciones = new DataTable();
-            cbox_tipo_identificacion.Items.Clear();
-
-            UtilesSQL.llenarTabla(identificaciones, "SELECT * FROM DERROCHADORES_DE_PAPEL.Documento");
-
-            for (int indice = 0; indice < identificaciones.Rows.Count; indice++)
-            {
-                cbox_tipo_identificacion.Items.Add(identificaciones.Rows[indice]["docu_detalle"]);
-            }
-        }
-
         private void btn_reservar_Click(object sender, EventArgs e)
         {
-            lbl_falta_id.Visible = txtbox_identificacion.Text == "";
-            lbl_falta_mail.Visible = txtbox_mail.Text == "";
-            lbl_falta_tipo_id.Visible = cbox_tipo_identificacion.Text == "";
-            lbl_id_incorrecta.Visible = !DocumentoValido();
-            if ((!lbl_falta_id.Visible) && (!lbl_falta_mail.Visible) && (!lbl_falta_tipo_id.Visible) && (!lbl_id_incorrecta.Visible) && (!lbl_falta_habitaciones_1.Visible) )
+            if (clie_nombre.Text.Length.Equals(0))
             {
-                if (!EsCliente())
-                {
-                    MessageBox.Show("Se debe registrar cliente");
-                    RegistrarCliente();
-                }
-                else
-                {
-                    reserva.cliente = Convert.ToInt32(clientes.Rows[0]["clie_id"]);
-                    AltaReserva();
-                    Close();
-                    MessageBox.Show("Se genero un reserva en el hotel " + reserva.hotel.ID.ToString() + " desde el dia " + reserva.fecha_desde.ToString() + " hasta el dia " + reserva.fecha_hasta.ToString() + "\n Codigo de reserva: " + reserva.codigo.ToString());
-                }
+                MessageBox.Show("Se debe registrar cliente");
+                return;
             }
-        }
-
-        bool DocumentoValido()
-        {
-            return txtbox_identificacion.Text.All( char.IsDigit );
-        }
-
-        bool EsCliente()
-        {
-            clientes = new DataTable();
-            UtilesSQL.llenarTabla(clientes, "SELECT * FROM DERROCHADORES_DE_PAPEL.Cliente as c WHERE c.clie_mail = '" + txtbox_mail.Text + "' and c.clie_tipoDeDocumento = '" + cbox_tipo_identificacion.SelectedIndex + "' and c.clie_numeroDeDocumento = '" + txtbox_identificacion.Text +"'" );
-
-            if(clientes.Rows.Count != 0)
+            if (lbl_falta_habitaciones_1.Visible)
             {
-                return false;
+                MessageBox.Show("Debe elegir bien las habitaciones");
+                return;
             }
-            else
-            {
-                if (Convert.ToInt32(clientes.Rows[0]["clie_habilitado"]) != 1)
-                {
-                    lbl_cliente_inhabilitado.Visible = true;
-                    return false;
-                }
-                else {
-                    return true;
-                }
-
-            }
-        }
-
-        private void RegistrarCliente()
-        {
-            Form alta_cliente = new AbmCliente.AltaCliente();
-            Hide();
-            alta_cliente.ShowDialog();
-            Show();
+            AltaReserva();
+            MessageBox.Show("Se genero un reserva en el hotel " + reserva.hotel.ID.ToString() + " desde el dia " + reserva.fecha_desde.ToString() + " hasta el dia " + reserva.fecha_hasta.ToString() + "\n Codigo de reserva: " + reserva.codigo.ToString()); 
+            Close();
         }
 
         private void AltaReserva()
@@ -356,7 +304,7 @@ namespace FrbaHotel.GenerarModificacionReserva
             command.Parameters.AddWithValue("@hotel", reserva.hotel.ID);
             command.Parameters.AddWithValue("@regimen", reserva.regimen_seleccionado);
             command.Parameters.AddWithValue("@user", reserva.usuario);
-            command.Parameters.AddWithValue("@cantidad", reserva.personas);
+            command.Parameters.AddWithValue("@personas", reserva.personas);
 
             reserva.codigo = Convert.ToInt32(command.ExecuteScalar());
 
@@ -386,6 +334,21 @@ namespace FrbaHotel.GenerarModificacionReserva
         private void GenerarReserva_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            RegistrarEstadia.ElegirCliente elegir = new RegistrarEstadia.ElegirCliente();
+            elegir.ShowDialog();
+            if (elegir.estaElegido())
+            {
+                reserva.cliente = Int32.Parse(elegir.id());
+                clie_nombre.Text = elegir.nombre();
+                clie_apellido.Text = elegir.apellido();
+                clie_mail.Text = elegir.mail();
+            }
+            Show();
         }
 
 
