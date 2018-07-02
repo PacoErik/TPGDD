@@ -191,11 +191,11 @@ namespace FrbaHotel.GenerarModificacionReserva
             {
                 habitaciones.Clear();
 
-                string consulta = "SELECT h1.habi_numero, h1.habi_piso, th1.tipo_cantidadDePersonas, th1.tipo_descripcion FROM  DERROCHADORES_DE_PAPEL.TipoDeHabitacion as th1 JOIN DERROCHADORES_DE_PAPEL.Habitacion as h1 ON (th1.tipo_codigo = h1.habi_tipo) WHERE h1.habi_hotel = @hotel AND NOT (EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.Habitacion as h2 JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion as rh2 ON ( rh2.rexh_hotel = h2.habi_hotel AND rh2.rexh_numero = h2.habi_numero AND rh2.rexh_piso = h2.habi_piso) JOIN DERROCHADORES_DE_PAPEL.Reserva as r2 ON (r2.rese_codigo = rh2.rexh_reserva) JOIN DERROCHADORES_DE_PAPEL.EstadoDeReserva as er2 ON (er2.esta_id = r2.rese_estado) WHERE h2.habi_hotel = h1.habi_hotel AND h2.habi_numero = h1.habi_numero AND h2.habi_piso = h1.habi_piso AND ( ((r2.rese_inicio BETWEEN @fechaDesde AND @fechaHasta) OR (r2.rese_fin BETWEEN @fechaDesde AND @fechaHasta) OR (r2.rese_fin <= @fechaDesde AND r2.rese_fin >= @fechaHasta) ) AND (NOT ( (esta_detalle = 'RESERVA CANCELADA POR RECEPCION') OR (esta_detalle = 'RESERVA CANCELADA POR CLIENTE' ) OR (esta_detalle = 'RESERVA CANCELADA POR NO-SHOW')) ) ) ) )";
+                string consulta = "SELECT h1.habi_numero, h1.habi_piso, th1.tipo_cantidadDePersonas, th1.tipo_descripcion FROM  DERROCHADORES_DE_PAPEL.TipoDeHabitacion as th1 JOIN DERROCHADORES_DE_PAPEL.Habitacion as h1 ON (th1.tipo_codigo = h1.habi_tipo) WHERE h1.habi_hotel = @hotel AND NOT (EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.Habitacion as h2 JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion as rh2 ON ( rh2.rexh_hotel = h2.habi_hotel AND rh2.rexh_numero = h2.habi_numero AND rh2.rexh_piso = h2.habi_piso) JOIN DERROCHADORES_DE_PAPEL.Reserva as r2 ON (r2.rese_codigo = rh2.rexh_reserva) JOIN DERROCHADORES_DE_PAPEL.EstadoDeReserva as er2 ON (er2.esta_id = r2.rese_estado) WHERE h2.habi_hotel = h1.habi_hotel AND h2.habi_numero = h1.habi_numero AND h2.habi_piso = h1.habi_piso AND ( ((r2.rese_inicio BETWEEN CONVERT(datetime,@fechaDesde) AND CONVERT(datetime,@fechaHasta)) OR (r2.rese_fin BETWEEN CONVERT(datetime,@fechaDesde) AND CONVERT(datetime,@fechaHasta)) OR (r2.rese_fin <= CONVERT(datetime,@fechaDesde) AND r2.rese_fin >= CONVERT(datetime,@fechaHasta)) ) AND (NOT ( (esta_detalle = 'RESERVA CANCELADA POR RECEPCION') OR (esta_detalle = 'RESERVA CANCELADA POR CLIENTE' ) OR (esta_detalle = 'RESERVA CANCELADA POR NO-SHOW')) ) ) ) )";
                 SqlDataAdapter sda = UtilesSQL.crearDataAdapter(consulta);
                 sda.SelectCommand.Parameters.AddWithValue("@hotel", reserva.hotel.ID);
-                sda.SelectCommand.Parameters.AddWithValue("@fechaDesde", reserva.fecha_desde);
-                sda.SelectCommand.Parameters.AddWithValue("@fechaHasta", reserva.fecha_hasta);
+                sda.SelectCommand.Parameters.AddWithValue("@fechaDesde", reserva.fecha_desde.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                sda.SelectCommand.Parameters.AddWithValue("@fechaHasta", reserva.fecha_hasta.ToString("yyyy-MM-dd HH:mm:ss.fff"));
                 sda.Fill(habitaciones);
 
                 habitaciones_disponibles = new List<Habitacion>();
@@ -301,19 +301,19 @@ namespace FrbaHotel.GenerarModificacionReserva
                 return;
             }
             AltaReserva();
-            MessageBox.Show("Se genero un reserva en el hotel " + reserva.hotel.ID.ToString() + " desde el dia " + reserva.fecha_desde.ToString() + " hasta el dia " + reserva.fecha_hasta.ToString() + "\n Codigo de reserva: " + reserva.codigo.ToString()); 
+            MessageBox.Show("Se genero un reserva en el hotel " + reserva.hotel.ID.ToString() + " desde el dia " + reserva.fecha_desde.ToString("yyyy-MM-dd") + " hasta el dia " + reserva.fecha_hasta.ToString("yyyy-MM-dd") + "\n Codigo de reserva: " + reserva.codigo.ToString()); 
             Close();
         }
 
         private void AltaReserva()
         {
-            command = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Reserva (rese_cliente, rese_cantidadDeNoches, rese_estado, rese_fecha, rese_inicio, rese_fin, rese_hotel, rese_regimen, rese_usuario, rese_cantidadDePersonas) VALUES (@clie, @noches, @estado, @fecha, @incio, @fin, @hotel, @regimen ,@user, @personas) SELECT SCOPE_IDENTITY()");
+            command = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Reserva (rese_cliente, rese_cantidadDeNoches, rese_estado, rese_fecha, rese_inicio, rese_fin, rese_hotel, rese_regimen, rese_usuario, rese_cantidadDePersonas) VALUES (@clie, @noches, @estado, CONVERT(datetime,@fecha), CONVERT(datetime,@incio), CONVERT(datetime,@fin), @hotel, @regimen ,@user, @personas) SELECT SCOPE_IDENTITY()");
             command.Parameters.AddWithValue("@clie", reserva.cliente);
             command.Parameters.AddWithValue("@noches", reserva.cantidad_de_noches );
             command.Parameters.AddWithValue("@estado", CargarEstadosDeReserva("RESERVA CORRECTA") );
-            command.Parameters.AddWithValue("@fecha", reserva.fecha_que_se_realizo_reserva );
-            command.Parameters.AddWithValue("@incio", reserva.fecha_desde);
-            command.Parameters.AddWithValue("@fin", reserva.fecha_hasta);
+            command.Parameters.AddWithValue("@fecha", reserva.fecha_que_se_realizo_reserva.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+            command.Parameters.AddWithValue("@incio", reserva.fecha_desde.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+            command.Parameters.AddWithValue("@fin", reserva.fecha_hasta.ToString("yyyy-MM-dd HH:mm:ss.fff"));
             command.Parameters.AddWithValue("@hotel", reserva.hotel.ID);
             command.Parameters.AddWithValue("@regimen", reserva.regimen_seleccionado);
             command.Parameters.AddWithValue("@user", reserva.usuario);
