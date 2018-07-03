@@ -55,7 +55,7 @@ namespace FrbaHotel.ListadoEstadistico
                                                         +"ORDER BY 3 DESC");
                     break;
                 case "HOTELES CON MAYOR CANTIDAD DE DIAS FUERA DE SERVICIO":
-                    UtilesSQL.llenarTabla(resultados_dt, "SELECT TOP 5 hote_id Hotel, hote_nombre Nombre, ISNULL(SUM(DATEDIFF(DAY, peri_fechaFin, peri_fechaInicio)),0) \'Días sin servicio\' "
+                    UtilesSQL.llenarTabla(resultados_dt, "SELECT TOP 5 hote_id Hotel, hote_nombre Nombre, ISNULL(SUM(DATEDIFF(DAY, peri_fechaInicio, peri_fechaFin)),0) \'Días sin servicio\' "
                                                         +"FROM DERROCHADORES_DE_PAPEL.Hotel LEFT JOIN "
                                                             +"DERROCHADORES_DE_PAPEL.PeriodoDeCierre ON peri_hotel = hote_id "
                                                         +"WHERE (peri_fechaInicio IS NOT NULL AND "
