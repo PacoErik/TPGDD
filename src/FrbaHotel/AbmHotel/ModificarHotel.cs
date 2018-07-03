@@ -316,7 +316,6 @@ namespace FrbaHotel.AbmHotel
             SqlCommand com1;
             foreach (DataGridViewRow row in dataGridViewRegimenes.Rows)
             {
-                MessageBox.Show(row.Cells[0].Value.ToString() + " " + false.ToString());
                 if (row.Cells[0].Value.ToString() == false.ToString()) //Checkea si el regimen esta seleccionado
                 {
                     if (!hotelTieneRegimen(i)) //Checkea que no haya huespedes o reservas en ese regimen
