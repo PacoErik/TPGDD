@@ -184,7 +184,6 @@ namespace FrbaHotel.GenerarModificacionReserva
             DataTable dt = new DataTable();
             UtilesSQL.llenarTabla(dt, "SELECT * FROM DERROCHADORES_DE_PAPEL.Hotel WHERE hote_id = '" + reserva.hotel.ID.ToString() + "'");
             reserva.hotel.recarga_estrellas = Convert.ToDouble(dt.Rows[0][8]);
-            MessageBox.Show(dt.Rows[0][8].ToString());
             lbl_recarga_estrellas.Visible = true;
             lbl_recarga_estrellas.Text = "U$S" + reserva.hotel.recarga_estrellas.ToString();
 

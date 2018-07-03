@@ -283,7 +283,7 @@ namespace FrbaHotel.GenerarModificacionReserva
         private void CalcularPrecio()
         {
             reserva.CalcularPrecio();
-            precio_total.Text = reserva.precio.ToString()+"$";
+            precio_total.Text = reserva.precio.ToString()+"U$S";
         }
 
         private void VerificarCapacidadReserva()
