@@ -304,7 +304,7 @@ namespace FrbaHotel.AbmHotel
         private void realizarCambios()
         {
             //Modifica el hotel
-            SqlCommand com = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Hotel SET hote_nombre=@nom, hote_mail=@mail, hote_telefono=@tel, hote_calle=@calle, hote_numeroDeCalle=@numCalle, hote_localidad=@loc, hote_estrellas=@estr, hote_ciudad=@ciudad, hote_pais=@pais, hote_fechaDeCreacion=CONVERT(datetime, @fecha) WHERE hote_id = @id");
+            SqlCommand com = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Hotel SET hote_nombre=@nom, hote_mail=@mail, hote_telefono=@tel, hote_calle=@calle, hote_numeroDeCalle=@numCalle, hote_localidad=@loc, hote_estrellas=@estr, hote_ciudad=@ciudad, hote_pais=@pais, hote_fechaDeCreacion=CONVERT(datetime, @fecha, 121) WHERE hote_id = @id");
             com.Parameters.AddWithValue("@nom", textBoxNombre.Text);
             com.Parameters.AddWithValue("@mail", textBoxMail.Text);
             com.Parameters.AddWithValue("@tel", textBoxTelefono.Text);
@@ -365,9 +365,9 @@ namespace FrbaHotel.AbmHotel
         }
         private bool hotelTieneRegimen(int reg)
         {
-            SqlDataAdapter sda = UtilesSQL.crearDataAdapter("SELECT * FROM DERROCHADORES_DE_PAPEL.Estadia AS e JOIN DERROCHADORES_DE_PAPEL.Reserva AS r ON r.rese_codigo = e.esta_reserva WHERE e.esta_fechaDeFin > @fecha AND r.rese_fin > @fecha AND r.rese_regimen = @reg AND r.rese_hotel = @hotel");
+            SqlDataAdapter sda = UtilesSQL.crearDataAdapter("SELECT * FROM DERROCHADORES_DE_PAPEL.Estadia AS e JOIN DERROCHADORES_DE_PAPEL.Reserva AS r ON r.rese_codigo = e.esta_reserva WHERE e.esta_fechaDeFin > CONVERT(DATETIME, @fecha, 121) AND r.rese_fin > CONVERT(DATETIME, @fecha, 121) AND r.rese_regimen = @reg AND r.rese_hotel = @hotel");
             sda.SelectCommand.Parameters.AddWithValue("@reg", reg);
-            sda.SelectCommand.Parameters.AddWithValue("@fecha", Convert.ToDateTime(Main.fecha()));
+            sda.SelectCommand.Parameters.AddWithValue("@fecha", Main.fecha());
             sda.SelectCommand.Parameters.AddWithValue("@hotel", Int32.Parse(dtH.Rows[0][0].ToString()));
             DataTable dt = new DataTable();
             sda.Fill(dt);

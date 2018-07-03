@@ -348,7 +348,7 @@ namespace FrbaHotel.AbmUsuario
         }
         private void realizarCambios()
         {
-            SqlCommand command1 = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Usuario SET usur_password = @pass, usur_nombre = @nom, usur_apellido = @ape, usur_mail = @mail, usur_telefono = @tel, usur_fechaDeNacimiento = CONVERT(datetime, @fecha), usur_calle = @calle, usur_numeroDeCalle = @numCalle, usur_piso = @piso, usur_departamento = @depto, usur_localidad = @loc, usur_tipoDeDocumento = @doc, usur_numeroDeDocumento = @numDoc, usur_habilitado = @hab WHERE usur_id = @id");
+            SqlCommand command1 = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.Usuario SET usur_password = @pass, usur_nombre = @nom, usur_apellido = @ape, usur_mail = @mail, usur_telefono = @tel, usur_fechaDeNacimiento = CONVERT(datetime, @fecha, 121), usur_calle = @calle, usur_numeroDeCalle = @numCalle, usur_piso = @piso, usur_departamento = @depto, usur_localidad = @loc, usur_tipoDeDocumento = @doc, usur_numeroDeDocumento = @numDoc, usur_habilitado = @hab WHERE usur_id = @id");
             if (textBoxContraseña.Text == dtUsuario.Rows[0][2].ToString())
             { command1.Parameters.AddWithValue("@pass", textBoxContraseña.Text); }
             else
