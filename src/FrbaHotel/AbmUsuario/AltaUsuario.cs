@@ -39,12 +39,14 @@ namespace FrbaHotel.AbmUsuario
         }
         private void cargarComboBox()
         {
-            SqlCommand command = UtilesSQL.crearCommand("select docu_detalle from DERROCHADORES_DE_PAPEL.Documento");
+            SqlCommand command = UtilesSQL.crearCommand("select docu_detalle, docu_tipo from DERROCHADORES_DE_PAPEL.Documento");
             SqlDataReader reader = command.ExecuteReader();
             dtDocu.Columns.Add("docu_detalle", typeof(string));
+            dt.Columns.Add("docu_tipo", typeof(string));
             dtDocu.Load(reader);
 
-            comboBoxTipoDocumento.ValueMember = "docu_detalle";
+            comboBoxTipoDocumento.ValueMember = "docu_tipo";
+            comboBoxTipoDocumento.DisplayMember = "docu_detalle";
             comboBoxTipoDocumento.DataSource = dtDocu;
 
             SqlCommand command2 = UtilesSQL.crearCommand("SELECT rol_nombre, rol_id FROM DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre NOT IN (SELECT rol_nombre  from DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre = 'ADMINISTRADOR GENERAL' OR rol_nombre = 'GUEST')");
@@ -375,7 +377,7 @@ namespace FrbaHotel.AbmUsuario
             { command1.Parameters.AddWithValue("@loc", DBNull.Value); }
             else
             { command1.Parameters.AddWithValue("@loc", textBoxLocalidad.Text); }
-            command1.Parameters.AddWithValue("@doc", comboBoxTipoDocumento.SelectedIndex + 1);
+            command1.Parameters.AddWithValue("@doc", comboBoxTipoDocumento.SelectedValue.ToString());
             command1.Parameters.AddWithValue("@numDoc", textBoxNumeroDocumento.Text);
             command1.Parameters.AddWithValue("@hab", checkBoxHabilitado.Checked);
             UtilesSQL.ejecutarComandoNonQuery(command1);

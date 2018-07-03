@@ -22,7 +22,6 @@ namespace FrbaHotel.AbmCliente
         DataTable dt;
         DataTable dtDoc = new DataTable();
         DataTable dtNac = new DataTable();
-        DataTable dt4 = new DataTable();
         Form f1;
         int id;
         bool teleNull = false;
@@ -269,11 +268,11 @@ namespace FrbaHotel.AbmCliente
             }
             else
             {
-                dt4.Clear();
+                DataTable dtMail = new DataTable();
                 SqlDataAdapter sda = UtilesSQL.crearDataAdapter("select clie_id from DERROCHADORES_DE_PAPEL.Cliente where clie_mail = @mail");
                 sda.SelectCommand.Parameters.AddWithValue("@mail", mail);
                 sda.Fill(dtNac);
-                if (dt4.Rows.Count == 0) //El mail no esta en uso
+                if (dtMail.Rows.Count == 0) //El mail no esta en uso
                 {
                     try
                     {
@@ -287,7 +286,7 @@ namespace FrbaHotel.AbmCliente
                 }
                 else
                 {
-                    if(dt4.Rows[0][0].ToString() == id.ToString())  //el mail esta en uso pero por ese usuario
+                    if(dtMail.Rows[0][0].ToString() == id.ToString())  //el mail esta en uso pero por ese usuario
                     {
                         labelMailEnUso.Visible = Enabled;
                         Valido = false;
