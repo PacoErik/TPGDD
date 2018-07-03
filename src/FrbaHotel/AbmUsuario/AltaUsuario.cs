@@ -42,7 +42,7 @@ namespace FrbaHotel.AbmUsuario
             SqlCommand command = UtilesSQL.crearCommand("select docu_detalle, docu_tipo from DERROCHADORES_DE_PAPEL.Documento");
             SqlDataReader reader = command.ExecuteReader();
             dtDocu.Columns.Add("docu_detalle", typeof(string));
-            dt.Columns.Add("docu_tipo", typeof(string));
+            dtDocu.Columns.Add("docu_tipo", typeof(string));
             dtDocu.Load(reader);
 
             comboBoxTipoDocumento.ValueMember = "docu_tipo";
