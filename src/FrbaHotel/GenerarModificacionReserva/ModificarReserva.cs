@@ -250,7 +250,7 @@ namespace FrbaHotel.GenerarModificacionReserva
             regimenes = new DataTable();
             UtilesSQL.llenarTabla(regimenes, "SELECT * FROM DERROCHADORES_DE_PAPEL.RegimenXHotel as rh JOIN DERROCHADORES_DE_PAPEL.Regimen as r ON ( rh.rexh_regimen = r.regi_codigo AND rh.rexh_hotel = " + reserva.hotel.ID.ToString() + ")");
             cbox_regimenes.Items.Clear();
-            for (int indice = 0; indice < regimenes.Rows.Count - 1; indice++)
+            for (int indice = 0; indice < regimenes.Rows.Count; indice++)
             {
                 cbox_regimenes.Items.Add(regimenes.Rows[indice]["regi_descripcion"].ToString());
             }
