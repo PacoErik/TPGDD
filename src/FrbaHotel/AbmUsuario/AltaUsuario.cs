@@ -47,12 +47,14 @@ namespace FrbaHotel.AbmUsuario
             comboBoxTipoDocumento.ValueMember = "docu_detalle";
             comboBoxTipoDocumento.DataSource = dtDocu;
 
-            SqlCommand command2 = UtilesSQL.crearCommand("SELECT rol_nombre FROM DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre NOT IN (SELECT rol_nombre  from DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre = 'ADMINISTRADOR GENERAL' OR rol_nombre = 'GUEST')");
+            SqlCommand command2 = UtilesSQL.crearCommand("SELECT rol_nombre, rol_id FROM DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre NOT IN (SELECT rol_nombre  from DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre = 'ADMINISTRADOR GENERAL' OR rol_nombre = 'GUEST')");
             SqlDataReader reader2 = command2.ExecuteReader();
             dtRol.Columns.Add("rol_nombre", typeof(string));
+            dtRol.Columns.Add("rol_id", typeof(string));
             dtRol.Load(reader2);
 
-            comboBoxRoles.ValueMember = "rol_nombre";
+            comboBoxRoles.ValueMember = "rol_id";
+            comboBoxRoles.DisplayMember = "rol_nombre";
             comboBoxRoles.DataSource = dtRol;
         }
 
@@ -380,7 +382,7 @@ namespace FrbaHotel.AbmUsuario
            
             SqlCommand command2 = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel SELECT @rol, u.usur_id, @hotel, u.usur_habilitado FROM DERROCHADORES_DE_PAPEL.Usuario AS u WHERE u.usur_username = @username");
             command2.Parameters.AddWithValue("@username", textBoxUsuario.Text);
-            command2.Parameters.AddWithValue("@rol", comboBoxRoles.SelectedIndex + 2);
+            command2.Parameters.AddWithValue("@rol", comboBoxRoles.SelectedValue.ToString());
             command2.Parameters.AddWithValue("@hotel", textBoxHotel.Text);
             UtilesSQL.ejecutarComandoNonQuery(command2);
             
