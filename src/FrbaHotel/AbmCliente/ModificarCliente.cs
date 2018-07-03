@@ -20,9 +20,8 @@ namespace FrbaHotel.AbmCliente
         private SqlCommand command;
         private SqlCommand command2;
         DataTable dt;
-        DataTable dt2 = new DataTable();
-        DataTable dt3 = new DataTable();
-        DataTable dt4 = new DataTable();
+        DataTable dtDoc = new DataTable();
+        DataTable dtNac = new DataTable();
         Form f1;
         int id;
         bool teleNull = false;
@@ -62,26 +61,30 @@ namespace FrbaHotel.AbmCliente
         }
         private void cargarComboBox()
         {
-            dt2.Clear();
-            dt3.Clear();
-            command = UtilesSQL.crearCommand("select docu_detalle from DERROCHADORES_DE_PAPEL.Documento");
+            dtDoc.Clear();
+            dtNac.Clear();
+            command = UtilesSQL.crearCommand("select docu_detalle, docu_tipo from DERROCHADORES_DE_PAPEL.Documento");
             SqlDataReader reader;
 
             reader = command.ExecuteReader();
-            dt2.Columns.Add("docu_detalle", typeof(string));
-            dt2.Load(reader);
+            dt.Columns.Add("docu_detalle", typeof(string));
+            dt.Columns.Add("docu_tipo", typeof(string));
+            dtDoc.Load(reader);
 
-            comboBoxTipoDocumento.ValueMember = "docu_detalle";
-            comboBoxTipoDocumento.DataSource = dt2;
+            comboBoxTipoDocumento.ValueMember = "docu_tipo";
+            comboBoxTipoDocumento.DisplayMember = "docu_detalle";
+            comboBoxTipoDocumento.DataSource = dtDoc;
 
             SqlDataReader reader2;
-            command2 = UtilesSQL.crearCommand("SELECT naci_detalle from DERROCHADORES_DE_PAPEL.Nacionalidad");
+            command2 = UtilesSQL.crearCommand("SELECT naci_detalle, naci_id from DERROCHADORES_DE_PAPEL.Nacionalidad");
             reader2 = command2.ExecuteReader();
-            dt3.Columns.Add("naci_detalle", typeof(string));
-            dt3.Load(reader2);
+            dtNac.Columns.Add("naci_detalle", typeof(string));
+            dtNac.Columns.Add("naci_id", typeof(string));
+            dtNac.Load(reader2);
 
-            comboBoxNacionalidad.ValueMember = "naci_detalle";
-            comboBoxNacionalidad.DataSource = dt3;
+            comboBoxNacionalidad.ValueMember = "naci_id";
+            comboBoxNacionalidad.DisplayMember = "naci_detalle";
+            comboBoxNacionalidad.DataSource = dtNac;
         }
 
         private void buttonSeleccionarFecha_Click(object sender, EventArgs e)
@@ -265,11 +268,11 @@ namespace FrbaHotel.AbmCliente
             }
             else
             {
-                dt4.Clear();
+                DataTable dtMail = new DataTable();
                 SqlDataAdapter sda = UtilesSQL.crearDataAdapter("select clie_id from DERROCHADORES_DE_PAPEL.Cliente where clie_mail = @mail");
                 sda.SelectCommand.Parameters.AddWithValue("@mail", mail);
-                sda.Fill(dt3);
-                if (dt4.Rows.Count == 0) //El mail no esta en uso
+                sda.Fill(dtNac);
+                if (dtMail.Rows.Count == 0) //El mail no esta en uso
                 {
                     try
                     {
@@ -283,7 +286,7 @@ namespace FrbaHotel.AbmCliente
                 }
                 else
                 {
-                    if(dt4.Rows[0][0].ToString() == id.ToString())  //el mail esta en uso pero por ese usuario
+                    if(dtMail.Rows[0][0].ToString() == id.ToString())  //el mail esta en uso pero por ese usuario
                     {
                         labelMailEnUso.Visible = Enabled;
                         Valido = false;
@@ -334,7 +337,7 @@ namespace FrbaHotel.AbmCliente
             { command.Parameters.AddWithValue("@tel", DBNull.Value);}
             else
             { command.Parameters.AddWithValue("@tel", textBoxTelefono.Text); }
-            command.Parameters.AddWithValue("@doc", comboBoxTipoDocumento.SelectedIndex + 1);
+            command.Parameters.AddWithValue("@doc", comboBoxTipoDocumento.SelectedValue.ToString());
             command.Parameters.AddWithValue("@numeroDoc", textBoxNumeroDocumento.Text);
             command.Parameters.AddWithValue("@calle", textBoxDireccion.Text);
             command.Parameters.AddWithValue("@numCalle", textBoxNumeroCalle.Text);
@@ -350,7 +353,7 @@ namespace FrbaHotel.AbmCliente
             { command.Parameters.AddWithValue("@loc", DBNull.Value); }
             else
             { command.Parameters.AddWithValue("@loc", textBoxLocalidad.Text); }
-            command.Parameters.AddWithValue("@nac", comboBoxNacionalidad.SelectedIndex + 1);
+            command.Parameters.AddWithValue("@nac", comboBoxNacionalidad.SelectedValue.ToString());
             command.Parameters.AddWithValue("@fecha", textBoxFecha.Text);
             command.Parameters.AddWithValue("@habilitado", checkBoxHabilitado.Checked);
             command.Parameters.AddWithValue("@id", id);

@@ -39,20 +39,24 @@ namespace FrbaHotel.AbmUsuario
         }
         private void cargarComboBox()
         {
-            SqlCommand command = UtilesSQL.crearCommand("select docu_detalle from DERROCHADORES_DE_PAPEL.Documento");
+            SqlCommand command = UtilesSQL.crearCommand("select docu_detalle, docu_tipo from DERROCHADORES_DE_PAPEL.Documento");
             SqlDataReader reader = command.ExecuteReader();
             dtDocu.Columns.Add("docu_detalle", typeof(string));
+            dtDocu.Columns.Add("docu_tipo", typeof(string));
             dtDocu.Load(reader);
 
-            comboBoxTipoDocumento.ValueMember = "docu_detalle";
+            comboBoxTipoDocumento.ValueMember = "docu_tipo";
+            comboBoxTipoDocumento.DisplayMember = "docu_detalle";
             comboBoxTipoDocumento.DataSource = dtDocu;
 
-            SqlCommand command2 = UtilesSQL.crearCommand("SELECT rol_nombre FROM DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre NOT IN (SELECT rol_nombre  from DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre = 'ADMINISTRADOR GENERAL' OR rol_nombre = 'GUEST')");
+            SqlCommand command2 = UtilesSQL.crearCommand("SELECT rol_nombre, rol_id FROM DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre NOT IN (SELECT rol_nombre  from DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre = 'ADMINISTRADOR GENERAL' OR rol_nombre = 'GUEST')");
             SqlDataReader reader2 = command2.ExecuteReader();
             dtRol.Columns.Add("rol_nombre", typeof(string));
+            dtRol.Columns.Add("rol_id", typeof(string));
             dtRol.Load(reader2);
 
-            comboBoxRoles.ValueMember = "rol_nombre";
+            comboBoxRoles.ValueMember = "rol_id";
+            comboBoxRoles.DisplayMember = "rol_nombre";
             comboBoxRoles.DataSource = dtRol;
         }
 
@@ -373,14 +377,14 @@ namespace FrbaHotel.AbmUsuario
             { command1.Parameters.AddWithValue("@loc", DBNull.Value); }
             else
             { command1.Parameters.AddWithValue("@loc", textBoxLocalidad.Text); }
-            command1.Parameters.AddWithValue("@doc", comboBoxTipoDocumento.SelectedIndex + 1);
+            command1.Parameters.AddWithValue("@doc", comboBoxTipoDocumento.SelectedValue.ToString());
             command1.Parameters.AddWithValue("@numDoc", textBoxNumeroDocumento.Text);
             command1.Parameters.AddWithValue("@hab", checkBoxHabilitado.Checked);
             UtilesSQL.ejecutarComandoNonQuery(command1);
 
             SqlCommand command2 = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel SELECT (SELECT rol_id FROM DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre=@rol), u.usur_id, @hotel, u.usur_habilitado FROM DERROCHADORES_DE_PAPEL.Usuario AS u WHERE u.usur_username = @username");
             command2.Parameters.AddWithValue("@username", textBoxUsuario.Text);
-            command2.Parameters.AddWithValue("@rol", comboBoxRoles.SelectedValue); 
+            command2.Parameters.AddWithValue("@rol", comboBoxRoles.SelectedValue.ToString());
             command2.Parameters.AddWithValue("@hotel", textBoxHotel.Text);
             UtilesSQL.ejecutarComandoNonQuery(command2);
             

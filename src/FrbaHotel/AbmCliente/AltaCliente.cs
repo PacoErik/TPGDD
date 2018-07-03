@@ -23,8 +23,8 @@ namespace FrbaHotel.AbmCliente
         bool pisoNull = false;
         bool deptoNull = false;
         bool locNull = false;
-        DataTable dt = new DataTable();
-        DataTable dt2 = new DataTable();
+        DataTable dtDoc = new DataTable();
+        DataTable dtNac = new DataTable();
         SqlDataReader reader;
         SqlDataReader reader2;
 
@@ -45,21 +45,25 @@ namespace FrbaHotel.AbmCliente
 
         private void cargarComboBox()
         {
-            command = UtilesSQL.crearCommand("select docu_detalle from DERROCHADORES_DE_PAPEL.Documento");
+            command = UtilesSQL.crearCommand("select docu_detalle, docu_tipo from DERROCHADORES_DE_PAPEL.Documento");
             reader = command.ExecuteReader();
-            dt.Columns.Add("docu_detalle", typeof(string));
-            dt.Load(reader);
+            dtDoc.Columns.Add("docu_detalle", typeof(string));
+            dtDoc.Columns.Add("docu_tipo", typeof(string));
+            dtDoc.Load(reader);
 
-            comboBoxTipoDocumento.ValueMember = "docu_detalle";
-            comboBoxTipoDocumento.DataSource = dt;
+            comboBoxTipoDocumento.ValueMember = "docu_tipo";
+            comboBoxTipoDocumento.DisplayMember = "docu_detalle";
+            comboBoxTipoDocumento.DataSource = dtDoc;
 
-            command2 = UtilesSQL.crearCommand("SELECT naci_detalle from DERROCHADORES_DE_PAPEL.Nacionalidad");
+            command2 = UtilesSQL.crearCommand("SELECT naci_detalle, naci_id from DERROCHADORES_DE_PAPEL.Nacionalidad");
             reader2 = command2.ExecuteReader();
-            dt2.Columns.Add("naci_detalle", typeof(string));
-            dt2.Load(reader2);
+            dtNac.Columns.Add("naci_detalle", typeof(string));
+            dtNac.Columns.Add("naci_id", typeof(string));
+            dtNac.Load(reader2);
 
-            comboBoxNacionalidad.ValueMember = "naci_detalle";
-            comboBoxNacionalidad.DataSource = dt2;
+            comboBoxNacionalidad.ValueMember = "naci_id";
+            comboBoxNacionalidad.DisplayMember = "naci_detalle";
+            comboBoxNacionalidad.DataSource = dtNac;
         }
 
         private bool checkearDatos()
@@ -292,7 +296,7 @@ namespace FrbaHotel.AbmCliente
             { command.Parameters.AddWithValue("@tel", DBNull.Value);}
             else
             { command.Parameters.AddWithValue("@tel", textBoxTelefono.Text); }
-            command.Parameters.AddWithValue("@doc", comboBoxTipoDocumento.SelectedIndex + 1);
+            command.Parameters.AddWithValue("@doc", comboBoxTipoDocumento.SelectedValue.ToString());
             command.Parameters.AddWithValue("@numeroDoc", textBoxNumeroDocumento.Text);
             command.Parameters.AddWithValue("@calle", textBoxDireccion.Text);
             command.Parameters.AddWithValue("@numCalle", textBoxNumeroCalle.Text);
@@ -308,7 +312,7 @@ namespace FrbaHotel.AbmCliente
             { command.Parameters.AddWithValue("@loc", DBNull.Value); }
             else
             { command.Parameters.AddWithValue("@loc", textBoxLocalidad.Text); }
-            command.Parameters.AddWithValue("@nac", comboBoxNacionalidad.SelectedIndex + 1);
+            command.Parameters.AddWithValue("@nac", comboBoxNacionalidad.SelectedValue.ToString());
             command.Parameters.AddWithValue("@fecha", textBoxFecha.Text);
             command.Parameters.AddWithValue("@habilitado", checkBoxHabilitado.Checked);
             UtilesSQL.ejecutarComandoNonQuery(command);

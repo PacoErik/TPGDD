@@ -23,7 +23,7 @@ namespace FrbaHotel.AbmUsuario
         bool pisoNull = false;
         bool deptoNull = false;
         bool locNull = false;
-        DataTable dtDocu = new DataTable();
+        DataTable dtDoc = new DataTable();
         DataTable dtRoles = new DataTable();
         DataTable dtHotel = new DataTable();
         DataTable dtUsuario;
@@ -74,13 +74,15 @@ namespace FrbaHotel.AbmUsuario
         }
         private void cargarCosas()
         {
-            SqlCommand command = UtilesSQL.crearCommand("select docu_detalle from DERROCHADORES_DE_PAPEL.Documento");
+            SqlCommand command = UtilesSQL.crearCommand("select docu_detalle, docu_tipo from DERROCHADORES_DE_PAPEL.Documento");
             SqlDataReader reader = command.ExecuteReader();
-            dtDocu.Columns.Add("docu_detalle", typeof(string));
-            dtDocu.Load(reader);
+            dtDoc.Columns.Add("docu_detalle", typeof(string));
+            dtDoc.Columns.Add("docu_tipo", typeof(string));
+            dtDoc.Load(reader);
 
-            comboBoxTipoDocumento.ValueMember = "docu_detalle";
-            comboBoxTipoDocumento.DataSource = dtDocu;
+            comboBoxTipoDocumento.ValueMember = "docu_tipo";
+            comboBoxTipoDocumento.DisplayMember = "docu_detalle";
+            comboBoxTipoDocumento.DataSource = dtDoc;
 
             SqlCommand command2 = UtilesSQL.crearCommand("SELECT rol_nombre FROM DERROCHADORES_DE_PAPEL.Rol AS r JOIN DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel AS ru ON r.rol_id = ru.rouh_rol JOIN DERROCHADORES_DE_PAPEL.Usuario AS u ON ru.rouh_usuario = u.usur_id WHERE ru.rouh_habilitado = 1 AND rol_nombre NOT IN (SELECT rol_nombre from DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre = 'ADMINISTRADOR GENERAL' OR rol_nombre = 'GUEST') AND u.usur_id = @user AND ru.rouh_hotel = @hote");
             command2.Parameters.AddWithValue("@user", dtUsuario.Rows[0][0].ToString());
@@ -375,7 +377,7 @@ namespace FrbaHotel.AbmUsuario
             { command1.Parameters.AddWithValue("@loc", DBNull.Value); }
             else
             { command1.Parameters.AddWithValue("@loc", textBoxLocalidad.Text); }
-            command1.Parameters.AddWithValue("@doc", comboBoxTipoDocumento.SelectedIndex + 1);
+            command1.Parameters.AddWithValue("@doc", comboBoxTipoDocumento.SelectedValue.ToString());
             command1.Parameters.AddWithValue("@numDoc", textBoxNumeroDocumento.Text);
             command1.Parameters.AddWithValue("@hab", checkBoxHabilitado.Checked ? "1" : "0");
             command1.Parameters.AddWithValue("@id", dtUsuario.Rows[0][0].ToString());
