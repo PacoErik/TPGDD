@@ -377,10 +377,10 @@ namespace FrbaHotel.AbmUsuario
             command1.Parameters.AddWithValue("@numDoc", textBoxNumeroDocumento.Text);
             command1.Parameters.AddWithValue("@hab", checkBoxHabilitado.Checked);
             UtilesSQL.ejecutarComandoNonQuery(command1);
-           
-            SqlCommand command2 = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel SELECT @rol, u.usur_id, @hotel, u.usur_habilitado FROM DERROCHADORES_DE_PAPEL.Usuario AS u WHERE u.usur_username = @username");
+
+            SqlCommand command2 = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel SELECT (SELECT rol_id FROM DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre=@rol), u.usur_id, @hotel, u.usur_habilitado FROM DERROCHADORES_DE_PAPEL.Usuario AS u WHERE u.usur_username = @username");
             command2.Parameters.AddWithValue("@username", textBoxUsuario.Text);
-            command2.Parameters.AddWithValue("@rol", comboBoxRoles.SelectedIndex + 2);
+            command2.Parameters.AddWithValue("@rol", comboBoxRoles.SelectedValue); 
             command2.Parameters.AddWithValue("@hotel", textBoxHotel.Text);
             UtilesSQL.ejecutarComandoNonQuery(command2);
             

@@ -79,7 +79,7 @@ namespace FrbaHotel.AbmUsuario
             }
             if (!String.IsNullOrEmpty(comboBoxRol.SelectedValue.ToString()))
             {
-                commandString += "ruh.rouh_rol = @rol and ";
+                commandString += "r.rol_nombre = @rol and ";
             }
             if (int.TryParse(textBoxTelefono.Text, out res))
             {
@@ -87,7 +87,7 @@ namespace FrbaHotel.AbmUsuario
             }
             if (!String.IsNullOrEmpty(textBoxEmail.Text))
             {
-                commandString += "u.usur_mail = @mail and ";
+                commandString += "u.usur_mail LIKE @mail and ";
             }
             if (checkBox.Checked)
             {
@@ -101,13 +101,13 @@ namespace FrbaHotel.AbmUsuario
             {
                 commandString += "u.usur_username LIKE @usur and ";
             }
-            commandString += "h.hote_id = @hotel AND NOT usur_id = 2 AND rouh_habilitado = 1 GROUP BY u.usur_username, u.usur_nombre, u.usur_apellido, u.usur_mail, u.usur_telefono, u.usur_fechaDeNacimiento, u.usur_calle, u.usur_numeroDeCalle, u.usur_numeroDeDocumento ORDER BY u.usur_username";
+            commandString += "h.hote_id = @hotel AND NOT usur_id = 2 GROUP BY u.usur_username, u.usur_nombre, u.usur_apellido, u.usur_mail, u.usur_telefono, u.usur_fechaDeNacimiento, u.usur_calle, u.usur_numeroDeCalle, u.usur_numeroDeDocumento ORDER BY u.usur_username";
             SqlDataAdapter sda = UtilesSQL.crearDataAdapter(commandString);
             sda.SelectCommand.Parameters.AddWithValue("@nom", "%" + textBoxNombre.Text + "%");
             sda.SelectCommand.Parameters.AddWithValue("@ape", "%" + textBoxApellido.Text + "%");
-            sda.SelectCommand.Parameters.AddWithValue("@rol", comboBoxRol.SelectedIndex);
-            sda.SelectCommand.Parameters.AddWithValue("@tel", textBoxTelefono.Text);
-            sda.SelectCommand.Parameters.AddWithValue("@mail", textBoxEmail.Text);
+            sda.SelectCommand.Parameters.AddWithValue("@rol", comboBoxRol.SelectedValue);
+            sda.SelectCommand.Parameters.AddWithValue("@tel", "%"+textBoxTelefono.Text+"%");
+            sda.SelectCommand.Parameters.AddWithValue("@mail", "%"+textBoxEmail.Text+"%");
             sda.SelectCommand.Parameters.AddWithValue("@hab", 1);
             sda.SelectCommand.Parameters.AddWithValue("@noHab", 0);
             sda.SelectCommand.Parameters.AddWithValue("@usur", "%" + textBoxUsuario.Text +"%");

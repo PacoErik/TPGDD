@@ -51,7 +51,7 @@ namespace FrbaHotel.AbmUsuario
             if (!String.IsNullOrEmpty(dtUsuario.Rows[0][7].ToString()))
             {
                 DateTime fechaUser = DateTime.Parse(dtUsuario.Rows[0][7].ToString());
-                textBoxFecha.Text = fechaUser.ToString("yyyy-dd-MM");
+                textBoxFecha.Text = fechaUser.ToString("yyyy-MM-dd");
                 monthCalendar.TodayDate = fechaUser;
                 monthCalendar.SelectionStart = fechaUser;
             }
@@ -82,7 +82,7 @@ namespace FrbaHotel.AbmUsuario
             comboBoxTipoDocumento.ValueMember = "docu_detalle";
             comboBoxTipoDocumento.DataSource = dtDocu;
 
-            SqlCommand command2 = UtilesSQL.crearCommand("SELECT rol_nombre FROM DERROCHADORES_DE_PAPEL.Rol AS r JOIN DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel AS ru ON r.rol_id = ru.rouh_rol JOIN DERROCHADORES_DE_PAPEL.Usuario AS u ON ru.rouh_usuario = u.usur_id WHERE rol_nombre NOT IN (SELECT rol_nombre from DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre = 'ADMINISTRADOR GENERAL' OR rol_nombre = 'GUEST') AND u.usur_id = @user AND ru.rouh_hotel = @hote");
+            SqlCommand command2 = UtilesSQL.crearCommand("SELECT rol_nombre FROM DERROCHADORES_DE_PAPEL.Rol AS r JOIN DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel AS ru ON r.rol_id = ru.rouh_rol JOIN DERROCHADORES_DE_PAPEL.Usuario AS u ON ru.rouh_usuario = u.usur_id WHERE ru.rouh_habilitado = 1 AND rol_nombre NOT IN (SELECT rol_nombre from DERROCHADORES_DE_PAPEL.Rol WHERE rol_nombre = 'ADMINISTRADOR GENERAL' OR rol_nombre = 'GUEST') AND u.usur_id = @user AND ru.rouh_hotel = @hote");
             command2.Parameters.AddWithValue("@user", dtUsuario.Rows[0][0].ToString());
             command2.Parameters.AddWithValue("@hote", hotelU);
             SqlDataReader reader2 = command2.ExecuteReader();
@@ -377,7 +377,7 @@ namespace FrbaHotel.AbmUsuario
             { command1.Parameters.AddWithValue("@loc", textBoxLocalidad.Text); }
             command1.Parameters.AddWithValue("@doc", comboBoxTipoDocumento.SelectedIndex + 1);
             command1.Parameters.AddWithValue("@numDoc", textBoxNumeroDocumento.Text);
-            command1.Parameters.AddWithValue("@hab", checkBoxHabilitado.Checked);
+            command1.Parameters.AddWithValue("@hab", checkBoxHabilitado.Checked ? "1" : "0");
             command1.Parameters.AddWithValue("@id", dtUsuario.Rows[0][0].ToString());
             UtilesSQL.ejecutarComandoNonQuery(command1);
 
