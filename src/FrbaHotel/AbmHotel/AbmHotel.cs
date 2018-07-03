@@ -38,6 +38,9 @@ namespace FrbaHotel.AbmHotel
         private void alta_Click(object sender, EventArgs e)
         {
             this.Hide();
+            dtHoteles.Clear();
+            buttonModificarHotel.Enabled = false;
+            buttonBajaHotel.Enabled = false;
             Form f1 = new AltaHotel(id);
             f1.ShowDialog();
             this.Show();

@@ -62,24 +62,17 @@ namespace FrbaHotel.AbmHotel
             sda.Fill(dtRegimen);
             dataGridViewRegimenes.DataSource = dtRegimen;
 
-            string commandString = "SELECT * FROM DERROCHADORES_DE_PAPEL.RegimenXHotel WHERE rexh_hotel = @idH";
-            sda = UtilesSQL.crearDataAdapter(commandString);
-            sda.SelectCommand.Parameters.AddWithValue("@idH", Int32.Parse(dtH.Rows[0][0].ToString()));
-            sda.Fill(dtRegimen2);
-            int pos = 0;
-            int pos2 = 1;
-            if (dtRegimen2.Rows.Count != 0)
+            UtilesSQL.llenarTabla(dtRegimen2, "SELECT rexh_regimen FROM DERROCHADORES_DE_PAPEL.RegimenXHotel WHERE rexh_hotel = " + dtH.Rows[0][0].ToString());
+
+            foreach (DataGridViewRow regimen in dataGridViewRegimenes.Rows)
             {
-                foreach (DataGridViewRow row in dataGridViewRegimenes.Rows)
+                regimen.Cells[0].Value = false;
+                if (dtRegimen2.Select().Any(rexh => rexh[0].ToString().Equals((regimen.Index + 1).ToString())))
                 {
-                    if (Int32.Parse(dtRegimen2.Rows[pos][0].ToString()) == pos2)
-                    {
-                        row.Cells[0].Value = true;
-                        pos++;
-                    }
-                    pos2++;
+                    regimen.Cells[0].Value = true;
                 }
             }
+
             dataGridViewRegimenes.Columns[1].ReadOnly = true;
         }
 
@@ -323,6 +316,7 @@ namespace FrbaHotel.AbmHotel
             SqlCommand com1;
             foreach (DataGridViewRow row in dataGridViewRegimenes.Rows)
             {
+                MessageBox.Show(row.Cells[0].Value.ToString() + " " + false.ToString());
                 if (row.Cells[0].Value.ToString() == false.ToString()) //Checkea si el regimen esta seleccionado
                 {
                     if (!hotelTieneRegimen(i)) //Checkea que no haya huespedes o reservas en ese regimen
