@@ -151,7 +151,7 @@ namespace FrbaHotel.RegistrarEstadia
                 UtilesSQL.ejecutarComandoNonQuery("UPDATE DERROCHADORES_DE_PAPEL.Reserva SET rese_estado = (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = \'RESERVA EFECTIVIZADA\')");
 
                 //Se genera la estadía
-                SqlCommand comando = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Estadia (esta_fechaDeInicio, esta_fechaDeFin, esta_cantidadDeNoches, esta_reserva, esta_usuarioCheckIn, esta_usuarioCheckOut) VALUES (@inicio, @fin, @noches, @reserva, @usuarioCheckIn, NULL)");
+                SqlCommand comando = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Estadia (esta_fechaDeInicio, esta_fechaDeFin, esta_cantidadDeNoches, esta_reserva, esta_usuarioCheckIn, esta_usuarioCheckOut) VALUES (CONVERT(DATETIME, @inicio, 121), CONVERT(DATETIME, @fin, 121), @noches, @reserva, @usuarioCheckIn, NULL)");
                 comando.Parameters.AddWithValue("@inicio", fecha_inicio.Text);
                 comando.Parameters.AddWithValue("@fin", fecha_fin.Text);
                 comando.Parameters.AddWithValue("@noches", cantidad_noches.Text);
@@ -202,7 +202,7 @@ namespace FrbaHotel.RegistrarEstadia
             }
             
             //Crea la factura para poder iniciar el proceso de check out
-            SqlCommand com = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Factura (fact_fecha, fact_estadia, fact_cliente) VALUES (CONVERT(datetime, @fecha), @estadia, @cliente)");
+            SqlCommand com = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Factura (fact_fecha, fact_estadia, fact_cliente) VALUES (CONVERT(datetime, @fecha, 121), @estadia, @cliente)");
             com.Parameters.AddWithValue("@fecha", Main.fecha());
             com.Parameters.AddWithValue("@estadia", dtH.Rows[0][2].ToString());
             com.Parameters.AddWithValue("@cliente", reserva_dt.Rows[0][9].ToString());

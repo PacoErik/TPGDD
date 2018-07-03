@@ -124,7 +124,7 @@ namespace FrbaHotel.CancelarReserva
             labelMotivo.Visible = false;
             if (!String.IsNullOrWhiteSpace(txtbox_motivo.Text))
             {
-                SqlCommand command = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.CancelacionReserva (canc_reserva, canc_motivo, canc_fechaDeCancelacion, canc_usuario) VALUES (@reserva, @motivo, CONVERT(DATETIME, @fecha), @user)");
+                SqlCommand command = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.CancelacionReserva (canc_reserva, canc_motivo, canc_fechaDeCancelacion, canc_usuario) VALUES (@reserva, @motivo, CONVERT(DATETIME, @fecha, 121), @user)");
                 command.Parameters.AddWithValue("@reserva", Convert.ToInt64(codigo));
                 command.Parameters.AddWithValue("@motivo", txtbox_motivo.Text);
                 command.Parameters.AddWithValue("@fecha", Main.fecha());

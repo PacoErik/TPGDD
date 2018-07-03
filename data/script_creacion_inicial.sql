@@ -57,8 +57,8 @@ CREATE PROCEDURE DERROCHADORES_DE_PAPEL.CrearBajaHotel
 AS
 	DECLARE @fechaInicio DATETIME
 	DECLARE @fechaFin DATETIME
-	SET @fechaInicio = CONVERT(datetime, @fechaI)
-	SET @fechaFin = CONVERT(datetime, @fechaF)
+	SET @fechaInicio = CONVERT(datetime, @fechaI, 121)
+	SET @fechaFin = CONVERT(datetime, @fechaF, 121)
 
 	IF NOT EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.Reserva 
 		          WHERE rese_hotel = @hotel AND (rese_fin BETWEEN @fechaInicio AND @fechaFin 
@@ -436,7 +436,7 @@ GO
 -- Hotel - Carga automatica
 
 INSERT INTO DERROCHADORES_DE_PAPEL.Hotel (hote_nombre, hote_mail, hote_telefono, hote_calle, hote_numeroDeCalle, hote_localidad, hote_estrellas, hote_recargaEstrella, hote_ciudad, hote_pais, hote_fechaDeCreacion)
-  	SELECT DISTINCT 'Hotel '+RTRIM(Hotel_Ciudad)+' '+STR(Hotel_Nro_Calle), '', 0, Hotel_Calle, Hotel_Nro_Calle, '', Hotel_CantEstrella, Hotel_Recarga_Estrella, Hotel_Ciudad, 'ARGENTINA', CONVERT(datetime,0)
+  	SELECT DISTINCT 'Hotel '+RTRIM(Hotel_Ciudad)+' '+STR(Hotel_Nro_Calle), '', 0, Hotel_Calle, Hotel_Nro_Calle, '', Hotel_CantEstrella, Hotel_Recarga_Estrella, Hotel_Ciudad, 'ARGENTINA', CONVERT(datetime,0, 121)
 	FROM gd_esquema.Maestra
 GO
 	
@@ -502,8 +502,8 @@ GO
 -- Usuario - Carga manual
 
 INSERT INTO DERROCHADORES_DE_PAPEL.Usuario (usur_username, usur_password, usur_nombre, usur_apellido, usur_mail, usur_telefono, usur_fechaDeNacimiento, usur_calle, usur_numeroDeCalle, usur_piso, usur_departamento, usur_localidad, usur_tipoDeDocumento, usur_numeroDeDocumento, usur_habilitado) 
-	VALUES 	('admin', 'E6B87050BFCB8143FCB8DB0170A4DC9ED00D904DDD3E2A4AD1B1E8DC0FDC9BE7', '', '', '', 0, CONVERT(datetime,0), '', 0, 0, '', '', 1, 0, 1),
-			('guest', '', '', '', '', 0, CONVERT(datetime,0), '', 0, 0, '', '', 1, 0, 1)
+	VALUES 	('admin', 'E6B87050BFCB8143FCB8DB0170A4DC9ED00D904DDD3E2A4AD1B1E8DC0FDC9BE7', '', '', '', 0, CONVERT(datetime,0, 121), '', 0, 0, '', '', 1, 0, 1),
+			('guest', '', '', '', '', 0, CONVERT(datetime,0, 121), '', 0, 0, '', '', 1, 0, 1)
 
 GO
 
@@ -512,7 +512,7 @@ GO
 SET IDENTITY_INSERT DERROCHADORES_DE_PAPEL.Reserva ON
 
 INSERT INTO DERROCHADORES_DE_PAPEL.Reserva (rese_codigo, rese_fecha, rese_hotel, rese_inicio, rese_fin, rese_cliente, rese_regimen, rese_usuario, rese_estado, rese_cantidadDeNoches, rese_cantidadDePersonas)
-	SELECT Reserva_Codigo, CONVERT(datetime,'2017-01-01'), hote_id, Reserva_Fecha_Inicio, (Reserva_Fecha_Inicio+Reserva_Cant_Noches), (SELECT clie_id FROM DERROCHADORES_DE_PAPEL.Cliente WHERE Cliente_Mail = clie_mail AND Cliente_Pasaporte_Nro = clie_numeroDeDocumento), (SELECT regi_codigo FROM DERROCHADORES_DE_PAPEL.Regimen WHERE regi_descripcion = Regimen_Descripcion), 2, (CASE WHEN MAX(Factura_Nro) IS NULL THEN (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = 'RESERVA CANCELADA POR NO-SHOW') ELSE (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = 'RESERVA EFECTIVIZADA') END), Reserva_Cant_Noches, 1
+	SELECT Reserva_Codigo, CONVERT(datetime,'2017-01-01', 121), hote_id, Reserva_Fecha_Inicio, (Reserva_Fecha_Inicio+Reserva_Cant_Noches), (SELECT clie_id FROM DERROCHADORES_DE_PAPEL.Cliente WHERE Cliente_Mail = clie_mail AND Cliente_Pasaporte_Nro = clie_numeroDeDocumento), (SELECT regi_codigo FROM DERROCHADORES_DE_PAPEL.Regimen WHERE regi_descripcion = Regimen_Descripcion), 2, (CASE WHEN MAX(Factura_Nro) IS NULL THEN (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = 'RESERVA CANCELADA POR NO-SHOW') ELSE (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = 'RESERVA EFECTIVIZADA') END), Reserva_Cant_Noches, 1
 	FROM DERROCHADORES_DE_PAPEL.Hotel JOIN gd_esquema.Maestra ON (Hotel_Ciudad = hote_ciudad AND
 																	Hotel_Calle = hote_calle AND
 																	Hotel_Nro_Calle = hote_numeroDeCalle)
