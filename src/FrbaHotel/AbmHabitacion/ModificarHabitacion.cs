@@ -22,11 +22,15 @@ namespace FrbaHotel.AbmHabitacion
             dtH = dt;
             InitializeComponent();
             richTextBoxDesc.MaxLength = 50;
-            checkBoxHabilitada.Checked = Convert.ToBoolean(dtH.Rows[0][6]);
 
             comboBoxUbicacion.Items.Add("Vista interna");
             comboBoxUbicacion.Items.Add("Vista al exterior");
-            comboBoxUbicacion.SelectedIndex = 0;
+
+            textBoxNumero.Text = dtH.Rows[0][1].ToString();
+            textBoxPiso.Text = dtH.Rows[0][2].ToString();
+            comboBoxUbicacion.SelectedIndex = Convert.ToBoolean(dtH.Rows[0][3]) ? 1 : 0;
+            richTextBoxDesc.Text = dtH.Rows[0][4].ToString();
+            checkBoxHabilitada.Checked = Convert.ToBoolean(dtH.Rows[0][6]);
         }
 
         private void buttonCancelar_Click(object sender, EventArgs e)
@@ -79,12 +83,14 @@ namespace FrbaHotel.AbmHabitacion
             }
             else
             {
+                if (textBoxNumero.Text.Equals(dtH.Rows[0][1].ToString()))
+                    return;
                 DataTable dt = new DataTable();
                 SqlDataAdapter sda = UtilesSQL.crearDataAdapter("SELECT * FROM DERROCHADORES_DE_PAPEL.Habitacion WHERE habi_hotel = @hote AND habi_numero = @num");
                 sda.SelectCommand.Parameters.AddWithValue("@hote", dtH.Rows[0][0]);
-                sda.SelectCommand.Parameters.AddWithValue("@num", dtH.Rows[0][1]);
+                sda.SelectCommand.Parameters.AddWithValue("@num", textBoxNumero.Text);
                 sda.Fill(dt);
-                if (dt.Rows.Count != 0) //No hay otra habitacion con el mismo número
+                if (dt.Rows.Count != 0) //Hay otra habitacion con el mismo número
                 {
                     labelNumeroInvalido2.Visible = true;
                     Valido = false;

@@ -87,7 +87,7 @@ namespace FrbaHotel.AbmHabitacion
             SqlDataAdapter sda = UtilesSQL.crearDataAdapter(commandString);
             sda.SelectCommand.Parameters.AddWithValue("@num", textBoxNumero.Text);
             sda.SelectCommand.Parameters.AddWithValue("@piso", textBoxPiso.Text);
-            sda.SelectCommand.Parameters.AddWithValue("@frente", comboBoxUbicacion.SelectedIndex);
+            sda.SelectCommand.Parameters.AddWithValue("@frente", comboBoxUbicacion.SelectedIndex - 1);
             sda.SelectCommand.Parameters.AddWithValue("@desc", comboBoxTipoHabitacion.SelectedValue.ToString());
             sda.SelectCommand.Parameters.AddWithValue("@habiDesc", "%" + richTextBoxDesc.Text + "%");
             sda.SelectCommand.Parameters.AddWithValue("@hote", idH);
@@ -122,6 +122,7 @@ namespace FrbaHotel.AbmHabitacion
             sda2.SelectCommand.Parameters.AddWithValue("@hotel", idH);
             sda2.Fill(dt);
             this.Hide();
+            dtHab.Clear();
             Form f = new ModificarHabitacion(dt);
             limpiarTodo();
             f.ShowDialog();
