@@ -44,7 +44,7 @@ namespace FrbaHotel.GenerarModificacionReserva
 
             //btn_cargar_opciones.Enabled = false;
             //Inicializacion de intefaz
-            lbl_noches.Text = lbl_precio_base.Text = lbl_recarga_estrellas.Text = String.Empty;
+            lbl_noches.Text = textBoxPrecioBase.Text = textBoxRecarga.Text = String.Empty;
         }
         private void CargarEstadosReserva()
         {
@@ -138,8 +138,7 @@ namespace FrbaHotel.GenerarModificacionReserva
             btn_agregar_habitacion.Enabled = true;
             btn_eliminar_habitacion.Enabled = true;
             btn_modificar.Enabled = true;
-            lbl_precio.Visible = true;
-            lbl_precio.Enabled = true;
+            textBoxTotal.Enabled = true;
             numericUpDown.Enabled = true;
 
             cargarReserva();
@@ -184,8 +183,8 @@ namespace FrbaHotel.GenerarModificacionReserva
             DataTable dt = new DataTable();
             UtilesSQL.llenarTabla(dt, "SELECT * FROM DERROCHADORES_DE_PAPEL.Hotel WHERE hote_id = '" + reserva.hotel.ID.ToString() + "'");
             reserva.hotel.recarga_estrellas = Convert.ToDouble(dt.Rows[0][8]);
-            lbl_recarga_estrellas.Visible = true;
-            lbl_recarga_estrellas.Text = "U$S" + reserva.hotel.recarga_estrellas.ToString();
+            textBoxRecarga.Visible = true;
+            textBoxRecarga.Text = "U$S" + reserva.hotel.recarga_estrellas.ToString();
 
             CalcularCantidadNoches();
         }
@@ -266,7 +265,7 @@ namespace FrbaHotel.GenerarModificacionReserva
         private void CalcularPrecio()
         {
             reserva.CalcularPrecio();
-            lbl_precio.Text = "U$S" + reserva.precio.ToString();
+            textBoxTotal.Text = "U$S" + reserva.precio.ToString();
         }
 
         private void VerificarFechasCorrectas()
@@ -299,7 +298,7 @@ namespace FrbaHotel.GenerarModificacionReserva
             int indice_regimen_seleccionado = cbox_regimenes.SelectedIndex;
             string precio_base = String.Empty;
             precio_base = regimenes.Rows[indice_regimen_seleccionado]["regi_precioBase"].ToString();
-            lbl_precio_base.Text = "U$S" + precio_base;
+            textBoxPrecioBase.Text = "U$S" + precio_base;
             reserva.precio_base = Convert.ToDouble(precio_base);
             foreach (DataRow row in regimenes.Rows)
             {
