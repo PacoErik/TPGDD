@@ -61,11 +61,11 @@ namespace FrbaHotel.AbmCliente
             }
             if (!String.IsNullOrEmpty(textBoxEmail.Text)) 
             { 
-                commandString += "c.clie_mail = @mail and ";
+                commandString += "c.clie_mail LIKE @mail and ";
             }
             if (!String.IsNullOrEmpty(textBoxNumeroIdentificacion.Text)) 
             { 
-                commandString += "c.clie_numeroDeDocumento = @numDoc and ";
+                commandString += "c.clie_numeroDeDocumento LIKE @numDoc and ";
             }
             if (!String.IsNullOrEmpty(comboBoxTipoDocumento.SelectedValue.ToString())) 
             { 
@@ -79,9 +79,9 @@ namespace FrbaHotel.AbmCliente
             SqlDataAdapter sda = UtilesSQL.crearDataAdapter(commandString);
             sda.SelectCommand.Parameters.AddWithValue("@nom", "%" + textBoxNombre.Text + "%");
             sda.SelectCommand.Parameters.AddWithValue("@ape", "%" + textBoxApellido.Text + "%");
-            sda.SelectCommand.Parameters.AddWithValue("@mail", textBoxEmail.Text);
-            sda.SelectCommand.Parameters.AddWithValue("@numDoc", textBoxNumeroIdentificacion.Text);
-            sda.SelectCommand.Parameters.AddWithValue("@doc", comboBoxTipoDocumento.SelectedText);
+            sda.SelectCommand.Parameters.AddWithValue("@mail", "%" + textBoxEmail.Text + "%");
+            sda.SelectCommand.Parameters.AddWithValue("@numDoc", "%" + textBoxNumeroIdentificacion.Text + "%");
+            sda.SelectCommand.Parameters.AddWithValue("@doc", comboBoxTipoDocumento.SelectedValue.ToString());
             sda.SelectCommand.Parameters.AddWithValue("@hab", 1);
             sda.Fill(dt2);
             dataGridViewClientes.DataSource = dt2;
@@ -98,10 +98,8 @@ namespace FrbaHotel.AbmCliente
 
         private void modificarCliente_Click(object sender, EventArgs e)
         {
-            commandString = "SELECT clie_nacionalidad, clie_nombre, clie_apellido, clie_mail, clie_telefono, clie_fechaDeNacimiento, clie_calle, clie_numeroDeCalle, clie_piso, clie_departamento, clie_localidad, clie_tipoDeDocumento, clie_numeroDeDocumento, clie_id FROM DERROCHADORES_DE_PAPEL.Cliente WHERE clie_mail = @mail";
-            SqlDataAdapter sda2 = UtilesSQL.crearDataAdapter(commandString);
-            sda2.SelectCommand.Parameters.AddWithValue("@mail", dataGridViewClientes.CurrentRow.Cells[2].Value);
-            sda2.Fill(dtM);
+            dtM = new DataTable();
+            UtilesSQL.llenarTabla(dtM, "SELECT clie_nacionalidad, clie_nombre, clie_apellido, clie_mail, clie_telefono, clie_fechaDeNacimiento, clie_calle, clie_numeroDeCalle, clie_piso, clie_departamento, clie_localidad, clie_tipoDeDocumento, clie_numeroDeDocumento, clie_id FROM DERROCHADORES_DE_PAPEL.Cliente WHERE clie_mail = '" + dataGridViewClientes.CurrentRow.Cells[2].Value.ToString() + "'");
             this.Hide();
             f = new ModificarCliente(this, dtM);
             limpiarTodo();
