@@ -111,7 +111,7 @@ namespace FrbaHotel.RegistrarEstadia
         }
         private void finalizarFacturaTarjeta()
         {
-            SqlCommand com = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.TarjetaBancaria VALUES (\'@nombre\', @numero)");
+            SqlCommand com = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.TarjetaBancaria VALUES (@nombre, @numero)");
             com.Parameters.AddWithValue("@nombre", propietario.Text);
             com.Parameters.AddWithValue("@numero", tarjeta.Text);
             UtilesSQL.ejecutarComandoNonQuery(com);
@@ -154,7 +154,7 @@ namespace FrbaHotel.RegistrarEstadia
                 labelNombreVacio.Visible = true;
                 Valido = false;
             }
-            if (!propietario.Text.All(Char.IsLetter))
+            if (!propietario.Text.All(l => Char.IsLetter(l) || l.Equals(" ")))
             {
                 labelNombreInvalido.Visible = true;
                 Valido = false;

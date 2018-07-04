@@ -43,7 +43,7 @@ namespace FrbaHotel.RegistrarEstadia
 
             foreach (DataRow hab in habitaciones_dt.Rows)
             {
-                habitaciones.Items.Add("Número: " + hab[0].ToString() + " - Piso: " + hab[1].ToString());
+                habitaciones.Items.Add("Número: " + hab[0].ToString() + " - Piso: " + hab[1].ToString() + " - Capacidad: "+hab[2].ToString());
             }
             habitaciones.SelectedIndex = 0;
         }
@@ -106,13 +106,23 @@ namespace FrbaHotel.RegistrarEstadia
             int cantidad = 0;
             foreach (DataRow habOcupada in distribucion_dt.Rows)
             {
-                if (habOcupada[0].ToString().Equals(habitacion[0].ToString()) && habOcupada[1].ToString().Equals(habitacion[1].ToString()))
+                if (habOcupada[3].ToString().Equals(habitacion[0].ToString()) && habOcupada[4].ToString().Equals(habitacion[1].ToString()))
                 {
                     cantidad++;
                 }
             }
  
             return cantidad.ToString().Equals(habitacion[2].ToString());
+        }
+
+        private void remover_Click(object sender, EventArgs e)
+        {
+            if (distribucion.CurrentRow != null)
+            {
+                DataRow cliente = ((DataRowView)distribucion.CurrentRow.DataBoundItem).Row;
+                clientes_dt.Rows.Add(cliente[0].ToString(), cliente[1].ToString(), cliente[2].ToString());
+                distribucion_dt.Rows.Remove(cliente);
+            }
         }
     }
 }

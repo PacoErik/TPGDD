@@ -151,7 +151,7 @@ namespace FrbaHotel.RegistrarEstadia
                 UtilesSQL.ejecutarComandoNonQuery("UPDATE DERROCHADORES_DE_PAPEL.Reserva SET rese_estado = (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = \'RESERVA EFECTIVIZADA\')");
 
                 //Se genera la estadía
-                SqlCommand comando = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Estadia (esta_fechaDeInicio, esta_fechaDeFin, esta_cantidadDeNoches, esta_reserva, esta_usuarioCheckIn, esta_usuarioCheckOut) VALUES (CONVERT(DATETIME, @inicio, 121), CONVERT(DATETIME, @fin, 121), @noches, @reserva, @usuarioCheckIn, NULL)");
+                SqlCommand comando = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Estadia (esta_fechaDeInicio, esta_fechaDeFin, esta_cantidadDeNoches, esta_reserva, esta_usuarioCheckIn, esta_usuarioCheckOut) VALUES (CONVERT(DATETIME, @inicio, 103), CONVERT(DATETIME, @fin, 103), @noches, @reserva, @usuarioCheckIn, NULL)");
                 comando.Parameters.AddWithValue("@inicio", fecha_inicio.Text);
                 comando.Parameters.AddWithValue("@fin", fecha_fin.Text);
                 comando.Parameters.AddWithValue("@noches", cantidad_noches.Text);
@@ -212,7 +212,7 @@ namespace FrbaHotel.RegistrarEstadia
             com.Parameters.AddWithValue("@estadia", dtH.Rows[0][2].ToString());
             factura = com.ExecuteScalar().ToString();
 
-            UtilesSQL.ejecutarComandoNonQuery("INSERT INTO DERROCHADORES_DE_PAPEL.ItemDeFactura (item_cantidad, item_monto, item_factura, item_descripcion, item_consumible, item_habitacionNumero, item_habitacionPiso) VALUES (1, (SELECT regi_precioBase * SUM(tipo_cantidadDePersonas) * rese_cantidadDeNoches FROM DERROCHADORES_DE_PAPEL.Reserva JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion ON rese_codigo = rexh_reserva JOIN DERROCHADORES_DE_PAPEL.Habitacion ON habi_hotel = rexh_hotel AND habi_numero = rexh_numero AND habi_piso = rexh_piso JOIN DERROCHADORES_DE_PAPEL.TipoDeHabitacion ON habi_tipo = tipo_codigo JOIN DERROCHADORES_DE_PAPEL.Regimen ON regi_codigo = rese_regimen WHERE rese_codigo = " + reserva.Text + " AND habi_hotel = " + Login.SeleccionFuncionalidad.getHotelId() + " GROUP BY regi_precioBase, rese_cantidadDeNoches), " + factura + ", \'Hospedaje\', NULL, " + dtH.Rows[0][0].ToString() + ", " + dtH.Rows[0][1].ToString() + ")");
+            UtilesSQL.ejecutarComandoNonQuery("INSERT INTO DERROCHADORES_DE_PAPEL.ItemDeFactura (item_cantidad, item_monto, item_factura, item_descripcion, item_consumible, item_habitacionNumero, item_habitacionPiso) VALUES (1, (SELECT regi_precioBase * SUM(tipo_cantidadDePersonas) * rese_cantidadDeNoches + 10 FROM DERROCHADORES_DE_PAPEL.Reserva JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion ON rese_codigo = rexh_reserva JOIN DERROCHADORES_DE_PAPEL.Habitacion ON habi_hotel = rexh_hotel AND habi_numero = rexh_numero AND habi_piso = rexh_piso JOIN DERROCHADORES_DE_PAPEL.TipoDeHabitacion ON habi_tipo = tipo_codigo JOIN DERROCHADORES_DE_PAPEL.Regimen ON regi_codigo = rese_regimen WHERE rese_codigo = " + reserva.Text + " AND habi_hotel = " + Login.SeleccionFuncionalidad.getHotelId() + " GROUP BY regi_precioBase, rese_cantidadDeNoches), " + factura + ", \'Hospedaje\', NULL, " + dtH.Rows[0][0].ToString() + ", " + dtH.Rows[0][1].ToString() + ")");
 
             Consumibles();
         }
