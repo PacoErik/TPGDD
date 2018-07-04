@@ -18,6 +18,7 @@ namespace FrbaHotel.Login
         Form f1;
         public int idU { get; set; }
         public bool resultado { get; set; }
+        public String rolElegido { get; set; }
 
         public SeleccionRol(DataTable dataT, Form f)
         {
@@ -30,6 +31,7 @@ namespace FrbaHotel.Login
         private void entrar_Click(object sender, EventArgs e)
         {
             hoteId = RolXHotel.CurrentRow.Cells[2].Value.ToString();
+            rolElegido = RolXHotel.CurrentRow.Cells[0].Value.ToString();
             resultado = true;
             this.Close();
         }

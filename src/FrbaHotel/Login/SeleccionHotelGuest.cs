@@ -31,7 +31,7 @@ namespace FrbaHotel.Login
         {
             String hoteId = hoteles.CurrentRow.Cells[1].Value.ToString();
             this.Hide();
-            new SeleccionFuncionalidad(this, 2, hoteId).ShowDialog();
+            new SeleccionFuncionalidad(this, 2, hoteId, "").ShowDialog();
             CargarHoteles();
             this.Show();
         }

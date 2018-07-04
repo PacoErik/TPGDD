@@ -98,7 +98,7 @@ namespace FrbaHotel.Login
                     MessageBox.Show("Esta cuenta no tiene ningún rol");
                     break;
                 case 1:
-                    Form f2 = new SeleccionFuncionalidad(this, int.Parse(dt.Rows[0][5].ToString()), dt.Rows[0][6].ToString());
+                    Form f2 = new SeleccionFuncionalidad(this, int.Parse(dt.Rows[0][5].ToString()), dt.Rows[0][6].ToString(), "");
                     f2.ShowDialog();
                     break;
                 default:
@@ -106,7 +106,7 @@ namespace FrbaHotel.Login
                     f1.ShowDialog();
                     if (f1.resultado) //Se fija que la seleccion de rol fue exitosa
                     {
-                        Form f3 = new SeleccionFuncionalidad(this, f1.idU, f1.hoteId);
+                        Form f3 = new SeleccionFuncionalidad(this, f1.idU, f1.hoteId, f1.rolElegido);
                         f3.ShowDialog();
                     }
                     break;

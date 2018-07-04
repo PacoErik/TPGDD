@@ -19,12 +19,14 @@ namespace FrbaHotel.Login
         SqlCommand com;
         DataSet ds = new DataSet();
         SqlDataAdapter da = new SqlDataAdapter();
+        string rolElegido;
 
-        public SeleccionFuncionalidad(Form f, int id_usuario, string hoteU)
+        public SeleccionFuncionalidad(Form f, int id_usuario, string hoteU, string rol)
         {
             hotelId = hoteU;
             idUser = id_usuario;
             f1 = f;
+            rolElegido = rol;
             UtilesSQL.inicializar();
             InitializeComponent();
             inicializarComboBox();
@@ -42,9 +44,11 @@ namespace FrbaHotel.Login
 
         private void inicializarComboBox()
         {
-            com = UtilesSQL.crearCommand("select f.func_detalle, u.rouh_hotel from DERROCHADORES_DE_PAPEL.FuncionalidadXRol as fxr  join DERROCHADORES_DE_PAPEL.Funcionalidad as f on f.func_id = fxro_funcionalidad  join DERROCHADORES_DE_PAPEL.Rol as r ON r.rol_id = fxr.fxro_rol  left join DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel as u ON u.rouh_rol = r.rol_id  where u.rouh_usuario = @id AND u.rouh_hotel = @hote group by f.func_detalle, u.rouh_hotel");
+            com = UtilesSQL.crearCommand("select f.func_detalle, u.rouh_hotel from DERROCHADORES_DE_PAPEL.FuncionalidadXRol as fxr  join DERROCHADORES_DE_PAPEL.Funcionalidad as f on f.func_id = fxro_funcionalidad  join DERROCHADORES_DE_PAPEL.Rol as r ON r.rol_id = fxr.fxro_rol  left join DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel as u ON u.rouh_rol = r.rol_id  where u.rouh_usuario = @id AND u.rouh_hotel = @hote AND r.rol_nombre LIKE @rol group by f.func_detalle, u.rouh_hotel");
             com.Parameters.AddWithValue("@id", idUser);
             com.Parameters.AddWithValue("@hote", hotelId);
+            MessageBox.Show(rolElegido);
+            com.Parameters.AddWithValue("@rol", "%"+rolElegido);
             da.SelectCommand = com;
             da.Fill(ds);
             comboBoxFuncionalidad.DisplayMember = "func_detalle";
