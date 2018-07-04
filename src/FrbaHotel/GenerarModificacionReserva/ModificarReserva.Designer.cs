@@ -39,14 +39,11 @@
             this.lbl_error_carga_hotel = new System.Windows.Forms.Label();
             this.lbl_error_fecha = new System.Windows.Forms.Label();
             this.btn_modificar = new System.Windows.Forms.Button();
-            this.lbl_precio = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.atras_Button = new System.Windows.Forms.Button();
             this.lbl_noches = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.lbl_recarga_estrellas = new System.Windows.Forms.Label();
-            this.lbl_precio_base = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -63,6 +60,9 @@
             this.lbl_cargado_correcto = new System.Windows.Forms.Label();
             this.lbl_error = new System.Windows.Forms.Label();
             this.numericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.textBoxTotal = new System.Windows.Forms.TextBox();
+            this.textBoxRecarga = new System.Windows.Forms.TextBox();
+            this.textBoxPrecioBase = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
@@ -181,22 +181,11 @@
             this.btn_modificar.UseVisualStyleBackColor = true;
             this.btn_modificar.Click += new System.EventHandler(this.btn_reservar_Click);
             // 
-            // lbl_precio
-            // 
-            this.lbl_precio.AutoSize = true;
-            this.lbl_precio.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_precio.Location = new System.Drawing.Point(110, 445);
-            this.lbl_precio.Name = "lbl_precio";
-            this.lbl_precio.Size = new System.Drawing.Size(65, 17);
-            this.lbl_precio.TabIndex = 65;
-            this.lbl_precio.Text = "PRECIO";
-            this.lbl_precio.Visible = false;
-            // 
             // label11
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(13, 445);
+            this.label11.Location = new System.Drawing.Point(13, 478);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(96, 17);
             this.label11.TabIndex = 64;
@@ -239,31 +228,11 @@
             this.label8.TabIndex = 60;
             this.label8.Text = "Cantidad de personas:";
             // 
-            // lbl_recarga_estrellas
-            // 
-            this.lbl_recarga_estrellas.AutoSize = true;
-            this.lbl_recarga_estrellas.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_recarga_estrellas.Location = new System.Drawing.Point(97, 413);
-            this.lbl_recarga_estrellas.Name = "lbl_recarga_estrellas";
-            this.lbl_recarga_estrellas.Size = new System.Drawing.Size(41, 15);
-            this.lbl_recarga_estrellas.TabIndex = 59;
-            this.lbl_recarga_estrellas.Text = "label9";
-            // 
-            // lbl_precio_base
-            // 
-            this.lbl_precio_base.AutoSize = true;
-            this.lbl_precio_base.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_precio_base.Location = new System.Drawing.Point(13, 413);
-            this.lbl_precio_base.Name = "lbl_precio_base";
-            this.lbl_precio_base.Size = new System.Drawing.Size(41, 15);
-            this.lbl_precio_base.TabIndex = 58;
-            this.lbl_precio_base.Text = "label8";
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(97, 398);
+            this.label6.Location = new System.Drawing.Point(13, 427);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(127, 15);
             this.label6.TabIndex = 57;
@@ -273,11 +242,11 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(13, 398);
+            this.label5.Location = new System.Drawing.Point(13, 453);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(75, 15);
+            this.label5.Size = new System.Drawing.Size(137, 15);
             this.label5.TabIndex = 56;
-            this.label5.Text = "Precio base:";
+            this.label5.Text = "Precio base (Régimen):";
             // 
             // label4
             // 
@@ -410,11 +379,39 @@
             this.numericUpDown.TabIndex = 94;
             this.numericUpDown.ValueChanged += new System.EventHandler(this.numericUpDown_ValueChanged);
             // 
+            // textBoxTotal
+            // 
+            this.textBoxTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxTotal.Location = new System.Drawing.Point(157, 478);
+            this.textBoxTotal.Name = "textBoxTotal";
+            this.textBoxTotal.ReadOnly = true;
+            this.textBoxTotal.Size = new System.Drawing.Size(100, 23);
+            this.textBoxTotal.TabIndex = 96;
+            // 
+            // textBoxRecarga
+            // 
+            this.textBoxRecarga.Location = new System.Drawing.Point(157, 426);
+            this.textBoxRecarga.Name = "textBoxRecarga";
+            this.textBoxRecarga.ReadOnly = true;
+            this.textBoxRecarga.Size = new System.Drawing.Size(100, 20);
+            this.textBoxRecarga.TabIndex = 97;
+            // 
+            // textBoxPrecioBase
+            // 
+            this.textBoxPrecioBase.Location = new System.Drawing.Point(157, 452);
+            this.textBoxPrecioBase.Name = "textBoxPrecioBase";
+            this.textBoxPrecioBase.ReadOnly = true;
+            this.textBoxPrecioBase.Size = new System.Drawing.Size(100, 20);
+            this.textBoxPrecioBase.TabIndex = 98;
+            // 
             // ModificarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(522, 550);
+            this.Controls.Add(this.textBoxPrecioBase);
+            this.Controls.Add(this.textBoxRecarga);
+            this.Controls.Add(this.textBoxTotal);
             this.Controls.Add(this.numericUpDown);
             this.Controls.Add(this.lbl_cargado_correcto);
             this.Controls.Add(this.lbl_error);
@@ -434,14 +431,11 @@
             this.Controls.Add(this.lbl_error_carga_hotel);
             this.Controls.Add(this.lbl_error_fecha);
             this.Controls.Add(this.btn_modificar);
-            this.Controls.Add(this.lbl_precio);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.atras_Button);
             this.Controls.Add(this.lbl_noches);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.lbl_recarga_estrellas);
-            this.Controls.Add(this.lbl_precio_base);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -471,14 +465,11 @@
         private System.Windows.Forms.Label lbl_error_carga_hotel;
         private System.Windows.Forms.Label lbl_error_fecha;
         private System.Windows.Forms.Button btn_modificar;
-        private System.Windows.Forms.Label lbl_precio;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button atras_Button;
         private System.Windows.Forms.Label lbl_noches;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label lbl_recarga_estrellas;
-        private System.Windows.Forms.Label lbl_precio_base;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
@@ -495,5 +486,8 @@
         private System.Windows.Forms.Label lbl_cargado_correcto;
         private System.Windows.Forms.Label lbl_error;
         private System.Windows.Forms.NumericUpDown numericUpDown;
+        private System.Windows.Forms.TextBox textBoxTotal;
+        private System.Windows.Forms.TextBox textBoxRecarga;
+        private System.Windows.Forms.TextBox textBoxPrecioBase;
     }
 }

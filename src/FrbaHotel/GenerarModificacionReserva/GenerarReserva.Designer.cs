@@ -58,6 +58,9 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.recarga_por_estrellas = new System.Windows.Forms.TextBox();
+            this.precio_total = new System.Windows.Forms.TextBox();
+            this.precio_base = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
             this.clie_mail = new System.Windows.Forms.TextBox();
@@ -67,9 +70,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.limpiar = new System.Windows.Forms.Button();
-            this.precio_base = new System.Windows.Forms.TextBox();
-            this.precio_total = new System.Windows.Forms.TextBox();
-            this.recarga_por_estrellas = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -132,11 +132,11 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(53, 28);
+            this.label5.Location = new System.Drawing.Point(8, 28);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(63, 13);
+            this.label5.Size = new System.Drawing.Size(114, 13);
             this.label5.TabIndex = 8;
-            this.label5.Text = "Precio base";
+            this.label5.Text = "Precio base (Régimen)";
             // 
             // label6
             // 
@@ -386,6 +386,30 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Costo de alojamiento";
             // 
+            // recarga_por_estrellas
+            // 
+            this.recarga_por_estrellas.Location = new System.Drawing.Point(122, 51);
+            this.recarga_por_estrellas.Name = "recarga_por_estrellas";
+            this.recarga_por_estrellas.ReadOnly = true;
+            this.recarga_por_estrellas.Size = new System.Drawing.Size(100, 20);
+            this.recarga_por_estrellas.TabIndex = 26;
+            // 
+            // precio_total
+            // 
+            this.precio_total.Location = new System.Drawing.Point(344, 36);
+            this.precio_total.Name = "precio_total";
+            this.precio_total.ReadOnly = true;
+            this.precio_total.Size = new System.Drawing.Size(100, 20);
+            this.precio_total.TabIndex = 25;
+            // 
+            // precio_base
+            // 
+            this.precio_base.Location = new System.Drawing.Point(122, 25);
+            this.precio_base.Name = "precio_base";
+            this.precio_base.ReadOnly = true;
+            this.precio_base.Size = new System.Drawing.Size(100, 20);
+            this.precio_base.TabIndex = 24;
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.button1);
@@ -472,30 +496,6 @@
             this.limpiar.Text = "Limpiar";
             this.limpiar.UseVisualStyleBackColor = true;
             this.limpiar.Click += new System.EventHandler(this.limpiar_Click);
-            // 
-            // precio_base
-            // 
-            this.precio_base.Location = new System.Drawing.Point(122, 25);
-            this.precio_base.Name = "precio_base";
-            this.precio_base.ReadOnly = true;
-            this.precio_base.Size = new System.Drawing.Size(100, 20);
-            this.precio_base.TabIndex = 24;
-            // 
-            // precio_total
-            // 
-            this.precio_total.Location = new System.Drawing.Point(344, 36);
-            this.precio_total.Name = "precio_total";
-            this.precio_total.ReadOnly = true;
-            this.precio_total.Size = new System.Drawing.Size(100, 20);
-            this.precio_total.TabIndex = 25;
-            // 
-            // recarga_por_estrellas
-            // 
-            this.recarga_por_estrellas.Location = new System.Drawing.Point(122, 51);
-            this.recarga_por_estrellas.Name = "recarga_por_estrellas";
-            this.recarga_por_estrellas.ReadOnly = true;
-            this.recarga_por_estrellas.Size = new System.Drawing.Size(100, 20);
-            this.recarga_por_estrellas.TabIndex = 26;
             // 
             // GenerarReserva
             // 

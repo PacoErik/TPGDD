@@ -60,7 +60,7 @@ namespace FrbaHotel.GenerarModificacionReserva
         {
             UtilesSQL.llenarTabla(hoteles, "SELECT * FROM DERROCHADORES_DE_PAPEL.Hotel WHERE hote_id = '" + reserva.hotel.ID.ToString() + "'");
             reserva.hotel.recarga_estrellas = Convert.ToDouble(hoteles.Rows[0]["hote_recargaEstrella"]);
-            recarga_por_estrellas.Text = reserva.hotel.recarga_estrellas.ToString()+"$";
+            recarga_por_estrellas.Text = reserva.hotel.recarga_estrellas.ToString()+"U$S";
         }
 
         private void date_desde_ValueChanged(object sender, EventArgs e)
@@ -158,7 +158,7 @@ namespace FrbaHotel.GenerarModificacionReserva
             regimenes = new DataTable();
             UtilesSQL.llenarTabla(regimenes, "SELECT * FROM DERROCHADORES_DE_PAPEL.RegimenXHotel as rh JOIN DERROCHADORES_DE_PAPEL.Regimen as r ON ( rh.rexh_regimen = r.regi_codigo AND rh.rexh_hotel = " + reserva.hotel.ID.ToString() + ")");
             cbox_regimenes.Items.Clear();
-            for (int indice = 0; indice < regimenes.Rows.Count - 1; indice++)
+            for (int indice = 0; indice < regimenes.Rows.Count; indice++)
             {
                 cbox_regimenes.Items.Add(regimenes.Rows[indice]["regi_descripcion"].ToString());
             }
@@ -170,11 +170,11 @@ namespace FrbaHotel.GenerarModificacionReserva
             int indice_regimen_seleccionado = cbox_regimenes.SelectedIndex;
             string preciobase = String.Empty;
             preciobase = regimenes.Rows[indice_regimen_seleccionado]["regi_precioBase"].ToString();
-            precio_base.Text = preciobase+"$";
+            precio_base.Text = preciobase + "U$S";
             reserva.precio_base = Convert.ToDouble(preciobase);
             reserva.regimen_seleccionado = Convert.ToInt32(regimenes.Rows[indice_regimen_seleccionado]["regi_codigo"]);
             reserva.CalcularPrecio();
-            precio_total.Text = reserva.precio.ToString()+"$";
+            precio_total.Text = reserva.precio.ToString() + "U$S";
         }
 
         private bool CargarHabitaciones()
@@ -282,7 +282,7 @@ namespace FrbaHotel.GenerarModificacionReserva
         private void CalcularPrecio()
         {
             reserva.CalcularPrecio();
-            precio_total.Text = reserva.precio.ToString()+"$";
+            precio_total.Text = reserva.precio.ToString()+"U$S";
         }
 
         private void VerificarCapacidadReserva()
