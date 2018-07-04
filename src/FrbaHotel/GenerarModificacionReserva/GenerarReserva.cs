@@ -180,7 +180,6 @@ namespace FrbaHotel.GenerarModificacionReserva
         private bool CargarHabitaciones()
         {
             hoteles = new DataTable();
-            UtilesSQL.llenarTabla(hoteles, "SELECT * From DERROCHADORES_DE_PAPEL.Habitacion JOIN DERROCHADORES_DE_PAPEL.PeriodoDeCierre ON (peri_hotel = '" + reserva.hotel.ID + "') WHERE (peri_fechaFin >= CONVERT(DATETIME,'" + reserva.fecha_desde + "', 121) AND peri_fechaFin <= CONVERT(DATETIME,'" + reserva.fecha_hasta + "', 121)) OR (peri_fechaInicio >= CONVERT(DATETIME,'" + reserva.fecha_desde + "', 121) AND peri_fechaInicio <= CONVERT(DATETIME,'" + reserva.fecha_hasta + "', 121)) OR ( peri_fechaInicio <= CONVERT(DATETIME,'" + reserva.fecha_desde + "', 121) AND peri_fechaFin >= CONVERT(DATETIME,'" + reserva.fecha_hasta + "', 121)) ");
             String desde = "CONVERT(datetime, \'" + reserva.fecha_desde.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\',121)";
             String hasta = "CONVERT(datetime, \'" + reserva.fecha_hasta.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\',121)";
             UtilesSQL.llenarTabla(hoteles, "SELECT * From DERROCHADORES_DE_PAPEL.Habitacion JOIN DERROCHADORES_DE_PAPEL.PeriodoDeCierre ON (peri_hotel = '" + reserva.hotel.ID + "') WHERE (peri_fechaFin >= "+desde+" AND peri_fechaFin <= " + hasta + ") OR (peri_fechaInicio >= " + desde+ " AND peri_fechaInicio <= " + hasta+ ") OR ( peri_fechaInicio <=" + desde+ " AND peri_fechaFin >= " + hasta+ ") " );

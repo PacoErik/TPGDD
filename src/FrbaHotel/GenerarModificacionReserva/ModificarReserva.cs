@@ -184,7 +184,6 @@ namespace FrbaHotel.GenerarModificacionReserva
             DataTable dt = new DataTable();
             UtilesSQL.llenarTabla(dt, "SELECT * FROM DERROCHADORES_DE_PAPEL.Hotel WHERE hote_id = '" + reserva.hotel.ID.ToString() + "'");
             reserva.hotel.recarga_estrellas = Convert.ToDouble(dt.Rows[0][8]);
-            MessageBox.Show(dt.Rows[0][8].ToString());
             lbl_recarga_estrellas.Visible = true;
             lbl_recarga_estrellas.Text = "U$S" + reserva.hotel.recarga_estrellas.ToString();
 
@@ -193,33 +192,20 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         private void CargarHabitaciones()
         {
-            hoteles = new DataTable();
-            UtilesSQL.llenarTabla(hoteles, "SELECT * FROM  DERROCHADORES_DE_PAPEL.PeriodoDeCierre WHERE (peri_fechaFin >= CONVERT(DATETIME, '" + reserva.fecha_desde.ToString("yyyy-MM-dd") + "', 121) AND peri_fechaFin <= CONVERT(DATETIME, '" + reserva.fecha_hasta.ToString("yyyy-MM-dd") + "', 121)) OR (peri_fechaInicio >= CONVERT(DATETIME, '" + reserva.fecha_desde.ToString("yyyy-MM-dd") + "', 121) AND peri_fechaInicio <= CONVERT(DATETIME, '" + reserva.fecha_hasta.ToString("yyyy-MM-dd") + "', 121)) OR ( peri_fechaInicio <= CONVERT(DATETIME, '" + reserva.fecha_desde.ToString("yyyy-MM-dd") + "', 121) AND peri_fechaFin >= CONVERT(DATETIME, '" + reserva.fecha_hasta.ToString("yyyy-MM-dd") + "', 121)) AND peri_hotel = '" + reserva.hotel.ID.ToString() + "' ");
-            if (hoteles.Rows.Count != 0)
+            habitaciones.Clear();
+            string consulta = "SELECT h1.habi_numero, h1.habi_piso, th1.tipo_cantidadDePersonas, th1.tipo_descripcion FROM  DERROCHADORES_DE_PAPEL.TipoDeHabitacion as th1 JOIN DERROCHADORES_DE_PAPEL.Habitacion as h1 ON (th1.tipo_codigo = h1.habi_tipo) WHERE h1.habi_hotel = '" + reserva.hotel.ID + "' AND NOT (EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.Habitacion as h2 JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion as rh2 ON ( rh2.rexh_hotel = h2.habi_hotel AND rh2.rexh_numero = h2.habi_numero AND rh2.rexh_piso = h2.habi_piso) JOIN DERROCHADORES_DE_PAPEL.Reserva as r2 ON (r2.rese_codigo = rh2.rexh_reserva) JOIN DERROCHADORES_DE_PAPEL.EstadoDeReserva as er2 ON (er2.esta_id = r2.rese_estado) WHERE h2.habi_hotel = h1.habi_hotel AND h2.habi_numero = h1.habi_numero AND h2.habi_piso = h1.habi_piso AND ( ((r2.rese_inicio BETWEEN CONVERT(DATETIME, '" + reserva.fecha_desde.ToString("yyyy-MM-dd") + "', 121) AND CONVERT(DATETIME, '" + reserva.fecha_hasta.ToString("yyyy-MM-dd") + "', 121)) OR (r2.rese_fin BETWEEN CONVERT(DATETIME, '" + reserva.fecha_desde.ToString("yyyy-MM-dd") + "', 121) AND CONVERT(DATETIME, '" + reserva.fecha_hasta.ToString("yyyy-MM-dd") + "', 121)) OR (r2.rese_fin <= CONVERT(DATETIME, '" + reserva.fecha_desde.ToString("yyyy-MM-dd") + "', 121) AND r2.rese_fin >= CONVERT(DATETIME, '" + reserva.fecha_hasta.ToString("yyyy-MM-dd") + "', 121)) ) AND (NOT ( (esta_detalle = 'RESERVA CANCELADA POR RECEPCION') OR (esta_detalle = 'RESERVA CANCELADA POR CLIENTE' ) OR (esta_detalle = 'RESERVA CANCELADA POR NO-SHOW')) ) ) ) )";
+            UtilesSQL.llenarTabla(habitaciones, consulta);
+            habitaciones_disponibles.Clear();
+            for (int indice = 0; indice < habitaciones.Rows.Count; indice++)
             {
-                lbl_error_carga_hotel.Text = "HOTEL CERRADO POR ESAS FECHAS";
-                lbl_error_carga_hotel.Visible = true;
-                return;
+                Habitacion habitacion = new Habitacion();
+                habitacion.descripcion = habitaciones.Rows[indice]["tipo_descripcion"].ToString();
+                habitacion.cantidad_personas = Convert.ToInt32(habitaciones.Rows[indice]["tipo_cantidadDePersonas"].ToString());
+                habitacion.numero = Convert.ToInt32(habitaciones.Rows[indice]["habi_numero"].ToString());
+                habitacion.piso = Convert.ToInt32(habitaciones.Rows[indice]["habi_piso"].ToString());
+                habitaciones_disponibles.Add(habitacion);
             }
-            else
-            {
-                habitaciones.Clear();
-                string consulta = "SELECT h1.habi_numero, h1.habi_piso, th1.tipo_cantidadDePersonas, th1.tipo_descripcion FROM  DERROCHADORES_DE_PAPEL.TipoDeHabitacion as th1 JOIN DERROCHADORES_DE_PAPEL.Habitacion as h1 ON (th1.tipo_codigo = h1.habi_tipo) WHERE h1.habi_hotel = '" + reserva.hotel.ID + "' AND NOT (EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.Habitacion as h2 JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion as rh2 ON ( rh2.rexh_hotel = h2.habi_hotel AND rh2.rexh_numero = h2.habi_numero AND rh2.rexh_piso = h2.habi_piso) JOIN DERROCHADORES_DE_PAPEL.Reserva as r2 ON (r2.rese_codigo = rh2.rexh_reserva) JOIN DERROCHADORES_DE_PAPEL.EstadoDeReserva as er2 ON (er2.esta_id = r2.rese_estado) WHERE h2.habi_hotel = h1.habi_hotel AND h2.habi_numero = h1.habi_numero AND h2.habi_piso = h1.habi_piso AND ( ((r2.rese_inicio BETWEEN CONVERT(DATETIME, '" + reserva.fecha_desde.ToString("yyyy-MM-dd") + "', 121) AND CONVERT(DATETIME, '" + reserva.fecha_hasta.ToString("yyyy-MM-dd") + "', 121)) OR (r2.rese_fin BETWEEN CONVERT(DATETIME, '" + reserva.fecha_desde.ToString("yyyy-MM-dd") + "', 121) AND CONVERT(DATETIME, '" + reserva.fecha_hasta.ToString("yyyy-MM-dd") + "', 121)) OR (r2.rese_fin <= CONVERT(DATETIME, '" + reserva.fecha_desde.ToString("yyyy-MM-dd") + "', 121) AND r2.rese_fin >= CONVERT(DATETIME, '" + reserva.fecha_hasta.ToString("yyyy-MM-dd") + "', 121)) ) AND (NOT ( (esta_detalle = 'RESERVA CANCELADA POR RECEPCION') OR (esta_detalle = 'RESERVA CANCELADA POR CLIENTE' ) OR (esta_detalle = 'RESERVA CANCELADA POR NO-SHOW')) ) ) ) )";
-                UtilesSQL.llenarTabla(habitaciones, consulta);
-                habitaciones_disponibles.Clear();
-                for (int indice = 0; indice < habitaciones.Rows.Count; indice++)
-                {
-                    Habitacion habitacion = new Habitacion();
-                    habitacion.descripcion = habitaciones.Rows[indice]["tipo_descripcion"].ToString();
-                    habitacion.cantidad_personas = Convert.ToInt32(habitaciones.Rows[indice]["tipo_cantidadDePersonas"].ToString());
-                    habitacion.numero = Convert.ToInt32(habitaciones.Rows[indice]["habi_numero"].ToString());
-                    habitacion.piso = Convert.ToInt32(habitaciones.Rows[indice]["habi_piso"].ToString());
-                    habitaciones_disponibles.Add(habitacion);
-                }
-                ActualizarComboBoxHabitaciones();
-                return;
-            }
-
+            ActualizarComboBoxHabitaciones();
         }
         private void ActualizarComboBoxHabitaciones()
         {
