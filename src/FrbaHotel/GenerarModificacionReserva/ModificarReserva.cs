@@ -257,11 +257,22 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         private void VerificarFechasCorrectas()
         {
+
             if (reserva.fecha_desde > reserva.fecha_hasta)
             {
                 date_hasta.Value = date_desde.Value;
             }
             CalcularCantidadNoches();
+            DataTable dt = new DataTable();
+            DataTable dt2 = new DataTable();
+            String desde = "CONVERT(datetime, \'" + reserva.fecha_desde.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\',121)";
+            String hasta = "CONVERT(datetime, \'" + reserva.fecha_hasta.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\',121)";
+            UtilesSQL.llenarTabla(dt, "SELECT * FROM DERROCHADORES_DE_PAPEL.PeriodoDeCierre WHERE peri_hotel = " + reserva.hotel.ID + " AND ((peri_fechaFin >= " + desde + " AND peri_fechaFin <= " + hasta + ") OR (peri_fechaInicio >= " + desde + " AND peri_fechaInicio <= " + hasta + ") OR ( peri_fechaInicio <=" + desde + " AND peri_fechaFin >= " + hasta + "))");
+            UtilesSQL.llenarTabla(dt2, "SELECT * FROM DERROCHADORES_DE_PAPEL.Reserva WHERE rese_hotel = " + reserva.hotel.ID + " AND rese_cliente = " + reserva.cliente.ToString() + " AND rese_codigo != " + reserva.codigo.ToString() + " AND ((rese_fin >= " + desde + " AND rese_fin <= " + hasta + ") OR (rese_inicio >= " + desde + " AND rese_inicio <= " + hasta + ") OR ( rese_inicio <=" + desde + " AND rese_fin >= " + hasta + "))");
+
+            labelHotelCerrado.Visible = dt.Rows.Count != 0;
+            labelReservaYaExistente.Visible = dt2.Rows.Count != 0;
+            ValidarTodo();
         }
         private void date_desde_ValueChanged_1(object sender, EventArgs e)
         {
@@ -276,8 +287,11 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         private void numericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            reserva.personas = Int32.Parse(numericUpDown.Value.ToString());
+            Int32 p = Int32.Parse(numericUpDown.Value.ToString());
+            reserva.personas = p;
+            label0Personas.Visible = p == 0;
             CalcularPrecio();
+            ValidarTodo();
         }
 
         private void cbox_regimenes_SelectedIndexChanged(object sender, EventArgs e)
@@ -309,14 +323,7 @@ namespace FrbaHotel.GenerarModificacionReserva
                 reserva.habitaciones_reservadas.Add(habitaciones_disponibles[cbox_disponibles.SelectedIndex - 1]);
                 habitaciones_disponibles.RemoveAt(cbox_disponibles.SelectedIndex - 1);
                 ActualizarComboBoxHabitaciones();
-                if (reserva.PersonasMaximas() >= reserva.personas)
-                {
-                    btn_modificar.Enabled = true;
-                }
-                else
-                {
-                    btn_modificar.Enabled = false;
-                }
+                ValidarTodo();
             }
         }
         private void btn_eliminar_habitacion_Click_1(object sender, EventArgs e)
@@ -327,16 +334,20 @@ namespace FrbaHotel.GenerarModificacionReserva
                 reserva.habitaciones_reservadas.RemoveAt(cbox_seleccionadas.SelectedIndex - 1);
                 ActualizarComboBoxHabitaciones();
             }
-            if (reserva.PersonasMaximas() >= reserva.personas)
-            {
-                btn_modificar.Enabled = true;
-            }
-            else
+            ValidarTodo();
+        }
+
+        private void ValidarTodo()
+        {
+            if (lbl_error_fecha.Visible || labelHotelCerrado.Visible || label0Personas.Visible || lbl_error_carga_hotel.Visible || lbl_falta_habitaciones_1.Visible || labelReservaYaExistente.Visible)
             {
                 btn_modificar.Enabled = false;
             }
+            else
+            {
+                btn_modificar.Enabled = true;
+            }
         }
-
         private void btn_reservar_Click(object sender, EventArgs e)
         {
             //ELIMINAR las reserva x habitacion que ya estan
