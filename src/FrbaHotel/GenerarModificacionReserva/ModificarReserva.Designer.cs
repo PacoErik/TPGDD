@@ -63,6 +63,9 @@
             this.textBoxTotal = new System.Windows.Forms.TextBox();
             this.textBoxRecarga = new System.Windows.Forms.TextBox();
             this.textBoxPrecioBase = new System.Windows.Forms.TextBox();
+            this.labelHotelCerrado = new System.Windows.Forms.Label();
+            this.label0Personas = new System.Windows.Forms.Label();
+            this.labelReservaYaExistente = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
@@ -152,7 +155,7 @@
             // 
             this.lbl_error_carga_hotel.AutoSize = true;
             this.lbl_error_carga_hotel.ForeColor = System.Drawing.Color.Red;
-            this.lbl_error_carga_hotel.Location = new System.Drawing.Point(312, 258);
+            this.lbl_error_carga_hotel.Location = new System.Drawing.Point(312, 274);
             this.lbl_error_carga_hotel.Name = "lbl_error_carga_hotel";
             this.lbl_error_carga_hotel.Size = new System.Drawing.Size(88, 13);
             this.lbl_error_carga_hotel.TabIndex = 77;
@@ -163,7 +166,7 @@
             // 
             this.lbl_error_fecha.AutoSize = true;
             this.lbl_error_fecha.ForeColor = System.Drawing.Color.Red;
-            this.lbl_error_fecha.Location = new System.Drawing.Point(240, 192);
+            this.lbl_error_fecha.Location = new System.Drawing.Point(240, 169);
             this.lbl_error_fecha.Name = "lbl_error_fecha";
             this.lbl_error_fecha.Size = new System.Drawing.Size(186, 13);
             this.lbl_error_fecha.TabIndex = 73;
@@ -404,11 +407,47 @@
             this.textBoxPrecioBase.Size = new System.Drawing.Size(100, 20);
             this.textBoxPrecioBase.TabIndex = 98;
             // 
+            // labelHotelCerrado
+            // 
+            this.labelHotelCerrado.AutoSize = true;
+            this.labelHotelCerrado.ForeColor = System.Drawing.Color.Red;
+            this.labelHotelCerrado.Location = new System.Drawing.Point(240, 193);
+            this.labelHotelCerrado.Name = "labelHotelCerrado";
+            this.labelHotelCerrado.Size = new System.Drawing.Size(201, 13);
+            this.labelHotelCerrado.TabIndex = 99;
+            this.labelHotelCerrado.Text = "HOTEL CERRADO POR ESAS FECHAS";
+            this.labelHotelCerrado.Visible = false;
+            // 
+            // label0Personas
+            // 
+            this.label0Personas.AutoSize = true;
+            this.label0Personas.ForeColor = System.Drawing.Color.Red;
+            this.label0Personas.Location = new System.Drawing.Point(240, 236);
+            this.label0Personas.Name = "label0Personas";
+            this.label0Personas.Size = new System.Drawing.Size(167, 13);
+            this.label0Personas.TabIndex = 100;
+            this.label0Personas.Text = "NO PUEDEN SER 0 PERSONAS";
+            this.label0Personas.Visible = false;
+            // 
+            // labelReservaYaExistente
+            // 
+            this.labelReservaYaExistente.AutoSize = true;
+            this.labelReservaYaExistente.ForeColor = System.Drawing.Color.Red;
+            this.labelReservaYaExistente.Location = new System.Drawing.Point(240, 217);
+            this.labelReservaYaExistente.Name = "labelReservaYaExistente";
+            this.labelReservaYaExistente.Size = new System.Drawing.Size(230, 13);
+            this.labelReservaYaExistente.TabIndex = 101;
+            this.labelReservaYaExistente.Text = "YA TIENE UNA RESERVA EN ESAS FECHAS";
+            this.labelReservaYaExistente.Visible = false;
+            // 
             // ModificarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(522, 550);
+            this.Controls.Add(this.labelReservaYaExistente);
+            this.Controls.Add(this.label0Personas);
+            this.Controls.Add(this.labelHotelCerrado);
             this.Controls.Add(this.textBoxPrecioBase);
             this.Controls.Add(this.textBoxRecarga);
             this.Controls.Add(this.textBoxTotal);
@@ -489,5 +528,8 @@
         private System.Windows.Forms.TextBox textBoxTotal;
         private System.Windows.Forms.TextBox textBoxRecarga;
         private System.Windows.Forms.TextBox textBoxPrecioBase;
+        private System.Windows.Forms.Label labelHotelCerrado;
+        private System.Windows.Forms.Label label0Personas;
+        private System.Windows.Forms.Label labelReservaYaExistente;
     }
 }
