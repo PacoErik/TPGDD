@@ -302,6 +302,14 @@ namespace FrbaHotel.GenerarModificacionReserva
                 MessageBox.Show("Debe elegir bien las habitaciones");
                 return;
             }
+            //verificar que no haya otra reserva
+            DataTable reservas = new DataTable();
+            UtilesSQL.llenarTabla(reservas, "SELECT * FROM DERROCHADORES_DE_PAPEL.Reserva WHERE rese_usuario = " + reserva.cliente.ToString() + " AND rese_estado IN (1,2,6) AND ((rese_inicio <= CONVERT(datetime,'" + reserva.fecha_desde.ToString("yyyy-MM-dd") + "',121) AND CONVERT(datetime,'" + reserva.fecha_desde.ToString("yyyy-MM-dd") + "',121) <= rese_fin) OR (rese_inicio <= CONVERT(datetime,'" + reserva.fecha_hasta.ToString("yyyy-MM-dd") + "',121) AND CONVERT(datetime,'" + reserva.fecha_hasta.ToString("yyyy-MM-dd") + "',121) <= rese_fin))");
+            if (reservas.Rows.Count > 0)
+            {
+                MessageBox.Show("El usuario ya tiene otra reserva en esas fechas");
+                return;
+            }
             AltaReserva();
             MessageBox.Show("Se genero un reserva en el hotel " + reserva.hotel.ID.ToString() + " desde el dia " + reserva.fecha_desde.ToString("yyyy-MM-dd") + " hasta el dia " + reserva.fecha_hasta.ToString("yyyy-MM-dd") + "\n Codigo de reserva: " + reserva.codigo.ToString()); 
             Close();
