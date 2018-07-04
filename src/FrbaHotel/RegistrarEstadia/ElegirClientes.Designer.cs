@@ -39,6 +39,7 @@
             this.volver = new System.Windows.Forms.Button();
             this.agregar = new System.Windows.Forms.Button();
             this.continuar = new System.Windows.Forms.Button();
+            this.buttonEliminar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.clientes)).BeginInit();
             this.SuspendLayout();
             // 
@@ -145,11 +146,23 @@
             this.continuar.UseVisualStyleBackColor = true;
             this.continuar.Click += new System.EventHandler(this.button2_Click);
             // 
+            // buttonEliminar
+            // 
+            this.buttonEliminar.Enabled = false;
+            this.buttonEliminar.Location = new System.Drawing.Point(218, 320);
+            this.buttonEliminar.Name = "buttonEliminar";
+            this.buttonEliminar.Size = new System.Drawing.Size(75, 23);
+            this.buttonEliminar.TabIndex = 11;
+            this.buttonEliminar.Text = "Eliminar cliente";
+            this.buttonEliminar.UseVisualStyleBackColor = true;
+            this.buttonEliminar.Click += new System.EventHandler(this.buttonEliminar_Click);
+            // 
             // ElegirClientes
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(505, 355);
+            this.Controls.Add(this.buttonEliminar);
             this.Controls.Add(this.continuar);
             this.Controls.Add(this.agregar);
             this.Controls.Add(this.volver);
@@ -182,5 +195,6 @@
         private System.Windows.Forms.Button volver;
         private System.Windows.Forms.Button agregar;
         private System.Windows.Forms.Button continuar;
+        private System.Windows.Forms.Button buttonEliminar;
     }
 }

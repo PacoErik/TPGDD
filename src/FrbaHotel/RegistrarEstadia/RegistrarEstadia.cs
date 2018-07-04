@@ -21,9 +21,11 @@ namespace FrbaHotel.RegistrarEstadia
         String cliente_nombre;
         String cliente_apellido;
         String cliente_mail;
+        String hoteId;
 
-        public RegistrarEstadia()
+        public RegistrarEstadia(string idH)
         {
+            hoteId = idH;
             InitializeComponent();
         }
 
@@ -128,7 +130,7 @@ namespace FrbaHotel.RegistrarEstadia
                 if (cantidad_personas > 1)
                 {
                     this.Hide();
-                    ElegirClientes elegirClientes = new ElegirClientes(cliente_id, cliente_apellido, cliente_nombre, cliente_mail, reserva.Text, cantidad_personas);
+                    ElegirClientes elegirClientes = new ElegirClientes(cliente_id, cliente_apellido, cliente_nombre, cliente_mail, reserva.Text, cantidad_personas, hoteId, fecha_inicio.Text, fecha_fin.Text);
                     elegirClientes.ShowDialog();
                     this.Show();
                     if (elegirClientes.esCorrecto())

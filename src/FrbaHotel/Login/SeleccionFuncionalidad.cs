@@ -89,7 +89,7 @@ namespace FrbaHotel.Login
         }
         private void Registrar_estadia()
         {
-            Form f1 = new RegistrarEstadia.RegistrarEstadia();
+            Form f1 = new RegistrarEstadia.RegistrarEstadia(hotelId);
             f1.ShowDialog();
         }
         private void Listado_estadistico()

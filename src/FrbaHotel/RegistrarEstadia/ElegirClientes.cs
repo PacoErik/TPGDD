@@ -20,11 +20,14 @@ namespace FrbaHotel.RegistrarEstadia
         String cliente_nombre;
         String cliente_mail;
         String reserva;
+        String hoteId;
+        String fecha_desde;
+        String fecha_hasta;
         int cantidad_personas;
 
         private DataTable clientes_dt;
 
-        public ElegirClientes(String cliente_id, String cliente_apellido, String cliente_nombre, String cliente_mail, String reserva, int cantidad_personas)
+        public ElegirClientes(String cliente_id, String cliente_apellido, String cliente_nombre, String cliente_mail, String reserva, int cantidad_personas, string idH, string fechaD, string fechaH)
         {
             correcto = false;
 
@@ -34,6 +37,9 @@ namespace FrbaHotel.RegistrarEstadia
             this.cliente_mail = cliente_mail;
             this.reserva = reserva;
             this.cantidad_personas = cantidad_personas;
+            this.hoteId = idH;
+            this.fecha_desde = fechaD;
+            this.fecha_hasta = fechaH;
 
             InitializeComponent();
 
@@ -70,7 +76,7 @@ namespace FrbaHotel.RegistrarEstadia
             }
             else
             {
-                MessageBox.Show("Todavía falta agregar personas");
+                MessageBox.Show("Falta agregar más personas");
             }
         }
 
@@ -91,18 +97,19 @@ namespace FrbaHotel.RegistrarEstadia
                 {
                     if (yaExisteCliente(elegir.id()))
                     {
-                        MessageBox.Show("Ese cliente ya fue agregado previamente");
+                        MessageBox.Show("Ese cliente ya fue agregado previamente o forma parte de otra estadía en la misma fecha");
                     }
                     else
                     {
                         clientes_dt.Rows.Add(elegir.id(), elegir.apellido(), elegir.nombre(), elegir.mail());
+                        buttonEliminar.Enabled = true;
                     }
                 }
                 this.Show();
             }
             else
             {
-                MessageBox.Show("Ya no se pueden agregar más personas");
+                MessageBox.Show("No se pueden agregar más personas");
             }
 
         }
@@ -117,16 +124,39 @@ namespace FrbaHotel.RegistrarEstadia
             return distribucionClientes_dt;
         }
 
-        private bool yaExisteCliente(String id)
+        private bool yaExisteCliente(String idC)
         {
+            DataTable dt = new DataTable();
+            String desde = "CONVERT(datetime, \'" + DateTime.Parse(fecha_desde).ToString("yyyy-MM-dd HH:mm:ss.fff") + "\',121)";
+            String hasta = "CONVERT(datetime, \'" + DateTime.Parse(fecha_hasta).ToString("yyyy-MM-dd HH:mm:ss.fff") + "\',121)";
+            UtilesSQL.llenarTabla(dt, "SELECT * FROM DERROCHADORES_DE_PAPEL.Estadia JOIN DERROCHADORES_DE_PAPEL.EstadiaXCliente ON esxc_estadia = esta_id JOIN DERROCHADORES_DE_PAPEL.Reserva ON rese_codigo = esta_reserva WHERE esxc_cliente = " + idC + " AND esxc_hotel = " + hoteId + " AND esta_reserva = " + reserva + " AND ((rese_fin >= " + desde + " AND rese_fin <= " + hasta + ") OR (rese_inicio >= " + desde + " AND rese_inicio <= " + hasta + ") OR ( rese_inicio <=" + desde + " AND rese_fin >= " + hasta + "))");
+            if (dt.Rows.Count > 0)
+            {
+                return true;
+            }
+
             foreach (DataRow cliente in clientes_dt.Rows)
             {
-                if (cliente[0].ToString().Equals(id))
+                if (cliente[0].ToString().Equals(idC))
                 {
                     return true;
                 }
             }
             return false;
+        }
+
+        private void buttonEliminar_Click(object sender, EventArgs e)
+        {
+            if (clientes.CurrentRow.Cells[0].Value.ToString() == cliente_id)
+            {
+                MessageBox.Show("No se puede eliminar al cliente que creó la reserva");
+                return;
+            }
+            clientes_dt.DefaultView[clientes.CurrentRow.Index].Delete();
+            if (clientes_dt.Rows.Count <= 1)
+            {
+                buttonEliminar.Enabled = false;
+            }
         }
     }
 }
