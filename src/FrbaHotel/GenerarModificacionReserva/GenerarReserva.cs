@@ -349,7 +349,7 @@ namespace FrbaHotel.GenerarModificacionReserva
                 DataTable dt = new DataTable();
                 String desde = "CONVERT(datetime, \'" + reserva.fecha_desde.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\',121)";
                 String hasta = "CONVERT(datetime, \'" + reserva.fecha_hasta.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\',121)";
-                UtilesSQL.llenarTabla(dt, "SELECT * FROM DERROCHADORES_DE_PAPEL.Reserva WHERE rese_hotel = " + reserva.hotel.ID + " AND rese_cliente = " + reserva.cliente.ToString() + " AND rese_codigo != " + reserva.codigo.ToString() + " AND ((rese_fin >= " + desde + " AND rese_fin <= " + hasta + ") OR (rese_inicio >= " + desde + " AND rese_inicio <= " + hasta + ") OR ( rese_inicio <=" + desde + " AND rese_fin >= " + hasta + "))");
+                UtilesSQL.llenarTabla(dt, "SELECT * FROM DERROCHADORES_DE_PAPEL.Reserva WHERE rese_hotel = " + reserva.hotel.ID + " AND rese_cliente = " + elegir.id() + " AND rese_codigo != " + reserva.codigo.ToString() + " AND ((rese_fin >= " + desde + " AND rese_fin <= " + hasta + ") OR (rese_inicio >= " + desde + " AND rese_inicio <= " + hasta + ") OR ( rese_inicio <=" + desde + " AND rese_fin >= " + hasta + "))");
                 if (dt.Rows.Count != 0)
                 {
                     MessageBox.Show("Ese usuario ya tiene una reserva en este hotel en esas fechas");
