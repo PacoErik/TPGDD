@@ -49,6 +49,8 @@ namespace FrbaHotel.RegistrarConsumible
 
         private void buttonAgregarConsumible_Click(object sender, EventArgs e)
         {
+            if (disponibles.CurrentRow == null)
+                return;
             int cantidad;
             RecibirEntrada:
                 String resultado = Microsoft.VisualBasic.Interaction.InputBox("¿Cuántas unidades del producto va a agregar?", "Cantidad de consumibles", "1");
@@ -67,9 +69,12 @@ namespace FrbaHotel.RegistrarConsumible
         }
         private void buttonQuitarConsumible_Click(object sender, EventArgs e)
         {
-            DataRow consumible = ((DataRowView)elegidos.Rows[elegidos.CurrentCell.RowIndex].DataBoundItem).Row;
-            consumibles_dt.Rows.Add(consumible["cons_codigo"].ToString(), consumible["cons_detalle"].ToString(), consumible["cons_precio"].ToString());
-            consumibles_elegidos_dt.Rows.Remove(consumible);
+            if (elegidos.CurrentRow != null)
+            {
+                DataRow consumible = ((DataRowView)elegidos.Rows[elegidos.CurrentCell.RowIndex].DataBoundItem).Row;
+                consumibles_dt.Rows.Add(consumible["cons_codigo"].ToString(), consumible["cons_detalle"].ToString(), consumible["cons_precio"].ToString());
+                consumibles_elegidos_dt.Rows.Remove(consumible);
+            }
         }
         
         private void guardar_Click(object sender, EventArgs e)

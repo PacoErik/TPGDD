@@ -47,14 +47,14 @@ namespace FrbaHotel.RegistrarEstadia
             sda.Fill(dtC);
             dataGridViewConsumibles.DataSource = dtC;
 
-            sda = UtilesSQL.crearDataAdapter("SELECT fact_fecha, fact_costoTotal, fact_estadia, fact_cliente FROM DERROCHADORES_DE_PAPEL.Factura WHERE fact_numero = @fact");
+            sda = UtilesSQL.crearDataAdapter("SELECT fact_fecha, fact_costoTotal, fact_estadia, fact_cliente, clie_apellido, clie_nombre FROM DERROCHADORES_DE_PAPEL.Factura JOIN DERROCHADORES_DE_PAPEL.Cliente ON clie_id = fact_cliente WHERE fact_numero = @fact");
             sda.SelectCommand.Parameters.AddWithValue("@fact", factId);
             sda.Fill(dtF);
 
             textBoxFecha.Text = dtF.Rows[0][0].ToString();
-            textBoxCostoTotal.Text = dtF.Rows[0][1].ToString();
+            textBoxCostoTotal.Text = dtF.Rows[0][1].ToString()+"U$S";
             textBoxEstadia.Text = dtF.Rows[0][2].ToString();
-            textBoxCliente.Text = dtF.Rows[0][3].ToString();
+            textBoxCliente.Text = dtF.Rows[0][4].ToString() + ", " + dtF.Rows[0][5].ToString();
 
             //calculo de costo total de consumibles
             foreach (DataRow row in dtC.Rows)
@@ -65,11 +65,11 @@ namespace FrbaHotel.RegistrarEstadia
                 }
                 else
                 {
-                    costoTotal += float.Parse(row[1].ToString()) * float.Parse(row[2].ToString());
+                    costoTotal += float.Parse(row[2].ToString());
                 }
 
             }
-            textBoxCostoTotal.Text = costoTotal.ToString();
+            textBoxCostoTotal.Text = costoTotal.ToString()+"U$S";
         }
 
         private void buttonFinalizar_Click(object sender, EventArgs e)
@@ -116,7 +116,7 @@ namespace FrbaHotel.RegistrarEstadia
             com.Parameters.AddWithValue("@numero", tarjeta.Text);
             UtilesSQL.ejecutarComandoNonQuery(com);
 
-            SqlCommand com2 = UtilesSQL.crearCommand("SELECT tarj_id FROM DERROCHADORES_DE_PAPEL.TarjetaBancaria WHERE \'@nombre\' = tarj_nombreDeEntidad AND @numero = tarj_numeroDeCuenta");
+            SqlCommand com2 = UtilesSQL.crearCommand("SELECT tarj_id FROM DERROCHADORES_DE_PAPEL.TarjetaBancaria WHERE @nombre = tarj_nombreDeEntidad AND @numero = tarj_numeroDeCuenta");
             com2.Parameters.AddWithValue("@nombre", propietario.Text);
             com2.Parameters.AddWithValue("@numero", tarjeta.Text);
             String tarjetaId = com2.ExecuteScalar().ToString();
@@ -154,7 +154,7 @@ namespace FrbaHotel.RegistrarEstadia
                 labelNombreVacio.Visible = true;
                 Valido = false;
             }
-            if (!propietario.Text.All(l => Char.IsLetter(l) || l.Equals(" ")))
+            if (!propietario.Text.All(l => Char.IsLetter(l) || Char.IsWhiteSpace(l)))
             {
                 labelNombreInvalido.Visible = true;
                 Valido = false;

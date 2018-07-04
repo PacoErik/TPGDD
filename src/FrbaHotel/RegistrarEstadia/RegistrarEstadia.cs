@@ -115,7 +115,7 @@ namespace FrbaHotel.RegistrarEstadia
                 if (fechaActual > fechaInicio)
                 {
                     MessageBox.Show("La fecha para hacer el check-in ya pasó. La reserva será cancelada");
-                    UtilesSQL.ejecutarComandoNonQuery("UPDATE DERROCHADORES_DE_PAPEL.Reserva SET rese_estado = (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = \'RESERVA CANCELADA POR RECEPCION\')");
+                    UtilesSQL.ejecutarComandoNonQuery("UPDATE DERROCHADORES_DE_PAPEL.Reserva SET rese_estado = (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = \'RESERVA CANCELADA POR RECEPCION\') WHERE rese_codigo = "+reserva.Text);
                     estado.Text = "RESERVA CANCELADA POR RECEPCION";
                     return;
                 }
@@ -148,7 +148,7 @@ namespace FrbaHotel.RegistrarEstadia
                 }
 
                 //Se efectiviza la reserva
-                UtilesSQL.ejecutarComandoNonQuery("UPDATE DERROCHADORES_DE_PAPEL.Reserva SET rese_estado = (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = \'RESERVA EFECTIVIZADA\')");
+                UtilesSQL.ejecutarComandoNonQuery("UPDATE DERROCHADORES_DE_PAPEL.Reserva SET rese_estado = (SELECT esta_id FROM DERROCHADORES_DE_PAPEL.EstadoDeReserva WHERE esta_detalle = \'RESERVA EFECTIVIZADA\') WHERE rese_codigo = " + reserva.Text);
 
                 //Se genera la estadía
                 SqlCommand comando = UtilesSQL.crearCommand("INSERT INTO DERROCHADORES_DE_PAPEL.Estadia (esta_fechaDeInicio, esta_fechaDeFin, esta_cantidadDeNoches, esta_reserva, esta_usuarioCheckIn, esta_usuarioCheckOut) VALUES (CONVERT(DATETIME, @inicio, 103), CONVERT(DATETIME, @fin, 103), @noches, @reserva, @usuarioCheckIn, NULL)");
