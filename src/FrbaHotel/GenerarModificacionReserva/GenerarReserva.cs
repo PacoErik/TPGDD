@@ -82,6 +82,11 @@ namespace FrbaHotel.GenerarModificacionReserva
                 date_hasta.Value = date_desde.Value;
             }
             CalcularCantidadNoches();
+            DataTable dt = new DataTable();
+            String desde = "CONVERT(datetime, \'" + reserva.fecha_desde.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\',121)";
+            String hasta = "CONVERT(datetime, \'" + reserva.fecha_hasta.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\',121)";
+            UtilesSQL.llenarTabla(dt, "SELECT * FROM DERROCHADORES_DE_PAPEL.PeriodoDeCierre WHERE peri_hotel = " + reserva.hotel.ID + " AND ((peri_fechaFin >= " + desde + " AND peri_fechaFin <= " + hasta + ") OR (peri_fechaInicio >= " + desde + " AND peri_fechaInicio <= " + hasta + ") OR ( peri_fechaInicio <=" + desde + " AND peri_fechaFin >= " + hasta + "))");
+            labelHotelCerrado.Visible = dt.Rows.Count != 0;
         }
 
         private void CalcularCantidadNoches()
@@ -90,35 +95,6 @@ namespace FrbaHotel.GenerarModificacionReserva
             reserva.cantidad_de_noches = (reserva.fecha_hasta - reserva.fecha_desde).TotalDays;
             lbl_noches.Text = reserva.cantidad_de_noches.ToString();
             lbl_error_fecha.Visible = reserva.cantidad_de_noches < 1;
-        }
-
-        private void txtbox_personas_TextChanged(object sender, EventArgs e)
-        {
-            string entrada = txtbox_personas.Text;
-            if (entrada.Length > 0)
-            {
-                if (CantidadValida(entrada))
-                {
-                    reserva.personas = Convert.ToInt32(entrada);
-                    lbl_error_personas.Visible = false;
-                }
-                else
-                {
-                    lbl_error_personas.Visible = true;
-                }
-            }
-        }
-
-        private bool CantidadValida(string texto)
-        {
-            if (texto.All(x => char.IsDigit(x)))
-            {
-                return Convert.ToInt32(texto) > 0;
-            }
-            else
-            {
-            return false;
-            }
         }
 
         private void btn_cargar_opciones_Click(object sender, EventArgs e)
@@ -142,7 +118,7 @@ namespace FrbaHotel.GenerarModificacionReserva
                     btn_cargar_opciones.Enabled = false;
                     date_desde.Enabled = false;
                     date_hasta.Enabled = false;
-                    txtbox_personas.Enabled = false;
+                    numericUpDownPersonas.Enabled = false;
                 }
                 else
                 {
@@ -292,6 +268,10 @@ namespace FrbaHotel.GenerarModificacionReserva
 
         private void btn_reservar_Click(object sender, EventArgs e)
         {
+            if (numericUpDownPersonas.Value == 0)
+            {
+                return;
+            }
             if (clie_nombre.Text.Length.Equals(0))
             {
                 MessageBox.Show("Se debe registrar cliente");
@@ -358,10 +338,21 @@ namespace FrbaHotel.GenerarModificacionReserva
             elegir.ShowDialog();
             if (elegir.estaElegido())
             {
-                reserva.cliente = Int32.Parse(elegir.id());
-                clie_nombre.Text = elegir.nombre();
-                clie_apellido.Text = elegir.apellido();
-                clie_mail.Text = elegir.mail();
+                DataTable dt = new DataTable();
+                String desde = "CONVERT(datetime, \'" + reserva.fecha_desde.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\',121)";
+                String hasta = "CONVERT(datetime, \'" + reserva.fecha_hasta.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\',121)";
+                UtilesSQL.llenarTabla(dt, "SELECT * FROM DERROCHADORES_DE_PAPEL.Reserva WHERE rese_hotel = " + reserva.hotel.ID + " AND rese_cliente = " + reserva.cliente.ToString() + " AND rese_codigo != " + reserva.codigo.ToString() + " AND ((rese_fin >= " + desde + " AND rese_fin <= " + hasta + ") OR (rese_inicio >= " + desde + " AND rese_inicio <= " + hasta + ") OR ( rese_inicio <=" + desde + " AND rese_fin >= " + hasta + "))");
+                if (dt.Rows.Count != 0)
+                {
+                    MessageBox.Show("Ese usuario ya tiene una reserva en este hotel en esas fechas");
+                }
+                else
+                {
+                    reserva.cliente = Int32.Parse(elegir.id());
+                    clie_nombre.Text = elegir.nombre();
+                    clie_apellido.Text = elegir.apellido();
+                    clie_mail.Text = elegir.mail();
+                }
             }
             Show();
         }
@@ -398,14 +389,25 @@ namespace FrbaHotel.GenerarModificacionReserva
             lbl_noches.Text = "";
 
             cbox_regimenes.Items.Clear();
-            txtbox_personas.Clear();
+            numericUpDownPersonas.Value = 0;
             btn_cargar_opciones.Enabled = true;
 
             date_desde.Enabled = true;
             date_hasta.Enabled = true;
-            txtbox_personas.Enabled = true;
+            numericUpDownPersonas.Enabled = true;
         }
 
-
+        private void numericUpDownPersonas_ValueChanged(object sender, EventArgs e)
+        {
+            reserva.personas = Int32.Parse(numericUpDownPersonas.Value.ToString());
+            if (numericUpDownPersonas.Value == 0)
+            {
+                lbl_error_personas.Visible = true;
+            }
+            else
+            {
+                lbl_error_personas.Visible = false;
+            }
+        }
     }
 }

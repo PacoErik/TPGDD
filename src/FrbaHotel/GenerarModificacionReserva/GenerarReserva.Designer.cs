@@ -43,7 +43,6 @@
             this.label11 = new System.Windows.Forms.Label();
             this.btn_reservar = new System.Windows.Forms.Button();
             this.lbl_error_fecha = new System.Windows.Forms.Label();
-            this.txtbox_personas = new System.Windows.Forms.TextBox();
             this.lbl_error_personas = new System.Windows.Forms.Label();
             this.btn_cargar_opciones = new System.Windows.Forms.Button();
             this.lbl_error_carga_hotel = new System.Windows.Forms.Label();
@@ -70,10 +69,13 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.limpiar = new System.Windows.Forms.Button();
+            this.labelHotelCerrado = new System.Windows.Forms.Label();
+            this.numericUpDownPersonas = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPersonas)).BeginInit();
             this.SuspendLayout();
             // 
             // date_desde
@@ -207,29 +209,21 @@
             // 
             this.lbl_error_fecha.AutoSize = true;
             this.lbl_error_fecha.ForeColor = System.Drawing.Color.Red;
-            this.lbl_error_fecha.Location = new System.Drawing.Point(233, 82);
+            this.lbl_error_fecha.Location = new System.Drawing.Point(233, 59);
             this.lbl_error_fecha.Name = "lbl_error_fecha";
             this.lbl_error_fecha.Size = new System.Drawing.Size(183, 13);
             this.lbl_error_fecha.TabIndex = 32;
             this.lbl_error_fecha.Text = "DEBE SER ALMENOS UNA NOCHE";
             // 
-            // txtbox_personas
-            // 
-            this.txtbox_personas.Location = new System.Drawing.Point(125, 117);
-            this.txtbox_personas.Name = "txtbox_personas";
-            this.txtbox_personas.Size = new System.Drawing.Size(84, 20);
-            this.txtbox_personas.TabIndex = 33;
-            this.txtbox_personas.TextChanged += new System.EventHandler(this.txtbox_personas_TextChanged);
-            // 
             // lbl_error_personas
             // 
             this.lbl_error_personas.AutoSize = true;
             this.lbl_error_personas.ForeColor = System.Drawing.Color.Red;
-            this.lbl_error_personas.Location = new System.Drawing.Point(233, 120);
+            this.lbl_error_personas.Location = new System.Drawing.Point(122, 140);
             this.lbl_error_personas.Name = "lbl_error_personas";
-            this.lbl_error_personas.Size = new System.Drawing.Size(111, 13);
+            this.lbl_error_personas.Size = new System.Drawing.Size(171, 13);
             this.lbl_error_personas.TabIndex = 34;
-            this.lbl_error_personas.Text = "ENTRADA INVALIDA";
+            this.lbl_error_personas.Text = "LA CANTIDAD NO PUEDE SER 0";
             // 
             // btn_cargar_opciones
             // 
@@ -245,7 +239,7 @@
             // 
             this.lbl_error_carga_hotel.AutoSize = true;
             this.lbl_error_carga_hotel.ForeColor = System.Drawing.Color.Red;
-            this.lbl_error_carga_hotel.Location = new System.Drawing.Point(305, 148);
+            this.lbl_error_carga_hotel.Location = new System.Drawing.Point(328, 172);
             this.lbl_error_carga_hotel.Name = "lbl_error_carga_hotel";
             this.lbl_error_carga_hotel.Size = new System.Drawing.Size(88, 13);
             this.lbl_error_carga_hotel.TabIndex = 36;
@@ -333,6 +327,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.numericUpDownPersonas);
+            this.groupBox1.Controls.Add(this.labelHotelCerrado);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.date_desde);
             this.groupBox1.Controls.Add(this.label3);
@@ -345,7 +341,6 @@
             this.groupBox1.Controls.Add(this.lbl_error_carga_hotel);
             this.groupBox1.Controls.Add(this.lbl_error_fecha);
             this.groupBox1.Controls.Add(this.btn_cargar_opciones);
-            this.groupBox1.Controls.Add(this.txtbox_personas);
             this.groupBox1.Controls.Add(this.lbl_error_personas);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
@@ -497,6 +492,25 @@
             this.limpiar.UseVisualStyleBackColor = true;
             this.limpiar.Click += new System.EventHandler(this.limpiar_Click);
             // 
+            // labelHotelCerrado
+            // 
+            this.labelHotelCerrado.AutoSize = true;
+            this.labelHotelCerrado.ForeColor = System.Drawing.Color.Red;
+            this.labelHotelCerrado.Location = new System.Drawing.Point(233, 83);
+            this.labelHotelCerrado.Name = "labelHotelCerrado";
+            this.labelHotelCerrado.Size = new System.Drawing.Size(201, 13);
+            this.labelHotelCerrado.TabIndex = 100;
+            this.labelHotelCerrado.Text = "HOTEL CERRADO POR ESAS FECHAS";
+            this.labelHotelCerrado.Visible = false;
+            // 
+            // numericUpDownPersonas
+            // 
+            this.numericUpDownPersonas.Location = new System.Drawing.Point(122, 118);
+            this.numericUpDownPersonas.Name = "numericUpDownPersonas";
+            this.numericUpDownPersonas.Size = new System.Drawing.Size(120, 20);
+            this.numericUpDownPersonas.TabIndex = 101;
+            this.numericUpDownPersonas.ValueChanged += new System.EventHandler(this.numericUpDownPersonas_ValueChanged);
+            // 
             // GenerarReserva
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -520,6 +534,7 @@
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPersonas)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -541,7 +556,6 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btn_reservar;
         private System.Windows.Forms.Label lbl_error_fecha;
-        private System.Windows.Forms.TextBox txtbox_personas;
         private System.Windows.Forms.Label lbl_error_personas;
         private System.Windows.Forms.Button btn_cargar_opciones;
         private System.Windows.Forms.Label lbl_error_carga_hotel;
@@ -568,5 +582,7 @@
         private System.Windows.Forms.TextBox recarga_por_estrellas;
         private System.Windows.Forms.TextBox precio_total;
         private System.Windows.Forms.TextBox precio_base;
+        private System.Windows.Forms.Label labelHotelCerrado;
+        private System.Windows.Forms.NumericUpDown numericUpDownPersonas;
     }
 }
