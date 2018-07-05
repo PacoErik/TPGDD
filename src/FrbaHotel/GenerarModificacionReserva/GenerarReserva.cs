@@ -169,7 +169,7 @@ namespace FrbaHotel.GenerarModificacionReserva
             {
                 habitaciones.Clear();
 
-                string consulta = "SELECT h1.habi_numero, h1.habi_piso, th1.tipo_cantidadDePersonas, th1.tipo_descripcion FROM  DERROCHADORES_DE_PAPEL.TipoDeHabitacion as th1 JOIN DERROCHADORES_DE_PAPEL.Habitacion as h1 ON (th1.tipo_codigo = h1.habi_tipo) WHERE h1.habi_hotel = @hotel AND NOT (EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.Habitacion as h2 JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion as rh2 ON ( rh2.rexh_hotel = h2.habi_hotel AND rh2.rexh_numero = h2.habi_numero AND rh2.rexh_piso = h2.habi_piso) JOIN DERROCHADORES_DE_PAPEL.Reserva as r2 ON (r2.rese_codigo = rh2.rexh_reserva) JOIN DERROCHADORES_DE_PAPEL.EstadoDeReserva as er2 ON (er2.esta_id = r2.rese_estado) WHERE h2.habi_hotel = h1.habi_hotel AND h2.habi_numero = h1.habi_numero AND h2.habi_piso = h1.habi_piso AND ( ((r2.rese_inicio BETWEEN CONVERT(datetime,@fechaDesde, 121) AND CONVERT(datetime,@fechaHasta, 121)) OR (r2.rese_fin BETWEEN CONVERT(datetime,@fechaDesde, 121) AND CONVERT(datetime,@fechaHasta, 121)) OR (r2.rese_fin <= CONVERT(datetime,@fechaDesde, 121) AND r2.rese_fin >= CONVERT(datetime,@fechaHasta, 121)) ) AND (NOT ( (esta_detalle = 'RESERVA CANCELADA POR RECEPCION') OR (esta_detalle = 'RESERVA CANCELADA POR CLIENTE' ) OR (esta_detalle = 'RESERVA CANCELADA POR NO-SHOW')) ) ) ) )";
+                string consulta = "SELECT h1.habi_numero, h1.habi_piso, th1.tipo_cantidadDePersonas, th1.tipo_descripcion FROM  DERROCHADORES_DE_PAPEL.TipoDeHabitacion as th1 JOIN DERROCHADORES_DE_PAPEL.Habitacion as h1 ON (th1.tipo_codigo = h1.habi_tipo) WHERE h1.habi_hotel = @hotel AND habi_estado = 1 AND NOT (EXISTS (SELECT * FROM DERROCHADORES_DE_PAPEL.Habitacion as h2 JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion as rh2 ON ( rh2.rexh_hotel = h2.habi_hotel AND rh2.rexh_numero = h2.habi_numero AND rh2.rexh_piso = h2.habi_piso) JOIN DERROCHADORES_DE_PAPEL.Reserva as r2 ON (r2.rese_codigo = rh2.rexh_reserva) JOIN DERROCHADORES_DE_PAPEL.EstadoDeReserva as er2 ON (er2.esta_id = r2.rese_estado) WHERE h2.habi_hotel = h1.habi_hotel AND h2.habi_numero = h1.habi_numero AND h2.habi_piso = h1.habi_piso AND ( ((r2.rese_inicio BETWEEN CONVERT(datetime,@fechaDesde, 121) AND CONVERT(datetime,@fechaHasta, 121)) OR (r2.rese_fin BETWEEN CONVERT(datetime,@fechaDesde, 121) AND CONVERT(datetime,@fechaHasta, 121)) OR (r2.rese_fin <= CONVERT(datetime,@fechaDesde, 121) AND r2.rese_fin >= CONVERT(datetime,@fechaHasta, 121)) ) AND (NOT ( (esta_detalle = 'RESERVA CANCELADA POR RECEPCION') OR (esta_detalle = 'RESERVA CANCELADA POR CLIENTE' ) OR (esta_detalle = 'RESERVA CANCELADA POR NO-SHOW')) ) ) ) )";
                 SqlDataAdapter sda = UtilesSQL.crearDataAdapter(consulta);
                 sda.SelectCommand.Parameters.AddWithValue("@hotel", reserva.hotel.ID);
                 sda.SelectCommand.Parameters.AddWithValue("@fechaDesde", reserva.fecha_desde.ToString("yyyy-MM-dd HH:mm:ss.fff"));
@@ -177,10 +177,7 @@ namespace FrbaHotel.GenerarModificacionReserva
                 sda.Fill(habitaciones);
 
                 habitaciones_disponibles = new List<Habitacion>();
-                /*if (habitaciones_disponibles.Count == 0)
-                {
-                    return false;
-                }*/
+
                 if (habitaciones.Rows.Count == 0)
                     return false;
                 if (habitaciones.Select().Sum(hab => Int32.Parse(hab[2].ToString())) < reserva.personas)
