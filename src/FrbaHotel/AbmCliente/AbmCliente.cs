@@ -71,18 +71,14 @@ namespace FrbaHotel.AbmCliente
             { 
                 commandString += "d.docu_detalle = @doc and ";
             }
-            if (checkBox.Checked)
-            {
-                commandString += "c.clie_habilitado = @hab and ";
-            }
-            commandString += "1=1";
+            commandString += "c.clie_habilitado = @hab";
             SqlDataAdapter sda = UtilesSQL.crearDataAdapter(commandString);
             sda.SelectCommand.Parameters.AddWithValue("@nom", "%" + textBoxNombre.Text + "%");
             sda.SelectCommand.Parameters.AddWithValue("@ape", "%" + textBoxApellido.Text + "%");
             sda.SelectCommand.Parameters.AddWithValue("@mail", "%" + textBoxEmail.Text + "%");
             sda.SelectCommand.Parameters.AddWithValue("@numDoc", "%" + textBoxNumeroIdentificacion.Text + "%");
             sda.SelectCommand.Parameters.AddWithValue("@doc", comboBoxTipoDocumento.SelectedValue.ToString());
-            sda.SelectCommand.Parameters.AddWithValue("@hab", 1);
+            sda.SelectCommand.Parameters.AddWithValue("@hab", checkBox.Checked ? "1" : "0");
             sda.Fill(dt2);
             dataGridViewClientes.DataSource = dt2;
             if (dt2.Rows.Count != 0)
