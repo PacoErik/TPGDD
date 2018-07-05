@@ -383,7 +383,7 @@ namespace FrbaHotel.AbmUsuario
             command1.Parameters.AddWithValue("@id", dtUsuario.Rows[0][0].ToString());
             UtilesSQL.ejecutarComandoNonQuery(command1);
 
-            SqlCommand command2 = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel SET rouh_habilitado = 0 WHERE rouh_usuario = @user AND rouh_hotel = @hotel");
+            SqlCommand command2 = UtilesSQL.crearCommand("UPDATE DERROCHADORES_DE_PAPEL.RolXUsuarioXHotel SET rouh_habilitado = 0 WHERE rouh_usuario = @user AND rouh_hotel = @hotel AND rouh_rol != 1");
             command2.Parameters.AddWithValue("@user", dtUsuario.Rows[0][0].ToString());
             command2.Parameters.AddWithValue("@hotel", hotelU);
             UtilesSQL.ejecutarComandoNonQuery(command2);
