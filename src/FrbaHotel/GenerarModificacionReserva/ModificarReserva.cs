@@ -374,26 +374,6 @@ namespace FrbaHotel.GenerarModificacionReserva
         }
         private void btn_reservar_Click(object sender, EventArgs e)
         {
-            String desde = "CONVERT(datetime, \'" + reserva.fecha_desde.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\',121)";
-            String hasta = "CONVERT(datetime, \'" + reserva.fecha_hasta.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\',121)";
-            DataTable HabInvalidas = new DataTable();
-            UtilesSQL.llenarTabla(HabInvalidas, "SELECT habi_numero, habi_piso FROM DERROCHADORES_DE_PAPEL.Habitacion JOIN DERROCHADORES_DE_PAPEL.ReservaXHabitacion ON rexh_hotel = habi_hotel AND habi_piso = rexh_piso AND habi_numero = rexh_numero JOIN DERROCHADORES_DE_PAPEL.Reserva ON rese_codigo = rexh_reserva WHERE habi_hotel = '" + hotel.ToString() + "' AND rese_cliente != '" + reserva.cliente.ToString() + "' AND ((rese_fin >= " + desde + " AND rese_fin <= " + hasta + ") OR (rese_inicio >= " + desde + " AND rese_inicio <= " + hasta + ") OR ( rese_inicio <=" + desde + " AND rese_fin >= " + hasta + "))");
-            if (HabInvalidas.Rows.Count != 0)
-            {
-                for (int i = 0; i < HabInvalidas.Rows.Count; i++)
-                {
-                    foreach (Habitacion hab in reserva.habitaciones_reservadas)
-                    {
-                        if (hab.piso.ToString() == HabInvalidas.Rows[i][1].ToString() && hab.numero.ToString() == HabInvalidas.Rows[i][0].ToString())
-                        {
-                            MessageBox.Show("Hay habitaciones que estan reservadas en ese período");
-                            return;
-                        }
-                    }
-                }
-            }
-
-
             //ELIMINAR las reserva x habitacion que ya estan
             command = UtilesSQL.crearCommand("DELETE FROM DERROCHADORES_DE_PAPEL.ReservaXHabitacion WHERE rexh_reserva = @reserva");
             command.Parameters.AddWithValue("@reserva", reserva.codigo);
