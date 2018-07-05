@@ -278,11 +278,17 @@ namespace FrbaHotel.GenerarModificacionReserva
         {
             reserva.fecha_desde = date_desde.Value;
             VerificarFechasCorrectas();
+            ResetearHabitaciones();
         }
         private void date_hasta_ValueChanged_1(object sender, EventArgs e)
         {
             reserva.fecha_hasta = date_hasta.Value;
             VerificarFechasCorrectas();
+            ResetearHabitaciones();
+        }
+        private void ResetearHabitaciones()
+        {
+            CargarHabitaciones();
         }
 
         private void numericUpDown_ValueChanged(object sender, EventArgs e)
@@ -320,6 +326,14 @@ namespace FrbaHotel.GenerarModificacionReserva
                     MessageBox.Show("Las habitaciones elegidas ya satisfacen la cantidad de personas estipuladas");
                     return;
                 }
+                foreach (Habitacion hab in reserva.habitaciones_reservadas)
+                {
+                    if (habitaciones_disponibles[cbox_disponibles.SelectedIndex - 1].numero == hab.numero && habitaciones_disponibles[cbox_disponibles.SelectedIndex - 1].piso == hab.piso)
+                    {
+                        MessageBox.Show("Habitación ya agregada");
+                        return;
+                    }
+                }
                 reserva.habitaciones_reservadas.Add(habitaciones_disponibles[cbox_disponibles.SelectedIndex - 1]);
                 habitaciones_disponibles.RemoveAt(cbox_disponibles.SelectedIndex - 1);
                 ActualizarComboBoxHabitaciones();
@@ -330,6 +344,15 @@ namespace FrbaHotel.GenerarModificacionReserva
         {
             if (cbox_seleccionadas.SelectedIndex != 0)
             {
+                foreach (Habitacion hab in habitaciones_disponibles)
+                {
+                    if (reserva.habitaciones_reservadas[cbox_seleccionadas.SelectedIndex - 1].numero == hab.numero && reserva.habitaciones_reservadas[cbox_seleccionadas.SelectedIndex - 1].piso == hab.piso)
+                    {
+                        reserva.habitaciones_reservadas.RemoveAt(cbox_seleccionadas.SelectedIndex - 1);
+                        ActualizarComboBoxHabitaciones();
+                        return;
+                    }
+                }
                 habitaciones_disponibles.Add(reserva.habitaciones_reservadas[cbox_seleccionadas.SelectedIndex - 1]);
                 reserva.habitaciones_reservadas.RemoveAt(cbox_seleccionadas.SelectedIndex - 1);
                 ActualizarComboBoxHabitaciones();
